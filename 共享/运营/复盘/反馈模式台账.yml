@@ -1,5 +1,5 @@
 schema_version: 1
-updated_on: "2026-07-21"
+updated_on: "2026-07-22"
 
 # 原始反馈留在内容包或受限反馈库；这里只保存脱敏后的跨案例模式。
 patterns:
@@ -138,6 +138,23 @@ patterns:
     introduced_on: "2026-07-21"
     regression_check: "下一次含参考图的 Image2 任务核对运行时、Prompt 哈希、原尺寸复检、迭代记录、路径和 manifest version 2，并运行 validator 反例门禁"
     next_review_on: "2026-08-21"
+
+  - id: "PROJECT-APPSO-AI-STYLE-001"
+    pattern: "APPSO 编辑创意图虽已登记固定 Prompt，但通用科技媒体模板仍可能在首次调用时抢先覆盖，造成风格回归"
+    evidence_level: "project_configuration"
+    source_cases: ["ai-agents-real-world-loss:DLV-005", "user-feedback:2026-07-22-governed-style-routing-regression"]
+    disposition: "project_adapter"
+    rule_source: "APPSO-数字资产/03-SOP/APPSO 内容生产 SOP.md#image2-风格化重绘"
+    trigger: "APPSO 内容包需要封面创意图、气氛图或不承担新闻证据职责的 AI 解释性示意图"
+    action: "按显式 task 用户覆盖、APPSO adapter 固化的 package style_policy、通用 profile 的顺序解析；默认锁定 appsso-004，package policy 不作为独立授权源；先复用已登记的合法本地参考，无参考图时才新建内部结构参考；每阶段调用前执行确定性 preflight，并把临时 tool_request 原样传给 image_gen"
+    pass_condition: "最终阶段使用档案允许的编辑模式、Prompt 哈希与改编权明确的参考输入；结构参考只作为中间件；正向约束不含冲突风格词；成品可观察到固定风格特征"
+    failure_signal: "首次调用落入成熟科技媒体、干净矢量或电影感模板；固定风格直接 text_to_image；缺参考图、未授权输入或 Prompt 哈希变化仍调用；手工重写 tool_request；把内部结构参考当成样张交付"
+    scope: "APPSO 的 ai_editorial_creative；默认排除官方资料、原帖和新闻图片、真实产品或界面截图、Logo 与要求数值精确的图表；内容包可对定性解释图显式选择并记录原因"
+    owner: "visual_rights_editor"
+    classification: "internal"
+    introduced_on: "2026-07-22"
+    regression_check: "正例：已登记本地参考可直接通过最终阶段，无参考图时参考阶段通过、登记输入后最终阶段通过；tool_request 精确映射三种输入绑定且不落盘；反例：缺参考、错误模式、冲突正向词与未授权输入均在调用前失败；通用无参考图 profile 仍可直接生成且不注入 appsso-004"
+    next_review_on: "2026-08-22"
 
   - id: "PROJECT-WECHAT-LAYOUT-001"
     pattern: "APPSO 普通公众号长文使用默认 Wenyan 主题时，字号、标题颜色、对齐与正文缩进无法复现，导致每篇都要在公众号后台重复手调"

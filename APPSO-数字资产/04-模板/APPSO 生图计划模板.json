@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "template_only": true,
+  "updated": "YYYY-MM-DD",
+  "project_adapter": "appsso",
+  "profile_registry": "APPSO-数字资产/04-模板/生图风格档案.json",
+  "style_policy": {
+    "profile": "appsso-004",
+    "scope": "all_ai_generated_editorial_images",
+    "new_image_strategy": "two_stage_reference_then_redraw",
+    "allow_final_text_to_image": false
+  },
+  "tasks": [
+    {
+      "id": "visual-001",
+      "visual_type": "ai_editorial_creative",
+      "purpose": "填写这张编辑创意图在文章中承担的唯一任务。",
+      "reference_strategy": "generated_base",
+      "reference_stage": {
+        "mode": "text_to_image",
+        "prompt_ref": "package-structure-reference-v1",
+        "output": "research/source-assets/visual-001-structure.png",
+        "receipt": "research/image-generation-runs/visual-001-reference-preflight.json",
+        "present_to_user": false,
+        "content_prompt": "Create a neutral structural reference that shows only the subjects, spatial relationships, reading order, and exact labels needed by this visual. This image is an internal composition input for a later redraw.",
+        "output_constraints": [
+          "填写画幅比例和移动端裁切安全区",
+          "填写必须准确出现的文字和数量",
+          "Keep the composition unambiguous and easy to redraw"
+        ],
+        "avoid": [
+          "Logos, trademarks, watermarks, fake interfaces, news-scene realism, or unverified claims"
+        ]
+      },
+      "final_stage": {
+        "mode": "referenced_edit",
+        "prompt_ref": "appsso-004",
+        "prompt_sha256": "6ba5e092a4f8d6fb2bd33602424ba4792715aa59f2bf5f916b90d8bb3f0bbd0a",
+        "input_assets": [
+          "research/source-assets/visual-001-structure.png"
+        ],
+        "output": "assets/visual-001-image2.png",
+        "receipt": "research/image-generation-runs/visual-001-final-preflight.json",
+        "present_to_user": true,
+        "preserve": [
+          "填写必须保留的主体、关系、阅读顺序和事实"
+        ],
+        "output_constraints": [
+          "填写画幅比例、精确文字、手机端可读性和裁切安全区",
+          "Use a white background"
+        ],
+        "avoid": [
+          "Polished technology-magazine composition, clean vector geometry, cinematic depth, or professional illustration finish",
+          "Logos, trademarks, watermarks, extra text, garbled text, fake interfaces, or news-scene realism"
+        ]
+      }
+    }
+  ]
+}

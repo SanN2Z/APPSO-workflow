@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "template_only": true,
+  "updated": "YYYY-MM-DD",
+  "project_adapter": "generic",
+  "profile_registry": "共享/运营/SOP/生图风格档案.json",
+  "style_policy": {
+    "profile": "generic-direct-v1",
+    "scope": "task",
+    "new_image_strategy": "direct",
+    "allow_final_text_to_image": true
+  },
+  "tasks": [
+    {
+      "id": "visual-001",
+      "visual_type": "general_editorial",
+      "purpose": "填写这张图片在内容中承担的唯一任务。",
+      "reference_strategy": "none",
+      "final_stage": {
+        "mode": "text_to_image",
+        "prompt_ref": "generic-direct-v1",
+        "input_assets": [],
+        "output": "assets/visual-001-image2.png",
+        "receipt": "research/image-generation-runs/visual-001-final-preflight.json",
+        "present_to_user": true,
+        "content_prompt": "Replace this sentence with the complete subject, scene, composition, and visual direction for one image.",
+        "output_constraints": [
+          "填写画幅比例、精确文字、移动端可读性和裁切安全区"
+        ],
+        "avoid": [
+          "Logos, trademarks, watermarks, extra text, garbled text, fake interfaces, or unverified claims"
+        ]
+      }
+    }
+  ]
+}

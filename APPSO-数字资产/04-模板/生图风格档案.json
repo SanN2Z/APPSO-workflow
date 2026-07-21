@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "appsso-004": {
+      "classification": "internal",
+      "prompt_source": "APPSO-数字资产/01-栏目与品牌/品牌视觉/生图-Prompt/笨拙涂鸦重绘.md",
+      "prompt_heading": "## 原始 Prompt",
+      "prompt_sha256": "6ba5e092a4f8d6fb2bd33602424ba4792715aa59f2bf5f916b90d8bb3f0bbd0a",
+      "prompt_characters": 443,
+      "requires_reference": true,
+      "allowed_final_modes": [
+        "referenced_edit",
+        "image_edit"
+      ],
+      "new_image_strategy": "two_stage_reference_then_redraw",
+      "forbidden_positive_terms": [
+        "高质量科技媒体",
+        "成熟科技媒体",
+        "科技杂志",
+        "二维矢量",
+        "矢量感",
+        "精致拼贴",
+        "纸张质感",
+        "暖白纸感",
+        "电影感",
+        "写实",
+        "企业宣传 PPT",
+        "premium magazine",
+        "technology magazine",
+        "clean vector",
+        "crisp geometry",
+        "cinematic",
+        "photorealistic",
+        "polished",
+        "paper texture",
+        "professional illustration",
+        "editorial collage"
+      ],
+      "forbidden_avoid_terms": [
+        "clumsy",
+        "scribbly",
+        "MS Paint",
+        "mouse-drawn",
+        "drawn with a mouse",
+        "white background",
+        "low-quality pixel",
+        "笨拙",
+        "潦草",
+        "鼠标涂鸦",
+        "白色背景",
+        "低像素"
+      ]
+    }
+  }
+}

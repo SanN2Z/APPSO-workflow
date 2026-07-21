@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import importlib.util
 import hashlib
+import json
 import re
 import sys
 import tempfile
@@ -19,8 +20,29 @@ VALIDATOR = importlib.util.module_from_spec(SPEC)
 sys.modules[SPEC.name] = VALIDATOR
 SPEC.loader.exec_module(VALIDATOR)
 
+PREFLIGHT_PATH = (
+    Path(__file__).resolve().parents[1]
+    / "scripts"
+    / "preflight_image_generation.py"
+)
+PREFLIGHT_SPEC = importlib.util.spec_from_file_location(
+    "preflight_image_generation_for_validator_tests",
+    PREFLIGHT_PATH,
+)
+if PREFLIGHT_SPEC is None or PREFLIGHT_SPEC.loader is None:
+    raise RuntimeError(f"Could not load image preflight: {PREFLIGHT_PATH}")
+PREFLIGHT = importlib.util.module_from_spec(PREFLIGHT_SPEC)
+sys.modules[PREFLIGHT_SPEC.name] = PREFLIGHT
+PREFLIGHT_SPEC.loader.exec_module(PREFLIGHT)
+
 
 class ContentPackageAssetManifestTests(unittest.TestCase):
+    APPSO_PROMPT_SHA256 = (
+        "6ba5e092a4f8d6fb2bd33602424ba4792715aa59f2bf5f916b90d8bb3f0bbd0a"
+    )
+    INVOCATION_PROMPT_SHA256 = "b" * 64
+    APPSO_RECEIPT = "research/image-generation-runs/output-final-preflight.json"
+
     def make_package(
         self,
         root: Path,
@@ -28,8 +50,15 @@ class ContentPackageAssetManifestTests(unittest.TestCase):
         *,
         status: str = "ready",
         markdown_image: bool = True,
+        project_adapter: str | None = "generic",
     ) -> Path:
-        package = root / "package"
+        workspace = root / "workspace"
+        (workspace / "AGENTS.md").parent.mkdir(parents=True, exist_ok=True)
+        (workspace / "AGENTS.md").write_text("# Test workspace\n", encoding="utf-8")
+        (workspace / "上下文").mkdir(exist_ok=True)
+        (workspace / "共享").mkdir(exist_ok=True)
+        (workspace / "config").mkdir(exist_ok=True)
+        package = workspace / "package"
         (package / "assets").mkdir(parents=True)
         (package / "research" / "source-assets").mkdir(parents=True)
         if 'file: "assets/output.png"' in manifest:
@@ -89,6 +118,11 @@ published_url: ""
             encoding="utf-8",
         )
         (package / "asset-manifest.yml").write_text(manifest, encoding="utf-8")
+        if project_adapter is not None:
+            (package / "publish.yml").write_text(
+                f'project_adapter: "{project_adapter}"\nlayout_profile: "default"\n',
+                encoding="utf-8",
+            )
         return package
 
     def set_body(self, package: Path, body: str) -> None:
@@ -119,6 +153,289 @@ published_url: ""
             )
         copyedit_path.write_text(copyedit, encoding="utf-8")
 
+    def write_appsso_receipt(
+        self,
+        package: Path,
+        *,
+        overrides: dict[str, object] | None = None,
+    ) -> Path:
+        receipt = {
+            "schema_version": 1,
+            "status": "pass",
+            "stage": "final",
+            "style_profile": "appsso-004",
+            "prompt_ref": "appsso-004",
+            "prompt_sha256": self.APPSO_PROMPT_SHA256,
+            "invocation_prompt_sha256": self.INVOCATION_PROMPT_SHA256,
+            "mode": "referenced_edit",
+            "input_assets": ["research\\source-assets\\reference.png"],
+            "output": "assets/output.png",
+        }
+        if overrides:
+            receipt.update(overrides)
+        receipt_path = package / self.APPSO_RECEIPT
+        receipt_path.parent.mkdir(parents=True, exist_ok=True)
+        receipt_path.write_text(
+            json.dumps(receipt, ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )
+        return receipt_path
+
+    def install_generic_preflight_contract(
+        self,
+        package: Path,
+        *,
+        edit: bool,
+    ) -> dict[str, object]:
+        """Create a real preflight plan/registry/receipt, then bind the manifest."""
+
+        profile_id = "generic-edit" if edit else "generic-direct"
+        strategy = "reference_required" if edit else "direct"
+        mode = "referenced_edit" if edit else "text_to_image"
+        reference_strategy = "provided_local" if edit else "none"
+        input_assets = ["research/source-assets/reference.png"] if edit else []
+        workspace = package.parent
+        registry = {
+            "schema_version": 1,
+            "profiles": {
+                profile_id: {
+                    "classification": "internal",
+                    "requires_reference": edit,
+                    "allowed_final_modes": [mode],
+                    "new_image_strategy": strategy,
+                    "forbidden_positive_terms": [],
+                    "forbidden_avoid_terms": [],
+                }
+            },
+        }
+        (workspace / "config" / "profiles.json").write_text(
+            json.dumps(registry, ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )
+
+        if edit:
+            (package / "research" / "source-assets" / "reference.png").write_bytes(
+                b"test-reference"
+            )
+            (package / "asset-manifest.yml").write_text(
+                self.reference_manifest_record(),
+                encoding="utf-8",
+            )
+
+        plan = {
+            "schema_version": 1,
+            "updated": "2026-07-22",
+            "project_adapter": "generic",
+            "profile_registry": "config/profiles.json",
+            "style_policy": {
+                "profile": profile_id,
+                "scope": "task",
+                "new_image_strategy": strategy,
+                "allow_final_text_to_image": not edit,
+            },
+            "tasks": [
+                {
+                    "id": "cover",
+                    "visual_type": "general_editorial",
+                    "purpose": "Test the complete persisted generation contract.",
+                    "reference_strategy": reference_strategy,
+                    "final_stage": {
+                        "mode": mode,
+                        "prompt_ref": profile_id,
+                        "input_assets": input_assets,
+                        "output": "assets/output.png",
+                        "receipt": (
+                            "research/image-generation-runs/cover-final.json"
+                        ),
+                        "present_to_user": True,
+                        "content_prompt": "Create a deliberately plain test image.",
+                        "preserve": ["test subject"],
+                        "output_constraints": ["16:9"],
+                        "avoid": ["added text"],
+                    },
+                }
+            ],
+        }
+        plan_path = package / "research" / "image-generation-plan.json"
+        plan_path.write_text(
+            json.dumps(plan, ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )
+        receipt, _, receipt_path = PREFLIGHT.build_request(
+            package,
+            "cover",
+            "final",
+        )
+        PREFLIGHT.write_receipt(receipt, receipt_path)
+        (package / "asset-manifest.yml").write_text(
+            self.generic_ai_manifest(receipt, edit=edit),
+            encoding="utf-8",
+        )
+        return receipt
+
+    def install_rotated_appsso_preflight_contract(
+        self,
+        package: Path,
+    ) -> dict[str, object]:
+        """Prove that an adapter registry can rotate its governed prompt."""
+
+        workspace = package.parent
+        prompt = "A newly rotated adapter prompt used only for contract testing."
+        prompt_hash = hashlib.sha256(prompt.encode("utf-8")).hexdigest()
+        self.assertNotEqual(self.APPSO_PROMPT_SHA256, prompt_hash)
+        (workspace / "internal").mkdir(exist_ok=True)
+        (workspace / "internal" / "prompt.md").write_text(
+            "# Test prompt\n\n## Original Prompt\n\n> " + prompt + "\n",
+            encoding="utf-8",
+        )
+        registry = {
+            "schema_version": 1,
+            "profiles": {
+                "appsso-004": {
+                    "classification": "internal",
+                    "prompt_source": "internal/prompt.md",
+                    "prompt_heading": "## Original Prompt",
+                    "prompt_sha256": prompt_hash,
+                    "prompt_characters": len(prompt),
+                    "requires_reference": True,
+                    "allowed_final_modes": ["referenced_edit", "image_edit"],
+                    "new_image_strategy": "two_stage_reference_then_redraw",
+                    "forbidden_positive_terms": [],
+                    "forbidden_avoid_terms": [],
+                }
+            },
+        }
+        (workspace / "config" / "profiles.json").write_text(
+            json.dumps(registry, ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )
+
+        reference = package / "research" / "source-assets" / "reference.png"
+        reference.write_bytes(b"test-reference")
+        (package / "asset-manifest.yml").write_text(
+            self.reference_manifest_record(),
+            encoding="utf-8",
+        )
+        (package / "publish.yml").write_text(
+            'project_adapter: "appsso"\nlayout_profile: "default"\n',
+            encoding="utf-8",
+        )
+        plan = {
+            "schema_version": 1,
+            "updated": "2026-07-22",
+            "project_adapter": "appsso",
+            "profile_registry": "config/profiles.json",
+            "style_policy": {
+                "profile": "appsso-004",
+                "scope": "all_ai_generated_editorial_images",
+                "new_image_strategy": "two_stage_reference_then_redraw",
+                "allow_final_text_to_image": False,
+            },
+            "tasks": [
+                {
+                    "id": "cover",
+                    "visual_type": "ai_editorial_creative",
+                    "purpose": "Test adapter-governed prompt rotation.",
+                    "reference_strategy": "generated_base",
+                    "reference_stage": {
+                        "mode": "text_to_image",
+                        "prompt_ref": "structure-reference-v1",
+                        "output": "research/source-assets/reference.png",
+                        "receipt": (
+                            "research/image-generation-runs/cover-reference.json"
+                        ),
+                        "present_to_user": False,
+                        "content_prompt": "Create a neutral structural reference.",
+                        "output_constraints": ["16:9"],
+                        "avoid": ["logos"],
+                    },
+                    "final_stage": {
+                        "mode": "referenced_edit",
+                        "prompt_ref": "appsso-004",
+                        "prompt_sha256": prompt_hash,
+                        "input_assets": [
+                            "research/source-assets/reference.png"
+                        ],
+                        "output": "assets/output.png",
+                        "receipt": (
+                            "research/image-generation-runs/cover-final.json"
+                        ),
+                        "present_to_user": True,
+                        "preserve": ["the test subject"],
+                        "output_constraints": ["16:9"],
+                        "avoid": ["logos"],
+                    },
+                }
+            ],
+        }
+        plan_path = package / "research" / "image-generation-plan.json"
+        plan_path.write_text(
+            json.dumps(plan, ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )
+        receipt, _, receipt_path = PREFLIGHT.build_request(
+            package,
+            "cover",
+            "final",
+        )
+        PREFLIGHT.write_receipt(receipt, receipt_path)
+        (package / "asset-manifest.yml").write_text(
+            self.generic_ai_manifest(receipt, edit=True),
+            encoding="utf-8",
+        )
+        return receipt
+
+    @staticmethod
+    def reference_manifest_record() -> str:
+        return '''version: 2
+assets:
+  - file: "research/source-assets/reference.png"
+    used_in_draft: false
+    source_type: "user_supplied"
+    source: "Test fixture"
+    creator_or_rightsholder: "User"
+    obtained_on: "2026-07-21"
+    modifications: "None"
+    rights_status: "user_confirmed_derivative_use"
+    allowed_platforms: []
+    attribution: "Not for publication"
+'''
+
+    def generic_ai_manifest(
+        self,
+        receipt: dict[str, object],
+        *,
+        edit: bool,
+    ) -> str:
+        input_assets = (
+            '["research/source-assets/reference.png"]' if edit else "[]"
+        )
+        reference_record = self.reference_manifest_record().split("assets:\n", 1)[1]
+        manifest = f'''version: 2
+assets:
+  - file: "assets/output.png"
+    used_in_draft: true
+    source_type: "ai_generated"
+    source: "Project generation"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-07-22"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "{receipt["mode"]}"
+    prompt_ref: "{receipt["prompt_ref"]}"
+    prompt_sha256: "{receipt["prompt_sha256"]}"
+    preflight_receipt: "{receipt["receipt"]}"
+    invocation_prompt_sha256: "{receipt["invocation_prompt_sha256"]}"
+    generation_constraints: "16:9; no added text"
+    input_assets: {input_assets}
+    generated_on: "2026-07-22"
+    modifications: "None"
+    rights_status: "project_owned"
+    allowed_platforms: ["wechat"]
+    attribution: "AI 生成"
+'''
+        return manifest + (reference_record if edit else "")
+
     @staticmethod
     def local_image_manifest(file: str = "assets/output.png") -> str:
         return f'''version: 2
@@ -136,8 +453,164 @@ assets:
 '''
 
     def test_v2_ready_referenced_generation_passes_with_full_provenance(self) -> None:
-        manifest = """version: 2
-updated: "2026-07-21"
+        for edit in (False, True):
+            with self.subTest(edit=edit), tempfile.TemporaryDirectory() as temp_dir:
+                package = self.make_package(
+                    Path(temp_dir),
+                    self.local_image_manifest(),
+                )
+                self.install_generic_preflight_contract(package, edit=edit)
+                errors, warnings, _ = VALIDATOR.validate(package)
+                self.assertEqual([], errors)
+                self.assertEqual([], warnings)
+
+    def test_v2_ready_adapter_registry_can_rotate_governed_prompt(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            package = self.make_package(
+                Path(temp_dir),
+                self.local_image_manifest(),
+                project_adapter="appsso",
+            )
+            receipt = self.install_rotated_appsso_preflight_contract(package)
+            errors, warnings, _ = VALIDATOR.validate(package)
+        self.assertNotEqual(self.APPSO_PROMPT_SHA256, receipt["prompt_sha256"])
+        self.assertEqual([], errors)
+        self.assertEqual([], warnings)
+
+    def test_v2_ready_generic_direct_and_edit_require_preflight_receipt(self) -> None:
+        for edit in (False, True):
+            with self.subTest(edit=edit), tempfile.TemporaryDirectory() as temp_dir:
+                package = self.make_package(
+                    Path(temp_dir),
+                    self.local_image_manifest(),
+                )
+                self.install_generic_preflight_contract(package, edit=edit)
+                manifest_path = package / "asset-manifest.yml"
+                manifest = manifest_path.read_text(encoding="utf-8")
+                manifest_path.write_text(
+                    "\n".join(
+                        line
+                        for line in manifest.splitlines()
+                        if "preflight_receipt:" not in line
+                    )
+                    + "\n",
+                    encoding="utf-8",
+                )
+                errors, _, _ = VALIDATOR.validate(package)
+                self.assertTrue(
+                    any(
+                        "missing AI preflight field: preflight_receipt" in item
+                        for item in errors
+                    ),
+                    errors,
+                )
+
+    def test_v2_ready_minimal_handwritten_receipt_is_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            package = self.make_package(
+                Path(temp_dir),
+                self.local_image_manifest(),
+            )
+            receipt = self.install_generic_preflight_contract(package, edit=False)
+            receipt_path = package / str(receipt["receipt"])
+            minimal = {
+                key: receipt[key]
+                for key in (
+                    "schema_version",
+                    "status",
+                    "stage",
+                    "style_profile",
+                    "prompt_ref",
+                    "prompt_sha256",
+                    "invocation_prompt_sha256",
+                    "mode",
+                    "input_assets",
+                    "output",
+                )
+            }
+            receipt_path.write_text(
+                json.dumps(minimal, ensure_ascii=False, indent=2) + "\n",
+                encoding="utf-8",
+            )
+            errors, _, _ = VALIDATOR.validate(package)
+        self.assertTrue(any("task_id must be a non-empty string" in item for item in errors))
+        self.assertTrue(any("plan must be a non-empty string" in item for item in errors))
+        self.assertTrue(any("input_fingerprints must be a list" in item for item in errors))
+
+    def test_v2_ready_preflight_receipt_stales_on_contract_mutation(self) -> None:
+        scenarios = (
+            ("plan", "plan SHA-256 is stale"),
+            ("registry", "profile_registry SHA-256 is stale"),
+            ("input", "preflight input SHA-256 changed"),
+        )
+        for mutation, expected in scenarios:
+            with self.subTest(mutation=mutation), tempfile.TemporaryDirectory() as temp_dir:
+                package = self.make_package(
+                    Path(temp_dir),
+                    self.local_image_manifest(),
+                )
+                self.install_generic_preflight_contract(package, edit=True)
+                if mutation == "plan":
+                    target = package / "research" / "image-generation-plan.json"
+                    target.write_text(
+                        target.read_text(encoding="utf-8") + "\n",
+                        encoding="utf-8",
+                    )
+                elif mutation == "registry":
+                    target = package.parent / "config" / "profiles.json"
+                    target.write_text(
+                        target.read_text(encoding="utf-8") + "\n",
+                        encoding="utf-8",
+                    )
+                else:
+                    target = package / "research" / "source-assets" / "reference.png"
+                    target.write_bytes(target.read_bytes() + b"-changed")
+                errors, _, _ = VALIDATOR.validate(package)
+                self.assertTrue(any(expected in item for item in errors), errors)
+
+    def test_v2_ready_wechat_ai_asset_requires_matching_project_adapter(self) -> None:
+        scenarios = (
+            (None, None, "requires an independent publish.yml project_adapter"),
+            ("generic", "appsso", "project_adapter does not match publish.yml"),
+        )
+        for initial_adapter, mutated_adapter, expected in scenarios:
+            with self.subTest(expected=expected), tempfile.TemporaryDirectory() as temp_dir:
+                package = self.make_package(
+                    Path(temp_dir),
+                    self.local_image_manifest(),
+                    project_adapter=initial_adapter,
+                )
+                self.install_generic_preflight_contract(package, edit=False)
+                if mutated_adapter is not None:
+                    (package / "publish.yml").write_text(
+                        f'project_adapter: "{mutated_adapter}"\n',
+                        encoding="utf-8",
+                    )
+                errors, _, _ = VALIDATOR.validate(package)
+                self.assertTrue(any(expected in item for item in errors), errors)
+
+    def test_v2_ready_final_receipt_must_be_presentable(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            package = self.make_package(
+                Path(temp_dir),
+                self.local_image_manifest(),
+            )
+            receipt = self.install_generic_preflight_contract(package, edit=False)
+            receipt_path = package / str(receipt["receipt"])
+            persisted = json.loads(receipt_path.read_text(encoding="utf-8"))
+            persisted["present_to_user"] = False
+            receipt_path.write_text(
+                json.dumps(persisted, ensure_ascii=False, indent=2) + "\n",
+                encoding="utf-8",
+            )
+            errors, _, _ = VALIDATOR.validate(package)
+        self.assertTrue(
+            any("requires present_to_user=true" in item for item in errors),
+            errors,
+        )
+
+    def test_v2_ready_appsso_generation_requires_receipt_and_invocation_hash(self) -> None:
+        manifest = f'''version: 2
 assets:
   - file: "assets/output.png"
     used_in_draft: true
@@ -149,11 +622,11 @@ assets:
     model: "gpt-image-2"
     generation_mode: "referenced_edit"
     prompt_ref: "appsso-004"
-    prompt_sha256: "6ba5e092a4f8d6fb2bd33602424ba4792715aa59f2bf5f916b90d8bb3f0bbd0a"
-    generation_constraints: "16:9; no added text"
+    prompt_sha256: "{self.APPSO_PROMPT_SHA256}"
+    generation_constraints: "16:9"
     input_assets: ["research/source-assets/reference.png"]
     generated_on: "2026-07-21"
-    modifications: "Original-resolution review"
+    modifications: "None"
     rights_status: "project_owned"
     allowed_platforms: ["wechat"]
     attribution: "AI 生成"
@@ -161,18 +634,193 @@ assets:
     used_in_draft: false
     source_type: "user_supplied"
     source: "Test fixture"
-    creator_or_rightsholder: "User / rights unverified"
+    creator_or_rightsholder: "User"
     obtained_on: "2026-07-21"
     modifications: "None"
     rights_status: "user_confirmed_derivative_use"
     allowed_platforms: []
     attribution: "Not for publication"
-"""
+'''
+        for status in ("ready", "published"):
+            with self.subTest(status=status), tempfile.TemporaryDirectory() as temp_dir:
+                package = self.make_package(Path(temp_dir), manifest, status=status)
+                errors, warnings, _ = VALIDATOR.validate(package)
+            self.assertEqual([], warnings)
+            self.assertTrue(any("preflight_receipt" in item for item in errors))
+            self.assertTrue(any("invocation_prompt_sha256" in item for item in errors))
+
+    def test_v2_draft_appsso_generation_receipt_gaps_are_warnings(self) -> None:
+        manifest = f'''version: 2
+assets:
+  - file: "assets/output.png"
+    used_in_draft: true
+    source_type: "ai_generated"
+    source: "Project generation"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-07-21"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "referenced_edit"
+    prompt_ref: "appsso-004"
+    prompt_sha256: "{self.APPSO_PROMPT_SHA256}"
+    generation_constraints: "16:9"
+    input_assets: ["research/source-assets/reference.png"]
+    generated_on: "2026-07-21"
+    modifications: "None"
+    rights_status: "project_owned"
+    allowed_platforms: ["wechat"]
+    attribution: "AI 生成"
+  - file: "research/source-assets/reference.png"
+    used_in_draft: false
+    source_type: "user_supplied"
+    source: "Test fixture"
+    creator_or_rightsholder: "User"
+    obtained_on: "2026-07-21"
+    modifications: "None"
+    rights_status: "user_confirmed_derivative_use"
+    allowed_platforms: []
+    attribution: "Not for publication"
+'''
         with tempfile.TemporaryDirectory() as temp_dir:
-            package = self.make_package(Path(temp_dir), manifest)
+            package = self.make_package(Path(temp_dir), manifest, status="draft")
             errors, warnings, _ = VALIDATOR.validate(package)
         self.assertEqual([], errors)
-        self.assertEqual([], warnings)
+        self.assertTrue(any("preflight_receipt" in item for item in warnings))
+        self.assertTrue(any("invocation_prompt_sha256" in item for item in warnings))
+
+    def test_v2_ready_appsso_receipt_contract_mismatches_are_blocked(self) -> None:
+        manifest = f'''version: 2
+assets:
+  - file: "assets/output.png"
+    used_in_draft: true
+    source_type: "ai_generated"
+    source: "Project generation"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-07-21"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "referenced_edit"
+    prompt_ref: "appsso-004"
+    prompt_sha256: "{self.APPSO_PROMPT_SHA256}"
+    preflight_receipt: "{self.APPSO_RECEIPT}"
+    invocation_prompt_sha256: "{self.INVOCATION_PROMPT_SHA256}"
+    generation_constraints: "16:9"
+    input_assets: ["research/source-assets/reference.png"]
+    generated_on: "2026-07-21"
+    modifications: "None"
+    rights_status: "project_owned"
+    allowed_platforms: ["wechat"]
+    attribution: "AI 生成"
+  - file: "research/source-assets/reference.png"
+    used_in_draft: false
+    source_type: "user_supplied"
+    source: "Test fixture"
+    creator_or_rightsholder: "User"
+    obtained_on: "2026-07-21"
+    modifications: "None"
+    rights_status: "user_confirmed_derivative_use"
+    allowed_platforms: []
+    attribution: "Not for publication"
+'''
+        with tempfile.TemporaryDirectory() as temp_dir:
+            package = self.make_package(Path(temp_dir), manifest)
+            self.write_appsso_receipt(
+                package,
+                overrides={
+                    "status": "fail",
+                    "stage": "reference",
+                    "style_profile": "generic",
+                    "prompt_ref": "custom",
+                    "prompt_sha256": "a" * 64,
+                    "invocation_prompt_sha256": "c" * 64,
+                    "mode": "text_to_image",
+                    "input_assets": [],
+                    "output": "assets/other.png",
+                    "prompt_payload": "must not be persisted",
+                    "tool_request": {"prompt": "must not be persisted"},
+                },
+            )
+            errors, _, _ = VALIDATOR.validate(package)
+        for expected in (
+            "must not contain prompt_payload",
+            "must not contain tool_request",
+            "status does not match",
+            "requires a final-stage",
+            "style_profile does not match",
+            "prompt_ref does not match",
+            "prompt_sha256 does not match",
+            "invocation_prompt_sha256 does not match",
+            "mode does not match",
+            "output does not match",
+            "input_assets do not match",
+        ):
+            with self.subTest(expected=expected):
+                self.assertTrue(any(expected in item for item in errors), errors)
+
+    def test_v2_ready_appsso_receipt_must_use_governed_package_directory(self) -> None:
+        manifest = f'''version: 2
+assets:
+  - file: "assets/output.png"
+    used_in_draft: true
+    source_type: "ai_generated"
+    source: "Project generation"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-07-21"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "referenced_edit"
+    prompt_ref: "appsso-004"
+    prompt_sha256: "{self.APPSO_PROMPT_SHA256}"
+    preflight_receipt: "research/other/run.json"
+    invocation_prompt_sha256: "{self.INVOCATION_PROMPT_SHA256}"
+    generation_constraints: "16:9"
+    input_assets: ["research/source-assets/reference.png"]
+    generated_on: "2026-07-21"
+    modifications: "None"
+    rights_status: "project_owned"
+    allowed_platforms: ["wechat"]
+    attribution: "AI 生成"
+  - file: "research/source-assets/reference.png"
+    used_in_draft: false
+    source_type: "user_supplied"
+    source: "Test fixture"
+    creator_or_rightsholder: "User"
+    obtained_on: "2026-07-21"
+    modifications: "None"
+    rights_status: "user_confirmed_derivative_use"
+    allowed_platforms: []
+    attribution: "Not for publication"
+'''
+        with tempfile.TemporaryDirectory() as temp_dir:
+            package = self.make_package(Path(temp_dir), manifest)
+            errors, _, _ = VALIDATOR.validate(package)
+        self.assertTrue(
+            any("directly under research/image-generation-runs/" in item for item in errors)
+        )
+
+    def test_ai_generated_prefix_alias_cannot_bypass_provenance_validation(self) -> None:
+        manifest = '''version: 2
+assets:
+  - file: "assets/output.png"
+    used_in_draft: true
+    source_type: "ai_generated_reference"
+    source: "Project generation"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-07-21"
+    modifications: "None"
+    rights_status: "project_owned"
+    allowed_platforms: ["wechat"]
+    attribution: "AI 生成"
+'''
+        for status, expected_channel in (("ready", "errors"), ("draft", "warnings")):
+            with self.subTest(status=status), tempfile.TemporaryDirectory() as temp_dir:
+                package = self.make_package(Path(temp_dir), manifest, status=status)
+                errors, warnings, _ = VALIDATOR.validate(package)
+            actual = errors if expected_channel == "errors" else warnings
+            self.assertTrue(any("non-standard AI source_type" in item for item in actual))
+            self.assertTrue(any("missing AI generation field" in item for item in actual))
+            if status == "draft":
+                self.assertEqual([], errors)
 
     def test_v2_ready_reference_without_input_and_platform_is_blocked(self) -> None:
         manifest = """version: 2
@@ -201,7 +849,6 @@ assets:
             errors, _, _ = VALIDATOR.validate(package)
         self.assertTrue(any("does not allow platform wechat" in item for item in errors))
         self.assertTrue(any("requires input_assets" in item for item in errors))
-        self.assertTrue(any("does not match governed prompt appsso-004" in item for item in errors))
 
     def test_v2_draft_missing_ai_metadata_warns_without_blocking(self) -> None:
         manifest = """version: 2
@@ -324,7 +971,7 @@ assets:
                     any("does not allow platform wechat" in item for item in errors)
                 )
 
-    def test_local_appsso_prompt_matches_governed_hash_when_available(self) -> None:
+    def test_local_appsso_prompt_matches_adapter_registry_when_available(self) -> None:
         prompt_asset = (
             WORKSPACE_ROOT
             / "APPSO-数字资产"
@@ -338,7 +985,15 @@ assets:
         text = prompt_asset.read_text(encoding="utf-8")
         prompt = next(line[2:] for line in text.splitlines() if line.startswith("> "))
         actual_hash = hashlib.sha256(prompt.encode("utf-8")).hexdigest()
-        self.assertEqual(VALIDATOR.GOVERNED_PROMPT_HASHES["appsso-004"], actual_hash)
+        registry_path = (
+            WORKSPACE_ROOT
+            / "APPSO-数字资产"
+            / "04-模板"
+            / "生图风格档案.json"
+        )
+        registry = json.loads(registry_path.read_text(encoding="utf-8"))
+        expected_hash = registry["profiles"]["appsso-004"]["prompt_sha256"]
+        self.assertEqual(expected_hash, actual_hash)
 
     def test_file_field_outside_assets_cannot_register_an_image(self) -> None:
         manifest = """version: 2

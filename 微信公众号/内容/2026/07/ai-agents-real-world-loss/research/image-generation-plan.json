@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "updated": "2026-07-22",
+  "project_adapter": "appsso",
+  "profile_registry": "APPSO-数字资产/04-模板/生图风格档案.json",
+  "style_policy": {
+    "profile": "appsso-004",
+    "scope": "all_ai_generated_editorial_images",
+    "new_image_strategy": "two_stage_reference_then_redraw",
+    "allow_final_text_to_image": false
+  },
+  "tasks": [
+    {
+      "id": "cover",
+      "visual_type": "ai_editorial_creative",
+      "purpose": "用微信公众号封面表现 AI 从聊天助手变成 Agent，撞上现实后让反馈回流形成闭环。",
+      "reference_strategy": "provided_local",
+      "final_stage": {
+        "mode": "referenced_edit",
+        "prompt_ref": "appsso-004",
+        "prompt_sha256": "6ba5e092a4f8d6fb2bd33602424ba4792715aa59f2bf5f916b90d8bb3f0bbd0a",
+        "input_assets": [
+          "research/source-assets/cover-base-v01.png"
+        ],
+        "output": "assets/cover-feedback-loop-image2.png",
+        "receipt": "research/image-generation-runs/cover-final-preflight.json",
+        "present_to_user": true,
+        "preserve": [
+          "The left-to-right collision and the returning feedback loop",
+          "The chat, terminal, experiment, tool, reality-boundary, and human-control relationships"
+        ],
+        "output_constraints": [
+          "16:9 horizontal WeChat cover",
+          "Keep essential content inside the central 70% crop-safe area",
+          "Show only AI 撞上现实 and 反馈闭环, each exactly once",
+          "Use a white background and keep the main relation readable at phone-thumbnail size"
+        ],
+        "avoid": [
+          "Polished technology-magazine composition, clean vector geometry, cinematic depth, collage texture, or professional illustration finish",
+          "Logos, trademarks, watermarks, extra English, garbled text, fake interfaces, or news-scene realism",
+          "Robot heads, humanoid robots, glowing brains, code rain, cyberpunk cities, rockets, or explosions"
+        ]
+      }
+    },
+    {
+      "id": "capability-timeline",
+      "visual_type": "qualitative_explainer",
+      "purpose": "解释 2022—2026 年间模型从聊天、推理和工具调用走向长周期 Agent 任务的能力范式变化。",
+      "reference_strategy": "provided_local",
+      "final_stage": {
+        "mode": "referenced_edit",
+        "prompt_ref": "appsso-004",
+        "prompt_sha256": "6ba5e092a4f8d6fb2bd33602424ba4792715aa59f2bf5f916b90d8bb3f0bbd0a",
+        "input_assets": [
+          "research/source-assets/model-timeline-base.png"
+        ],
+        "output": "assets/capability-timeline-image2.png",
+        "receipt": "research/image-generation-runs/capability-timeline-final-preflight.json",
+        "present_to_user": true,
+        "preserve": [
+          "The five-node chronological order and the distinction between chat, multimodal input, reasoning and computer use, terminal work, and long-horizon Agent work"
+        ],
+        "output_constraints": [
+          "4:5 vertical explanatory image",
+          "Keep every confirmed date and Chinese label readable at phone width",
+          "Do not add model names, scores, or claims absent from the structural reference"
+        ],
+        "avoid": [
+          "Polished technology-magazine composition, clean vector geometry, cinematic depth, collage texture, or professional illustration finish",
+          "Logos, screenshots, robot heads, glowing brains, code rain, extra English, garbled text, or watermarks"
+        ]
+      }
+    }
+  ]
+}

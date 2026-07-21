@@ -1,8 +1,8 @@
 # Image2 生图工作流
 
-版本：1.0
+版本：1.2
 
-更新日期：2026 年 7 月 21 日
+更新日期：2026 年 7 月 22 日
 
 资料属性：internal
 
@@ -29,8 +29,10 @@
 
 ```text
 用户给出用途与参考图
-→ 读取内容包视觉任务和权利边界
-→ Prompt 路由：通用 Prompt / 品牌 Prompt / 固定风格资产
+→ 读取内容包视觉任务、项目 adapter 和权利边界
+→ 写入 research/image-generation-plan.json
+→ 路由：显式 task 用户覆盖 > 项目 adapter 固化的 package style_policy > 通用 profile
+→ 逐阶段执行生图预检，生成临时 tool_request 并写入非敏感 receipt
 → Codex 内置 image_gen（gpt-image-2）
 → 原尺寸视觉检查
 → 单变量定向迭代
@@ -45,11 +47,43 @@
 3. 必须保留或禁止出现的元素。
 4. 已知的比例、尺寸、文字或裁切要求；未给出时由内容包和平台 adapter 补齐。
 
+## 路由与调用前硬门
+
+需要 AI 新图、重绘或编辑的内容包，先创建 `research/image-generation-plan.json`。计划声明 `project_adapter`、每项 `visual_type`、风格档案引用、参考策略、输出约束和文件路径，不复制 `local-only` Prompt 原文。通用新图从 `共享/模板/生图计划/通用直出计划模板.json` 创建，通用参考图编辑从 `共享/模板/生图计划/通用参考图编辑计划模板.json` 创建；APPSO 任务使用自己的 adapter 模板。计划的 `project_adapter` 必须与 `publish.yml` 的独立声明一致；`appsso-article-v1` 仍作为额外反查，不能作为 Hunt Good 等其他 APPSO 稿型的唯一品牌证据。
+
+路由优先级从高到低为：
+
+1. 用户在当前任务中明确指定并确认的单项覆盖，记录在对应任务的 `style_override`，同时显式指向覆盖 profile 所属 registry。
+2. `publish.yml` 声明的项目或品牌 adapter，以及它固化到内容包根 `style_policy` 的默认风格。
+3. 没有品牌 adapter 时使用的通用 profile。
+
+根 `style_policy` 是 adapter 解析后的执行记录，不是独立授权源，不能自行压过品牌默认。APPSO 编辑创意图选择非默认 profile 时，只有对应任务可以保存 `explicit_current_task_user` 覆盖、原因与确认日期；覆盖不得扩散到其他任务。固定风格不能与「高质量科技媒体」「干净矢量」「电影感」等相反的正向风格要求同时存在；若确需改变风格，先修改内容包任务并重新预检，不能在工具调用时临时拼接。
+
+确定性 preflight 只能检查结构化合同，不能理解自然语言中的语义矛盾。对本地参考图先做原图检查，逐项对齐参考图的对象数量、顺序、标签与关系，以及计划中的 `purpose`、`preserve` 和 `output_constraints`。例如参考图有 5 个节点而约束写「4 步」，即使脚本通过也必须停止并修正计划。
+
+每次工具调用前执行：
+
+```powershell
+python .agents/skills/self-media-ops/scripts/preflight_image_generation.py `
+  <content-package-path> --task <task-id> --stage <reference|final> `
+  --include-prompt --write-receipt
+```
+
+预检负责校验风格档案、原始 Prompt 哈希、生成模式、参考图存在性与改编权、输入绑定、输出位置、路径安全和冲突风格词。只有退出码为 `0` 且 receipt 的 `status` 为 `pass` 时，才能调用生图工具。
+
+`--include-prompt` 的 stdout 会额外返回临时 `tool_request`：它已按当前输入绑定组成 `prompt`、`referenced_image_paths` 或 `num_last_images_to_include`。执行器必须在同一次编排动作中解析 stdout JSON，把 `tool_request` 对象原样传给 `image_gen`；禁止人工复制、摘录或重组 Prompt。当前运行时无法保证这种程序化交接时，必须停止，不允许退回手工输入。`tool_request` 和 `prompt_payload` 只在当次 stdout 存在，receipt 会强制删除两者，不把受控 Prompt 原文落盘。
+
+`reference` 与 `final` 是两个独立调用，必须分别预检。缺少计划、风格档案、合法参考图或通过记录时停止；不静默退回通用风格，也不把预检通过当作图片已经生成。
+
 ## 输入与工具映射
 
 ### 新图生成
 
-- 没有参考图时，只向内置工具传入整理后的 `prompt`。
+- 通用 profile 明确允许直接生成且没有参考图时，只向内置工具传入预检输出的 `prompt`。
+- 先复用已登记且构图任务匹配的本地参考图，包括因风格不符而被否决、但结构仍可用的上一版成图；不为了形式上的「两阶段」重复生成。
+- 固定风格要求参考图而当前没有参考图时，采用两阶段策略：先生成仅表达构图关系的内部结构参考图，再以该图作为输入执行固定风格重绘。结构参考图不得作为候选或交付图、不得进入正文。
+- 内部结构参考图必须保存到 `research/source-assets/`，以标准 `source_type: "ai_generated"`、`use: "research_reference"` 和明确的 `project_owned` 权利状态登记；随后 `final` 阶段才可消费它。
+- `present_to_user: false` 表示「不可当作候选或成品交付」，不代表 Codex 界面一定能隐藏生图工具的返回图。如果当前界面会显示该图，在调用前明确告知用户它只是结构中间件；若生图工具会结束当前响应，`reference` 与 `final` 分两个工具回合执行，不声称在单回合内隐式完成。
 - 不为普通质量、尺寸或保存路径切换到 API / CLI。
 
 ### 参考图重绘或编辑
@@ -59,19 +93,16 @@
 - `referenced_image_paths` 与 `num_last_images_to_include` 不能同时使用。
 - 参考图不在当前对话或工作区时停止，不凭文字描述伪造「attached image」，请用户重新附图。
 - 多张不同用途的成品分别调用；一次调用只承担一个清晰的视觉任务。
+- 固定风格 profile 声明 `requires_reference: true` 时，最终调用禁止 `text_to_image`；必须使用 `referenced_edit` 或档案允许的编辑模式。
 
 Codex CLI 的人工入口可以用自然语言或 `$imagegen`，参考图可通过 `-i` / `--image` 附加。仓库 SOP 约束的是语义合同，不依赖某一版界面参数名。
 
-## 固定风格 Prompt
+## 受控风格 Prompt
 
-「笨拙涂鸦重绘」使用 APPSO 本地资产 `appsso-004`：
-
-- 真源：`APPSO-数字资产/01-栏目与品牌/品牌视觉/生图-Prompt/笨拙涂鸦重绘.md`
-- 原始 Prompt SHA-256：`6ba5e092a4f8d6fb2bd33602424ba4792715aa59f2bf5f916b90d8bb3f0bbd0a`
-- 哈希口径：`## 原始 Prompt` 下 443 个字符的单行英文原文，以 UTF-8 编码；不包含 Markdown 的 `> ` 前缀与行末换行。它不是整个 Markdown 文件的哈希。
-- 调用时逐字使用原始英文，不润色、不翻译、不做同义改写。
-- 比例、用途、裁切安全区、精确文字和禁用元素作为独立的 `Output constraints` / `Preserve` / `Avoid` 约束追加，不改写风格基底。
-- 该 Prompt 是 `internal / local-only` 资产；Git 只保存引用、哈希、调用规则和权利边界，不保存原文。
+- 通用 profile 真源为 `共享/运营/SOP/生图风格档案.json`；品牌固定 profile 由对应项目 adapter 的独立 registry 提供。核心层不复制品牌 Prompt 路径、哈希或视觉特征。
+- profile 选中受控 Prompt 时，预检从 registry 读取真源路径、标题、字符数、哈希、允许模式和冲突词，并校验本地原文；调用时逐字使用，不润色、不翻译、不做同义改写。
+- 比例、用途、裁切安全区、精确文字和禁用元素作为独立的 `Output constraints` / `Preserve` / `Avoid` 追加，不改写风格基底。
+- `local-only` Prompt 原文不进入 Git、计划或 receipt；项目映射与可观察验收标准只写在项目 adapter。
 
 ## 质量迭代
 
@@ -79,12 +110,20 @@ Codex CLI 的人工入口可以用自然语言或 `$imagegen`，参考图可通�
 
 - 是否完成该图在正文中的论证任务。
 - 参考图的主体关系是否仍可辨认，固定风格要求是否成立。
+- 固定风格的可观察验收标准必须由项目 adapter 提供；成品不满足时判失败，不能只凭 Prompt 哈希放行。
 - 比例、留白、裁切安全区和手机端可读性是否合格。
 - 中文、数字、Logo 和界面文字是否准确；不需要文字时是否出现伪文字。
 - 是否意外生成第三方标志、真实界面、新闻现场感或其他冒充风险。
 - 是否违反输入图的改编权、允许平台或品牌使用边界。
 
 失败时只针对一个主要问题迭代，并重复必须保持不变的约束。文件使用非破坏性版本名，例如 `cover-image2-v01.png`、`cover-image2-v02.png`；选中的最终版本再进入正文，弃稿放入 `research/source-assets/` 或按内容包规则清理。
+
+封面等需要用户选版的成图，初次落盘按「候选」处理：`used_in_draft: false`、`used_as_cover: false`、`use: "unused"`，不提前替换 `publish.yml` 的现有绑定。用户明确选中后，在同一次文件更新中：
+
+1. 把 `publish.cover` 或正文图片路径指向新图。
+2. 把新图更新为 `used_as_cover: true` / `use: "wechat_cover"` 或对应正文用途。
+3. 撤销旧图的发布绑定，保留历史记录。
+4. 运行内容包 validator 和发布 dry-run；四项未一次完成时不得进入 `ready`。
 
 ## 落盘与资产登记
 
@@ -105,8 +144,10 @@ assets:
     generator: "Codex built-in image_gen"
     model: "gpt-image-2"
     generation_mode: "text_to_image | referenced_edit | image_edit"
-    prompt_ref: "appsso-004 or another governed prompt asset"
+    prompt_ref: "<selected profile id>"
     prompt_sha256: "<hash of the exact prompt referenced above>"
+    preflight_receipt: "research/image-generation-runs/<task>-<stage>-preflight.json"
+    invocation_prompt_sha256: "<hash of the complete Prompt emitted by preflight>"
     generation_constraints: "<ratio, preserve, avoid, text and crop constraints>"
     input_assets: ["research/source-assets/<reference-file>"]
     generated_on: "YYYY-MM-DD"
@@ -116,7 +157,9 @@ assets:
     attribution: "AI 生成"
 ```
 
-`prompt_sha256` 校验 `prompt_ref` 指向的治理 Prompt。对于 `appsso-004`，它必须是本文件记录的固定原文哈希；比例、保留元素、禁用元素、文字和裁切要求单独写入 `generation_constraints`，不能混进风格 Prompt。参考图必须在进入 `ready` 前落到 `research/source-assets/` 并作为独立资产登记；`referenced_edit`、`image_edit` 和 `appsso-004` 禁止使用空 `input_assets`。
+`prompt_sha256` 校验 `prompt_ref` 指向的治理 Prompt，并与所选 registry 一致；比例、保留元素、禁用元素、文字和裁切要求单独写入 `generation_constraints`，不能混进风格 Prompt。参考图必须在进入 `ready` 前落到 `research/source-assets/` 并作为独立资产登记；`referenced_edit`、`image_edit` 和任何声明 `requires_reference: true` 的 profile 禁止使用空 `input_assets`。
+
+每个 version 2 AI 资产都应在 `research/image-generation-runs/` 保存对应阶段的 preflight receipt，并在 manifest 引用它、记录 `invocation_prompt_sha256`。发布校验会复算计划、profile registry 与本地输入文件哈希，并核对输入权利和顺序；Prompt、计划、registry、模式、约束、输入内容或输出任一变化，都必须重新预检并废弃旧 receipt，最小手写记录不能替代真实 preflight。
 
 参考图的 `rights_status` 必须明确允许制作衍生图，例如 `project_owned`、`user_confirmed_derivative_use`、`licensed_derivative_use`、`cc0_verified` 或 `public_domain_verified`。`user_supplied` 只说明文件从哪里来，`research_reference` 只允许内部核对，两者都不自动授予改编权。只存在于对话中的 `conversation:` / `user_attachment:` 引用可以在草稿阶段保留为警告，但到 `ready` 前必须持久化并登记。输入依赖必须无环；成品不能把自己、自己的路径别名或下游派生图伪装成参考输入。
 
@@ -134,14 +177,15 @@ assets:
 ```yaml
 id: "PROJECT-IMAGE2-001"
 trigger: "内容任务需要 AI 新图、参考图重绘或图片编辑"
-action: "优先由 Codex 内置 gpt-image-2 直接生成，完成原图检查、定向迭代、落盘和权利登记"
-pass_condition: "最终图进入目标 assets，正文使用相对路径，manifest 和视觉门禁完整"
-failure_signal: "让用户手动复制 Prompt、参考图不可访问仍生成、未质检、只留临时文件或漏记权利"
+action: "先按显式 task 用户覆盖、项目 adapter 固化的 package style_policy、通用 profile 的顺序路由并逐阶段预检，再由 Codex 内置 gpt-image-2 生成，完成原图检查、定向迭代、落盘和权利登记"
+pass_condition: "调用前 plan 与 receipt 通过；最终图进入目标 assets，正文使用相对路径，manifest 和视觉门禁完整"
+failure_signal: "固定风格被通用风格覆盖、缺参考图仍直接出最终图、未预检、让用户手动复制 Prompt、未质检、只留临时文件或漏记权利"
 scope: "本项目视觉 adapter；品牌 Prompt 与平台尺寸由下级 adapter 提供"
 source_cases:
   - "user-feedback:2026-07-21-image2-direct-generation"
   - "user-feedback:2026-07-21-image2-codex-owned-workflow"
-regression_check: "下一次含参考图的任务检查运行时、Prompt 哈希、原尺寸复检、迭代记录、路径与 manifest"
+  - "user-feedback:2026-07-22-governed-style-routing-regression"
+regression_check: "正例检查固定风格无参考图时先生成内部结构参考再重绘；反例检查通用无参考图不注入 appsso-004、冲突风格词与未授权参考图均在调用前失败"
 classification: "internal"
 owner: "visual_rights_editor"
 introduced_on: "2026-07-21"

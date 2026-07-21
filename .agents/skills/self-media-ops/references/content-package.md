@@ -18,6 +18,8 @@ content-package/
 Optional directories:
 
 - `research/`: internal notes, reference text, and unused source assets.
+- `research/image-generation-plan.json`: required when the package uses AI-generated images; stores `project_adapter`, task `visual_type`, style routing, stages, references, constraints, outputs, and receipt paths without copying local-only Prompt text.
+- `research/image-generation-runs/`: non-sensitive preflight receipts for AI-image calls.
 - `tools/`: deterministic scripts used to create charts or transform local assets.
 - `dist/`: generated previews and upload inputs; disposable and Git-ignored.
 
@@ -98,7 +100,7 @@ Keep paths relative to the package. Never point a publication draft at a tempora
 
 Keep manifests in the validator's normalized project subset shown above: root-level `version`, optional `updated`, then root-level `assets`; indent each `- file` by 2 spaces and its fields by 4 spaces. Use quoted scalars plus inline or indented scalar lists. Do not use YAML anchors, aliases, block scalars, or inline comments in this file.
 
-For `source_type: "ai_generated"`, also record the runtime and reproducibility fields when available:
+For every version 2 `source_type: "ai_generated"` item, record the runtime, preflight, and reproducibility fields:
 
 ```yaml
     generator: "Codex built-in image_gen"
@@ -109,11 +111,25 @@ For `source_type: "ai_generated"`, also record the runtime and reproducibility f
     generation_constraints: "Aspect ratio, preserved elements, forbidden elements, and text rules"
     input_assets: ["source reference or conversation attachment"]
     generated_on: "2026-07-21"
+    preflight_receipt: "research/image-generation-runs/<task>-final-preflight.json"
+    invocation_prompt_sha256: "64-lowercase-hex-characters"
 ```
 
-`input_assets` may be empty for `text_to_image`, but `referenced_edit`, `image_edit`, and `prompt_ref: "appsso-004"` must identify every input and its rights record. `prompt_sha256` hashes the exact governed prompt referenced by `prompt_ref`; keep non-secret run-specific constraints in `generation_constraints` rather than mutating a fixed style prompt.
+`input_assets` may be empty for `text_to_image`, but `referenced_edit`, `image_edit`, and any profile declaring `requires_reference: true` must identify every input and its rights record. `prompt_sha256` hashes the exact preflight prompt basis referenced by `prompt_ref`, while `invocation_prompt_sha256` binds the complete Prompt actually sent after constraints are appended. Keep non-secret run-specific constraints in `generation_constraints` rather than mutating a fixed style prompt.
 
 Before a referenced generation becomes `ready`, every conversation attachment must be persisted under `research/source-assets/` and registered as its own manifest item. Its `rights_status` must explicitly permit derivative use: `project_owned`, `user_confirmed_derivative_use`, `licensed_derivative_use`, `cc0_verified`, `public_domain_verified`, or `project_owned_with_cc0_component`. A generic `user_supplied`, `research_reference`, or unknown status is not permission to redraw. Inputs form an acyclic provenance graph: an output cannot name itself, a path alias of itself, or a downstream derivative as an input.
+
+When a governed fixed style requires a reference, first reuse a suitable registered local input. If none exists, the plan must declare `two_stage_reference_then_redraw`. Generate the first-stage composition into `research/source-assets/`, mark it with the standard `source_type: "ai_generated"`, `use: "research_reference"`, `used_in_draft: false`, and a derivative-cleared rights status, then register its own generation metadata. Do not invent `source_type: "ai_generated_reference"`; using a nonstandard label must not bypass AI provenance checks.
+
+Run the preflight immediately before each call:
+
+```powershell
+python .agents/skills/self-media-ops/scripts/preflight_image_generation.py `
+  <content-package-path> --task <task-id> --stage <reference|final> `
+  --include-prompt --write-receipt
+```
+
+With `--include-prompt`, preflight returns an ephemeral `tool_request` containing the exact `prompt` and, when required, `referenced_image_paths` or `num_last_images_to_include`. Parse that object and pass it unchanged to `image_gen` in the same orchestration action; never transcribe or reconstruct it. A changed Prompt, plan, profile registry, input file content or rights, input order, mode, constraints, or output invalidates the receipt and requires another preflight. The release validator recomputes the plan, registry, and local-input hashes and rejects minimal handwritten receipts. Receipts do not store `tool_request` or the governed Prompt original.
 
 New or materially edited manifests use `version: 2`. The validator treats publication-bound assets (`used_in_draft: true`, `used_as_cover: true`, a real Markdown reference, or a declared release `use`, such as `wechat_cover`) as follows:
 
@@ -126,7 +142,8 @@ New or materially edited manifests use `version: 2`. The validator treats public
 - Version 1 or unversioned historical AI assets remain readable and emit migration warnings; migrate them when the package is next materially edited.
 
 Follow the project [Image2 generation workflow](<../../../../共享/运营/SOP/Image2 生图工作流.md>) for tool mapping, quality review, versioning, and fallback rules.
+For generic new images, start from `共享/模板/生图计划/通用直出计划模板.json`; for generic reference edits, use `共享/模板/生图计划/通用参考图编辑计划模板.json`. For APPSO packages, use `APPSO-数字资产/04-模板/APPSO 生图计划模板.json`. Copy the selected file into `research/image-generation-plan.json`, replace every task-specific placeholder, and remove `template_only` before preflight. The preflight rejects untouched templates by design.
 
 ## WeChat publish configuration
 
-WeChat packages use `publish.yml` for the API-safe title, digest, cover, comments, allowlisted layout profile, and optional package-local body header/footer components. `draft.md` remains the only editable article source. See [wechat-publishing.md](wechat-publishing.md).
+WeChat packages use `publish.yml` for the independently declared `project_adapter`, API-safe title, digest, cover, comments, allowlisted layout profile, and optional package-local body header/footer components. The image plan must declare the same adapter; brand and layout are separate, so changing `layout_profile` does not erase brand ownership. `draft.md` remains the only editable article source. See [wechat-publishing.md](wechat-publishing.md).

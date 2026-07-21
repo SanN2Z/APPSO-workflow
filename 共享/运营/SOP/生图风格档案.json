@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "generic-direct-v1": {
+      "classification": "internal",
+      "requires_reference": false,
+      "allowed_final_modes": [
+        "text_to_image"
+      ],
+      "new_image_strategy": "direct",
+      "forbidden_positive_terms": [],
+      "forbidden_avoid_terms": []
+    },
+    "generic-edit-v1": {
+      "classification": "internal",
+      "requires_reference": true,
+      "allowed_final_modes": [
+        "referenced_edit",
+        "image_edit"
+      ],
+      "new_image_strategy": "reference_required",
+      "forbidden_positive_terms": [],
+      "forbidden_avoid_terms": []
+    }
+  }
+}

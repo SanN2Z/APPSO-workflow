@@ -1,10 +1,12 @@
 # 复制为 APPSO 普通长文内容包的 publish.yml，再填写每稿字段。
-# draft.md 仍是正文唯一真源；头尾图由发布适配器注入。
+# draft.md 仍是正文唯一真源；project_adapter 是品牌归属声明，不随 layout_profile 改变。
+# 头尾图由发布适配器注入。
 title: ""
 author: ""
 digest: ""
 cover: "assets/cover.png"
 source_url: ""
+project_adapter: "appsso"
 theme: "default"
 layout_profile: "appsso-article-v1"
 highlight: "solarized-light"

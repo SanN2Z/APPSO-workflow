@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import ast
 import hashlib
+import json
 import re
 import sys
 from datetime import date
@@ -129,9 +130,7 @@ RELEASE_ASSET_USES = {
     "x_media",
 }
 NON_RELEASE_ASSET_USES = {"research_reference", "unused"}
-GOVERNED_PROMPT_HASHES = {
-    "appsso-004": "6ba5e092a4f8d6fb2bd33602424ba4792715aa59f2bf5f916b90d8bb3f0bbd0a",
-}
+PROJECT_ADAPTERS = {"appsso", "generic"}
 RELEASE_RIGHTS_STATUSES = {
     "cc0_verified",
     "licensed",
@@ -320,6 +319,788 @@ def canonical_package_key(package: Path, raw_path: str) -> str | None:
     return resolved.relative_to(package).as_posix().casefold()
 
 
+def normalize_generation_input_key(package: Path, raw_value: object) -> str | None:
+    """Normalize manifest/receipt inputs without losing conversation bindings."""
+
+    if not isinstance(raw_value, str) or not raw_value.strip():
+        return None
+    value = raw_value.strip().replace("\\", "/")
+    if value.startswith(("conversation:", "user_attachment:")):
+        prefix, identifier = value.split(":", 1)
+        if not identifier.strip():
+            return None
+        return f"{prefix}:{identifier.strip()}"
+    return canonical_package_key(package, value)
+
+
+def file_sha256(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def find_workspace_root(package: Path) -> Path | None:
+    for candidate in (package.resolve(), *package.resolve().parents):
+        if (
+            (candidate / "AGENTS.md").is_file()
+            and (candidate / "上下文").is_dir()
+            and (candidate / "共享").is_dir()
+        ):
+            return candidate
+    return None
+
+
+def read_publish_project_adapter(package: Path) -> tuple[str | None, str | None]:
+    publish_path = package / "publish.yml"
+    if not publish_path.is_file():
+        return None, None
+    values: list[object] = []
+    try:
+        lines = publish_path.read_text(encoding="utf-8").splitlines()
+    except (OSError, UnicodeError) as exc:
+        return None, f"cannot read publish.yml project_adapter: {exc}"
+    for line in lines:
+        if not line or line[0].isspace() or line.lstrip().startswith("#"):
+            continue
+        key, separator, raw_value = line.partition(":")
+        if separator and key.strip() == "project_adapter":
+            if " #" in raw_value:
+                raw_value = raw_value.split(" #", 1)[0].rstrip()
+            values.append(parse_manifest_scalar(raw_value))
+    if len(values) > 1:
+        return None, "publish.yml declares project_adapter more than once"
+    if not values:
+        return None, None
+    value = values[0]
+    if not isinstance(value, str) or not value.strip():
+        return None, "publish.yml project_adapter must be a non-empty string"
+    normalized = value.strip()
+    if normalized not in PROJECT_ADAPTERS:
+        return (
+            normalized,
+            "publish.yml project_adapter must be one of: "
+            + ", ".join(sorted(PROJECT_ADAPTERS)),
+        )
+    return normalized, None
+
+
+def _reject_duplicate_json_keys(pairs: list[tuple[str, object]]) -> dict[str, object]:
+    parsed: dict[str, object] = {}
+    for key, value in pairs:
+        if key in parsed:
+            raise ValueError(f"duplicate JSON key: {key}")
+        parsed[key] = value
+    return parsed
+
+
+def _reject_json_constant(value: str) -> object:
+    raise ValueError(f"non-standard JSON constant: {value}")
+
+
+def _contains_json_key(value: object, forbidden_key: str) -> bool:
+    pending = [value]
+    while pending:
+        current = pending.pop()
+        if isinstance(current, dict):
+            if forbidden_key in current:
+                return True
+            pending.extend(current.values())
+        elif isinstance(current, list):
+            pending.extend(current)
+    return False
+
+
+def load_strict_json_object(path: Path, label: str) -> tuple[dict[str, object] | None, str | None]:
+    try:
+        loaded = json.loads(
+            path.read_text(encoding="utf-8"),
+            object_pairs_hook=_reject_duplicate_json_keys,
+            parse_constant=_reject_json_constant,
+        )
+    except (OSError, UnicodeError, json.JSONDecodeError, ValueError, RecursionError) as exc:
+        return None, f"{label} is not valid strict JSON: {exc}"
+    if not isinstance(loaded, dict):
+        return None, f"{label} root must be an object"
+    return loaded, None
+
+
+def resolve_json_file(
+    root: Path,
+    raw_value: object,
+    label: str,
+) -> tuple[str | None, Path | None, str | None]:
+    if not isinstance(raw_value, str) or not raw_value.strip():
+        return None, None, f"{label} must be a non-empty relative path"
+    normalized = raw_value.strip().replace("\\", "/")
+    if not normalized.endswith(".json") or canonical_package_key(root, normalized) is None:
+        return None, None, f"{label} must be a root-relative package-local JSON file"
+    declared = root / normalized
+    if declared.is_symlink():
+        return None, None, f"{label} must not be a symlink: {normalized}"
+    resolved = declared.resolve()
+    if not resolved.is_file():
+        return None, None, f"{label} file does not exist: {normalized}"
+    return normalized, resolved, None
+
+
+def validate_ai_preflight_receipt(
+    package: Path,
+    asset: dict[str, object],
+    label: str,
+    file_key: str | None,
+    assets_by_file: dict[str, dict[str, object]],
+    release_bound: bool,
+    platform: str,
+    publish_project_adapter: str | None,
+    publish_adapter_issue: str | None,
+) -> list[str]:
+    """Bind an AI manifest record to the complete persisted preflight contract."""
+
+    issues: list[str] = []
+    invocation_hash = asset.get("invocation_prompt_sha256")
+    if is_missing_value(invocation_hash):
+        issues.append(
+            f"manifest {label} missing AI preflight field: invocation_prompt_sha256"
+        )
+    elif not isinstance(invocation_hash, str) or not SHA256_PATTERN.fullmatch(
+        invocation_hash
+    ):
+        issues.append(
+            f"manifest {label} invocation_prompt_sha256 must be 64 lowercase hexadecimal characters"
+        )
+
+    raw_receipt = asset.get("preflight_receipt")
+    if is_missing_value(raw_receipt):
+        issues.append(f"manifest {label} missing AI preflight field: preflight_receipt")
+        return issues
+    if not isinstance(raw_receipt, str):
+        issues.append(f"manifest {label} preflight_receipt must be a string")
+        return issues
+
+    normalized_receipt = raw_receipt.strip().replace("\\", "/")
+    receipt_parts = PurePosixPath(normalized_receipt).parts
+    if (
+        len(receipt_parts) != 3
+        or receipt_parts[0].casefold() != "research"
+        or receipt_parts[1].casefold() != "image-generation-runs"
+        or not receipt_parts[2].endswith(".json")
+        or receipt_parts[2] == ".json"
+        or canonical_package_key(package, normalized_receipt) is None
+    ):
+        issues.append(
+            f"manifest {label} preflight_receipt must be a package-local JSON file "
+            "directly under research/image-generation-runs/"
+        )
+        return issues
+
+    declared_receipt_path = package / normalized_receipt
+    if declared_receipt_path.is_symlink():
+        issues.append(
+            f"manifest {label} preflight_receipt must not be a symlink: {normalized_receipt}"
+        )
+        return issues
+    receipt_path = declared_receipt_path.resolve()
+    if not receipt_path.is_file():
+        issues.append(
+            f"manifest {label} preflight_receipt file does not exist: {normalized_receipt}"
+        )
+        return issues
+    receipt, receipt_error = load_strict_json_object(
+        receipt_path,
+        f"preflight_receipt {normalized_receipt}",
+    )
+    if receipt_error:
+        issues.append(f"manifest {label} {receipt_error}")
+        return issues
+    assert receipt is not None
+    if _contains_json_key(receipt, "prompt_payload"):
+        issues.append(
+            f"manifest {label} preflight_receipt must not contain prompt_payload: "
+            f"{normalized_receipt}"
+        )
+    if _contains_json_key(receipt, "tool_request"):
+        issues.append(
+            f"manifest {label} preflight_receipt must not contain tool_request: "
+            f"{normalized_receipt}"
+        )
+
+    prompt_ref = asset.get("prompt_ref")
+    expected_values: dict[str, object] = {
+        "status": "pass",
+        "style_profile": prompt_ref,
+        "prompt_ref": prompt_ref,
+        "prompt_sha256": asset.get("prompt_sha256"),
+        "invocation_prompt_sha256": invocation_hash,
+        "mode": asset.get("generation_mode"),
+    }
+    for field, expected in expected_values.items():
+        if receipt.get(field) != expected:
+            issues.append(
+                f"manifest {label} preflight_receipt {field} does not match "
+                f"the required manifest value: {normalized_receipt}"
+            )
+
+    if receipt.get("schema_version") != 1:
+        issues.append(
+            f"manifest {label} preflight_receipt schema_version must be 1: "
+            f"{normalized_receipt}"
+        )
+    if not is_iso_date(receipt.get("checked_on")):
+        issues.append(
+            f"manifest {label} preflight_receipt checked_on must be an ISO date: "
+            f"{normalized_receipt}"
+        )
+    for field in (
+        "task_id",
+        "project_adapter",
+        "visual_type",
+        "style_profile",
+        "style_scope",
+        "new_image_strategy",
+        "reference_strategy",
+        "mode",
+        "input_binding",
+        "prompt_ref",
+        "output",
+        "plan",
+        "profile_registry",
+        "receipt",
+    ):
+        if not isinstance(receipt.get(field), str) or not str(receipt.get(field)).strip():
+            issues.append(
+                f"manifest {label} preflight_receipt {field} must be a non-empty string: "
+                f"{normalized_receipt}"
+            )
+    for field in (
+        "plan_sha256",
+        "profile_registry_sha256",
+        "constraints_sha256",
+    ):
+        value = receipt.get(field)
+        if not isinstance(value, str) or not SHA256_PATTERN.fullmatch(value):
+            issues.append(
+                f"manifest {label} preflight_receipt {field} must be 64 lowercase "
+                f"hexadecimal characters: {normalized_receipt}"
+            )
+    if receipt.get("style_scope") not in {
+        "task",
+        "all_ai_generated_editorial_images",
+    }:
+        issues.append(
+            f"manifest {label} preflight_receipt style_scope is unsupported: "
+            f"{normalized_receipt}"
+        )
+    if receipt.get("new_image_strategy") not in {
+        "direct",
+        "reference_required",
+        "two_stage_reference_then_redraw",
+    }:
+        issues.append(
+            f"manifest {label} preflight_receipt new_image_strategy is unsupported: "
+            f"{normalized_receipt}"
+        )
+    if receipt.get("reference_strategy") not in {
+        "none",
+        "generated_base",
+        "provided_local",
+        "conversation_attachment",
+    }:
+        issues.append(
+            f"manifest {label} preflight_receipt reference_strategy is unsupported: "
+            f"{normalized_receipt}"
+        )
+    if receipt.get("input_binding") not in {
+        "none",
+        "referenced_image_paths",
+        "num_last_images_to_include",
+    }:
+        issues.append(
+            f"manifest {label} preflight_receipt input_binding is unsupported: "
+            f"{normalized_receipt}"
+        )
+    if not isinstance(receipt.get("present_to_user"), bool):
+        issues.append(
+            f"manifest {label} preflight_receipt present_to_user must be boolean: "
+            f"{normalized_receipt}"
+        )
+    stage = receipt.get("stage")
+    if release_bound and stage != "final":
+        issues.append(
+            f"manifest {label} release-bound AI asset requires a final-stage "
+            f"preflight_receipt: {normalized_receipt}"
+        )
+    elif not release_bound and stage not in {"reference", "final"}:
+        issues.append(
+            f"manifest {label} research AI asset receipt stage must be reference or final: "
+            f"{normalized_receipt}"
+        )
+    if stage == "final" and receipt.get("present_to_user") is not True:
+        issues.append(
+            f"manifest {label} final-stage preflight_receipt requires "
+            f"present_to_user=true: {normalized_receipt}"
+        )
+    if stage == "reference" and receipt.get("present_to_user") is not False:
+        issues.append(
+            f"manifest {label} reference-stage preflight_receipt requires "
+            f"present_to_user=false: {normalized_receipt}"
+        )
+
+    for optional_string in ("style_override_source", "prompt_source"):
+        value = receipt.get(optional_string)
+        if value is not None and (not isinstance(value, str) or not value.strip()):
+            issues.append(
+                f"manifest {label} preflight_receipt {optional_string} must be null or "
+                f"a non-empty string: {normalized_receipt}"
+            )
+    if not isinstance(receipt.get("conversation_derivative_rights_confirmed"), bool):
+        issues.append(
+            f"manifest {label} preflight_receipt "
+            f"conversation_derivative_rights_confirmed must be boolean: {normalized_receipt}"
+        )
+    image_count = receipt.get("num_last_images_to_include")
+    if receipt.get("input_binding") == "num_last_images_to_include":
+        if (
+            not isinstance(image_count, int)
+            or isinstance(image_count, bool)
+            or not 1 <= image_count <= 5
+        ):
+            issues.append(
+                f"manifest {label} preflight_receipt num_last_images_to_include must be "
+                f"between 1 and 5: {normalized_receipt}"
+            )
+    elif image_count is not None:
+        issues.append(
+            f"manifest {label} preflight_receipt num_last_images_to_include must be null "
+            f"for {receipt.get('input_binding')}: {normalized_receipt}"
+        )
+
+    receipt_self = receipt.get("receipt")
+    if (
+        not isinstance(receipt_self, str)
+        or canonical_package_key(package, receipt_self) != canonical_package_key(
+            package, normalized_receipt
+        )
+    ):
+        issues.append(
+            f"manifest {label} preflight_receipt receipt field does not identify itself: "
+            f"{normalized_receipt}"
+        )
+
+    receipt_adapter = receipt.get("project_adapter")
+    if receipt_adapter not in PROJECT_ADAPTERS:
+        issues.append(
+            f"manifest {label} preflight_receipt project_adapter is unsupported: "
+            f"{normalized_receipt}"
+        )
+    if publish_adapter_issue:
+        issues.append(f"manifest {label} {publish_adapter_issue}")
+    if publish_project_adapter is not None and receipt_adapter != publish_project_adapter:
+        issues.append(
+            f"manifest {label} preflight_receipt project_adapter does not match "
+            f"publish.yml: {normalized_receipt}"
+        )
+    if platform == "wechat" and release_bound and publish_project_adapter is None:
+        issues.append(
+            f"manifest {label} WeChat release AI asset requires an independent "
+            "publish.yml project_adapter declaration"
+        )
+
+    receipt_output = receipt.get("output")
+    receipt_output_key = (
+        canonical_package_key(package, receipt_output)
+        if isinstance(receipt_output, str)
+        else None
+    )
+    if receipt_output_key is None or receipt_output_key != file_key:
+        issues.append(
+            f"manifest {label} preflight_receipt output does not match the asset path: "
+            f"{normalized_receipt}"
+        )
+
+    manifest_inputs = asset.get("input_assets")
+    receipt_inputs = receipt.get("input_assets")
+    normalized_manifest_inputs: list[str | None] = []
+    normalized_receipt_inputs: list[str | None] = []
+    if not isinstance(receipt_inputs, list):
+        issues.append(
+            f"manifest {label} preflight_receipt input_assets must be a list: "
+            f"{normalized_receipt}"
+        )
+    elif not isinstance(manifest_inputs, list):
+        issues.append(
+            f"manifest {label} preflight_receipt input_assets cannot match a non-list "
+            f"manifest value: {normalized_receipt}"
+        )
+    else:
+        normalized_manifest_inputs = [
+            normalize_generation_input_key(package, value) for value in manifest_inputs
+        ]
+        normalized_receipt_inputs = [
+            normalize_generation_input_key(package, value) for value in receipt_inputs
+        ]
+        if (
+            any(value is None for value in normalized_manifest_inputs)
+            or any(value is None for value in normalized_receipt_inputs)
+            or normalized_receipt_inputs != normalized_manifest_inputs
+        ):
+            issues.append(
+                f"manifest {label} preflight_receipt input_assets do not match the "
+                f"manifest after path normalization: {normalized_receipt}"
+            )
+
+    fingerprints = receipt.get("input_fingerprints")
+    if not isinstance(fingerprints, list):
+        issues.append(
+            f"manifest {label} preflight_receipt input_fingerprints must be a list: "
+            f"{normalized_receipt}"
+        )
+        fingerprints = []
+    local_inputs: list[tuple[str, str, Path, dict[str, object] | None]] = []
+    if isinstance(manifest_inputs, list):
+        for raw_input, input_key in zip(manifest_inputs, normalized_manifest_inputs):
+            if (
+                not isinstance(raw_input, str)
+                or raw_input.strip().startswith(("conversation:", "user_attachment:"))
+                or input_key is None
+            ):
+                continue
+            normalized_input = raw_input.strip().replace("\\", "/")
+            local_inputs.append(
+                (
+                    normalized_input,
+                    input_key,
+                    (package / normalized_input).resolve(),
+                    assets_by_file.get(input_key),
+                )
+            )
+    if len(fingerprints) != len(local_inputs):
+        issues.append(
+            f"manifest {label} preflight_receipt input_fingerprints count does not "
+            f"match local input_assets: {normalized_receipt}"
+        )
+    for index, (input_path_value, input_key, input_path, input_record) in enumerate(
+        local_inputs
+    ):
+        if index >= len(fingerprints):
+            break
+        fingerprint = fingerprints[index]
+        if not isinstance(fingerprint, dict):
+            issues.append(
+                f"manifest {label} preflight_receipt input_fingerprints[{index}] must "
+                f"be an object: {normalized_receipt}"
+            )
+            continue
+        fingerprint_key = normalize_generation_input_key(package, fingerprint.get("file"))
+        if fingerprint_key != input_key:
+            issues.append(
+                f"manifest {label} preflight_receipt input_fingerprints[{index}].file "
+                f"does not match input_assets order: {normalized_receipt}"
+            )
+        fingerprint_hash = fingerprint.get("sha256")
+        if not isinstance(fingerprint_hash, str) or not SHA256_PATTERN.fullmatch(
+            fingerprint_hash
+        ):
+            issues.append(
+                f"manifest {label} preflight_receipt input_fingerprints[{index}].sha256 "
+                f"is invalid: {normalized_receipt}"
+            )
+        elif not input_path.is_file():
+            issues.append(
+                f"manifest {label} preflight input file does not exist: {input_path_value}"
+            )
+        elif file_sha256(input_path) != fingerprint_hash:
+            issues.append(
+                f"manifest {label} preflight input SHA-256 changed after receipt: "
+                f"{input_path_value}"
+            )
+        current_rights = input_record.get("rights_status") if input_record else None
+        if fingerprint.get("rights_status") != current_rights:
+            issues.append(
+                f"manifest {label} preflight input rights_status changed after receipt: "
+                f"{input_path_value}"
+            )
+
+    has_conversation_inputs = isinstance(manifest_inputs, list) and any(
+        isinstance(value, str)
+        and value.strip().startswith(("conversation:", "user_attachment:"))
+        for value in manifest_inputs
+    )
+    expected_binding = (
+        "referenced_image_paths"
+        if local_inputs
+        else "num_last_images_to_include"
+        if has_conversation_inputs
+        else "none"
+    )
+    if receipt.get("input_binding") != expected_binding:
+        issues.append(
+            f"manifest {label} preflight_receipt input_binding does not match "
+            f"input_assets: {normalized_receipt}"
+        )
+
+    raw_plan = receipt.get("plan")
+    plan_value, plan_path, plan_path_issue = resolve_json_file(
+        package,
+        raw_plan,
+        "preflight_receipt plan",
+    )
+    plan: dict[str, object] | None = None
+    if plan_path_issue:
+        issues.append(f"manifest {label} {plan_path_issue}")
+    elif plan_path is not None:
+        if receipt.get("plan_sha256") != file_sha256(plan_path):
+            issues.append(
+                f"manifest {label} preflight_receipt plan SHA-256 is stale: {plan_value}"
+            )
+        plan, plan_error = load_strict_json_object(plan_path, f"plan {plan_value}")
+        if plan_error:
+            issues.append(f"manifest {label} {plan_error}")
+
+    if plan is not None:
+        if plan.get("schema_version") != 1:
+            issues.append(f"manifest {label} image-generation plan schema_version must be 1")
+        if plan.get("project_adapter") != receipt_adapter:
+            issues.append(
+                f"manifest {label} preflight_receipt project_adapter does not match plan"
+            )
+        style_policy = plan.get("style_policy")
+        if not isinstance(style_policy, dict):
+            issues.append(
+                f"manifest {label} image-generation plan style_policy must be an object"
+            )
+        tasks = plan.get("tasks")
+        task_id = receipt.get("task_id")
+        matched_tasks = (
+            [
+                item
+                for item in tasks
+                if isinstance(item, dict) and item.get("id") == task_id
+            ]
+            if isinstance(tasks, list)
+            else []
+        )
+        if len(matched_tasks) != 1:
+            issues.append(
+                f"manifest {label} preflight_receipt task_id does not identify exactly "
+                f"one plan task"
+            )
+        else:
+            task = matched_tasks[0]
+            style_override_source = receipt.get("style_override_source")
+            task_override = task.get("style_override")
+            if style_override_source is None:
+                if task_override is not None:
+                    issues.append(
+                        f"manifest {label} preflight_receipt style_override_source "
+                        "does not match plan task"
+                    )
+                if isinstance(style_policy, dict):
+                    for field, receipt_field in (
+                        ("profile", "style_profile"),
+                        ("scope", "style_scope"),
+                        ("new_image_strategy", "new_image_strategy"),
+                    ):
+                        if style_policy.get(field) != receipt.get(receipt_field):
+                            issues.append(
+                                f"manifest {label} preflight_receipt {receipt_field} "
+                                "does not match plan style_policy"
+                            )
+                    if plan.get("profile_registry") != receipt.get("profile_registry"):
+                        issues.append(
+                            f"manifest {label} preflight_receipt profile_registry "
+                            "does not match plan"
+                        )
+            elif not isinstance(task_override, dict):
+                issues.append(
+                    f"manifest {label} preflight_receipt style_override_source "
+                    "has no matching plan task style_override"
+                )
+            else:
+                for field, expected in (
+                    ("source", style_override_source),
+                    ("profile", receipt.get("style_profile")),
+                    ("profile_registry", receipt.get("profile_registry")),
+                ):
+                    if task_override.get(field) != expected:
+                        issues.append(
+                            f"manifest {label} preflight_receipt style override {field} "
+                            "does not match plan task"
+                        )
+                if receipt.get("style_scope") != "task":
+                    issues.append(
+                        f"manifest {label} preflight_receipt style_scope must be task "
+                        "for a plan task style_override"
+                    )
+            if task.get("visual_type", "general_editorial") != receipt.get("visual_type"):
+                issues.append(
+                    f"manifest {label} preflight_receipt visual_type does not match plan"
+                )
+            if task.get("reference_strategy", "none") != receipt.get(
+                "reference_strategy"
+            ):
+                issues.append(
+                    f"manifest {label} preflight_receipt reference_strategy does not match plan"
+                )
+            stage_key = "reference_stage" if stage == "reference" else "final_stage"
+            plan_stage = task.get(stage_key)
+            if not isinstance(plan_stage, dict):
+                issues.append(
+                    f"manifest {label} preflight_receipt stage is absent from plan task"
+                )
+            else:
+                plan_stage_inputs = plan_stage.get("input_assets", [])
+                stage_expected = {
+                    "mode": receipt.get("mode"),
+                    "prompt_ref": receipt.get("prompt_ref"),
+                    "present_to_user": receipt.get("present_to_user"),
+                }
+                for field, expected in stage_expected.items():
+                    if plan_stage.get(field) != expected:
+                        issues.append(
+                            f"manifest {label} preflight_receipt {field} does not match plan stage"
+                        )
+                declared_stage_prompt_hash = plan_stage.get("prompt_sha256")
+                if (
+                    declared_stage_prompt_hash is not None
+                    and declared_stage_prompt_hash != receipt.get("prompt_sha256")
+                ):
+                    issues.append(
+                        f"manifest {label} preflight_receipt prompt_sha256 does not "
+                        "match plan stage"
+                    )
+                for field, expected_key in (
+                    ("output", file_key),
+                    ("receipt", canonical_package_key(package, normalized_receipt)),
+                ):
+                    stage_value = plan_stage.get(field)
+                    stage_value_key = (
+                        canonical_package_key(package, stage_value)
+                        if isinstance(stage_value, str)
+                        else None
+                    )
+                    if stage_value_key != expected_key:
+                        issues.append(
+                            f"manifest {label} preflight_receipt {field} does not match plan stage"
+                        )
+                if isinstance(receipt_inputs, list):
+                    normalized_plan_inputs = (
+                        [
+                            normalize_generation_input_key(package, value)
+                            for value in plan_stage_inputs
+                        ]
+                        if isinstance(plan_stage_inputs, list)
+                        else []
+                    )
+                    if normalized_plan_inputs != normalized_receipt_inputs:
+                        issues.append(
+                            f"manifest {label} preflight_receipt input_assets do not match plan stage"
+                        )
+                computed_constraints_hash = hashlib.sha256(
+                    json.dumps(
+                        {
+                            "output_constraints": plan_stage.get("output_constraints", []),
+                            "preserve": plan_stage.get("preserve", []),
+                            "avoid": plan_stage.get("avoid", []),
+                        },
+                        ensure_ascii=False,
+                        sort_keys=True,
+                        separators=(",", ":"),
+                    ).encode("utf-8")
+                ).hexdigest()
+                if receipt.get("constraints_sha256") != computed_constraints_hash:
+                    issues.append(
+                        f"manifest {label} preflight_receipt constraints_sha256 does not "
+                        f"match plan stage"
+                    )
+
+    workspace_root = find_workspace_root(package)
+    if workspace_root is None:
+        issues.append(
+            f"manifest {label} cannot locate workspace root for profile_registry validation"
+        )
+    else:
+        registry_value, registry_path, registry_path_issue = resolve_json_file(
+            workspace_root,
+            receipt.get("profile_registry"),
+            "preflight_receipt profile_registry",
+        )
+        if registry_path_issue:
+            issues.append(f"manifest {label} {registry_path_issue}")
+        elif registry_path is not None:
+            if receipt.get("profile_registry_sha256") != file_sha256(registry_path):
+                issues.append(
+                    f"manifest {label} preflight_receipt profile_registry SHA-256 is stale: "
+                    f"{registry_value}"
+                )
+            registry, registry_error = load_strict_json_object(
+                registry_path,
+                f"profile_registry {registry_value}",
+            )
+            if registry_error:
+                issues.append(f"manifest {label} {registry_error}")
+            elif registry is not None:
+                profiles = registry.get("profiles")
+                profile = (
+                    profiles.get(receipt.get("style_profile"))
+                    if isinstance(profiles, dict)
+                    and isinstance(receipt.get("style_profile"), str)
+                    else None
+                )
+                if registry.get("schema_version") != 1 or not isinstance(profile, dict):
+                    issues.append(
+                        f"manifest {label} preflight_receipt style_profile is absent from "
+                        f"the declared schema_version 1 profile_registry"
+                    )
+                elif profile.get("new_image_strategy") != receipt.get(
+                    "new_image_strategy"
+                ):
+                    issues.append(
+                        f"manifest {label} preflight_receipt new_image_strategy does not "
+                        f"match profile_registry"
+                    )
+                else:
+                    governed_profile_hash = profile.get("prompt_sha256")
+                    if governed_profile_hash is not None:
+                        if not isinstance(
+                            governed_profile_hash, str
+                        ) or not SHA256_PATTERN.fullmatch(governed_profile_hash):
+                            issues.append(
+                                f"manifest {label} profile_registry prompt_sha256 must "
+                                "be 64 lowercase hexadecimal characters"
+                            )
+                        elif governed_profile_hash != receipt.get("prompt_sha256"):
+                            issues.append(
+                                f"manifest {label} preflight_receipt prompt_sha256 does "
+                                "not match profile_registry"
+                            )
+                    elif profile.get("prompt_source") is not None:
+                        issues.append(
+                            f"manifest {label} profile_registry prompt_source requires "
+                            "prompt_sha256"
+                        )
+                    if profile.get("prompt_source") != receipt.get("prompt_source"):
+                        issues.append(
+                            f"manifest {label} preflight_receipt prompt_source does not "
+                            "match profile_registry"
+                        )
+                    allowed_modes = profile.get("allowed_final_modes")
+                    if (
+                        stage == "final"
+                        and (
+                            not isinstance(allowed_modes, list)
+                            or receipt.get("mode") not in allowed_modes
+                        )
+                    ):
+                        issues.append(
+                            f"manifest {label} preflight_receipt mode is not allowed by "
+                            "profile_registry"
+                        )
+
+    return issues
+
+
 def validate_manifest_assets(
     package: Path,
     assets: list[dict[str, object]],
@@ -327,6 +1108,8 @@ def validate_manifest_assets(
     status: str,
     platform: str,
     draft_image_targets: set[str],
+    publish_project_adapter: str | None,
+    publish_adapter_issue: str | None,
 ) -> tuple[list[str], list[str]]:
     """Validate v2 manifests strictly while keeping legacy manifests readable."""
 
@@ -507,8 +1290,19 @@ def validate_manifest_assets(
                 True,
             )
 
-        if asset.get("source_type") != "ai_generated":
+        source_type = asset.get("source_type")
+        ai_generated_like = (
+            isinstance(source_type, str)
+            and source_type.strip().casefold().startswith("ai_generated")
+        )
+        if not ai_generated_like:
             continue
+        if source_type != "ai_generated":
+            add_contract_issue(
+                f"manifest {label} uses non-standard AI source_type {source_type!r}; "
+                'use source_type: "ai_generated" so generation provenance cannot be bypassed',
+                release_bound,
+            )
 
         missing_ai = [
             field
@@ -553,13 +1347,19 @@ def validate_manifest_assets(
                 release_bound,
             )
 
-        prompt_ref = asset.get("prompt_ref")
-        governed_hash = GOVERNED_PROMPT_HASHES.get(prompt_ref) if isinstance(prompt_ref, str) else None
-        if governed_hash and prompt_sha256 != governed_hash:
-            add_contract_issue(
-                f"manifest {label} prompt_sha256 does not match governed prompt {prompt_ref}",
+        if strict:
+            for issue in validate_ai_preflight_receipt(
+                package,
+                asset,
+                label,
+                file_key,
+                assets_by_file,
                 release_bound,
-            )
+                platform,
+                publish_project_adapter,
+                publish_adapter_issue,
+            ):
+                add_contract_issue(issue, release_bound)
 
         input_assets = asset.get("input_assets")
         if not is_missing_value(input_assets) and not isinstance(input_assets, list):
@@ -570,7 +1370,7 @@ def validate_manifest_assets(
         requires_input = (
             isinstance(generation_mode, str)
             and generation_mode in REFERENCE_GENERATION_MODES
-        ) or prompt_ref == "appsso-004"
+        )
         if isinstance(input_assets, list):
             if requires_input and not input_assets:
                 add_contract_issue(
@@ -915,6 +1715,9 @@ def validate(package: Path) -> tuple[list[str], list[str], int]:
 
     platform = metadata.get("platform", "")
     status = metadata.get("status", "")
+    publish_project_adapter, publish_adapter_issue = read_publish_project_adapter(
+        package
+    )
     if platform and platform not in ALLOWED_PLATFORMS:
         errors.append(f"unsupported platform: {platform}")
     if status and status not in ALLOWED_STATES:
@@ -1013,6 +1816,8 @@ def validate(package: Path) -> tuple[list[str], list[str], int]:
         status,
         platform,
         draft_image_targets,
+        publish_project_adapter,
+        publish_adapter_issue,
     )
     errors.extend(manifest_errors)
     warnings.extend(manifest_warnings)
