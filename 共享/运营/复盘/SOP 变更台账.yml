@@ -59,3 +59,38 @@ changes:
     promoted_rules:
       - "CORE-VISUAL-001 (E2 provisional)"
     next_review_on: "2026-08-21"
+
+  - id: "SOP-CHANGE-20260721-004"
+    date: "2026-07-21"
+    change: "核验 Codex 内置生图为 gpt-image-2；建立 Image2 调用真源和 manifest version 2 可执行门禁，将手动 Web 生图升级为 Codex 承担 Prompt、生成、原尺寸质检、定向迭代、落盘与权利登记的完整工作流"
+    source_cases:
+      - "user-feedback:2026-07-21-image2-direct-generation"
+      - "user-feedback:2026-07-21-image2-codex-owned-workflow"
+    affected_sources:
+      - "共享/运营/SOP/Image2 生图工作流.md"
+      - "共享/运营/SOP/README.md"
+      - ".agents/skills/self-media-ops/SKILL.md"
+      - ".agents/skills/self-media-ops/references/content-package.md"
+      - ".agents/skills/self-media-ops/scripts/validate_content_package.py"
+      - ".agents/skills/self-media-ops/tests/test_validate_content_package.py"
+      - "上下文/视觉与版权规范.md"
+      - "APPSO-数字资产/03-SOP/APPSO 内容生产 SOP.md"
+      - "APPSO-数字资产/00-治理/资产台账.yml"
+      - ".gitignore"
+      - ".gitattributes"
+      - "tools/repository_preflight.ps1"
+    classification: "project_adapter"
+    validation:
+      - "OpenAI Codex official documentation states that built-in image generation uses gpt-image-2"
+      - "installed imagegen skill defines built-in image_gen as the preferred path and gpt-image-2 as the CLI default"
+      - "verbatim internal Prompt SHA-256 recorded as 6ba5e092a4f8d6fb2bd33602424ba4792715aa59f2bf5f916b90d8bb3f0bbd0a"
+      - "all workflow links resolve and YAML ledgers parse"
+      - "counterexample passed: generic no-reference generation does not load appsso-004"
+      - "seventeen unit tests passed, including full provenance, draft/manifest contradiction, root-level fake file, unknown rights label, derivative-input clearance, conversation-input persistence, canonical self-reference and dependency-cycle rejection, whitespace provenance, platform mismatch, governed Prompt hash, schema compatibility, research use, and cover binding"
+      - "independent cold code review found release-gate bypasses; draft-reference binding, parsed-asset file truth, canonical package paths, rights allowlists, input-rights propagation and cycle rejection, field typing and blank checks, and explicit use values were repaired and regression-tested"
+      - "final independent re-review passed with 17/17 tests and no blocker or major finding; path-alias self-loops and two-node dependency cycles were black-box tested"
+      - "three historical ready packages with seven legacy AI assets remain valid and emit migration warnings"
+      - "repository preflight passed after the final code review and regression suite"
+    promoted_rules:
+      - "PROJECT-IMAGE2-001 (project configuration)"
+    next_review_on: "2026-08-21"
