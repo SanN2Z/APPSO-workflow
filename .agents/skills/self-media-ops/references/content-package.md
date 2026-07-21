@@ -21,6 +21,12 @@ Optional directories:
 - `tools/`: deterministic scripts used to create charts or transform local assets.
 - `dist/`: generated previews and upload inputs; disposable and Git-ignored.
 
+Install the validator's pinned parser dependencies once in a fresh checkout:
+
+```powershell
+python -m pip install -r .agents/skills/self-media-ops/requirements.txt
+```
+
 ## Draft frontmatter
 
 ```yaml
@@ -90,7 +96,7 @@ assets:
 
 Keep paths relative to the package. Never point a publication draft at a temporary attachment path.
 
-For dependency-free validation, keep manifests in the normalized project subset shown above: root-level `version`, optional `updated`, then root-level `assets`; indent each `- file` by 2 spaces and its fields by 4 spaces. Use quoted scalars plus inline or indented scalar lists. Do not use YAML anchors, aliases, block scalars, or inline comments in this file.
+Keep manifests in the validator's normalized project subset shown above: root-level `version`, optional `updated`, then root-level `assets`; indent each `- file` by 2 spaces and its fields by 4 spaces. Use quoted scalars plus inline or indented scalar lists. Do not use YAML anchors, aliases, block scalars, or inline comments in this file.
 
 For `source_type: "ai_generated"`, also record the runtime and reproducibility fields when available:
 
@@ -113,7 +119,8 @@ New or materially edited manifests use `version: 2`. The validator treats public
 
 - Before `ready`, incomplete version 2 metadata is a warning so work can continue visibly.
 - At `ready` or `published`, missing generation provenance, unresolved rights, or a platform mismatch is an error.
-- A real Markdown image reference is publication-bound even if its manifest falsely says `used_in_draft: false`; the contradiction is reported. The only declared release uses are `wechat_cover` and `x_media`; `research_reference` and `unused` remain non-release uses.
+- A real Markdown or raw HTML image reference is publication-bound even if its manifest falsely says `used_in_draft: false`; the contradiction is reported. At `ready` or `published`, remote and embedded data images are blocked instead of bypassing the package manifest. Declared release uses are `wechat_cover`, `wechat_body_header`, `wechat_body_footer`, and `x_media`; `research_reference` and `unused` remain non-release uses.
+- Raw active HTML, event-handler attributes, non-allowlisted URL schemes, duplicate HTML attributes, alternate resource attributes, and CSS resource references are rejected before preview or release. Put HTML examples in fenced, indented, or inline code so they remain text.
 - Release-bound version 2 assets use this rights allowlist: `project_owned`, `project_owned_with_cc0_component`, `user_confirmed_editorial_commentary`, `user_confirmed_editorial_use`, `licensed`, `cc0_verified`, and `public_domain_verified`. Unknown labels never imply clearance; adding a new cleared status requires a reviewed schema/SOP change.
 - Unused research and rejected assets remain warnings and do not block release.
 - Version 1 or unversioned historical AI assets remain readable and emit migration warnings; migrate them when the package is next materially edited.
@@ -122,4 +129,4 @@ Follow the project [Image2 generation workflow](<../../../../共享/运营/SOP/I
 
 ## WeChat publish configuration
 
-WeChat packages use `publish.yml` for the API-safe title, digest, cover, comments, and Wenyan theme. `draft.md` remains the only editable article source. See [wechat-publishing.md](wechat-publishing.md).
+WeChat packages use `publish.yml` for the API-safe title, digest, cover, comments, allowlisted layout profile, and optional package-local body header/footer components. `draft.md` remains the only editable article source. See [wechat-publishing.md](wechat-publishing.md).

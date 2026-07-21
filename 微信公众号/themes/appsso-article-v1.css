@@ -1,0 +1,207 @@
+/*
+ * APPSO 普通公众号长文版式 v1。
+ *
+ * 依据：2026-07-21 用户排版反馈与 APPSO 公开旧稿样本。
+ * 边界：不用于 Hunt Good 专项版式，也不自动用于个人公众号。
+ */
+
+#wenyan {
+    color: #222222;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 15px;
+    line-height: 25px;
+    overflow-wrap: break-word;
+}
+
+#wenyan * {
+    box-sizing: border-box;
+}
+
+#wenyan p {
+    margin: 27px 0;
+    padding: 0 16px;
+    color: #222222;
+    font-size: 15px;
+    line-height: 25px;
+    text-align: justify;
+}
+
+#wenyan h1,
+#wenyan h2,
+#wenyan h3,
+#wenyan h4,
+#wenyan h5,
+#wenyan h6 {
+    padding-right: 16px;
+    padding-left: 16px;
+    border: 0;
+    text-align: left;
+}
+
+#wenyan h1,
+#wenyan h2 {
+    margin: 65px 0 27px;
+    color: #fd4606;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 29px;
+}
+
+#wenyan h3,
+#wenyan h4,
+#wenyan h5,
+#wenyan h6 {
+    margin: 38px 0 20px;
+    color: #222222;
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 25px;
+}
+
+#wenyan > ul,
+#wenyan > ol {
+    margin: 27px 16px;
+    padding-left: 24px;
+}
+
+#wenyan ul,
+#wenyan ol {
+    color: #222222;
+    font-size: 15px;
+    line-height: 25px;
+}
+
+#wenyan li {
+    margin: 8px 0;
+}
+
+#wenyan li p,
+#wenyan table p {
+    margin: 0;
+    padding: 0;
+}
+
+#wenyan blockquote {
+    margin: 27px 16px;
+    padding: 12px 16px;
+    border: 0;
+    border-left: 3px solid #fd4606;
+    background-color: #f7f7f7;
+    color: #555555;
+    font-size: 15px;
+    font-style: normal;
+    line-height: 25px;
+}
+
+#wenyan blockquote p {
+    margin: 0;
+    padding: 0;
+    color: inherit;
+}
+
+#wenyan img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+}
+
+#wenyan table {
+    max-width: calc(100% - 32px);
+    margin: 27px 16px;
+    border-collapse: collapse;
+    table-layout: fixed;
+    overflow: auto;
+    color: #222222;
+    font-size: 13px;
+    line-height: 21px;
+    text-align: left;
+    word-break: break-word;
+}
+
+#wenyan table th,
+#wenyan table td {
+    padding: 8px 10px;
+    border: 1px solid #dddddd;
+    vertical-align: top;
+}
+
+#wenyan table th {
+    background-color: #f6f6f6;
+    font-weight: 600;
+}
+
+#wenyan pre {
+    margin: 27px 16px;
+    padding: 12px;
+    border-radius: 4px;
+    background-color: #f7f7f7;
+    font-size: 12px;
+    line-height: 20px;
+    overflow-x: auto;
+}
+
+#wenyan pre code {
+    display: block;
+    padding: 0;
+    overflow-x: auto;
+}
+
+#wenyan p code,
+#wenyan li code {
+    padding: 2px 4px;
+    border-radius: 3px;
+    background-color: #f5f5f5;
+    color: #d94310;
+    font-size: 0.9em;
+}
+
+#wenyan a {
+    color: #d94310;
+    overflow-wrap: anywhere;
+}
+
+#wenyan hr {
+    height: 1px;
+    margin: 40px 16px;
+    padding: 0;
+    border: 0;
+    background-color: #eeeeee;
+}
+
+#wenyan #footnotes p {
+    margin: 8px 0;
+    padding: 0 16px;
+    font-size: 13px;
+    line-height: 21px;
+}
+
+#wenyan .appsso-body-header {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border-radius: 10px;
+    overflow: hidden;
+    line-height: 0;
+    text-align: center;
+}
+
+#wenyan .appsso-body-header img {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    border-radius: 10px;
+}
+
+#wenyan .appsso-body-footer {
+    margin: 24px 16px 0;
+    padding: 0;
+    line-height: 0;
+    text-align: center;
+}
+
+#wenyan .appsso-body-footer img {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+}

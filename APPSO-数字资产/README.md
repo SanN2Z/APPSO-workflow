@@ -8,6 +8,9 @@
 
 - [Hunt Good 周报保姆级指南](<01-栏目与品牌/Hunt-Good/Hunt Good 周报保姆级指南.md>)
 - [APPSO 内容生产 SOP](<03-SOP/APPSO 内容生产 SOP.md>)
+- [APPSO 公众号发布配置模板](<04-模板/APPSO 公众号发布配置.yml>)
+- [APPSO 普通长文版式 profile](<../微信公众号/themes/README.md>)
+- [APPSO 公众号版式反馈与样本证据](<02-方法与知识/视觉与排版/APPSO 公众号版式反馈与样本证据.md>)
 - [Image2 生图工作流](<../共享/运营/SOP/Image2 生图工作流.md>)
 - [Hunt Good 周报专项 SOP](<03-SOP/Hunt Good 周报专项 SOP.md>)
 - [时效热点 × AIGC 解释稿 SOP](<03-SOP/时效热点 × AIGC 解释稿 SOP.md>)

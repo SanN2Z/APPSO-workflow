@@ -85,6 +85,12 @@ Before any draft can become `ready`, read [references/wechat-copyedit-pass.md](r
    - Do not use `published` without a real publication URL or explicit user confirmation.
 
 8. **Validate**
+   - In a fresh checkout, install the pinned parser dependencies once:
+
+     ```powershell
+     python -m pip install -r .agents/skills/self-media-ops/requirements.txt
+     ```
+
    - Run:
 
      ```powershell
@@ -121,4 +127,5 @@ Drafting, local organization, source checks, and dry-runs are allowed. Posting, 
 - [references/wechat-publishing.md](references/wechat-publishing.md): Wenyan-based local preview, developer credentials, draft dry-run, and external-action boundary.
 - [references/wechat-writing-research.md](references/wechat-writing-research.md): research basis; read only when evolving or evaluating the team.
 - `scripts/validate_content_package.py`: deterministic local package validation.
+- `requirements.txt`: pinned semantic Markdown and CSS parser dependencies for validation.
 - [content-retrospective](../content-retrospective/SKILL.md): feedback capture, post-publication review, SOP promotion, and workflow migration.

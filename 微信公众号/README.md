@@ -1,6 +1,6 @@
 # 微信公众号子项目
 
-公众号文章按“一个选题一个内容包”管理。项目采用六角色写作团队：主编、证据编辑、特稿主笔、语法终校、视觉版权编辑和独立终审；运行规则见 `../.agents/skills/self-media-ops/references/wechat-team.md`。
+公众号文章按「一个选题一个内容包」管理。项目采用六角色写作团队：主编、证据编辑、特稿主笔、语法终校、视觉版权编辑和独立终审；运行规则见 `../.agents/skills/self-media-ops/references/wechat-team.md`。
 
 ## 目录
 
@@ -9,6 +9,8 @@
 ├─ AGENTS.md              # 平台硬规则，未经明确授权不改
 ├─ CONTEXT.md             # 读者、栏目与默认写法
 ├─ package.json           # 锁定 @wenyan-md/cli 版本
+├─ requirements.txt       # 锁定 Python 发布适配器依赖
+├─ themes/                # 受控版式 profile、自定义 CSS 与样本说明
 ├─ tools/                 # 内容包到 Wenyan 的安全适配层
 ├─ 知识库/                 # 可复用的编辑反馈、参考结构和研究结论
 ├─ 选题/                   # 详细选题卡；状态总表仍在 共享/运营/选题池.md
@@ -40,19 +42,21 @@
 
 ## 本机预览与草稿箱
 
-排版、图片上传和微信草稿 API 复用开源 [Wenyan CLI](https://github.com/caol64/wenyan-cli)，项目固定为 `@wenyan-md/cli@2.0.11`；本地适配层不重复实现渲染器和微信客户端。
+排版、图片上传和微信草稿 API 复用开源 [Wenyan CLI](https://github.com/caol64/wenyan-cli)，项目固定为 `@wenyan-md/cli@2.0.11`；本地适配层不重复实现渲染器和微信客户端。APPSO 普通长文显式选择 `appsso-article-v1`，Hunt Good 与个人公众号使用独立 profile；版式入口见 [themes/README.md](themes/README.md)。
 
 当前固定版本会把正文图片作为永久图片素材上传并缓存重复素材；自定义摘要暂不随 API 提交，需在公众号后台检查微信自动生成的摘要。其余已知限制记录在发布参考文档中。
 
-首次安装：
+首次安装（从仓库根目录运行）：
 
 ```powershell
-Set-Location 微信公众号
-npm.cmd install
-Copy-Item .env.example .env
+python -m pip install -r 微信公众号/requirements.txt
+npm.cmd --prefix 微信公众号 install
+Copy-Item 微信公众号/.env.example 微信公众号/.env
 ```
 
 凭证只在本机填写到 `.env`，不要发到聊天中。
+
+以下命令也从仓库根目录运行：
 
 ```powershell
 # 本机手机宽预览，不上传

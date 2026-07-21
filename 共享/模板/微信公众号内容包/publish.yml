@@ -6,8 +6,18 @@ digest: ""
 cover: "assets/cover.png"
 source_url: ""
 theme: "default"
+# APPSO 普通长文改为 appsso-article-v1；Hunt Good 与个人公众号不得套用。
+layout_profile: "default"
 highlight: "solarized-light"
 mac_style: false
 footnote: true
 need_open_comment: false
 only_fans_can_comment: false
+# 头尾组件必须位于当前内容包，并在 asset-manifest.yml 登记发布用途与权利。
+header_image: ""
+header_alt: ""
+footer_image: ""
+footer_alt: ""
+# 尾图启用时按 Asia/Shanghai 填写复核截止日 YYYY-MM-DD；它不是活动真实截止日。
+# 从本次确认日起最长不得超过 365 天，且必须填写与图片内容一致的 footer_alt。
+footer_valid_until: ""

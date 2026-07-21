@@ -9,7 +9,13 @@ import hashlib
 import re
 import sys
 from datetime import date
-from pathlib import Path
+from html import unescape
+from html.parser import HTMLParser
+from pathlib import Path, PurePosixPath
+from urllib.parse import unquote
+
+from markdown_it import MarkdownIt
+from tinycss2 import parse_declaration_list
 
 
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
@@ -41,8 +47,52 @@ COPYEDIT_STATES = {"pass", "needs_fix"}
 SHA256_PATTERN = re.compile(r"^[0-9a-f]{64}$")
 ISO_DATE_PATTERN = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 IMAGE_SUFFIXES = {".avif", ".gif", ".jpeg", ".jpg", ".png", ".svg", ".webp"}
-IMAGE_PATTERN = re.compile(r"!\[[^\]]*\]\(([^)]+)\)")
+MARKDOWN_LINK_PATTERN = re.compile(r"(?<!!)\[[^\]]*\]\(([^)]+)\)")
+MARKDOWN_AUTOLINK_PATTERN = re.compile(r"<\s*((?:javascript|vbscript)\s*:[^>]*)>", re.I)
 WINDOWS_ABSOLUTE_PATTERN = re.compile(r"\b[A-Za-z]:[\\/]")
+URL_SCHEME_PATTERN = re.compile(r"^[A-Za-z][A-Za-z0-9+.-]*:")
+FORBIDDEN_HTML_TAGS = {
+    "audio",
+    "base",
+    "embed",
+    "form",
+    "iframe",
+    "link",
+    "meta",
+    "object",
+    "picture",
+    "script",
+    "source",
+    "style",
+    "svg",
+    "track",
+    "video",
+}
+URL_ATTRIBUTES = {
+    "action",
+    "background",
+    "cite",
+    "data",
+    "formaction",
+    "href",
+    "poster",
+    "src",
+    "srcset",
+    "xlink:href",
+}
+UNSUPPORTED_RESOURCE_ATTRIBUTES = {"background", "data-src", "poster", "srcset"}
+ALLOWED_NAVIGATION_SCHEMES = {"http", "https", "mailto", "tel"}
+CSS_RESOURCE_FUNCTIONS = {
+    "-moz-element",
+    "-webkit-cross-fade",
+    "-webkit-image-set",
+    "cross-fade",
+    "element",
+    "image",
+    "image-set",
+    "paint",
+    "url",
+}
 SUPPORTED_MANIFEST_VERSION = 2
 MANIFEST_V2_REQUIRED_FIELDS = (
     "file",
@@ -68,7 +118,16 @@ AI_GENERATED_REQUIRED_FIELDS = (
 )
 AI_GENERATION_MODES = {"text_to_image", "referenced_edit", "image_edit"}
 REFERENCE_GENERATION_MODES = {"referenced_edit", "image_edit"}
-RELEASE_ASSET_USES = {"wechat_cover", "x_media"}
+MARKDOWN_PARSER = MarkdownIt("commonmark", {"html": True})
+# Parse the same URL shapes that downstream renderers may accept. Safety is
+# enforced below by our own scheme and local-image checks, not parser defaults.
+MARKDOWN_PARSER.validateLink = lambda _url: True
+RELEASE_ASSET_USES = {
+    "wechat_body_footer",
+    "wechat_body_header",
+    "wechat_cover",
+    "x_media",
+}
 NON_RELEASE_ASSET_USES = {"research_reference", "unused"}
 GOVERNED_PROMPT_HASHES = {
     "appsso-004": "6ba5e092a4f8d6fb2bd33602424ba4792715aa59f2bf5f916b90d8bb3f0bbd0a",
@@ -243,11 +302,13 @@ def canonical_package_key(package: Path, raw_path: str) -> str | None:
     """Return a case-folded package-relative key after resolving path aliases."""
 
     value = raw_path.strip().replace("\\", "/")
+    path_parts = PurePosixPath(value).parts
     if (
         not value
         or value.startswith("/")
         or WINDOWS_ABSOLUTE_PATTERN.search(value)
         or re.match(r"^[A-Za-z][A-Za-z0-9+.-]*:", value)
+        or any(part in {"", ".", ".."} or ":" in part for part in path_parts)
     ):
         return None
     try:
@@ -338,6 +399,10 @@ def validate_manifest_assets(
         declared_use = asset.get("use")
         used_as_cover = asset.get("used_as_cover")
         file_key = canonical_package_key(package, file_value) if file_value else None
+        if file_value and file_key is None:
+            errors.append(
+                f"manifest path must be package-relative and contain no unsafe path segments: {file_value}"
+            )
         referenced_in_draft = file_key in draft_image_targets if file_key else False
         release_bound = (
             referenced_in_draft
@@ -593,10 +658,194 @@ def copyedit_body_sha256(draft: str) -> str:
 
 
 def normalize_markdown_target(target: str) -> str:
-    target = target.strip()
-    if target.startswith("<") and target.endswith(">"):
-        target = target[1:-1]
-    return target.split("#", 1)[0]
+    """Return the destination portion of a Markdown link or image target."""
+
+    value = unescape(target.strip())
+    if value.startswith("<"):
+        closing = value.find(">", 1)
+        value = value[1:closing] if closing >= 0 else value[1:]
+    else:
+        value = value.split(None, 1)[0] if value else ""
+    return normalize_html_target(value)
+
+
+def normalize_html_target(target: str) -> str:
+    """Normalize an HTML URL attribute without treating encoded # as a fragment."""
+
+    value = unescape(target.strip()).split("#", 1)[0]
+    return unquote(value)
+
+
+def compact_url_for_scheme_check(value: str) -> str:
+    decoded = unquote(unescape(value))
+    return re.sub(r"[\x00-\x20]+", "", decoded).casefold()
+
+
+def has_dangerous_url_scheme(value: str) -> bool:
+    compact = compact_url_for_scheme_check(value)
+    return compact.startswith(("javascript:", "vbscript:"))
+
+
+def has_forbidden_navigation_scheme(value: str) -> bool:
+    compact = compact_url_for_scheme_check(value)
+    match = re.match(r"^([a-z][a-z0-9+.-]*):", compact)
+    return bool(match and match.group(1) not in ALLOWED_NAVIGATION_SCHEMES)
+
+
+def css_tokens_have_resource(tokens: list[object]) -> bool:
+    for token in tokens:
+        token_type = getattr(token, "type", "")
+        if token_type in {"error", "url"}:
+            return True
+        if token_type == "function":
+            if getattr(token, "lower_name", "") in CSS_RESOURCE_FUNCTIONS:
+                return True
+            if css_tokens_have_resource(list(getattr(token, "arguments", []))):
+                return True
+        content = getattr(token, "content", None)
+        if content and css_tokens_have_resource(list(content)):
+            return True
+    return False
+
+
+def style_has_resource_reference(style: str) -> bool:
+    declarations = parse_declaration_list(
+        unescape(unquote(style)), skip_comments=True, skip_whitespace=True
+    )
+    for declaration in declarations:
+        if getattr(declaration, "type", "") == "error":
+            return True
+        if css_tokens_have_resource(list(getattr(declaration, "value", []))):
+            return True
+    return False
+
+
+class DraftHTMLInspector(HTMLParser):
+    """Collect raw HTML images and reject active HTML that is unsafe to preview."""
+
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=True)
+        self.image_targets: list[str] = []
+        self.issues: list[str] = []
+
+    @staticmethod
+    def local_name(name: str) -> str:
+        return name.casefold().rsplit(":", 1)[-1]
+
+    def inspect_tag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        normalized_tag = self.local_name(tag)
+        if normalized_tag in FORBIDDEN_HTML_TAGS:
+            self.issues.append(f"draft.md contains forbidden HTML tag <{normalized_tag}>")
+
+        attribute_map: dict[str, str] = {}
+        for raw_name, raw_value in attrs:
+            name = raw_name.casefold()
+            value = raw_value or ""
+            if name in attribute_map:
+                self.issues.append(
+                    f"draft.md contains duplicate HTML attribute {name}"
+                )
+            else:
+                attribute_map[name] = value
+            if name.startswith("on"):
+                self.issues.append(
+                    f"draft.md contains forbidden HTML event attribute {name}"
+                )
+            if name in UNSUPPORTED_RESOURCE_ATTRIBUTES:
+                self.issues.append(
+                    f"draft.md contains unsupported HTML resource attribute {name}"
+                )
+            if name == "src" and normalized_tag != "img":
+                self.issues.append(
+                    f"draft.md contains unsupported HTML src on <{normalized_tag}>"
+                )
+            if name in URL_ATTRIBUTES:
+                candidates = value.split(",") if name == "srcset" else [value]
+                for candidate in candidates:
+                    destination = candidate.strip()
+                    if name == "srcset" and destination:
+                        destination = destination.split(None, 1)[0]
+                    if destination and has_forbidden_navigation_scheme(destination):
+                        self.issues.append(
+                            f"draft.md contains forbidden URL scheme in HTML attribute {name}"
+                        )
+                        break
+            if name == "style" and style_has_resource_reference(value):
+                self.issues.append(
+                    "draft.md contains a resource reference in an HTML style attribute"
+                )
+
+        if normalized_tag == "img":
+            source = attribute_map.get("src", "").strip()
+            if source:
+                self.image_targets.append(normalize_html_target(source))
+            else:
+                self.issues.append("draft.md contains an HTML img without a non-empty src")
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        self.inspect_tag(tag, attrs)
+
+    def handle_startendtag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        self.inspect_tag(tag, attrs)
+
+
+def inspect_draft_body(body: str) -> tuple[list[tuple[str, str]], list[str]]:
+    """Return semantic Markdown/HTML images and active-content issues."""
+
+    references: list[tuple[str, str]] = []
+    issues: list[str] = []
+    tokens = MARKDOWN_PARSER.parse(body)
+    stack = list(reversed(tokens))
+    while stack:
+        token = stack.pop()
+        if token.children:
+            stack.extend(reversed(token.children))
+        if token.type == "image":
+            source = token.attrGet("src") or ""
+            references.append(("Markdown", normalize_html_target(source)))
+        elif token.type == "link_open":
+            destination = token.attrGet("href") or ""
+            if destination and has_forbidden_navigation_scheme(destination):
+                issues.append(
+                    "draft.md contains forbidden Markdown URL scheme"
+                )
+        elif token.type == "text":
+            text_targets = MARKDOWN_LINK_PATTERN.findall(token.content)
+            if any(
+                has_forbidden_navigation_scheme(normalize_markdown_target(target))
+                for target in text_targets
+            ) or MARKDOWN_AUTOLINK_PATTERN.search(token.content):
+                issues.append(
+                    "draft.md contains forbidden Markdown URL scheme"
+                )
+        elif token.type in {"html_block", "html_inline"}:
+            inspector = DraftHTMLInspector()
+            inspector.feed(token.content)
+            inspector.close()
+            issues.extend(inspector.issues)
+            references.extend(
+                ("HTML", target) for target in inspector.image_targets
+            )
+            # CommonMark may keep a Markdown-looking line in the same HTML block.
+            # Scan that token conservatively so a blocked URL scheme cannot disappear
+            # merely because it follows block HTML without a blank-line boundary.
+            text_targets = MARKDOWN_LINK_PATTERN.findall(token.content)
+            if any(
+                has_forbidden_navigation_scheme(normalize_markdown_target(target))
+                for target in text_targets
+            ) or MARKDOWN_AUTOLINK_PATTERN.search(token.content):
+                issues.append(
+                    "draft.md contains forbidden Markdown URL scheme"
+                )
+
+    return references, list(dict.fromkeys(issues))
+
+
+def has_external_image_scheme(target: str) -> bool:
+    value = target.strip()
+    if value.startswith("//"):
+        return True
+    return URL_SCHEME_PATTERN.match(value) is not None
 
 
 def validate(package: Path) -> tuple[list[str], list[str], int]:
@@ -627,8 +876,9 @@ def validate(package: Path) -> tuple[list[str], list[str], int]:
             f"maximum supported version is {SUPPORTED_MANIFEST_VERSION}"
         )
 
+    draft_body = ""
     try:
-        metadata = parse_frontmatter(draft, "draft.md")
+        metadata, draft_body = split_frontmatter(draft, "draft.md")
     except ValueError as exc:
         errors.append(str(exc))
         metadata = {}
@@ -720,14 +970,42 @@ def validate(package: Path) -> tuple[list[str], list[str], int]:
         for asset in manifest_assets
         if isinstance((value := asset.get("file")), str) and value
     }
+    manifest_file_keys = {
+        key
+        for value in manifest_files
+        if (key := canonical_package_key(package, value)) is not None
+    }
+    image_references, html_issues = inspect_draft_body(draft_body)
+    errors.extend(html_issues)
     draft_image_targets: set[str] = set()
-    for raw_target in IMAGE_PATTERN.findall(draft):
-        target = normalize_markdown_target(raw_target)
-        if target.startswith(("http://", "https://", "data:")):
+    local_image_references: list[tuple[str, str, str]] = []
+    image_count = 0
+    for origin, target in image_references:
+        if not target:
+            errors.append(f"{origin} image target is empty")
             continue
+        if WINDOWS_ABSOLUTE_PATTERN.search(target) or (
+            target.startswith(("/", "\\")) and not target.startswith("//")
+        ):
+            errors.append(f"{origin} image path must be package-relative: {target}")
+            continue
+        if has_forbidden_navigation_scheme(target):
+            errors.append(f"{origin} image contains a forbidden URL scheme: {target}")
+            continue
+        if target.startswith("//") or has_external_image_scheme(target):
+            message = f"{origin} image is not packaged locally: {target}"
+            if status in {"ready", "published"}:
+                errors.append(message)
+            else:
+                warnings.append(message)
+            continue
+        image_count += 1
         target_key = canonical_package_key(package, target)
-        if target_key:
-            draft_image_targets.add(target_key)
+        if target_key is None:
+            errors.append(f"{origin} image path escapes package: {target}")
+            continue
+        draft_image_targets.add(target_key)
+        local_image_references.append((origin, target, target_key))
     manifest_errors, manifest_warnings = validate_manifest_assets(
         package,
         manifest_assets,
@@ -738,26 +1016,18 @@ def validate(package: Path) -> tuple[list[str], list[str], int]:
     )
     errors.extend(manifest_errors)
     warnings.extend(manifest_warnings)
-    image_count = 0
-    for raw_target in IMAGE_PATTERN.findall(draft):
-        target = normalize_markdown_target(raw_target)
-        if target.startswith(("http://", "https://", "data:")):
-            warnings.append(f"remote image is not packaged locally: {target}")
-            continue
-        image_count += 1
-        if WINDOWS_ABSOLUTE_PATTERN.search(target) or target.startswith("/"):
-            errors.append(f"image path must be package-relative: {target}")
-            continue
+    for origin, target, target_key in local_image_references:
         resolved = (package / target).resolve()
-        if not resolved.is_relative_to(package):
-            errors.append(f"image path escapes package: {target}")
-            continue
         if not resolved.is_file():
-            errors.append(f"missing image: {target}")
-        if target.replace("\\", "/") not in manifest_files:
-            errors.append(f"image is not registered in asset-manifest.yml: {target}")
+            errors.append(f"missing {origin} image: {target}")
+        if target_key not in manifest_file_keys:
+            errors.append(
+                f"{origin} image is not registered in asset-manifest.yml: {target}"
+            )
 
     for value in manifest_files:
+        if canonical_package_key(package, value) is None:
+            continue
         path = (package / value).resolve()
         if not path.is_relative_to(package):
             errors.append(f"manifest path escapes package: {value}")
