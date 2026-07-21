@@ -1,0 +1,165 @@
+assets:
+  - file: "assets/fig2-bspline-fitting.png"
+    used_in_draft: true
+    source_type: "paper_figure"
+    source: "https://arxiv.org/pdf/2607.09648, Figure 2"
+    creator_or_rightsholder: "Xiaoshen Han et al. / respective rightsholders"
+    obtained_on: "2026-07-13"
+    modifications: "Cropped from PDF; no data or labels altered"
+    rights_status: "needs_review"
+    allowed_platforms: ["wechat"]
+    attribution: "Xiaoshen Han et al., B-spline Policy, Fig. 2"
+
+  - file: "assets/fig3-inference-pipeline.png"
+    used_in_draft: false
+    source_type: "paper_figure"
+    source: "https://arxiv.org/pdf/2607.09648, Figure 3"
+    creator_or_rightsholder: "Xiaoshen Han et al. / respective rightsholders"
+    obtained_on: "2026-07-13"
+    modifications: "Cropped from PDF; no data or labels altered"
+    rights_status: "needs_review"
+    allowed_platforms: ["wechat"]
+    attribution: "Xiaoshen Han et al., B-spline Policy, Fig. 3"
+
+  - file: "assets/fig3a-policy-output.png"
+    used_in_draft: true
+    source_type: "paper_figure"
+    source: "https://arxiv.org/pdf/2607.09648, Figure 3 left section"
+    creator_or_rightsholder: "Xiaoshen Han et al. / respective rightsholders"
+    obtained_on: "2026-07-13"
+    modifications: "Cropped from PDF and split for mobile readability; no data or labels altered"
+    rights_status: "needs_review"
+    allowed_platforms: ["wechat"]
+    attribution: "Xiaoshen Han et al., B-spline Policy, Fig. 3"
+
+  - file: "assets/fig3b-low-level-control.png"
+    used_in_draft: true
+    source_type: "paper_figure"
+    source: "https://arxiv.org/pdf/2607.09648, Figure 3 right section"
+    creator_or_rightsholder: "Xiaoshen Han et al. / respective rightsholders"
+    obtained_on: "2026-07-13"
+    modifications: "Cropped from PDF and split for mobile readability; no data or labels altered"
+    rights_status: "needs_review"
+    allowed_platforms: ["wechat"]
+    attribution: "Xiaoshen Han et al., B-spline Policy, Fig. 3"
+
+  - file: "assets/fig5-speed-stacking.png"
+    used_in_draft: true
+    source_type: "paper_figure"
+    source: "https://arxiv.org/pdf/2607.09648, Figure 5"
+    creator_or_rightsholder: "Xiaoshen Han et al. / respective rightsholders"
+    obtained_on: "2026-07-13"
+    modifications: "Cropped from PDF; no data or labels altered"
+    rights_status: "needs_review"
+    allowed_platforms: ["wechat"]
+    attribution: "Xiaoshen Han et al., B-spline Policy, Fig. 5"
+
+  - file: "assets/fig6-segment-alignment.png"
+    used_in_draft: true
+    source_type: "paper_figure"
+    source: "https://arxiv.org/pdf/2607.09648, Figure 6"
+    creator_or_rightsholder: "Xiaoshen Han et al. / respective rightsholders"
+    obtained_on: "2026-07-13"
+    modifications: "Cropped from PDF; no data or labels altered"
+    rights_status: "needs_review"
+    allowed_platforms: ["wechat"]
+    attribution: "Xiaoshen Han et al., B-spline Policy, Fig. 6"
+
+  - file: "research/source-assets/arxiv-2607.09648.pdf"
+    used_in_draft: false
+    source_type: "paper_pdf"
+    source: "https://arxiv.org/pdf/2607.09648"
+    creator_or_rightsholder: "Xiaoshen Han et al. / respective rightsholders"
+    obtained_on: "2026-07-13"
+    modifications: "Unmodified local research copy"
+    rights_status: "research_reference"
+    allowed_platforms: []
+    attribution: "arXiv:2607.09648"
+
+  - file: "research/rendered-pages/page-01.png"
+    used_in_draft: false
+    source_type: "paper_page_render"
+    source: "Local render of arXiv:2607.09648 page 1"
+    creator_or_rightsholder: "Xiaoshen Han et al. / respective rightsholders"
+    obtained_on: "2026-07-13"
+    modifications: "Rendered from PDF for visual inspection"
+    rights_status: "research_reference"
+    allowed_platforms: []
+    attribution: "arXiv:2607.09648"
+
+  - file: "research/rendered-pages/page-02.png"
+    used_in_draft: false
+    source_type: "paper_page_render"
+    source: "Local render of arXiv:2607.09648 page 2"
+    creator_or_rightsholder: "Xiaoshen Han et al. / respective rightsholders"
+    obtained_on: "2026-07-13"
+    modifications: "Rendered from PDF for visual inspection"
+    rights_status: "research_reference"
+    allowed_platforms: []
+    attribution: "arXiv:2607.09648"
+
+  - file: "research/rendered-pages/page-03.png"
+    used_in_draft: false
+    source_type: "paper_page_render"
+    source: "Local render of arXiv:2607.09648 page 3"
+    creator_or_rightsholder: "Xiaoshen Han et al. / respective rightsholders"
+    obtained_on: "2026-07-13"
+    modifications: "Rendered from PDF for visual inspection"
+    rights_status: "research_reference"
+    allowed_platforms: []
+    attribution: "arXiv:2607.09648"
+
+  - file: "research/rendered-pages/page-04.png"
+    used_in_draft: false
+    source_type: "paper_page_render"
+    source: "Local render of arXiv:2607.09648 page 4"
+    creator_or_rightsholder: "Xiaoshen Han et al. / respective rightsholders"
+    obtained_on: "2026-07-13"
+    modifications: "Rendered from PDF for visual inspection"
+    rights_status: "research_reference"
+    allowed_platforms: []
+    attribution: "arXiv:2607.09648"
+
+  - file: "research/rendered-pages/page-05.png"
+    used_in_draft: false
+    source_type: "paper_page_render"
+    source: "Local render of arXiv:2607.09648 page 5"
+    creator_or_rightsholder: "Xiaoshen Han et al. / respective rightsholders"
+    obtained_on: "2026-07-13"
+    modifications: "Rendered from PDF for visual inspection"
+    rights_status: "research_reference"
+    allowed_platforms: []
+    attribution: "arXiv:2607.09648"
+
+  - file: "research/rendered-pages/page-06.png"
+    used_in_draft: false
+    source_type: "paper_page_render"
+    source: "Local render of arXiv:2607.09648 page 6"
+    creator_or_rightsholder: "Xiaoshen Han et al. / respective rightsholders"
+    obtained_on: "2026-07-13"
+    modifications: "Rendered from PDF for visual inspection"
+    rights_status: "research_reference"
+    allowed_platforms: []
+    attribution: "arXiv:2607.09648"
+
+  - file: "research/rendered-pages/page-07.png"
+    used_in_draft: false
+    source_type: "paper_page_render"
+    source: "Local render of arXiv:2607.09648 page 7"
+    creator_or_rightsholder: "Xiaoshen Han et al. / respective rightsholders"
+    obtained_on: "2026-07-13"
+    modifications: "Rendered from PDF for visual inspection"
+    rights_status: "research_reference"
+    allowed_platforms: []
+    attribution: "arXiv:2607.09648"
+
+  - file: "research/rendered-pages/page-08.png"
+    used_in_draft: false
+    source_type: "paper_page_render"
+    source: "Local render of arXiv:2607.09648 page 8"
+    creator_or_rightsholder: "Xiaoshen Han et al. / respective rightsholders"
+    obtained_on: "2026-07-13"
+    modifications: "Rendered from PDF for visual inspection"
+    rights_status: "research_reference"
+    allowed_platforms: []
+    attribution: "arXiv:2607.09648"

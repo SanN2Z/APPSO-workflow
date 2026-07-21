@@ -1,0 +1,352 @@
+{
+  "live_ranked": [
+    {
+      "brier_total": 46.1878,
+      "by_stage": {
+        "group": {
+          "brier_total": 34.831,
+          "correct_picks": 47,
+          "graded": 72,
+          "log_loss_total": 58.895122
+        },
+        "knockout": {
+          "brier_total": 11.3568,
+          "correct_picks": 25,
+          "graded": 32,
+          "log_loss_total": 17.225522
+        }
+      },
+      "correct_picks": 72,
+      "graded": 104,
+      "log_loss_total": 76.120644,
+      "model": "deepseek"
+    },
+    {
+      "brier_total": 46.3988,
+      "by_stage": {
+        "group": {
+          "brier_total": 35.7804,
+          "correct_picks": 45,
+          "graded": 72,
+          "log_loss_total": 60.026539
+        },
+        "knockout": {
+          "brier_total": 10.6184,
+          "correct_picks": 25,
+          "graded": 31,
+          "log_loss_total": 16.27545
+        }
+      },
+      "correct_picks": 70,
+      "graded": 103,
+      "log_loss_total": 76.301989,
+      "model": "google"
+    },
+    {
+      "brier_total": 46.843994,
+      "by_stage": {
+        "group": {
+          "brier_total": 35.888488,
+          "correct_picks": 47,
+          "graded": 72,
+          "log_loss_total": 60.503581
+        },
+        "knockout": {
+          "brier_total": 10.955506,
+          "correct_picks": 26,
+          "graded": 32,
+          "log_loss_total": 16.779849
+        }
+      },
+      "correct_picks": 73,
+      "graded": 104,
+      "log_loss_total": 77.28343,
+      "model": "consensus"
+    },
+    {
+      "brier_total": 47.4706,
+      "by_stage": {
+        "group": {
+          "brier_total": 36.8366,
+          "correct_picks": 47,
+          "graded": 72,
+          "log_loss_total": 61.404626
+        },
+        "knockout": {
+          "brier_total": 10.634,
+          "correct_picks": 26,
+          "graded": 32,
+          "log_loss_total": 16.334185
+        }
+      },
+      "correct_picks": 73,
+      "graded": 104,
+      "log_loss_total": 77.738811,
+      "model": "xai"
+    },
+    {
+      "brier_total": 47.6774,
+      "by_stage": {
+        "group": {
+          "brier_total": 36.8018,
+          "correct_picks": 45,
+          "graded": 72,
+          "log_loss_total": 62.003272
+        },
+        "knockout": {
+          "brier_total": 10.8756,
+          "correct_picks": 27,
+          "graded": 32,
+          "log_loss_total": 16.551723
+        }
+      },
+      "correct_picks": 72,
+      "graded": 104,
+      "log_loss_total": 78.554995,
+      "model": "anthropic"
+    },
+    {
+      "brier_total": 48.6954,
+      "by_stage": {
+        "group": {
+          "brier_total": 37.1378,
+          "correct_picks": 45,
+          "graded": 72,
+          "log_loss_total": 62.808999
+        },
+        "knockout": {
+          "brier_total": 11.5576,
+          "correct_picks": 26,
+          "graded": 32,
+          "log_loss_total": 17.47286
+        }
+      },
+      "correct_picks": 71,
+      "graded": 104,
+      "log_loss_total": 80.281859,
+      "model": "openai"
+    }
+  ],
+  "overall_ranked": [
+    {
+      "brier_total": 81.36,
+      "by_stage": {
+        "group": {
+          "brier_total": 70.7416,
+          "correct_picks": 92,
+          "graded": 144,
+          "log_loss_total": 118.713215
+        },
+        "knockout": {
+          "brier_total": 10.6184,
+          "correct_picks": 25,
+          "graded": 31,
+          "log_loss_total": 16.27545
+        }
+      },
+      "correct_picks": 117,
+      "graded": 175,
+      "log_loss_total": 134.988665,
+      "model": "google"
+    },
+    {
+      "brier_total": 81.7166,
+      "by_stage": {
+        "group": {
+          "brier_total": 70.3598,
+          "correct_picks": 92,
+          "graded": 144,
+          "log_loss_total": 118.989851
+        },
+        "knockout": {
+          "brier_total": 11.3568,
+          "correct_picks": 25,
+          "graded": 32,
+          "log_loss_total": 17.225522
+        }
+      },
+      "correct_picks": 117,
+      "graded": 176,
+      "log_loss_total": 136.215373,
+      "model": "deepseek"
+    },
+    {
+      "brier_total": 82.450858,
+      "by_stage": {
+        "group": {
+          "brier_total": 71.495352,
+          "correct_picks": 93,
+          "graded": 144,
+          "log_loss_total": 120.592997
+        },
+        "knockout": {
+          "brier_total": 10.955506,
+          "correct_picks": 26,
+          "graded": 32,
+          "log_loss_total": 16.779849
+        }
+      },
+      "correct_picks": 119,
+      "graded": 176,
+      "log_loss_total": 137.372846,
+      "model": "consensus"
+    },
+    {
+      "brier_total": 83.8274,
+      "by_stage": {
+        "group": {
+          "brier_total": 73.1934,
+          "correct_picks": 94,
+          "graded": 144,
+          "log_loss_total": 122.171325
+        },
+        "knockout": {
+          "brier_total": 10.634,
+          "correct_picks": 26,
+          "graded": 32,
+          "log_loss_total": 16.334185
+        }
+      },
+      "correct_picks": 120,
+      "graded": 176,
+      "log_loss_total": 138.50551,
+      "model": "xai"
+    },
+    {
+      "brier_total": 83.8594,
+      "by_stage": {
+        "group": {
+          "brier_total": 72.9838,
+          "correct_picks": 91,
+          "graded": 144,
+          "log_loss_total": 123.193303
+        },
+        "knockout": {
+          "brier_total": 10.8756,
+          "correct_picks": 27,
+          "graded": 32,
+          "log_loss_total": 16.551723
+        }
+      },
+      "correct_picks": 118,
+      "graded": 176,
+      "log_loss_total": 139.745026,
+      "model": "anthropic"
+    },
+    {
+      "brier_total": 85.5076,
+      "by_stage": {
+        "group": {
+          "brier_total": 73.95,
+          "correct_picks": 92,
+          "graded": 144,
+          "log_loss_total": 125.035803
+        },
+        "knockout": {
+          "brier_total": 11.5576,
+          "correct_picks": 26,
+          "graded": 32,
+          "log_loss_total": 17.47286
+        }
+      },
+      "correct_picks": 118,
+      "graded": 176,
+      "log_loss_total": 142.508663,
+      "model": "openai"
+    }
+  ],
+  "ranked": [
+    {
+      "brier_total": 34.9612,
+      "by_stage": {
+        "group": {
+          "brier_total": 34.9612,
+          "correct_picks": 47,
+          "graded": 72,
+          "log_loss_total": 58.686676
+        }
+      },
+      "correct_picks": 47,
+      "graded": 72,
+      "log_loss_total": 58.686676,
+      "model": "google"
+    },
+    {
+      "brier_total": 35.5288,
+      "by_stage": {
+        "group": {
+          "brier_total": 35.5288,
+          "correct_picks": 45,
+          "graded": 72,
+          "log_loss_total": 60.094729
+        }
+      },
+      "correct_picks": 45,
+      "graded": 72,
+      "log_loss_total": 60.094729,
+      "model": "deepseek"
+    },
+    {
+      "brier_total": 35.606864,
+      "by_stage": {
+        "group": {
+          "brier_total": 35.606864,
+          "correct_picks": 46,
+          "graded": 72,
+          "log_loss_total": 60.089416
+        }
+      },
+      "correct_picks": 46,
+      "graded": 72,
+      "log_loss_total": 60.089416,
+      "model": "consensus"
+    },
+    {
+      "brier_total": 36.182,
+      "by_stage": {
+        "group": {
+          "brier_total": 36.182,
+          "correct_picks": 46,
+          "graded": 72,
+          "log_loss_total": 61.190031
+        }
+      },
+      "correct_picks": 46,
+      "graded": 72,
+      "log_loss_total": 61.190031,
+      "model": "anthropic"
+    },
+    {
+      "brier_total": 36.3568,
+      "by_stage": {
+        "group": {
+          "brier_total": 36.3568,
+          "correct_picks": 47,
+          "graded": 72,
+          "log_loss_total": 60.766699
+        }
+      },
+      "correct_picks": 47,
+      "graded": 72,
+      "log_loss_total": 60.766699,
+      "model": "xai"
+    },
+    {
+      "brier_total": 36.8122,
+      "by_stage": {
+        "group": {
+          "brier_total": 36.8122,
+          "correct_picks": 47,
+          "graded": 72,
+          "log_loss_total": 62.226804
+        }
+      },
+      "correct_picks": 47,
+      "graded": 72,
+      "log_loss_total": 62.226804,
+      "model": "openai"
+    }
+  ],
+  "tournament_complete": true,
+  "updated_at": "2026-07-20T05:58:49Z"
+}

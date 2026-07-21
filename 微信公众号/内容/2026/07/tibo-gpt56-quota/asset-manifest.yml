@@ -1,0 +1,269 @@
+version: 1
+updated: "2026-07-12"
+assets:
+  - file: "assets/cover-v2.png"
+    used_in_draft: true
+    source_type: "project_generated"
+    source: "Generated from the locked title hook with the deterministic Pillow script"
+    creator_or_rightsholder: "This project"
+    obtained_on: "2026-07-12"
+    modifications: "Original v2 cover; no external logos or source imagery"
+    rights_status: "project_owned"
+    allowed_platforms: ["wechat", "x"]
+    attribution: "None required"
+
+  - file: "assets/timeline-v2.png"
+    used_in_draft: true
+    source_type: "project_generated"
+    source: "Generated from FACT-TIME-01 in research/fact-sheet.md"
+    creator_or_rightsholder: "This project"
+    obtained_on: "2026-07-12"
+    modifications: "Original v2 timeline with timezone assumption, 24-hour rollout, and causality limit"
+    rights_status: "project_owned"
+    allowed_platforms: ["wechat", "x"]
+    attribution: "本文整理；时间依据 OpenAI 预告与包内用户截图"
+
+  - file: "assets/usable-intelligence-v2.png"
+    used_in_draft: true
+    source_type: "project_generated"
+    source: "Generated from the locked 1+4 framework in brief.md"
+    creator_or_rightsholder: "This project"
+    obtained_on: "2026-07-12"
+    modifications: "Original v2 framework graphic; explicitly marked as an editorial framework, not an academic formula"
+    rights_status: "project_owned"
+    allowed_platforms: ["wechat", "x"]
+    attribution: "本文分析框架"
+
+  - file: "assets/api-pricing-v2.png"
+    used_in_draft: true
+    source_type: "project_generated"
+    source: "Generated from the verified standard short-context API prices in research/fact-sheet.md"
+    creator_or_rightsholder: "This project"
+    obtained_on: "2026-07-12"
+    modifications: "Original v2 price card with context and total-cost limits"
+    rights_status: "project_owned"
+    allowed_platforms: ["wechat", "x"]
+    attribution: "本文整理；数据来源见 sources.md"
+
+  - file: "assets/benchmark-split-v2.png"
+    used_in_draft: true
+    source_type: "project_generated"
+    source: "Generated from the six-row OpenAI release table recorded in FACT-BENCH-01"
+    creator_or_rightsholder: "This project"
+    obtained_on: "2026-07-12"
+    modifications: "Original v2 comparison card; preserves per-row model/config and non-combinability limits"
+    rights_status: "project_owned"
+    allowed_platforms: ["wechat", "x"]
+    attribution: "本文整理；据 OpenAI GPT-5.6 发布页"
+
+  - file: "assets/swebench-warning-v2.png"
+    used_in_draft: true
+    source_type: "project_generated"
+    source: "Generated from FACT-SWE-01 and the OpenAI SWE-Bench Pro audit"
+    creator_or_rightsholder: "This project"
+    obtained_on: "2026-07-12"
+    modifications: "Original v2 audit warning card; distinguishes pipeline from human-labeling activity"
+    rights_status: "project_owned"
+    allowed_platforms: ["wechat", "x"]
+    attribution: "本文整理；据 OpenAI SWE-Bench Pro audit"
+
+  - file: "assets/user-cover.png"
+    used_in_draft: false
+    source_type: "user_supplied"
+    source: "User-provided optimized cover"
+    creator_or_rightsholder: "User-reported"
+    obtained_on: "2026-07-10"
+    modifications: "None after delivery"
+    rights_status: "user_confirmation_required"
+    allowed_platforms: ["wechat"]
+    attribution: "Not specified"
+
+  - file: "assets/user-api-pricing.png"
+    used_in_draft: false
+    source_type: "user_supplied"
+    source: "User-provided optimized chart"
+    creator_or_rightsholder: "User-reported"
+    obtained_on: "2026-07-10"
+    modifications: "None after delivery"
+    rights_status: "user_confirmation_required"
+    allowed_platforms: ["wechat"]
+    attribution: "Data sources cited in draft"
+
+  - file: "assets/user-benchmark-split.png"
+    used_in_draft: false
+    source_type: "user_supplied"
+    source: "User-provided optimized chart"
+    creator_or_rightsholder: "User-reported"
+    obtained_on: "2026-07-10"
+    modifications: "None after delivery"
+    rights_status: "user_confirmation_required"
+    allowed_platforms: ["wechat"]
+    attribution: "Data source cited in draft"
+
+  - file: "assets/user-usable-intelligence-main.png"
+    used_in_draft: false
+    source_type: "user_supplied"
+    source: "User-provided optimized concept graphic"
+    creator_or_rightsholder: "User-reported"
+    obtained_on: "2026-07-10"
+    modifications: "None after delivery"
+    rights_status: "user_confirmation_required"
+    allowed_platforms: ["wechat"]
+    attribution: "Not specified"
+
+  - file: "assets/user-usable-intelligence-summary.png"
+    used_in_draft: false
+    source_type: "user_supplied"
+    source: "User-provided optimized summary graphic"
+    creator_or_rightsholder: "User-reported"
+    obtained_on: "2026-07-10"
+    modifications: "None after delivery"
+    rights_status: "user_confirmation_required"
+    allowed_platforms: ["wechat"]
+    attribution: "Not specified"
+
+  - file: "assets/claude-reset-tibo.png"
+    used_in_draft: true
+    source_type: "user_supplied_screenshot"
+    source: "ClaudeDevs post and Tibo reply on X"
+    creator_or_rightsholder: "Original posters / platform"
+    obtained_on: "2026-07-10"
+    modifications: "Screenshot supplied by user"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_confirmation: "User confirmed WeChat commentary/reporting use and public-account context on 2026-07-12; no commercial license implied"
+    allowed_platforms: ["wechat"]
+    attribution: "Describe source and context in caption"
+
+  - file: "assets/timeline.png"
+    used_in_draft: false
+    source_type: "project_generated"
+    source: "Generated from cited timestamps"
+    creator_or_rightsholder: "This project"
+    obtained_on: "2026-07-10"
+    modifications: "Original chart"
+    rights_status: "project_owned"
+    allowed_platforms: ["wechat", "x"]
+    attribution: "本文整理"
+
+  - file: "assets/swebench-warning.png"
+    used_in_draft: false
+    source_type: "project_generated"
+    source: "Generated from OpenAI SWE-Bench Pro audit data"
+    creator_or_rightsholder: "This project"
+    obtained_on: "2026-07-10"
+    modifications: "Original chart"
+    rights_status: "project_owned"
+    allowed_platforms: ["wechat", "x"]
+    attribution: "Cite OpenAI audit"
+
+  - file: "assets/chatgpt-work-official-web.jpg"
+    used_in_draft: true
+    source_type: "official_product_image"
+    source: "https://openai.com/index/chatgpt-for-your-most-ambitious-work/"
+    creator_or_rightsholder: "OpenAI"
+    obtained_on: "2026-07-10"
+    modifications: "Web-optimized copy"
+    rights_status: "user_confirmed_editorial_use"
+    rights_confirmation: "User confirmed WeChat editorial use on 2026-07-12; source attribution retained and no commercial license implied"
+    allowed_platforms: ["wechat"]
+    attribution: "OpenAI ChatGPT Work release page"
+
+  - file: "assets/chatgpt-work-plugins-official-web.jpg"
+    used_in_draft: true
+    source_type: "official_product_image"
+    source: "https://openai.com/index/chatgpt-for-your-most-ambitious-work/"
+    creator_or_rightsholder: "OpenAI"
+    obtained_on: "2026-07-10"
+    modifications: "Web-optimized copy"
+    rights_status: "user_confirmed_editorial_use"
+    rights_confirmation: "User confirmed WeChat editorial use on 2026-07-12; source attribution retained and no commercial license implied"
+    allowed_platforms: ["wechat"]
+    attribution: "OpenAI ChatGPT Work release page"
+
+  - file: "research/source-assets/cover.png"
+    used_in_draft: false
+    source_type: "project_generated"
+    source: "Earlier project cover"
+    creator_or_rightsholder: "This project"
+    obtained_on: "2026-07-10"
+    modifications: "Superseded by user-cover.png"
+    rights_status: "project_owned"
+    allowed_platforms: ["wechat", "x"]
+    attribution: "None required"
+
+  - file: "research/source-assets/api-pricing.png"
+    used_in_draft: false
+    source_type: "project_generated"
+    source: "Earlier project chart"
+    creator_or_rightsholder: "This project"
+    obtained_on: "2026-07-10"
+    modifications: "Superseded by user-api-pricing.png"
+    rights_status: "project_owned"
+    allowed_platforms: ["wechat", "x"]
+    attribution: "Cite underlying data"
+
+  - file: "research/source-assets/benchmark-split.png"
+    used_in_draft: false
+    source_type: "project_generated"
+    source: "Earlier project chart"
+    creator_or_rightsholder: "This project"
+    obtained_on: "2026-07-10"
+    modifications: "Superseded by user-benchmark-split.png"
+    rights_status: "project_owned"
+    allowed_platforms: ["wechat", "x"]
+    attribution: "Cite underlying data"
+
+  - file: "research/source-assets/usable-intelligence.png"
+    used_in_draft: false
+    source_type: "project_generated"
+    source: "Earlier project concept graphic"
+    creator_or_rightsholder: "This project"
+    obtained_on: "2026-07-10"
+    modifications: "Superseded by user graphics"
+    rights_status: "project_owned"
+    allowed_platforms: ["wechat", "x"]
+    attribution: "None required"
+
+  - file: "research/source-assets/chatgpt-work-official.png"
+    used_in_draft: false
+    source_type: "official_product_image"
+    source: "https://openai.com/index/chatgpt-for-your-most-ambitious-work/"
+    creator_or_rightsholder: "OpenAI"
+    obtained_on: "2026-07-10"
+    modifications: "Original-resolution local copy"
+    rights_status: "editorial_use_needs_review"
+    allowed_platforms: ["wechat"]
+    attribution: "OpenAI release page"
+
+  - file: "research/source-assets/chatgpt-work-plugins-official.png"
+    used_in_draft: false
+    source_type: "official_product_image"
+    source: "https://openai.com/index/chatgpt-for-your-most-ambitious-work/"
+    creator_or_rightsholder: "OpenAI"
+    obtained_on: "2026-07-10"
+    modifications: "Original-resolution local copy"
+    rights_status: "editorial_use_needs_review"
+    allowed_platforms: ["wechat"]
+    attribution: "OpenAI release page"
+
+  - file: "research/source-assets/chatgpt-sites-official.png"
+    used_in_draft: false
+    source_type: "official_product_image"
+    source: "https://openai.com/index/chatgpt-for-your-most-ambitious-work/"
+    creator_or_rightsholder: "OpenAI"
+    obtained_on: "2026-07-10"
+    modifications: "Original-resolution local copy"
+    rights_status: "editorial_use_needs_review"
+    allowed_platforms: ["wechat"]
+    attribution: "OpenAI release page"
+
+  - file: "research/source-assets/chatgpt-sites-official-web.jpg"
+    used_in_draft: false
+    source_type: "official_product_image"
+    source: "https://openai.com/index/chatgpt-for-your-most-ambitious-work/"
+    creator_or_rightsholder: "OpenAI"
+    obtained_on: "2026-07-10"
+    modifications: "Web-optimized copy"
+    rights_status: "editorial_use_needs_review"
+    allowed_platforms: ["wechat"]
+    attribution: "OpenAI release page"

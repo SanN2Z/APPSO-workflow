@@ -1,0 +1,26 @@
+version: 1
+updated: "2026-07-13"
+assets:
+  - file: "assets/cover-image2.png"
+    used_in_draft: true
+    source_type: "ai_generated"
+    source: "Generated with Image2 in the user's authenticated ChatGPT session; exact prompt archived in research/image-prompts.md"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-07-13"
+    dimensions: "1923x818"
+    modifications: "No post-generation edits; visually reviewed at original resolution"
+    rights_status: "project_owned"
+    allowed_platforms: ["wechat"]
+    attribution: "AI 生成"
+
+  - file: "assets/agent-closed-loop-image2.png"
+    used_in_draft: true
+    source_type: "ai_generated"
+    source: "Generated with Image2 in the user's authenticated ChatGPT session; exact prompt archived in research/image-prompts.md"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-07-13"
+    dimensions: "1536x1024"
+    modifications: "No post-generation edits; visually reviewed at original resolution"
+    rights_status: "project_owned"
+    allowed_platforms: ["wechat"]
+    attribution: "AI 生成"

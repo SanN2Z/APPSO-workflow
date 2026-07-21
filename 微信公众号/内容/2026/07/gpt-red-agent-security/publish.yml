@@ -1,0 +1,12 @@
+# 微信 API 标题不得超过 32 个字。
+title: "OpenAI 养了一个专门黑自家 AI 的模型"
+author: ""
+digest: "GPT-Red 不是新的 ChatGPT，而是 OpenAI 内部训练的攻击模型。它让真实售货机 Agent 改价，也暴露了更大的问题：当网页、邮件和文件都可能夹带指令，固定安全 benchmark 很快会过时。"
+cover: "assets/cover.png"
+source_url: "https://openai.com/index/unlocking-self-improvement-gpt-red/"
+theme: "default"
+highlight: "solarized-light"
+mac_style: false
+footnote: true
+need_open_comment: true
+only_fans_can_comment: false

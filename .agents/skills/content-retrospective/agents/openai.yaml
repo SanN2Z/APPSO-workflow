@@ -1,0 +1,4 @@
+interface:
+  display_name: "内容复盘与 SOP 进化"
+  short_description: "将发布反馈、修改意见与数据持续沉淀为可迁移的内容工作流"
+  default_prompt: "使用 $content-retrospective 复盘这轮内容反馈，并判断哪些经验应升级为 SOP。"

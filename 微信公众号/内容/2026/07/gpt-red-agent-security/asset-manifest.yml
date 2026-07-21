@@ -1,0 +1,51 @@
+version: 1
+updated: "2026-07-16"
+assets:
+  - file: "assets/cover.png"
+    used_in_draft: false
+    use: "wechat_cover"
+    source_type: "ai_generated"
+    source: "Generated with Image2 in the user's authenticated session from the project prompt; supplied by the user for this article"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-07-16"
+    dimensions: "1922x818"
+    modifications: "No post-generation edits; visually reviewed at original resolution"
+    rights_status: "project_owned"
+    allowed_platforms: ["wechat"]
+    attribution: "AI 生成"
+
+  - file: "assets/gpt-red-self-play.png"
+    used_in_draft: true
+    source_type: "ai_generated"
+    source: "Generated with Image2 in the user's authenticated session from the project prompt; supplied by the user for this article"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-07-16"
+    dimensions: "1536x1024"
+    modifications: "No post-generation edits; visually reviewed at original resolution"
+    rights_status: "project_owned"
+    allowed_platforms: ["wechat"]
+    attribution: "AI 生成"
+
+  - file: "assets/agent-security-layers.png"
+    used_in_draft: true
+    source_type: "ai_generated"
+    source: "Generated with Image2 in the user's authenticated session from the project prompt; supplied by the user for this article"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-07-16"
+    dimensions: "1536x1024"
+    modifications: "No post-generation edits; visually reviewed at original resolution"
+    rights_status: "project_owned"
+    allowed_platforms: ["wechat"]
+    attribution: "AI 生成"
+
+  - file: "research/source-assets/vending-case-brand-pending.png"
+    used_in_draft: false
+    source_type: "ai_generated"
+    source: "Generated with Image2 in the user's authenticated session from the project prompt; supplied by the user for this article"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-07-16"
+    dimensions: "1536x1024"
+    modifications: "No post-generation edits; excluded from publication because a shelf product contains a likely Apple-shaped mark"
+    rights_status: "needs_review"
+    allowed_platforms: []
+    attribution: "AI 生成"

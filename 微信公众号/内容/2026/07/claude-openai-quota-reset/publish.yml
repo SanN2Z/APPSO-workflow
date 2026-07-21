@@ -1,0 +1,12 @@
+# 微信 API 标题不得超过 32 个字。
+title: "Claude刚续杯，OpenAI 16分钟后跟上"
+author: ""
+digest: "Claude 刚重置所有用户的 5 小时和周额度，16 分钟后 OpenAI 也把 Codex 与 ChatGPT Work 的周额度拉回 100%。以前商战送券，现在送 Token。"
+cover: "assets/claude-reset.png"
+source_url: "https://x.com/thsottiaux/status/2077607697487188198"
+theme: "default"
+highlight: "solarized-light"
+mac_style: false
+footnote: true
+need_open_comment: true
+only_fans_can_comment: false

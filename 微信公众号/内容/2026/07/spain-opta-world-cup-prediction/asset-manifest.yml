@@ -1,0 +1,232 @@
+assets:
+  - file: "assets/cover-opta-59-6.png"
+    used_in_draft: false
+    used_as_cover: false
+    editorial_status: "superseded_per_user_direction"
+    source_type: "project_generated"
+    source: "本项目排版；背景来自 assets/spain-v-belgium-2026-cc0.jpg"
+    creator_or_rightsholder: "本项目（版式）；Alexis Doine（CC0 背景照片）"
+    obtained_on: "2026-07-20"
+    modifications: "将 CC0 现场照裁为 900×383，添加暗色遮罩、标题与来源字样"
+    rights_status: "project_owned_with_cc0_component"
+    allowed_platforms: ["wechat", "x"]
+    attribution: "背景图：Alexis Doine / Wikimedia Commons（CC0）"
+
+  - file: "assets/spain-v-belgium-2026-cc0.jpg"
+    used_in_draft: false
+    used_as_cover: true
+    source_type: "creative_commons"
+    source: "https://commons.wikimedia.org/wiki/File:2026_FIFA_World_Cup_Match_98,_Spain_v_Belgium_(2).jpg"
+    creator_or_rightsholder: "Alexis Doine"
+    obtained_on: "2026-07-20"
+    modifications: "下载 Wikimedia 1280 像素衍生版本；未裁切、未调色"
+    rights_status: "cc0_verified"
+    allowed_platforms: ["wechat", "x"]
+    attribution: "图为 2026 世界杯西班牙对比利时比赛现场；Alexis Doine / Wikimedia Commons，CC0 1.0"
+
+  - file: "assets/probability-59-6-vs-40-4.png"
+    used_in_draft: false
+    used_as_cover: false
+    editorial_status: "superseded_per_user_direction"
+    source_type: "project_generated"
+    source: "Opta 赛前概率，经 Yahoo Sports 等媒体转述；59.46% / 40.54% 四舍五入为 59.6% / 40.4%"
+    creator_or_rightsholder: "本项目"
+    obtained_on: "2026-07-20"
+    modifications: "原创 1080×780 概率条形图；未使用 Opta 图形、队徽或官方模板"
+    rights_status: "project_owned"
+    allowed_platforms: ["wechat", "x"]
+    attribution: "制图：本项目；数据：Opta（经 Yahoo Sports 转述）"
+
+  - file: "assets/monte-carlo-25000-explainer.png"
+    used_in_draft: false
+    used_as_cover: false
+    editorial_status: "superseded_per_user_direction"
+    source_type: "project_generated"
+    source: "依据公开的足球概率预测与蒙特卡洛模拟流程制作；仅为方法示意"
+    creator_or_rightsholder: "本项目"
+    obtained_on: "2026-07-20"
+    modifications: "原创 1080×900 四步流程图；未复制 Opta 专有模型图"
+    rights_status: "project_owned"
+    allowed_platforms: ["wechat", "x"]
+    attribution: "制图：本项目；方法示意，不代表 Opta 已公开完整模型与全部输入"
+
+  - file: "assets/opta-final-prediction-hero.jpg"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "1800x901"
+    source_type: "official_material"
+    source: "https://theanalyst.com/articles/spain-vs-argentina-prediction-world-cup-final-2026-match-preview；图片直链：https://theanalyst.com/wp-content/uploads/2026/07/spain-vs-argentina-world-cup-final-prediction.jpg"
+    creator_or_rightsholder: "Stats Perform / Opta Analyst；画面中的球员照片上游权利人未在页面标明"
+    obtained_on: "2026-07-20"
+    modifications: "未修改；原图下载"
+    rights_status: "needs_review"
+    rights_basis: "Stats Perform 网站条款仅允许个人、非商业使用，并禁止未经权利人事先书面同意复制、转载、上传或发布；该合成主图还含球员照片，页面未标明上游摄影权利人与可转载许可"
+    rights_blocker: true
+    allowed_platforms: []
+    attribution: "图源：Opta Analyst，原文发布于 2026 年 7 月 19 日"
+
+  - file: "assets/opta-spain-defence-2026.jpeg"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "1024x768"
+    source_type: "official_material"
+    source: "https://theanalyst.com/articles/spain-vs-argentina-prediction-world-cup-final-2026-match-preview；图片直链：https://theanalyst.com/wp-content/uploads/2026/07/spain-defence-at-world-cup-2026-1024x768.jpeg"
+    creator_or_rightsholder: "Stats Perform / Opta Analyst"
+    obtained_on: "2026-07-20"
+    modifications: "未修改；原图下载"
+    rights_status: "needs_review"
+    rights_basis: "Stats Perform 网站条款未给普通媒体或公众号提供通用转载许可；署名和评论报道语境不能替代权利人的书面许可"
+    rights_blocker: true
+    allowed_platforms: []
+    attribution: "图源：Opta Analyst；决赛前 7 场西班牙失球位置分布（图表口径：不含乌龙球）"
+
+  - file: "assets/opta-spain-argentina-probability.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "1024x1024"
+    source_type: "official_material"
+    source: "https://theanalyst.com/articles/spain-vs-argentina-prediction-world-cup-final-2026-match-preview；图片直链：https://theanalyst.com/wp-content/uploads/2026/07/spain-vs-argentina-prediction-1024x1024.png"
+    creator_or_rightsholder: "Stats Perform / Opta Analyst"
+    obtained_on: "2026-07-20"
+    modifications: "未修改；原图下载"
+    rights_status: "needs_review"
+    rights_basis: "Stats Perform 网站条款未给普通媒体或公众号提供通用转载许可；署名和评论报道语境不能替代权利人的书面许可"
+    rights_blocker: true
+    allowed_platforms: []
+    attribution: "图源：Opta Analyst；45% / 29% / 26% 为 90 分钟内西班牙胜 / 平 / 阿根廷胜概率，不是包含加时与点球的 59.5% / 40.5% 最终夺冠概率"
+
+  - file: "research/source-assets/cover-layout.svg"
+    used_in_draft: false
+    source_type: "project_source"
+    source: "cover-opta-59-6.png 的本地可编辑源文件"
+    creator_or_rightsholder: "本项目；内嵌背景为 Alexis Doine 的 CC0 图片"
+    obtained_on: "2026-07-20"
+    modifications: "原创排版源文件"
+    rights_status: "project_owned_with_cc0_component"
+    allowed_platforms: []
+    attribution: "不直接发布；见导出的 PNG"
+
+  - file: "research/source-assets/probability-chart.svg"
+    used_in_draft: false
+    source_type: "project_source"
+    source: "probability-59-6-vs-40-4.png 的本地可编辑源文件"
+    creator_or_rightsholder: "本项目"
+    obtained_on: "2026-07-20"
+    modifications: "原创排版源文件"
+    rights_status: "project_owned"
+    allowed_platforms: []
+    attribution: "不直接发布；见导出的 PNG"
+
+  - file: "research/source-assets/monte-carlo-process.svg"
+    used_in_draft: false
+    source_type: "project_source"
+    source: "monte-carlo-25000-explainer.png 的本地可编辑源文件"
+    creator_or_rightsholder: "本项目"
+    obtained_on: "2026-07-20"
+    modifications: "原创排版源文件"
+    rights_status: "project_owned"
+    allowed_platforms: []
+    attribution: "不直接发布；见导出的 PNG"
+
+  - file: "research/source-assets/opta-pre-tournament-predictions-reference.jpeg"
+    used_in_draft: false
+    source_type: "official_material"
+    source: "https://theanalyst.com/articles/who-will-win-2026-fifa-world-cup-predictions-opta-supercomputer"
+    creator_or_rightsholder: "Stats Perform / Opta Analyst"
+    obtained_on: "2026-07-20"
+    modifications: "从官方网页下载 1024×768 版本；仅保存在研究区"
+    rights_status: "needs_review"
+    allowed_platforms: []
+    attribution: "研究参考，不得直接发布；Stats Perform 条款说明网站图片受版权保护"
+
+  - file: "research/source-assets/opta-spain-world-cup-winners-reference.jpg"
+    used_in_draft: false
+    source_type: "official_material"
+    source: "https://theanalyst.com/wp-content/uploads/2026/07/spain-world-cup-winners-1024x512.jpg"
+    creator_or_rightsholder: "Stats Perform / Opta Analyst 或其上游图片授权方（未公开）"
+    obtained_on: "2026-07-20"
+    modifications: "从 Opta 官方站下载缩略图；仅保存在研究区"
+    rights_status: "needs_review"
+    allowed_platforms: []
+    attribution: "研究参考，不得直接发布；照片上游权利人与授权范围未查明"
+
+  - file: "assets/personal-world-cup-betting-waterfall.png"
+    used_in_draft: false
+    dimensions: "1080x1680"
+    source_type: "project_generated"
+    source: "D:/projects/soccer 本地实购记录的已审计汇总；仓库未含票根或支付流水，不具备独立核验条件"
+    creator_or_rightsholder: "本项目（制图）；用户（实购记录）"
+    obtained_on: "2026-07-20"
+    modifications: "根据 7 笔已审计盈亏节点原创制作 1080×1680 收益瀑布图；图内显式区分初始方案额度比例与累计下注口径"
+    rights_status: "project_owned"
+    evidence_status: "limited_to_local_ledger_without_ticket_or_payment_receipt"
+    allowed_platforms: ["wechat", "x"]
+    attribution: "制图：本项目；数据：用户本地实购记录（票根 / 支付流水未在仓库内供独立复核）"
+
+  - file: "assets/opta-spain-title-probability-timeline.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "1080x1900"
+    source_type: "project_generated_data_visualization"
+    source: "Opta Analyst 六篇静态阶段预测；Tom's Guide、Al Jazeera、Financial Express 的大模型问答记录"
+    creator_or_rightsholder: "本项目（制图）；底层数值与媒体答案归原来源"
+    obtained_on: "2026-07-20"
+    modifications: "原创双轨时间线；未复制 Opta 模板、Logo 或官方图形"
+    rights_status: "project_owned"
+    allowed_platforms: ["wechat", "x"]
+    attribution: "制图：Hunt Good；数据：Opta Analyst、Tom's Guide、Al Jazeera、Financial Express"
+
+  - file: "assets/world-cup-final-opta-events-3d-x.mp4"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "720x720"
+    duration_seconds: 80.213
+    source_type: "social_post_video"
+    source: "https://x.com/bogachev_al/status/2078968779212816405/video/1"
+    creator_or_rightsholder: "Alexander Bogachev；底层比赛事件数据在原帖中署名 Opta"
+    obtained_on: "2026-07-20"
+    modifications: "使用 X 提供的 720×720 MP4 版本，未转码、未裁切"
+    rights_status: "needs_review"
+    rights_basis: "原帖公开可访问但未提供公众号转载许可；署名不能替代授权"
+    rights_blocker: true
+    allowed_platforms: []
+    attribution: "视频：Alexander Bogachev / X；事件数据署名见原帖"
+
+  - file: "assets/world-cup-final-opta-events-3d-x.jpg"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "1080x1080"
+    source_type: "social_post_video_thumbnail"
+    source: "https://x.com/bogachev_al/status/2078968779212816405/video/1"
+    creator_or_rightsholder: "Alexander Bogachev"
+    obtained_on: "2026-07-20"
+    modifications: "X 视频原始缩略图，作为本地视频 poster"
+    rights_status: "needs_review"
+    rights_basis: "随视频一并等待转载许可"
+    rights_blocker: true
+    allowed_platforms: []
+    attribution: "图：Alexander Bogachev / X"
+
+  - file: "assets/personal-fable5-record-user-supplied.png"
+    used_in_draft: false
+    used_as_cover: false
+    source_type: "user_supplied"
+    source: "用户于 2026-07-20 在当前会话提供"
+    creator_or_rightsholder: "用户；终端界面所涉第三方产品标识权利归原权利人"
+    obtained_on: "2026-07-20"
+    modifications: "原图备份，未修改"
+    rights_status: "user_confirmation_needed"
+    allowed_platforms: []
+    attribution: "用户提供；当前不用于正文"
+
+  - file: "research/source-assets/personal-fable5-record-user-supplied.png"
+    used_in_draft: false
+    used_as_cover: false
+    source_type: "user_supplied_research_copy"
+    source: "用户于 2026-07-20 在当前会话提供；assets/ 下同名文件的研究区备份"
+    creator_or_rightsholder: "用户；终端界面所涉第三方产品标识权利归原权利人"
+    obtained_on: "2026-07-20"
+    modifications: "未修改；仅作事实复核与素材留档"
+    rights_status: "user_confirmation_needed"
+    allowed_platforms: []
+    attribution: "研究参考，不直接发布"

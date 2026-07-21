@@ -1,0 +1,41 @@
+schema_version: 1
+updated_on: "2026-07-21"
+
+changes:
+  - id: "SOP-CHANGE-20260721-001"
+    date: "2026-07-21"
+    change: "建立 content-retrospective skill、反馈模式台账、发布后 / 周 / 月复盘节奏与 GitHub 到期审计"
+    source_cases:
+      - "tibo-gpt56-quota"
+      - "spain-opta-world-cup-prediction"
+    affected_sources:
+      - ".agents/skills/content-retrospective/SKILL.md"
+      - ".agents/skills/self-media-ops/SKILL.md"
+      - "共享/运营/SOP/内容工作流.md"
+      - "AGENTS.md"
+    validation:
+      - "skill-creator quick_validate passed"
+      - "Python scripts compiled"
+      - "dry-run record generation passed"
+      - "due-review audit passed"
+      - "Windows PowerShell 5 preflight changed to ASCII-only source after UTF-8 no-BOM regression"
+      - "independent read-only forward test completed; evidence, rule contracts, status invalidation, and SOP single-source issues repaired"
+    promoted_rules:
+      - "CORE-PROMISE-001 (E2 provisional)"
+      - "CORE-FACTCARD-001 (E2 provisional)"
+      - "CORE-HUMAN-001 (E2 provisional)"
+      - "CORE-COPYEDIT-001 (E2 provisional)"
+    next_review_on: "2026-08-21"
+
+  - id: "SOP-CHANGE-20260721-002"
+    date: "2026-07-21"
+    change: "将 Image2 直接生图设为项目默认；笨拙涂鸦重绘绑定内部 Prompt，并增加缺失参考图与权利登记门"
+    source_cases:
+      - "user-feedback:2026-07-21-image2-direct-generation"
+    affected_sources:
+      - "上下文/视觉与版权规范.md"
+      - ".agents/skills/self-media-ops/SKILL.md"
+      - "APPSO-数字资产/03-SOP/APPSO 内容生产 SOP.md"
+      - "APPSO-数字资产/00-治理/资产台账.yml"
+    classification: "project_adapter"
+    next_review_on: "2026-08-21"

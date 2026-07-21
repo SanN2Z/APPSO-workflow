@@ -1,0 +1,125 @@
+schema_version: 1
+updated_on: "2026-07-21"
+
+assets:
+  - id: "appsso-001"
+    title: "Hunt Good 周报保姆级指南"
+    path: "01-栏目与品牌/Hunt-Good/Hunt Good 周报保姆级指南.md"
+    source: "用户提供的 APPSO 实习培训资料，已脱敏整理"
+    obtained_on: "2026-07-21"
+    classification: "internal"
+    rights_status: "internal_reference"
+    allowed_use: "公司工作与内部学习；对外分享前脱敏"
+    contains_credentials: false
+    notes: "未保存公司账号、邮箱或密码提示"
+
+  - id: "appsso-002"
+    title: "APPSO Logo 红底白字 PNG"
+    path: "01-栏目与品牌/品牌视觉/原始资料/APPSO Logo 红底白字.png"
+    source: "user_supplied"
+    obtained_on: "2026-07-21"
+    classification: "restricted"
+    rights_status: "internal_reference"
+    allowed_use: "本地品牌参考；对外使用前确认授权"
+    contains_credentials: false
+    format: "PNG"
+    dimensions: "1978x634"
+    sha256: "8160DB79FC8CAFDD864312B32BB6B01EE4D720187BC4ACC6A875E273EECD04FF"
+    reconfirmed_on: "2026-07-21"
+    notes: "用户再次提供微信临时文件，SHA-256 与已入库原件一致；红底白字，不是透明页脚版本"
+
+  - id: "appsso-003"
+    title: "Markdown 示意图设计系统规范"
+    path: "01-栏目与品牌/品牌视觉/原始资料/Markdown 示意图设计系统规范.md"
+    source: "用户提供的公司设计文档"
+    obtained_on: "2026-07-21"
+    classification: "restricted"
+    rights_status: "internal_reference"
+    allowed_use: "内部设计参考"
+    contains_credentials: false
+    sha256: "C8C191665A99DA9AF14F8BA84B0F7EF769CBADEFE347F5D197635264B024C043"
+    reconfirmed_on: "2026-07-21"
+    notes: "用户再次提供 Design_v5 (1)(35).md，SHA-256 与已入库原件一致；原件不直接修改，派生速查另存"
+
+  - id: "appsso-004"
+    title: "笨拙涂鸦重绘 Prompt"
+    path: "01-栏目与品牌/品牌视觉/生图-Prompt/笨拙涂鸦重绘.md"
+    source: "用户提供的公司生图 Prompt"
+    obtained_on: "2026-07-21"
+    classification: "internal"
+    rights_status: "internal_reference"
+    allowed_use: "内部编辑创意；对外使用前检查输入素材权利"
+    preferred_generator: "Image2"
+    contains_credentials: false
+    notes: "优先由 Codex 直接调用；参考图不可访问时停止生成；产物不能替代标准 Logo"
+
+  - id: "appsso-005"
+    title: "APPSO 信息源逆向"
+    path: "02-方法与知识/选题与信息源/APPSO 信息源逆向.md"
+    source: "微信公众号/知识库/信息源/APPSO-信息源逆向.md"
+    obtained_on: "2026-07-21"
+    classification: "public-derived"
+    rights_status: "project_analysis"
+    allowed_use: "方法参考；不得声称为 APPSO 官方来源表"
+    contains_credentials: false
+
+  - id: "appsso-006"
+    title: "APPSO 文风蒸馏"
+    path: "02-方法与知识/写作与结构/APPSO 文风蒸馏.md"
+    source: "微信公众号/知识库/参考文风/APPSO-文风蒸馏.md"
+    obtained_on: "2026-07-21"
+    classification: "public-derived"
+    rights_status: "project_analysis"
+    allowed_use: "学习结构、密度与翻译方法；不模仿独特表达"
+    contains_credentials: false
+
+  - id: "appsso-007"
+    title: "APPSO 近 25 篇样本分析"
+    path: "02-方法与知识/写作与结构/APPSO 近 25 篇样本分析.md"
+    source: "微信公众号/知识库/参考文风/APPSO-近25篇样本分析.md"
+    obtained_on: "2026-07-21"
+    classification: "public-derived"
+    rights_status: "project_analysis"
+    allowed_use: "公开样本研究；不复制参考文章原文"
+    contains_credentials: false
+
+  - id: "appsso-008"
+    title: "时效热点 × AIGC 解释稿 SOP"
+    path: "03-SOP/时效热点 × AIGC 解释稿 SOP.md"
+    source: "微信公众号/知识库/SOP/时效热点-AIGC解释稿.md"
+    obtained_on: "2026-07-21"
+    classification: "internal"
+    rights_status: "project_owned_method"
+    allowed_use: "内部内容生产"
+    contains_credentials: false
+
+  - id: "appsso-009"
+    title: "APPSO 内容生产 SOP"
+    path: "03-SOP/APPSO 内容生产 SOP.md"
+    source: "本轮整理：培训指南、领导反馈、Opta 复盘与项目工作流"
+    obtained_on: "2026-07-21"
+    classification: "internal"
+    rights_status: "project_owned_method"
+    allowed_use: "内部内容生产"
+    contains_credentials: false
+
+  - id: "appsso-010"
+    title: "Hunt Good 周报专项 SOP"
+    path: "03-SOP/Hunt Good 周报专项 SOP.md"
+    source: "用户提供的 Hunt Good 培训指南与实战反馈"
+    obtained_on: "2026-07-21"
+    classification: "internal"
+    rights_status: "project_owned_method"
+    allowed_use: "Hunt Good 选题、写作与审校"
+    contains_credentials: false
+
+  - id: "appsso-011"
+    title: "高敏感公司材料索引"
+    path: "00-治理/内部资产索引.md"
+    source: "现有自媒体运营工作区"
+    obtained_on: "2026-07-21"
+    classification: "restricted_index"
+    rights_status: "index_only"
+    allowed_use: "本地查找；不复制原文"
+    contains_credentials: false
+    notes: "公司终稿、逐条反馈和单期内部选题只记录原路径"

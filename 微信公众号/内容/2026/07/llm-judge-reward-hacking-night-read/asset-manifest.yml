@@ -1,0 +1,224 @@
+assets:
+  - file: "assets/cover.png"
+    used_in_draft: true
+    source_type: "ai_generated"
+    source: "Generated with Image2 in the user's authenticated session; exact prompt archived in research/image-prompts.md"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-07-14"
+    dimensions: "1923x818"
+    modifications: "No post-generation edits; visually reviewed at original resolution"
+    rights_status: "project_owned"
+    allowed_platforms: ["wechat"]
+    attribution: "AI 生成"
+
+  - file: "assets/fig1-judge-truth-gap.png"
+    used_in_draft: true
+    source_type: "paper_figure"
+    source: "https://arxiv.org/pdf/2607.05904, Figure 1"
+    creator_or_rightsholder: "Chenyu Zhou / respective rightsholders"
+    obtained_on: "2026-07-14"
+    modifications: "Cropped from PDF; no data, axes, or labels altered"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "User explicitly approved use of the paper's own figures in this attributed paper-reading commentary; this is not a commercial license"
+    allowed_platforms: ["wechat"]
+    attribution: "Chenyu Zhou, More Convincing, Not More Correct, Fig. 1"
+
+  - file: "assets/fig2-commit-first.png"
+    used_in_draft: true
+    source_type: "paper_figure"
+    source: "https://arxiv.org/pdf/2607.05904, Figure 2"
+    creator_or_rightsholder: "Chenyu Zhou / respective rightsholders"
+    obtained_on: "2026-07-14"
+    modifications: "Cropped from PDF; no data, axes, or labels altered"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "User explicitly approved use of the paper's own figures in this attributed paper-reading commentary; this is not a commercial license"
+    allowed_platforms: ["wechat"]
+    attribution: "Chenyu Zhou, More Convincing, Not More Correct, Fig. 2"
+
+  - file: "assets/fig4-best-of-n.png"
+    used_in_draft: true
+    source_type: "paper_figure"
+    source: "https://arxiv.org/pdf/2607.05904, Figure 4"
+    creator_or_rightsholder: "Chenyu Zhou / respective rightsholders"
+    obtained_on: "2026-07-14"
+    modifications: "Cropped from PDF; no data, axes, or labels altered"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "User explicitly approved use of the paper's own figures in this attributed paper-reading commentary; this is not a commercial license"
+    allowed_platforms: ["wechat"]
+    attribution: "Chenyu Zhou, More Convincing, Not More Correct, Fig. 4"
+
+  - file: "research/source-assets/arxiv-2607.05904.pdf"
+    used_in_draft: false
+    source_type: "paper_pdf"
+    source: "https://arxiv.org/pdf/2607.05904"
+    creator_or_rightsholder: "Chenyu Zhou / respective rightsholders"
+    obtained_on: "2026-07-14"
+    modifications: "Unmodified local research copy"
+    rights_status: "research_reference"
+    allowed_platforms: []
+    attribution: "arXiv:2607.05904"
+
+  - file: "research/rendered-pages/page-01.png"
+    used_in_draft: false
+    source_type: "paper_page_render"
+    source: "Local render of arXiv:2607.05904 page 1"
+    creator_or_rightsholder: "Chenyu Zhou / respective rightsholders"
+    obtained_on: "2026-07-14"
+    modifications: "Rendered from PDF for visual inspection"
+    rights_status: "research_reference"
+    allowed_platforms: []
+    attribution: "arXiv:2607.05904"
+
+  - file: "research/rendered-pages/page-02.png"
+    used_in_draft: false
+    source_type: "paper_page_render"
+    source: "Local render of arXiv:2607.05904 page 2"
+    creator_or_rightsholder: "Chenyu Zhou / respective rightsholders"
+    obtained_on: "2026-07-14"
+    modifications: "Rendered from PDF for visual inspection"
+    rights_status: "research_reference"
+    allowed_platforms: []
+    attribution: "arXiv:2607.05904"
+
+  - file: "research/rendered-pages/page-03.png"
+    used_in_draft: false
+    source_type: "paper_page_render"
+    source: "Local render of arXiv:2607.05904 page 3"
+    creator_or_rightsholder: "Chenyu Zhou / respective rightsholders"
+    obtained_on: "2026-07-14"
+    modifications: "Rendered from PDF for visual inspection"
+    rights_status: "research_reference"
+    allowed_platforms: []
+    attribution: "arXiv:2607.05904"
+
+  - file: "research/rendered-pages/page-04.png"
+    used_in_draft: false
+    source_type: "paper_page_render"
+    source: "Local render of arXiv:2607.05904 page 4"
+    creator_or_rightsholder: "Chenyu Zhou / respective rightsholders"
+    obtained_on: "2026-07-14"
+    modifications: "Rendered from PDF for visual inspection"
+    rights_status: "research_reference"
+    allowed_platforms: []
+    attribution: "arXiv:2607.05904"
+
+  - file: "research/rendered-pages/page-05.png"
+    used_in_draft: false
+    source_type: "paper_page_render"
+    source: "Local render of arXiv:2607.05904 page 5"
+    creator_or_rightsholder: "Chenyu Zhou / respective rightsholders"
+    obtained_on: "2026-07-14"
+    modifications: "Rendered from PDF for visual inspection"
+    rights_status: "research_reference"
+    allowed_platforms: []
+    attribution: "arXiv:2607.05904"
+
+  - file: "research/rendered-pages/page-06.png"
+    used_in_draft: false
+    source_type: "paper_page_render"
+    source: "Local render of arXiv:2607.05904 page 6"
+    creator_or_rightsholder: "Chenyu Zhou / respective rightsholders"
+    obtained_on: "2026-07-14"
+    modifications: "Rendered from PDF for visual inspection"
+    rights_status: "research_reference"
+    allowed_platforms: []
+    attribution: "arXiv:2607.05904"
+
+  - file: "research/rendered-pages/page-07.png"
+    used_in_draft: false
+    source_type: "paper_page_render"
+    source: "Local render of arXiv:2607.05904 page 7"
+    creator_or_rightsholder: "Chenyu Zhou / respective rightsholders"
+    obtained_on: "2026-07-14"
+    modifications: "Rendered from PDF for visual inspection"
+    rights_status: "research_reference"
+    allowed_platforms: []
+    attribution: "arXiv:2607.05904"
+
+  - file: "research/rendered-pages/page-08.png"
+    used_in_draft: false
+    source_type: "paper_page_render"
+    source: "Local render of arXiv:2607.05904 page 8"
+    creator_or_rightsholder: "Chenyu Zhou / respective rightsholders"
+    obtained_on: "2026-07-14"
+    modifications: "Rendered from PDF for visual inspection"
+    rights_status: "research_reference"
+    allowed_platforms: []
+    attribution: "arXiv:2607.05904"
+
+  - file: "research/rendered-pages/page-09.png"
+    used_in_draft: false
+    source_type: "paper_page_render"
+    source: "Local render of arXiv:2607.05904 page 9"
+    creator_or_rightsholder: "Chenyu Zhou / respective rightsholders"
+    obtained_on: "2026-07-14"
+    modifications: "Rendered from PDF for visual inspection"
+    rights_status: "research_reference"
+    allowed_platforms: []
+    attribution: "arXiv:2607.05904"
+
+  - file: "research/rendered-pages/page-10.png"
+    used_in_draft: false
+    source_type: "paper_page_render"
+    source: "Local render of arXiv:2607.05904 page 10"
+    creator_or_rightsholder: "Chenyu Zhou / respective rightsholders"
+    obtained_on: "2026-07-14"
+    modifications: "Rendered from PDF for visual inspection"
+    rights_status: "research_reference"
+    allowed_platforms: []
+    attribution: "arXiv:2607.05904"
+
+  - file: "research/rendered-pages/page-11.png"
+    used_in_draft: false
+    source_type: "paper_page_render"
+    source: "Local render of arXiv:2607.05904 page 11"
+    creator_or_rightsholder: "Chenyu Zhou / respective rightsholders"
+    obtained_on: "2026-07-14"
+    modifications: "Rendered from PDF for visual inspection"
+    rights_status: "research_reference"
+    allowed_platforms: []
+    attribution: "arXiv:2607.05904"
+
+  - file: "research/rendered-pages/page-12.png"
+    used_in_draft: false
+    source_type: "paper_page_render"
+    source: "Local render of arXiv:2607.05904 page 12"
+    creator_or_rightsholder: "Chenyu Zhou / respective rightsholders"
+    obtained_on: "2026-07-14"
+    modifications: "Rendered from PDF for visual inspection"
+    rights_status: "research_reference"
+    allowed_platforms: []
+    attribution: "arXiv:2607.05904"
+
+  - file: "research/rendered-pages/page-13.png"
+    used_in_draft: false
+    source_type: "paper_page_render"
+    source: "Local render of arXiv:2607.05904 page 13"
+    creator_or_rightsholder: "Chenyu Zhou / respective rightsholders"
+    obtained_on: "2026-07-14"
+    modifications: "Rendered from PDF for visual inspection"
+    rights_status: "research_reference"
+    allowed_platforms: []
+    attribution: "arXiv:2607.05904"
+
+  - file: "research/rendered-pages/page-14.png"
+    used_in_draft: false
+    source_type: "paper_page_render"
+    source: "Local render of arXiv:2607.05904 page 14"
+    creator_or_rightsholder: "Chenyu Zhou / respective rightsholders"
+    obtained_on: "2026-07-14"
+    modifications: "Rendered from PDF for visual inspection"
+    rights_status: "research_reference"
+    allowed_platforms: []
+    attribution: "arXiv:2607.05904"
+
+  - file: "research/rendered-pages/page-15.png"
+    used_in_draft: false
+    source_type: "paper_page_render"
+    source: "Local render of arXiv:2607.05904 page 15"
+    creator_or_rightsholder: "Chenyu Zhou / respective rightsholders"
+    obtained_on: "2026-07-14"
+    modifications: "Rendered from PDF for visual inspection"
+    rights_status: "research_reference"
+    allowed_platforms: []
+    attribution: "arXiv:2607.05904"

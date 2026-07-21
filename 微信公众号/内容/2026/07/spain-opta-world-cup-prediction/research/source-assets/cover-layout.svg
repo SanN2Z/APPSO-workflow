@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="900" height="383" viewBox="0 0 900 383">
+  <defs>
+    <linearGradient id="shade" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#17080a" stop-opacity="0.97"/>
+      <stop offset="0.58" stop-color="#4b090c" stop-opacity="0.88"/>
+      <stop offset="1" stop-color="#101014" stop-opacity="0.32"/>
+    </linearGradient>
+    <filter id="soft" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur stdDeviation="1.4"/>
+    </filter>
+  </defs>
+  <image x="0" y="0" width="900" height="383" preserveAspectRatio="xMidYMid slice"
+         xlink:href="../../assets/spain-v-belgium-2026-cc0.jpg" filter="url(#soft)"/>
+  <rect x="0" y="0" width="900" height="383" fill="url(#shade)"/>
+  <rect x="50" y="42" width="164" height="36" rx="18" fill="#f5c542"/>
+  <text x="132" y="66" text-anchor="middle" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="18" font-weight="700" fill="#30100b">世界杯 × AI 预测</text>
+  <text x="50" y="137" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="48" font-weight="800" fill="#ffffff">Opta 猜中了？</text>
+  <text x="50" y="205" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="54" font-weight="900" fill="#ffd45a">59.6% 不是预言</text>
+  <text x="53" y="257" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="24" font-weight="500" fill="#ffffff">2.5 万次模拟，究竟算出了什么</text>
+  <rect x="50" y="311" width="550" height="2" fill="#ffffff" opacity="0.38"/>
+  <text x="50" y="343" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="15" fill="#ffffff" opacity="0.82">背景图：Alexis Doine / Wikimedia Commons（CC0）</text>
+</svg>

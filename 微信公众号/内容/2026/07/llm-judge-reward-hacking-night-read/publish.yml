@@ -1,0 +1,12 @@
+# 微信 API 标题与正文标题分开：API 标题不得超过 32 个字。
+title: "Judge 模型给出94%通过率，真实正确率只有20%"
+author: ""
+digest: "Judge通过率从71.6%升到93.8%，真实正确率仍在约20%。论文拆解了生成、筛选和DPO如何逐轮放大评分误判，并测试了hidden-anchor审计和commit-first修复。"
+cover: "assets/cover.png"
+source_url: "https://arxiv.org/abs/2607.05904"
+theme: "default"
+highlight: "solarized-light"
+mac_style: false
+footnote: true
+need_open_comment: false
+only_fans_can_comment: false

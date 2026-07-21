@@ -1,0 +1,35 @@
+version: 1
+updated: "2026-07-12"
+assets:
+  - file: "assets/cover.png"
+    used_in_draft: true
+    source_type: "project_generated"
+    source: "Generated from the locked local-execution title hook with tools/make_graphics.py"
+    creator_or_rightsholder: "This project"
+    obtained_on: "2026-07-12"
+    modifications: "Original cover; no vendor logos, screenshots, or external imagery"
+    rights_status: "project_owned"
+    allowed_platforms: ["wechat", "x"]
+    attribution: "None required"
+
+  - file: "assets/edge-cloud-loop.png"
+    used_in_draft: true
+    source_type: "project_generated"
+    source: "Editorial redraw based on the Step Edge official 1+N and local/cloud routing description"
+    creator_or_rightsholder: "This project"
+    obtained_on: "2026-07-12"
+    modifications: "Original diagram; adds a visible 100ms scope warning and does not reproduce vendor charts"
+    rights_status: "project_owned"
+    allowed_platforms: ["wechat", "x"]
+    attribution: "本文重绘；架构依据 Step Edge 官方发布页"
+
+  - file: "assets/ai-phone-four-checks.png"
+    used_in_draft: true
+    source_type: "project_generated"
+    source: "Generated from the four-question editorial framework in brief.md"
+    creator_or_rightsholder: "This project"
+    obtained_on: "2026-07-12"
+    modifications: "Original mobile-first checklist graphic"
+    rights_status: "project_owned"
+    allowed_platforms: ["wechat", "x"]
+    attribution: "本文分析框架"

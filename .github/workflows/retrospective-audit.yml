@@ -1,0 +1,21 @@
+name: Retrospective audit
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * 5"
+    - cron: "15 0 1 * *"
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Audit due retrospectives
+        run: python .agents/skills/content-retrospective/scripts/audit_retrospectives.py --root .

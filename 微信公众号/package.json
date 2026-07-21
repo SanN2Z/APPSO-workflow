@@ -1,0 +1,16 @@
+{
+  "name": "self-media-wechat-tooling",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Pinned WeChat rendering and draft tooling for the self-media workspace.",
+  "license": "UNLICENSED",
+  "scripts": {
+    "wenyan": "wenyan"
+  },
+  "dependencies": {
+    "@wenyan-md/cli": "2.0.11"
+  },
+  "overrides": {
+    "mermaid": "11.16.0"
+  }
+}

@@ -1,0 +1,13 @@
+# 微信公众号草稿字段。draft.md 仍是正文唯一真源；Wenyan 负责渲染和上传。
+# title 留空时使用 draft.md frontmatter 标题；正式草稿标题最多 32 个字。
+title: ""
+author: ""
+digest: ""
+cover: "assets/cover.png"
+source_url: ""
+theme: "default"
+highlight: "solarized-light"
+mac_style: false
+footnote: true
+need_open_comment: false
+only_fans_can_comment: false

@@ -1,0 +1,12 @@
+# 微信 API 标题不得超过 32 个字。
+title: "这个号的编辑部全是 AI，今天我把它开源了"
+author: ""
+digest: "运营这个号的 AI 编辑舰队 press-fleet 今天开源：八个角色、哈希绑定的质量门禁、版本化的 SOP。从这篇起明牌运营，你的评论就是下一个版本的信号。"
+cover: ""
+source_url: "https://github.com/shanyuzhe/press-fleet"
+theme: "default"
+highlight: "solarized-light"
+mac_style: false
+footnote: true
+need_open_comment: true
+only_fans_can_comment: false

@@ -1,0 +1,26 @@
+version: 1
+updated: "2026-07-16"
+assets:
+  - file: "assets/claude-reset.png"
+    used_in_draft: true
+    source_type: "user_supplied_screenshot"
+    source: "https://x.com/ClaudeDevs"
+    creator_or_rightsholder: "ClaudeDevs / Anthropic / X"
+    obtained_on: "2026-07-16"
+    modifications: "None; screenshot supplied by user"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_confirmation: "User supplied the screenshot and explicitly authorized direct WeChat draft upload for this article on 2026-07-16; no commercial license implied"
+    allowed_platforms: ["wechat"]
+    attribution: "ClaudeDevs on X; editorial commentary screenshot"
+
+  - file: "assets/tibo-reset-9m.png"
+    used_in_draft: true
+    source_type: "user_supplied_screenshot"
+    source: "https://x.com/thsottiaux/status/2077607697487188198"
+    creator_or_rightsholder: "Tibo Sottiaux / X"
+    obtained_on: "2026-07-16"
+    modifications: "None; screenshot supplied by user"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_confirmation: "User supplied the screenshot and explicitly authorized direct WeChat draft upload for this article on 2026-07-16; no commercial license implied"
+    allowed_platforms: ["wechat"]
+    attribution: "Tibo on X; editorial commentary screenshot"

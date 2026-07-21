@@ -1,0 +1,33 @@
+schema_version: 1
+updated_on: "2026-07-21"
+timezone: "Asia/Tokyo"
+
+triggers:
+  delivery_or_publish:
+    action: "初始化或更新内容包 retrospective.md，记录本轮版本、已知反馈和下一次复盘日期"
+    due: "同一工作日"
+  feedback_received:
+    action: "逐条登记用户或编辑意见；先归案例，再判断是否成为 SOP 候选"
+    due: "收到反馈的同一工作会话"
+  post_publish_followup:
+    action: "复核早期数据、评论、转载与执行问题"
+    due_after_days: 7
+  weekly:
+    action: "清理待处理反馈、到期复盘和 SOP 候选"
+    schedule: "每周五"
+  monthly:
+    action: "审计重复缺陷、SOP 冲突、失效规则与可迁移工作流"
+    schedule: "每月第 1 个工作日"
+
+promotion:
+  default_min_independent_cases: 2
+  severe_single_case_override:
+    - "事实准确性"
+    - "图片与版权"
+    - "隐私与凭据"
+    - "发布与不可逆外部操作"
+
+artifacts:
+  package_record: "<content-package>/retrospective.md"
+  feedback_ledger: "共享/运营/复盘/反馈模式台账.yml"
+  sop_change_ledger: "共享/运营/复盘/SOP 变更台账.yml"

@@ -1,0 +1,13 @@
+* text=auto
+
+*.md text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.json text eol=lf
+*.py text eol=lf
+*.ps1 text eol=crlf
+*.cmd text eol=crlf
+*.bat text eol=crlf
+
+# PDF text extraction may contain embedded NUL bytes and preserved CRLF data.
+**/research/source-assets/arxiv-*.txt -text -diff

@@ -1,0 +1,78 @@
+assets:
+  - file: "assets/apple-siri-ai-hero-official.jpg"
+    used_in_draft: true
+    source_type: "official_product_image"
+    source: "https://www.apple.com/newsroom/2026/06/apple-introduces-siri-ai-a-profoundly-more-capable-and-personal-assistant/"
+    creator_or_rightsholder: "Apple Inc."
+    obtained_on: "2026-07-15"
+    dimensions: "980x551"
+    modifications: "Downloaded from Apple Newsroom; no content edits"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "User explicitly requested Apple official-site imagery for this attributed news commentary; this is not a commercial license"
+    allowed_platforms: ["wechat"]
+    attribution: "Apple Newsroom"
+
+  - file: "assets/cac-apple-intelligence-filing-official.png"
+    used_in_draft: false
+    source_type: "official_government_notice_image"
+    source: "https://www.cac.gov.cn/rootimages/2026/07/15/1785861480767004-1785861480815752.png"
+    creator_or_rightsholder: "中央网络安全和信息化委员会办公室 / 国家互联网信息办公室"
+    obtained_on: "2026-07-15"
+    dimensions: "2147x2001"
+    modifications: "Downloaded from the official announcement; no content edits"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "Used as attributed evidence in news commentary at the user's request; this is not a commercial license"
+    allowed_platforms: ["wechat"]
+    attribution: "中国网信网"
+
+  - file: "assets/cac-apple-intelligence-filing-row1.png"
+    used_in_draft: true
+    source_type: "official_government_notice_image"
+    source: "https://www.cac.gov.cn/rootimages/2026/07/15/1785861480767004-1785861480815752.png"
+    creator_or_rightsholder: "中央网络安全和信息化委员会办公室 / 国家互联网信息办公室"
+    obtained_on: "2026-07-15"
+    dimensions: "2147x438"
+    modifications: "Cropped from the official announcement image to the table header plus first row (Apple 智能) for mobile readability; caption discloses the crop; no other edits"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "Used as attributed evidence in news commentary at the user's request; this is not a commercial license"
+    allowed_platforms: ["wechat"]
+    attribution: "中国网信网"
+
+  - file: "assets/apple-intelligence-architecture-official.jpg"
+    used_in_draft: true
+    source_type: "official_product_diagram"
+    source: "https://www.apple.com/newsroom/2026/06/apple-introduces-siri-ai-a-profoundly-more-capable-and-personal-assistant/"
+    creator_or_rightsholder: "Apple Inc."
+    obtained_on: "2026-07-15"
+    dimensions: "653x653"
+    modifications: "Downloaded from Apple Newsroom; no content edits"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "User explicitly requested Apple official-site imagery for this attributed news commentary; this is not a commercial license"
+    allowed_platforms: ["wechat"]
+    attribution: "Apple Newsroom"
+
+  - file: "assets/apple-support-mainland-unavailable.png"
+    used_in_draft: false
+    source_type: "official_support_page_screenshot"
+    source: "https://support.apple.com/zh-cn/guide/iphone/iphe3f499e0e/ios"
+    creator_or_rightsholder: "Apple Inc."
+    obtained_on: "2026-07-15"
+    dimensions: "1040x158"
+    modifications: "Element screenshot captured from the official Apple Support page; wording unaltered"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "User explicitly requested Apple official-site screenshots for this attributed news commentary; this is not a commercial license"
+    allowed_platforms: ["wechat"]
+    attribution: "截图：本项目；页面版权归 Apple"
+
+  - file: "assets/apple-support-mainland-unavailable-highlight.png"
+    used_in_draft: true
+    source_type: "official_support_page_screenshot"
+    source: "https://support.apple.com/zh-cn/guide/iphone/iphe3f499e0e/ios"
+    creator_or_rightsholder: "Apple Inc."
+    obtained_on: "2026-07-15"
+    dimensions: "1040x158"
+    modifications: "Element screenshot captured from the official Apple Support page; added a red box annotation around the mainland-unavailability sentence for readability; caption discloses the annotation; wording unaltered"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "User explicitly requested Apple official-site screenshots for this attributed news commentary; this is not a commercial license"
+    allowed_platforms: ["wechat"]
+    attribution: "截图：本项目；页面版权归 Apple"

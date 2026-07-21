@@ -1,0 +1,108 @@
+assets:
+  - file: "assets/openai-long-horizon-summary.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "912x615"
+    source_type: "official_material"
+    source: "https://openai.com/index/safety-alignment-long-horizon-models/"
+    creator_or_rightsholder: "OpenAI"
+    obtained_on: "2026-07-21"
+    modifications: "项目从 OpenAI 官方网页截屏并裁切；未改动页面文字"
+    rights_status: "needs_review"
+    rights_basis: "作为有出处的评论与报道证据使用；尚未核实可用于微信公众号转载的通用许可"
+    rights_blocker: true
+    allowed_platforms: []
+    attribution: "OpenAI 7 月 20 日文章首页与 Summary；图源：OpenAI"
+
+  - file: "assets/github-pr300-powercool.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "700x508"
+    source_type: "official_material"
+    source: "https://github.com/KellerJordan/modded-nanogpt/pull/300#issue-4448633566"
+    creator_or_rightsholder: "PR 作者 eliebak；页面界面 GitHub"
+    obtained_on: "2026-07-21"
+    modifications: "从同一公开 PR 页面截取 #300 标题条与 Credits 中的 #287 致谢，按上下顺序拼接；未改动页面文字"
+    rights_status: "needs_review"
+    rights_basis: "作为核对公开技术记录的评论与报道证据使用；PR 文本和 GitHub 界面未核实公众号转载许可"
+    rights_blocker: true
+    allowed_platforms: []
+    attribution: "PR #300 对 PR #287 power-law cooldown 的后续引用；图源：GitHub"
+
+  - file: "research/source-assets/openai-trajectory-token-case.png"
+    used_in_draft: false
+    used_as_cover: false
+    dimensions: "850x720"
+    source_type: "official_material"
+    source: "https://openai.com/index/safety-alignment-long-horizon-models/#from-considering-single-actions-to-considering-whole-trajectories"
+    creator_or_rightsholder: "OpenAI"
+    obtained_on: "2026-07-21"
+    modifications: "项目从 OpenAI 官方网页截屏并裁切；未改动页面文字"
+    rights_status: "research_reference"
+    rights_basis: "仅保留作研究与来源核对，不进入发布稿"
+    rights_blocker: false
+    allowed_platforms: []
+    attribution: "OpenAI 对拆分认证令牌及轨迹级风险的说明；图源：OpenAI"
+
+  - file: "research/source-assets/openai-long-horizon-safeguards.png"
+    used_in_draft: false
+    used_as_cover: false
+    dimensions: "790x750"
+    source_type: "official_material"
+    source: "https://openai.com/index/safety-alignment-long-horizon-models/#building-safeguards-for-long-running-models"
+    creator_or_rightsholder: "OpenAI"
+    obtained_on: "2026-07-21"
+    modifications: "项目从 OpenAI 官方网页截屏并裁切；未改动页面文字"
+    rights_status: "research_reference"
+    rights_basis: "仅保留作研究与来源核对，不进入发布稿"
+    rights_blocker: false
+    allowed_platforms: []
+    attribution: "OpenAI 公布的四项长时程防护措施；图源：OpenAI"
+
+  - file: "assets/openai-redeployment-results.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "1350x818"
+    source_type: "official_material"
+    source: "https://openai.com/index/safety-alignment-long-horizon-models/#redeployment"
+    creator_or_rightsholder: "OpenAI"
+    obtained_on: "2026-07-21"
+    modifications: "从 OpenAI 官方页内嵌 SVG 提取；按页面计算样式还原原配色并渲染为 PNG；未改动标签、数值或图例"
+    rights_status: "needs_review"
+    rights_basis: "作为有出处的评论与报道证据使用；尚未核实可用于微信公众号转载的通用许可"
+    rights_blocker: true
+    allowed_platforms: []
+    attribution: "OpenAI 对旧防护与新防护的内部回放结果；图源：OpenAI"
+
+  - file: "assets/x-peter-usage-reset-thread.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "620x604"
+    source_type: "social_screenshot"
+    source: "https://x.com/peterfotinis/status/2077630629039231044"
+    creator_or_rightsholder: "Peter Fotinis、可见回复作者及 X 界面"
+    obtained_on: "2026-07-21"
+    modifications: "从公开 X 对话页面截取；裁掉侧栏和本地账号的回复输入区，将原页面中 Peter 主帖与紧邻的两条可见回复按原顺序拼接；未改动帖子文字"
+    rights_status: "needs_review"
+    rights_basis: "作为有出处的评论与报道证据使用；尚未核实微信公众号转载许可"
+    rights_blocker: true
+    allowed_platforms: []
+    attribution: "Tibo 文件删除回应下的额度玩梗；图源：X"
+
+  - file: "assets/x-tomek-task-horizon-comment.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "620x255"
+    source_type: "social_screenshot"
+    source: "https://x.com/tomekkorbak/status/2079285014018367812"
+    creator_or_rightsholder: "Tomek Korbak 及 X 界面"
+    obtained_on: "2026-07-21"
+    modifications: "从公开 X 帖子截取并裁掉侧栏及下方重复的 OpenAI 文章预览；保留账号、原文与 X 机器翻译；未改动帖子文字"
+    rights_status: "needs_review"
+    rights_basis: "作为有出处的评论与报道证据使用；尚未核实微信公众号转载许可"
+    rights_blocker: true
+    allowed_platforms: []
+    attribution: "Tomek Korbak 对任务时程与对齐偏差的公开评论；图源：X"
+
+# 正文使用 3 张原始证据图和 2 张 X 原帖截图，均不是 AI 生成图；另外两张长截图只保留作研究参考。
+# 版权复核完成前，rights_checked 必须保持 false，稿件不得进入 ready。

@@ -1,0 +1,12 @@
+# 微信 API 标题不得超过 32 个字。
+title: "当 AI 开始替你上夜班，谁来盯着它？"
+author: ""
+digest: "研究人员只让它把结果发到内部 Slack，它却花一小时绕过沙箱，把成果提交到公开 GitHub。长时程 Agent 的安全，不能只盯着眼前这一条命令。"
+cover: ""
+source_url: "https://openai.com/index/safety-alignment-long-horizon-models/"
+theme: "default"
+highlight: "solarized-light"
+mac_style: false
+footnote: true
+need_open_comment: true
+only_fans_can_comment: false

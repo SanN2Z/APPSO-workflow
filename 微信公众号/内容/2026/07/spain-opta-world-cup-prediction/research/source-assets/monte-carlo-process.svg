@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="900" viewBox="0 0 1080 900">
+  <rect width="1080" height="900" fill="#111217"/>
+  <text x="64" y="84" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="44" font-weight="800" fill="#ffffff">2.5 万次模拟，到底在做什么？</text>
+  <text x="64" y="126" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="21" fill="#b8bdc9">先有比赛概率，再反复抽样；不是让大模型“思考”2.5 万遍。</text>
+
+  <rect x="64" y="198" width="212" height="290" rx="18" fill="#20232c" stroke="#4b5060"/>
+  <circle cx="104" cy="244" r="22" fill="#f3c54b"/>
+  <text x="104" y="252" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="800" fill="#241e0b">1</text>
+  <text x="96" y="307" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="27" font-weight="700" fill="#ffffff">输入</text>
+  <text x="96" y="354" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="21" fill="#d8dae1">球队实力</text>
+  <text x="96" y="391" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="21" fill="#d8dae1">近期表现</text>
+  <text x="96" y="428" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="21" fill="#d8dae1">市场信息等</text>
+
+  <path d="M290 343 H330" stroke="#747b8e" stroke-width="5"/><path d="M330 343 l-14 -10 v20 z" fill="#747b8e"/>
+  <rect x="344" y="198" width="212" height="290" rx="18" fill="#20232c" stroke="#4b5060"/>
+  <circle cx="384" cy="244" r="22" fill="#ef6c5d"/>
+  <text x="384" y="252" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="800" fill="#30100d">2</text>
+  <text x="376" y="307" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="27" font-weight="700" fill="#ffffff">建模</text>
+  <text x="376" y="354" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="21" fill="#d8dae1">估计每场比赛</text>
+  <text x="376" y="391" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="21" fill="#d8dae1">胜 / 平 / 负</text>
+  <text x="376" y="428" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="21" fill="#d8dae1">以及晋级概率</text>
+
+  <path d="M570 343 H610" stroke="#747b8e" stroke-width="5"/><path d="M610 343 l-14 -10 v20 z" fill="#747b8e"/>
+  <rect x="624" y="198" width="212" height="290" rx="18" fill="#20232c" stroke="#4b5060"/>
+  <circle cx="664" cy="244" r="22" fill="#67b7e1"/>
+  <text x="664" y="252" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="800" fill="#09202c">3</text>
+  <text x="656" y="307" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="27" font-weight="700" fill="#ffffff">抽样</text>
+  <text x="656" y="354" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="21" fill="#d8dae1">按这些概率</text>
+  <text x="656" y="391" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="21" fill="#d8dae1">模拟完整赛程</text>
+  <text x="656" y="428" font-family="Arial, Microsoft YaHei, sans-serif" font-size="25" font-weight="700" fill="#67b7e1">× 25,000</text>
+
+  <path d="M850 343 H890" stroke="#747b8e" stroke-width="5"/><path d="M890 343 l-14 -10 v20 z" fill="#747b8e"/>
+  <rect x="904" y="198" width="112" height="290" rx="18" fill="#20232c" stroke="#4b5060"/>
+  <circle cx="944" cy="244" r="22" fill="#73c68a"/>
+  <text x="944" y="252" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="800" fill="#0d2c16">4</text>
+  <text x="936" y="307" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="27" font-weight="700" fill="#ffffff">统计</text>
+  <text x="936" y="354" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="20" fill="#d8dae1">各队</text>
+  <text x="936" y="389" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="20" fill="#d8dae1">夺冠</text>
+  <text x="936" y="424" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="20" fill="#d8dae1">频率</text>
+
+  <rect x="64" y="558" width="952" height="198" rx="22" fill="#fff4cb"/>
+  <text x="104" y="624" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="30" font-weight="800" fill="#2b2615">模拟次数增加，只会让统计结果更稳定。</text>
+  <text x="104" y="680" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="27" fill="#2b2615">输入有偏，或者底层概率错了，跑再多次也救不回来。</text>
+  <text x="64" y="842" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="16" fill="#8e94a4">方法示意图：本项目制作。仅说明蒙特卡洛流程，不代表 Opta 已公开其完整模型与全部输入。</text>
+</svg>

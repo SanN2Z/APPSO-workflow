@@ -1,0 +1,40 @@
+# Secrets
+**/.env
+**/.env.*.local
+!**/.env.example
+
+# Python
+**/__pycache__/
+**/*.py[cod]
+.venv/
+venv/
+
+# Node
+**/node_modules/
+**/.wenyan-runtime/
+
+# Editors / OS
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Local agent, browser, and scratch artifacts
+/.playwright-mcp/
+/.tmp/
+/output/
+/临时素材/
+
+# Generated publication artifacts
+**/dist/
+**/tmp/
+**/*.log
+
+# Local analytics exports may contain private audience data
+**/private-data/
+
+# Company-supplied APPSO source assets: local archive only
+APPSO-数字资产/01-栏目与品牌/品牌视觉/原始资料/
+APPSO-数字资产/01-栏目与品牌/品牌视觉/生图-Prompt/
+APPSO-数字资产/90-受限资料/*
+!APPSO-数字资产/90-受限资料/README.md
