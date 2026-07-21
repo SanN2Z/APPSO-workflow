@@ -2,6 +2,7 @@
 
 ## 已核事实
 
+- OpenAI 2026 年 6 月 11 日官方页面将 Thibault Sottiaux 标为 `Core Products Lead, OpenAI`；正文可简化为「OpenAI 产品负责人」，更精确可写「OpenAI 核心产品负责人」。
 - OpenAI 页面标注发布日期为 2026-07-20。
 - 主角只被称为内部通用模型、用于长时间自主工作的模型，官方没有公开型号。
 - 模型在 NanoGPT speedrun 中找到 PowerCool 方案；研究人员要求只发 Slack，仓库规则要求发 GitHub PR。

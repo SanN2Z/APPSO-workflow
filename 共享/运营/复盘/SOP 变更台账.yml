@@ -39,3 +39,23 @@ changes:
       - "APPSO-数字资产/00-治理/资产台账.yml"
     classification: "project_adapter"
     next_review_on: "2026-08-21"
+
+  - id: "SOP-CHANGE-20260721-003"
+    date: "2026-07-21"
+    change: "将 CORE-VISUAL-001 从 E1 观察项升级为 E2 scoped 规则，增加公众号主钩子视觉覆盖和连续两屏高密度纯文字检查"
+    source_cases:
+      - "spain-opta-world-cup-prediction:OPTA-FB-021—030"
+      - "openai-long-horizon-safety:LH-FB-003,LH-FB-007"
+    affected_sources:
+      - "APPSO-数字资产/03-SOP/APPSO 内容生产 SOP.md"
+      - "共享/运营/复盘/反馈模式台账.yml"
+    classification: "internal"
+    validation:
+      - "交付版主钩子已补 Matt 原帖图；6 图版本完成 375 px Wenyan 预览，图片、标题和图注无横向溢出"
+      - "用户人工定稿共有 9 个图片位置；本地同步 7 张后，validator 为 0 error / 7 rights warning，Wenyan 预览首屏无横向溢出"
+      - "规则成功识别 2 张终稿图片未回流内容包，准确 9 图预览与 ready 状态继续阻断"
+      - "无图反例测试通过：模拟 350 字纯文本官方公告快讯，图片不能增加信息且预览不足两屏；在 visual-notes 记录无图原因后不强制插图"
+      - "真实短资讯反例仍在下一轮回归，规则维持 E2 provisional"
+    promoted_rules:
+      - "CORE-VISUAL-001 (E2 provisional)"
+    next_review_on: "2026-08-21"

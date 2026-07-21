@@ -73,19 +73,19 @@ patterns:
 
   - id: "CORE-VISUAL-001"
     pattern: "视觉在成稿后补，导致缺图、格式混淆、图注不清和权利返工"
-    evidence_level: "E1"
-    source_cases: ["spain-opta-world-cup-prediction:OPTA-FB-021—030"]
-    disposition: "watch"
+    evidence_level: "E2"
+    source_cases: ["spain-opta-world-cup-prediction:OPTA-FB-021—030", "openai-long-horizon-safety:LH-FB-003,LH-FB-007"]
+    disposition: "promoted_provisional"
     rule_source: "APPSO-数字资产/03-SOP/APPSO 内容生产 SOP.md"
-    trigger: "brief 没有为正文视觉定义任务、格式、来源和权利状态"
-    action: "在锁稿阶段建立配图任务，交付前核对实际文件与 manifest"
-    pass_condition: "图片 / 视频真实落盘、图注、权利和手机预览齐全"
-    failure_signal: "只交付视觉方案、poster 冒充视频或成稿后才找素材"
-    scope: "APPSO 与微信公众号 adapter；等待第二独立案例"
+    trigger: "公众号解释稿的主钩子依赖具体事件 / 界面 / 数据，或手机预览出现连续两屏高密度纯文字"
+    action: "在 brief 阶段给主钩子定义证据图，并标记高密度文字区；先删重复，再用有论证任务的图片、短段或留白调整节奏"
+    pass_condition: "主钩子有实际落盘并登记的视觉证据，或 visual-notes 记录无图原因与替代方案；手机预览无未处理的连续两屏高密度纯文字"
+    failure_signal: "开头核心事件无图且无原因记录、只交视觉方案、用装饰图凑数、poster 冒充视频，或成稿后才发现连续大段文字"
+    scope: "APPSO 与微信公众号解释稿；短资讯、无可用权利素材或图片不能增加信息时允许记录理由后不配图"
     owner: "visual_rights_editor"
     classification: "internal"
     introduced_on: "2026-07-21"
-    regression_check: "收集下一篇含视频或数据图的独立案例"
+    regression_check: "下一篇非体育、非 OpenAI 的解释稿在 375 px 手机预览中检查主钩子覆盖；另测一篇不需要配图的短资讯，确认规则不会强迫插装饰图"
     next_review_on: "2026-08-21"
 
   - id: "CORE-STATE-001"

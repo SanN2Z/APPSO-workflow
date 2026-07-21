@@ -18,6 +18,8 @@
 | S12 | 用户提供的量子位文章《危！GPT-5.6 会自动删文件，AI 初创老板痛失整台 Mac》 | 当前会话用户提供 | 二手报道 | 中文传播语境、Bruno Lemos 案例线索 | 不作为 OpenAI 内部事故的一手证据 |
 | S13 | Peter Fotinis 在 Tibo 回应下的额度玩梗及可见回复 | https://x.com/peterfotinis/status/2077630629039231044 | 社交评论原帖 | “根据调查结果重置使用额度”的玩笑，以及评论区继续催额度的现场感 | 纯属网友玩梗，不代表 OpenAI 承诺补偿、重置额度或承认事故责任；截图只保留公开对话所需上下文 |
 | S14 | Tomek Korbak 对任务时程与对齐偏差的评论 | https://x.com/tomekkorbak/status/2079285014018367812 | OpenAI 安全研究员公开评论 | 对齐偏差似乎随任务时程增加；思维链监控目前仍能发现这类问题 | 这是研究者的概括，不是定律或完整评测结果；`seems` 与 `still` 的限定不能省略；账号身份以其公开简介为准 |
+| S15 | OpenAI：OpenAI to acquire Ona | https://openai.com/index/openai-to-acquire-ona/ | OpenAI 官方公司页面 | 截至 2026 年 7 月 21 日，Thibault Sottiaux 的官方职务标注为 `Core Products Lead, OpenAI`；正文可简化为「OpenAI 产品负责人」，更精确可写「OpenAI 核心产品负责人」 | 页面发布于 2026 年 6 月 11 日；人物职位属于时效事实，发布前仍需重开 |
+| S16 | Bruno Lemos 的原始报告 | https://x.com/brunolemos/status/2076769881534398974 | 当事人原帖 | Bruno Lemos 自述 GPT-5.6 Sol 删除其整个生产数据库 | 第一人称报告，不等于独立技术取证；与 Matt Shumer 等案例不能默认归为同一根因 |
 
 ## 事实标签
 

@@ -1,4 +1,34 @@
 assets:
+  - file: "assets/x-matt-shumer-file-deletion.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "1140x900"
+    source_type: "social_screenshot"
+    source: "https://x.com/mattshumer_/status/2075657271401390161"
+    creator_or_rightsholder: "Matt Shumer 及 X 界面"
+    obtained_on: "2026-07-21"
+    modifications: "从 X 官方帖子嵌入页以 760 × 600 窄屏视口、1.5 倍像素密度直接截取；保留头像、姓名、账号、原文、帖内证据图、日期与互动数；未改动原帖文字，不包含页面登录 CTA"
+    rights_status: "needs_review"
+    rights_basis: "当事人公开原帖，可作为有出处的评论与报道证据；尚未核实微信公众号转载许可"
+    rights_blocker: true
+    allowed_platforms: []
+    attribution: "Matt Shumer 报告 GPT-5.6 Sol 误删 Mac 文件；图源：X"
+
+  - file: "research/source-assets/x-tibo-file-delete-response.png"
+    used_in_draft: false
+    used_as_cover: false
+    dimensions: "1140x1650"
+    source_type: "social_screenshot"
+    source: "https://x.com/thsottiaux/status/2077630111499882637"
+    creator_or_rightsholder: "Thibault 「Tibo」 Sottiaux 及 X 界面"
+    obtained_on: "2026-07-21"
+    modifications: "从公开 X 原帖以 760 × 1100 窄屏视口、1.5 倍像素密度直接截取；保留头像、姓名、账号、完整初步调查口径、日期与互动数；未改动原帖文字"
+    rights_status: "needs_review"
+    rights_basis: "OpenAI 产品负责人公开回应，仅作为备选核对素材；尚未核实微信公众号转载许可；当前未用于正文"
+    rights_blocker: false
+    allowed_platforms: []
+    attribution: "OpenAI 产品负责人 Tibo 对文件删除报告的初步回应；图源：X"
+
   - file: "assets/openai-long-horizon-summary.png"
     used_in_draft: true
     used_as_cover: false
@@ -29,8 +59,8 @@ assets:
     allowed_platforms: []
     attribution: "PR #300 对 PR #287 power-law cooldown 的后续引用；图源：GitHub"
 
-  - file: "research/source-assets/openai-trajectory-token-case.png"
-    used_in_draft: false
+  - file: "assets/openai-trajectory-token-case.png"
+    used_in_draft: true
     used_as_cover: false
     dimensions: "850x720"
     source_type: "official_material"
@@ -38,9 +68,9 @@ assets:
     creator_or_rightsholder: "OpenAI"
     obtained_on: "2026-07-21"
     modifications: "项目从 OpenAI 官方网页截屏并裁切；未改动页面文字"
-    rights_status: "research_reference"
-    rights_basis: "仅保留作研究与来源核对，不进入发布稿"
-    rights_blocker: false
+    rights_status: "needs_review"
+    rights_basis: "OpenAI 官方文章正文截图，人工定稿重新采用；作为有出处的解释材料，微信公众号转载边界仍待人工确认"
+    rights_blocker: true
     allowed_platforms: []
     attribution: "OpenAI 对拆分认证令牌及轨迹级风险的说明；图源：OpenAI"
 
@@ -104,5 +134,5 @@ assets:
     allowed_platforms: []
     attribution: "Tomek Korbak 对任务时程与对齐偏差的公开评论；图源：X"
 
-# 正文使用 3 张原始证据图和 2 张 X 原帖截图，均不是 AI 生成图；另外两张长截图只保留作研究参考。
+# 正文当前使用 3 张原始证据图和 3 张 X 原帖截图；本轮新增的 Matt Shumer 截图已插入开头，Tibo 长截图保留为备选。所有截图均非 AI 生成。
 # 版权复核完成前，rights_checked 必须保持 false，稿件不得进入 ready。
