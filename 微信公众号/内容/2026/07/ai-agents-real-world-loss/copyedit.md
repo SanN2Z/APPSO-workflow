@@ -1,7 +1,7 @@
 ---
 status: pass
-checked_at: "2026-07-22 01:28:26+09:00"
-body_sha256: "465abfa238ea8f1d8a5df3c20b4004ed754c1702344248ad55c5f7d7d3013dac"
+checked_at: "2026-07-22 02:07:21+09:00"
+body_sha256: "daaab91d965110eb4f00261231a57cb950d488c9a76abbfeed0abe78be06f21b"
 scope: "title, deck, body, headings, quotes, notes"
 ---
 
@@ -25,5 +25,7 @@ scope: "title, deck, body, headings, quotes, notes"
 - `COPY-004`：resolved。删除连续模板转场，改为直接逻辑推进。
 - `COPY-005`：resolved。并列结构与 Claude Code、API 的能力归属已修正。
 - `COPY-006`：resolved。结尾长句拆分并保持第一人称判断。
+- `COPY-007`：resolved。4 组图片替代文本和图注已检查；中文引号、数字与英文空格符合项目规则。
+- `COPY-008`：resolved。含图片替代文本和图注的正文压缩至 3476 个中文字符，核心论证与事实限定保留。
 
 无 open `COPY-*` 缺陷。

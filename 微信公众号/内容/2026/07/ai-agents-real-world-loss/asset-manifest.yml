@@ -1,3 +1,122 @@
 version: 2
 updated: "2026-07-22"
-assets: []
+assets:
+  - file: "assets/cover.png"
+    used_in_draft: false
+    used_as_cover: true
+    use: "wechat_cover"
+    source_type: "ai_generated"
+    source: "Generated with Codex built-in image_gen in the user's authenticated session; governed prompt recorded as appsso-004"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-07-22"
+    dimensions: "1672x941"
+    modifications: "No post-generation edits; visually reviewed at original resolution"
+    rights_status: "project_owned"
+    allowed_platforms: ["wechat"]
+    attribution: "AI 生成"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "referenced_edit"
+    prompt_ref: "appsso-004"
+    prompt_sha256: "6ba5e092a4f8d6fb2bd33602424ba4792715aa59f2bf5f916b90d8bb3f0bbd0a"
+    generation_constraints: "16:9 微信封面；保留 AI 撞击现实并形成反馈闭环的构图；仅保留指定标题与标签；白底、黑线、少量红色；禁用品牌标识、水印和额外文字"
+    input_assets: ["research/source-assets/cover-base-v01.png"]
+    generated_on: "2026-07-22"
+
+  - file: "assets/model-timeline-scribble.png"
+    used_in_draft: true
+    source_type: "ai_generated"
+    source: "Generated with Codex built-in image_gen in the user's authenticated session; governed prompt recorded as appsso-004"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-07-22"
+    dimensions: "1122x1402"
+    modifications: "No post-generation edits; visually reviewed at original resolution"
+    rights_status: "project_owned"
+    allowed_platforms: ["wechat"]
+    attribution: "AI 生成；时间节点由本文整理"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "referenced_edit"
+    prompt_ref: "appsso-004"
+    prompt_sha256: "6ba5e092a4f8d6fb2bd33602424ba4792715aa59f2bf5f916b90d8bb3f0bbd0a"
+    generation_constraints: "4:5 竖版时间线；保留 2022—2026 的 5 个节点及顺序；文字准确优先；白底、黑线、红色强调；禁用品牌标识、水印和额外文字"
+    input_assets: ["research/source-assets/model-timeline-base.png"]
+    generated_on: "2026-07-22"
+
+  - file: "assets/anthropic-claude-code-official.png"
+    used_in_draft: true
+    source_type: "official_product_image"
+    source: "https://www.anthropic.com/news/claude-3-7-sonnet"
+    creator_or_rightsholder: "Anthropic PBC"
+    obtained_on: "2026-07-22"
+    dimensions: "1920x1080"
+    modifications: "Downloaded from Anthropic's official CDN; no content edits"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "User explicitly requested Anthropic official imagery for this attributed technology commentary; this is not a commercial license"
+    allowed_platforms: ["wechat"]
+    attribution: "Anthropic"
+
+  - file: "assets/anthropic-fable-mythos-official.png"
+    used_in_draft: true
+    source_type: "official_product_image"
+    source: "https://www.anthropic.com/news/claude-fable-5-mythos-5"
+    creator_or_rightsholder: "Anthropic PBC"
+    obtained_on: "2026-07-22"
+    dimensions: "2880x1620"
+    modifications: "Downloaded from Anthropic's official CDN; no content edits"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "User explicitly requested Anthropic official imagery for this attributed technology commentary; this is not a commercial license"
+    allowed_platforms: ["wechat"]
+    attribution: "Anthropic"
+
+  - file: "assets/anthropic-mythos-protein-design-official.png"
+    used_in_draft: true
+    source_type: "official_product_figure"
+    source: "https://www.anthropic.com/news/claude-fable-5-mythos-5"
+    creator_or_rightsholder: "Anthropic PBC"
+    obtained_on: "2026-07-22"
+    dimensions: "1920x1080"
+    modifications: "Downloaded from Anthropic's official CDN; no content edits"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "User explicitly requested Anthropic official imagery for this attributed technology commentary; this is not a commercial license"
+    allowed_platforms: ["wechat"]
+    attribution: "Anthropic"
+
+  - file: "research/source-assets/cover-base-v01.png"
+    used_in_draft: false
+    use: "research_reference"
+    source_type: "ai_generated"
+    source: "Generated in-project with Codex built-in image_gen as the composition reference for the final cover"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-07-22"
+    dimensions: "1672x941"
+    modifications: "Unmodified generated reference; not used in the published draft"
+    rights_status: "project_owned"
+    allowed_platforms: []
+    attribution: "AI 生成"
+
+  - file: "research/source-assets/model-timeline-base.png"
+    used_in_draft: false
+    use: "research_reference"
+    source_type: "project_designed_reference"
+    source: "Local render of research/source-assets/model-timeline-base.svg"
+    creator_or_rightsholder: "This project"
+    obtained_on: "2026-07-22"
+    dimensions: "1200x1500"
+    modifications: "Rendered from the project-authored SVG as the reference input for the final timeline"
+    rights_status: "project_owned"
+    allowed_platforms: []
+    attribution: "本文整理"
+
+  - file: "research/source-assets/model-timeline-base.svg"
+    used_in_draft: false
+    use: "research_reference"
+    source_type: "project_designed_reference"
+    source: "Designed in-project from the verified model timeline in sources.md"
+    creator_or_rightsholder: "This project"
+    obtained_on: "2026-07-22"
+    dimensions: "1200x1500"
+    modifications: "Editable source for the timeline reference image"
+    rights_status: "project_owned"
+    allowed_platforms: []
+    attribution: "本文整理"

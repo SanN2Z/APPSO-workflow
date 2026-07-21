@@ -1,10 +1,11 @@
-title: ""
+title: "不要只向 AI 索取答案，带它去撞一次现实"
 author: ""
 digest: "从聊天助手到自主 Agent，不到四年。当认知能力被快速商品化，真正稀缺的是能接触、读取并拥有真实反馈的闭环。"
-cover: ""
+cover: "assets/cover.png"
 source_url: ""
+project_adapter: "appsso"
 theme: "default"
-layout_profile: "default"
+layout_profile: "appsso-article-v1"
 highlight: "solarized-light"
 mac_style: false
 footnote: true
