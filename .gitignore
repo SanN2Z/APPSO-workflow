@@ -22,6 +22,7 @@ Thumbs.db
 # Local agent, browser, and scratch artifacts
 /.playwright-mcp/
 /.tmp/
+/.tmp-*/
 /output/
 /临时素材/
 

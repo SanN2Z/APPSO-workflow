@@ -31,6 +31,7 @@ try {
         '^\u4e34\u65f6\u7d20\u6750/',
         '^\.playwright-mcp/',
         '^\.tmp/',
+        '^\.tmp-[^/]+/',
         '^APPSO-\u6570\u5b57\u8d44\u4ea7/01-\u680f\u76ee\u4e0e\u54c1\u724c/\u54c1\u724c\u89c6\u89c9/\u539f\u59cb\u8d44\u6599/',
         '^APPSO-\u6570\u5b57\u8d44\u4ea7/01-\u680f\u76ee\u4e0e\u54c1\u724c/\u54c1\u724c\u89c6\u89c9/\u751f\u56fe-Prompt/',
         '^APPSO-\u6570\u5b57\u8d44\u4ea7/90-\u53d7\u9650\u8d44\u6599/(?!README\.md$)'
