@@ -50,8 +50,12 @@ assets:
     rights_status: "internal_reference"
     allowed_use: "内部编辑创意；对外使用前检查输入素材权利"
     preferred_generator: "Image2"
+    preferred_runtime: "Codex built-in image_gen; verified as gpt-image-2 on 2026-07-21"
+    prompt_sha256: "6ba5e092a4f8d6fb2bd33602424ba4792715aa59f2bf5f916b90d8bb3f0bbd0a"
+    prompt_sha256_scope: "原始 Prompt 单行英文 UTF-8；不含 Markdown 引用前缀与行末换行"
+    workflow_source: "共享/运营/SOP/Image2 生图工作流.md"
     contains_credentials: false
-    notes: "优先由 Codex 直接调用；参考图不可访问时停止生成；产物不能替代标准 Logo"
+    notes: "原始英文逐字调用，输出约束另行追加；参考图不可访问时停止生成；产物不能替代标准 Logo"
 
   - id: "appsso-005"
     title: "APPSO 信息源逆向"

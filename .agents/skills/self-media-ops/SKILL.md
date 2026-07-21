@@ -54,9 +54,11 @@ Before any draft can become `ready`, read [references/wechat-copyedit-pass.md](r
    - Register every asset in `asset-manifest.yml`.
    - Do not mark rights as cleared merely because a file was supplied by the user.
    - Keep attribution near official images and social screenshots.
-   - When AI generation or editing is required, prefer calling the available Image2 tool directly. For the project clumsy-scribble redraw, load the internal prompt asset under `APPSO-数字资产/01-栏目与品牌/品牌视觉/生图-Prompt/`.
+   - Follow the project [Image2 generation workflow](<../../../共享/运营/SOP/Image2 生图工作流.md>). Use Codex built-in `image_gen` directly; the runtime was verified against official OpenAI documentation as `gpt-image-2` on 2026-07-21.
+   - For the project clumsy-scribble redraw, load the exact internal prompt asset under `APPSO-数字资产/01-栏目与品牌/品牌视觉/生图-Prompt/`; keep output constraints separate from the verbatim style prompt.
    - Do not attempt a referenced-image edit when the referenced image is unavailable in the current conversation or workspace. Ask the user to attach it again.
-   - Save generated output in the target package, label it as AI-generated, and record both the input-image rights and generation details.
+   - Inspect the result at original resolution, iterate with one targeted change at a time, then save the selected output in the target package, label it as AI-generated, and record both the input-image rights and generation details.
+   - Use asset manifest `version: 2` for new or materially edited packages. Record generation mode, governed prompt hash, run constraints, input assets, runtime, model, and generation date. Missing release-bound metadata may remain visible as warnings during drafting but blocks `ready`.
 
 4. **Draft**
    - Write for the target platform rather than mechanically shortening or expanding another platform's copy.

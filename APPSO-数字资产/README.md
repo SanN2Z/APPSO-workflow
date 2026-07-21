@@ -8,6 +8,7 @@
 
 - [Hunt Good 周报保姆级指南](<01-栏目与品牌/Hunt-Good/Hunt Good 周报保姆级指南.md>)
 - [APPSO 内容生产 SOP](<03-SOP/APPSO 内容生产 SOP.md>)
+- [Image2 生图工作流](<../共享/运营/SOP/Image2 生图工作流.md>)
 - [Hunt Good 周报专项 SOP](<03-SOP/Hunt Good 周报专项 SOP.md>)
 - [时效热点 × AIGC 解释稿 SOP](<03-SOP/时效热点 × AIGC 解释稿 SOP.md>)
 - [选题会提交模板](<04-模板/选题会提交模板.md>)

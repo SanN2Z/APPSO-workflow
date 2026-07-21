@@ -73,6 +73,8 @@ Record sentence defects as `COPY-*` items below the frontmatter. See [wechat-cop
 Register publication and archived source assets. Minimum fields:
 
 ```yaml
+version: 2
+updated: "2026-07-21"
 assets:
   - file: "assets/example.png"
     used_in_draft: true
@@ -87,6 +89,36 @@ assets:
 ```
 
 Keep paths relative to the package. Never point a publication draft at a temporary attachment path.
+
+For dependency-free validation, keep manifests in the normalized project subset shown above: root-level `version`, optional `updated`, then root-level `assets`; indent each `- file` by 2 spaces and its fields by 4 spaces. Use quoted scalars plus inline or indented scalar lists. Do not use YAML anchors, aliases, block scalars, or inline comments in this file.
+
+For `source_type: "ai_generated"`, also record the runtime and reproducibility fields when available:
+
+```yaml
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "text_to_image or referenced_edit or image_edit"
+    prompt_ref: "appsso-004 or a governed prompt asset"
+    prompt_sha256: "64-lowercase-hex-characters"
+    generation_constraints: "Aspect ratio, preserved elements, forbidden elements, and text rules"
+    input_assets: ["source reference or conversation attachment"]
+    generated_on: "2026-07-21"
+```
+
+`input_assets` may be empty for `text_to_image`, but `referenced_edit`, `image_edit`, and `prompt_ref: "appsso-004"` must identify every input and its rights record. `prompt_sha256` hashes the exact governed prompt referenced by `prompt_ref`; keep non-secret run-specific constraints in `generation_constraints` rather than mutating a fixed style prompt.
+
+Before a referenced generation becomes `ready`, every conversation attachment must be persisted under `research/source-assets/` and registered as its own manifest item. Its `rights_status` must explicitly permit derivative use: `project_owned`, `user_confirmed_derivative_use`, `licensed_derivative_use`, `cc0_verified`, `public_domain_verified`, or `project_owned_with_cc0_component`. A generic `user_supplied`, `research_reference`, or unknown status is not permission to redraw. Inputs form an acyclic provenance graph: an output cannot name itself, a path alias of itself, or a downstream derivative as an input.
+
+New or materially edited manifests use `version: 2`. The validator treats publication-bound assets (`used_in_draft: true`, `used_as_cover: true`, a real Markdown reference, or a declared release `use`, such as `wechat_cover`) as follows:
+
+- Before `ready`, incomplete version 2 metadata is a warning so work can continue visibly.
+- At `ready` or `published`, missing generation provenance, unresolved rights, or a platform mismatch is an error.
+- A real Markdown image reference is publication-bound even if its manifest falsely says `used_in_draft: false`; the contradiction is reported. The only declared release uses are `wechat_cover` and `x_media`; `research_reference` and `unused` remain non-release uses.
+- Release-bound version 2 assets use this rights allowlist: `project_owned`, `project_owned_with_cc0_component`, `user_confirmed_editorial_commentary`, `user_confirmed_editorial_use`, `licensed`, `cc0_verified`, and `public_domain_verified`. Unknown labels never imply clearance; adding a new cleared status requires a reviewed schema/SOP change.
+- Unused research and rejected assets remain warnings and do not block release.
+- Version 1 or unversioned historical AI assets remain readable and emit migration warnings; migrate them when the package is next materially edited.
+
+Follow the project [Image2 generation workflow](<../../../../共享/运营/SOP/Image2 生图工作流.md>) for tool mapping, quality review, versioning, and fallback rules.
 
 ## WeChat publish configuration
 
