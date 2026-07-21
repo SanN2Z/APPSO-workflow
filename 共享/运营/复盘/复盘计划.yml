@@ -17,7 +17,7 @@ triggers:
     schedule: "每周五"
   monthly:
     action: "审计重复缺陷、SOP 冲突、失效规则与可迁移工作流"
-    schedule: "每月第 1 个工作日"
+    schedule: "每月 1 日"
 
 promotion:
   default_min_independent_cases: 2
