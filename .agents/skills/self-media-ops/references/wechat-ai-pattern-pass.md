@@ -61,6 +61,8 @@ Flag identical paragraph lengths, repeated section shapes, every paragraph endin
 
 Flag fake emotional reactions, forced slang, unexplained memes, canned agreement, or invented labels that are not used by the source or helpful to the reader. Do not “humanize” copy by injecting casual language at random.
 
+Also flag stock Chinese colloquial frames and nonliteral metaphors that manufacture emphasis without carrying information, such as「先别急着……」「喊革命」「……到账」「这笔账……」or a repeated exam / war / finance metaphor chain. Apply a transfer test: if the whole phrase could move unchanged to another AI product article and deleting it loses no fact or judgment, remove it. If it has a real job, rewrite it with a concrete actor, action, condition, cost, or result. Preserve sourced quotations and literal uses such as an actual bill, payment arrival, historical revolution, or real examination.
+
 ### 6. Speculative gap filling
 
 Flag precise motives, causes, product mechanisms, safety guarantees, or future outcomes that are not supported by sources. A limitation should say what remains unknown in reader-facing language; it should not narrate the research process or turn missing evidence into a product accusation.

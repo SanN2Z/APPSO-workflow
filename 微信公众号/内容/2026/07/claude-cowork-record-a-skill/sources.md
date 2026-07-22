@@ -15,7 +15,8 @@
 | Claude Help：Use Claude Cowork safely | https://support.claude.com/en/articles/13364135-use-claude-cowork-safely | 官方安全说明 | 服务器侧处理、本地文件边界、屏幕画面、敏感数据与人类监督 | 未单独说明 Record 原始录屏留存期限 |
 | Claude Help：Let Claude use your computer in Cowork | https://support.claude.com/en/articles/14128542-let-claude-use-your-computer-in-cowork | 官方帮助 | 电脑操作与屏幕可见信息的安全边界 | 该页套餐范围与新品帖不同，不用来覆盖 Record 套餐 |
 | OpenAI：ChatGPT release notes，Record & Replay in Codex | https://help.openai.com/en/articles/6825453-chatgpt-release-notes | 官方发布说明 | 2026 年 6 月 18 日已公布 Codex `Record & Replay`；符合条件的 macOS 用户可示范稳定、可重复流程并转成 Skill | 支持竞品时间线，不用于推断 Claude 的具体实现 |
-| OpenAI：Record & Replay | https://developers.openai.com/codex/record-and-replay | 官方教程 | Codex 录制前补充任务背景；录制中观察操作与窗口内容；生成的 Skill 包含触发条件、变量、步骤和验收，可在新会话复用 | 官方未说 Codex「只记录点击坐标」 |
+| OpenAI：Record & Replay | https://developers.openai.com/codex/record-and-replay | 官方教程 | Codex 录制前补充任务背景；录制中观察操作与窗口内容；生成的 Skill 包含触发条件、变量、步骤和验收，可在新会话复用；仅 macOS，首发排除欧洲经济区、英国和瑞士；必须启用 Computer Use；官方示例场景为报销、订停车位、建 issue、发视频、下载周期报表 | 官方未说 Codex「只记录点击坐标」；2026-07-22 复核时跳转至 learn.chatgpt.com/docs/extend/record-and-replay |
+| APPSO：Codex Record & Replay 报道（你在电脑的操作正在成为 AI 经验包） | 用户粘贴全文，原文 URL 待补 | 第三方报道 + 读者评论 | 「学徒模式」定位、YouTube 上传演示描述、读者评论「我的『好兄弟』正在『蒸馏』我」 | 关键产品细节已另行与 OpenAI 官方页核对；评论仅作玩梗引用，不承担热度或产品效果证明；APPSO 独特表达不复用 |
 | OpenAI：Record & Replay in Codex | https://www.youtube.com/watch?v=ZK3JhU73W18 | 官方演示视频 | 演示一次、生成可检查和编辑的 Skill；用户控制录制开始与结束 | 用于核对 Codex 产品定位 |
 | 程序员鱼皮：Codex Record & Replay 实战 | https://mp.weixin.qq.com/s/bzGBw56hojzHvwWWzlk24A | 用户指定对比参考 / 第三方实测 | 以下载 FLAC 音乐测试录制、生成 Skill 和新会话回放；作者认为更适合「说不清、但做得出」的流程，并报告速度慢、偶尔误操作 | 微信原页触发环境验证；同文可访问镜像见下一条 |
 | 程序员鱼皮：Codex Record & Replay 实战（腾讯云同步） | https://cloud.tencent.com/developer/article/2699863 | 第三方实测镜像 | 支持上述实测步骤、个人评价、适用场景与生成物可编辑性 | 2026-06-29 同步，页面注明原始发表于 2026-06-24 微信公众号 |

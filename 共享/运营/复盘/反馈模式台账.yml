@@ -54,6 +54,23 @@ patterns:
     regression_check: "下一篇使用不同稿型，验证规则不会强迫同一种叙事骨架"
     next_review_on: "2026-08-21"
 
+  - id: "WECHAT-HUMAN-002"
+    pattern: "中文公众号解释稿或方法指南用可移植的套式口语或非字面隐喻制造转折和强调，具体事实、限制与判断反而被遮住"
+    evidence_level: "E2"
+    source_cases: ["spain-opta-world-cup-prediction:OPTA-FB-017", "claude-cowork-record-a-skill:CLAUDE-FB-001"]
+    disposition: "promoted_provisional"
+    rule_source: ".agents/skills/self-media-ops/references/wechat-ai-pattern-pass.md#5-manufactured-personality"
+    trigger: "中文公众号解释稿或方法指南出现可整句移植到其他 AI 新品稿的套式口语，或革命 / 战争 / 考试 / 财务等非字面隐喻链"
+    action: "先识别句子承担的具体信息；删除后不损失事实或判断时直接删除，否则改写为主体、动作、条件、成本或结果"
+    pass_condition: "来源原话、字面事实和必要术语可以保留；其余实例只有在删除会损失一条可明确复述的事实或判断，且无法用更具体的主体 / 动作 / 条件表达时才通过"
+    failure_signal: "短语只增加口气、悬念或权威感，删掉后信息完全不变，或同一隐喻在一节内反复承担转场"
+    scope: "微信公众号解释稿与方法指南；不机械禁止真实付款、计费、账单、历史革命、战争报道、教学测验和来源原话"
+    owner: "feature_writer_and_release_auditor"
+    classification: "internal"
+    introduced_on: "2026-07-22"
+    regression_check: "正例：『先别急着喊革命』『这笔账躲不掉』『入口到账』和连续交卷 / 考试隐喻必须命中；反例：『本次 API 调用账单增加 12%』作为真实计费表述必须放行"
+    next_review_on: "2026-08-22"
+
   - id: "CORE-COPYEDIT-001"
     pattern: "冷读通过后，正文仍可能残留主谓、比较、格式，以及依赖聊天、brief 或版本历史才能理解的内部指代"
     evidence_level: "E2"

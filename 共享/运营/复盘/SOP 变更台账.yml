@@ -290,3 +290,29 @@ changes:
       - "现有发布后复盘到期审计通过；GitHub 周五 / 每月审计已增加洞察结构与到期门"
       - "仓库预检通过：482 个候选文件、75.41 MB；边界、常见凭据、大文件、未暂存和已暂存差异检查无异常"
     next_review_on: "2026-07-24"
+
+  - id: "SOP-CHANGE-20260722-005"
+    date: "2026-07-22"
+    change: "将中文公众号中的可移植套式口语与非字面隐喻升级为 scoped AI 痕迹规则：删除无信息增量的万能口气，或改写为具体主体、动作、条件、成本与结果；字面语境和来源原话继续放行"
+    source_cases:
+      - "spain-opta-world-cup-prediction:OPTA-FB-017"
+      - "claude-cowork-record-a-skill:CLAUDE-FB-001"
+    affected_sources:
+      - ".agents/skills/self-media-ops/references/wechat-ai-pattern-pass.md"
+      - "APPSO-数字资产/03-SOP/时效热点 × AIGC 解释稿 SOP.md"
+      - "共享/运营/复盘/反馈模式台账.yml"
+      - "微信公众号/内容/2026/07/claude-cowork-record-a-skill/retrospective.md"
+      - "微信公众号/内容/2026/07/claude-cowork-record-a-skill/review.md"
+    classification: "scoped_rule_promotion"
+    validation:
+      - "两个独立内容包均由用户明确指出非字面隐喻像 AI 表达，E2 证据可追溯"
+      - "正例回归命中「先别急着喊革命」「这笔账躲不掉」「入口到账」和连续交卷 / 考试隐喻"
+      - "字面反例「本次 API 调用账单增加 12%」保留，真实付款到账、历史革命、真实考试与来源原话同样放行"
+      - "空泛评论热度仅有本稿一例，留在 case_only，没有借本次 E2 扩大规则范围"
+      - "APPSO 专项 SOP 已改为链接公众号诊断真源，只保留预测类 adapter，不维护第二份通用动作合同"
+      - "独立 promotion-gate 回归确认 trigger、scope、pass condition、真源链接和方法指南范围一致；规则维持 E2 provisional，不升级 E3"
+      - "来源稿目标表达扫描为 0；AI 痕迹诊断与独立冷读通过，逐句终校关闭 11 个 COPY 缺陷，最终正文哈希为 ee5d17e7bb54b3da0dfddc4509fe8be75d4dc26e8dcf57e756b6da43008b5bc5"
+      - "内容包 validator 为 0 error / 6 条既有图片权利 warning，事实与权利门仍保持 draft 状态"
+    promoted_rules:
+      - "WECHAT-HUMAN-002 (E2 provisional)"
+    next_review_on: "2026-08-22"
