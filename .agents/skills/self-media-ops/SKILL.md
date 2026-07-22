@@ -30,6 +30,7 @@ Do not load unrelated research-project instructions unless the user explicitly b
 - **Editorial review**: record findings in `review.md` and update frontmatter only when requirements pass.
 - **Publishing preparation**: for WeChat, read [references/wechat-publishing.md](references/wechat-publishing.md), build the local Wenyan preview, and keep draft creation dry-run unless the current task explicitly authorizes the external write.
 - **Post-delivery or post-publication retrospective**: load [content-retrospective](../content-retrospective/SKILL.md), capture user and editor feedback in the content package, and update SOPs only after the promotion gate passes.
+- **Cross-cycle insight experiment**: load [insight-to-asset](../insight-to-asset/SKILL.md) when the user wants to turn an abstract judgment into a falsifiable test and reusable asset. Keep the original content cycle and feedback in their existing sources.
 
 Read [references/content-package.md](references/content-package.md) when creating or restructuring a package. Read [references/review-checklist.md](references/review-checklist.md) before changing a draft to `ready`.
 

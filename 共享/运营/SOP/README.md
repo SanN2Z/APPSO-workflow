@@ -11,6 +11,8 @@
 
 - [生产 skill](../../../.agents/skills/self-media-ops/SKILL.md)：选题、调研、写稿、审校和发布准备。
 - [复盘 skill](../../../.agents/skills/content-retrospective/SKILL.md)：反馈登记、因果复盘、SOP 升级和工作流迁移。
+- [洞察资产化 skill](../../../.agents/skills/insight-to-asset/SKILL.md)：把宏观判断缩成可证伪实验，跨内容周期更新证据并形成可迁移资产。
+- [洞察实验室](../../研究/洞察实验室/README.md)：人类入口、洞察台账、实验记录和到期复核。
 
 ## 项目 adapter
 

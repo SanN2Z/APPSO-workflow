@@ -1,5 +1,5 @@
 schema_version: 1
-updated_on: "2026-07-21"
+updated_on: "2026-07-22"
 timezone: "Asia/Tokyo"
 
 triggers:
@@ -18,6 +18,9 @@ triggers:
   monthly:
     action: "审计重复缺陷、SOP 冲突、失效规则与可迁移工作流"
     schedule: "每月 1 日"
+  insight_checkpoint:
+    action: "先关闭到期洞察实验，再更新支持、反对与中性证据；不得自动扩大命题或直接升级 SOP"
+    schedule: "每周五，并以洞察台账中的 next_review_on 为准"
 
 promotion:
   default_min_independent_cases: 2
@@ -31,3 +34,4 @@ artifacts:
   package_record: "<content-package>/retrospective.md"
   feedback_ledger: "共享/运营/复盘/反馈模式台账.yml"
   sop_change_ledger: "共享/运营/复盘/SOP 变更台账.yml"
+  insight_registry: "共享/研究/洞察实验室/洞察台账.yml"

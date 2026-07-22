@@ -17,6 +17,7 @@
 
 1. 使用项目 skill：`.agents/skills/self-media-ops/SKILL.md`。
    - 收到发布后反馈、用户修改意见，或执行周 / 月复盘时，同时使用 `.agents/skills/content-retrospective/SKILL.md`。
+   - 把抽象判断、核心洞察或长期命题落成可验证系统时，使用 `.agents/skills/insight-to-asset/SKILL.md`，并从 `共享/研究/洞察实验室/README.md` 进入；洞察记录不替代单稿证据、内容复盘或 SOP 晋升门。
 2. 读取 `上下文/当前重点.md` 和任务相关的共享上下文。
 3. 涉及 APPSO 时，读取 `APPSO-数字资产/README.md` 和相关 SOP。
 4. 再读取目标平台的 `CONTEXT.md` 与 `AGENTS.md`。

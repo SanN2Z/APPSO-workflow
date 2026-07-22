@@ -1,0 +1,15 @@
+schema_version: 1
+updated_on: "2026-07-22"
+timezone: "Asia/Tokyo"
+wip_limit: 1
+
+insights:
+  - id: "INSIGHT-001"
+    title: "反馈闭环资产化是否形成可观察的工作流复利"
+    record: "insights/INSIGHT-001-feedback-loop-compounding/insight.yml"
+    status: "framed"
+    evidence_level: "E0"
+    classification: "internal"
+    owner: "strategy_editor"
+    updated_on: "2026-07-22"
+    next_review_on: "2026-07-24"

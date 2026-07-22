@@ -1,0 +1,4 @@
+interface:
+  display_name: "洞察落地与复利"
+  short_description: "把核心洞察转成可证伪实验、证据更新和可迁移资产工作流"
+  default_prompt: "Use $insight-to-asset 把这条核心洞察转成可证伪实验、证据记录和下一轮可复用资产。"

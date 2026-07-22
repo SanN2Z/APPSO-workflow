@@ -1,0 +1,125 @@
+schema_version: 1
+id: "INSIGHT-001"
+title: "反馈闭环资产化是否形成可观察的工作流复利"
+classification: "internal"
+status: "framed"
+evidence_level: "E0"
+owner: "strategy_editor"
+created_on: "2026-07-22"
+updated_on: "2026-07-22"
+next_review_on: "2026-07-24"
+
+claim:
+  statement: "在同一操作者、同类公众号 AI 解释稿和相同质量门下，把现实反馈转成可执行且可复用的工作流资产，可能比只提升单次 Prompt 或工具熟练度更稳定地减少同机制返工，并提高跨 Session 迁移性。"
+  scope: "本仓库内的微信公众号 AI 解释稿生产；先测试生产机制，不外推到个人职业发展、企业竞争力或所有 AI 工作。"
+  mechanism: "反馈被保存为带触发条件、动作、通过标准、失败信号和回归检查的资产后，下一轮可以在交付前阻断已知问题；独立 Session 也能复用该资产，而不依赖原对话记忆。"
+  exclusions:
+    - "不声称抽象能力本身必然带来更高职业上限。"
+    - "不把一次公众号改进视为长期因果证明。"
+    - "不把接触公司反馈等同于拥有公司数据、终稿、品牌资产或传播权。"
+    - "不读取或引用未由用户明确纳入范围的科研项目。"
+
+falsifiability:
+  prediction: "在冻结的同类任务和质量门下，使用洞察落地卡的实验分支，其每 1000 个中文字符中「主要判断缺少证据、边界或读者后果」的问题数应至少比对照分支低 50%，且总人工时间、修改轮次和硬门问题不恶化。"
+  failure_condition: "连续两个独立配对案例未达到主指标，或任一案例增加事实、引语、版权、隐私、发布、语法硬门问题；若维护新资产的实测时间连续两轮高于避免的返工时间，也否定当前资产化方式。"
+  alternative_explanations:
+    - "实验文章本身更简单。"
+    - "操作者因重复任务自然熟练，而非资产产生作用。"
+    - "模型或运行时更新提高了输出质量。"
+    - "实验分支只是投入了更多前置规划时间。"
+    - "审稿人知道分支身份后产生期望偏差。"
+
+evidence:
+  supporting: []
+  contradicting: []
+  neutral:
+    - relation: "neutral"
+      ref: "微信公众号/内容/2026/07/ai-agents-real-world-loss/brief.md"
+      note: "该内容包提出反馈闭环所有权命题，但命题本身不是效果证据。"
+    - relation: "neutral"
+      ref: "微信公众号/内容/2026/07/ai-agents-real-world-loss/retrospective.md#DLV-002"
+      note: "单案例已经区分接触反馈与拥有闭环，当前仍是观察项。"
+    - relation: "neutral"
+      ref: "微信公众号/内容/2026/07/ai-agents-real-world-loss/retrospective.md#DLV-007"
+      note: "用户明确要求把洞察变成可迭代入口；这支持建立实验，不支持实验机制已经有效。"
+    - relation: "neutral"
+      ref: "共享/运营/复盘/SOP 变更台账.yml"
+      note: "台账证明反馈已产生多项工作流资产，但尚未前瞻测量复发率、总成本和迁移效果。"
+    - relation: "neutral"
+      ref: "共享/研究/洞察实验室/insights/INSIGHT-001-feedback-loop-compounding/review.md#skill-forward-test"
+      note: "隔离 Session 能从 Skill 把一个过宽命题缩成 E0 实验，说明入口可迁移；它不支持 INSIGHT-001 的效果预测。"
+  unknowns:
+    - "历史内容包缺少统一记录的人工分钟数，不能事后猜测效率基线。"
+    - "尚无隔离 Session 对同一洞察卡的前瞻迁移结果。"
+    - "现有 SOP 变更是否减少下一轮同机制返工，仍需按可比机会记录。"
+
+experiments:
+  - id: "EXP-001"
+    title: "下一篇同类公众号解释稿的洞察卡配对实验"
+    status: "planned"
+    question: "写作前强制补齐证据、边界、反证和读者后果，能否减少宏观跳跃，同时不增加总成本或质量风险？"
+    baseline:
+      description: "使用实验开始时冻结的现有 self-media-ops、内容工作流和同一份 brief、sources、素材与质量门，不加载洞察落地卡。"
+      frozen_ref: null
+      missing_data_rule: "没有实测人工时间时保留 null，不用聊天时间或 Git 时间推算。"
+    intervention:
+      description: "在同一输入的隔离 Session 中，写作前填写核心判断、类型、支持证据、反对证据、作用机制、读者后果、改口条件和目标资产；审校时逐项检查。"
+      artifact_ref: ".agents/skills/insight-to-asset/SKILL.md"
+      version_ref: null
+    controls:
+      - "使用同一 brief、sources、素材、模型、运行时、操作者角色和停止标准。"
+      - "两个分支使用隔离 Session，执行顺序随机。"
+      - "冷读审稿人不知道哪个分支使用了洞察卡。"
+      - "两分支都不直接发布，只把通过全部门禁的版本继续交付。"
+    metrics:
+      primary:
+        id: "unsupported-judgment-defects-per-1000-zh-chars"
+        definition: "盲审确认的主要判断缺少证据、适用边界或读者后果的问题数 ÷ 正文中文字符数 × 1000。"
+        direction: "lower"
+        success_threshold: "实验分支至少比对照分支低 50%。"
+        baseline: null
+        result: null
+      secondary:
+        - id: "total-human-minutes"
+          definition: "规划、填卡、审校、返工和资产维护的全部实测人工分钟数。"
+          direction: "lower"
+          success_threshold: "实验分支不高于对照分支；复制到第二独立案例时再检验是否下降 20%。"
+          baseline: null
+          result: null
+        - id: "revision-rounds"
+          definition: "从首稿到同一审校状态所需的实质修改轮次。"
+          direction: "lower"
+          success_threshold: "实验分支不高于对照分支。"
+          baseline: null
+          result: null
+      guardrails:
+        - id: "release-blockers"
+          condition: "事实、引语、版权、隐私、发布和 copyedit 阻断项不得多于对照分支。"
+        - id: "blind-read-quality"
+          condition: "盲审对清晰度、可信度和唯一内容承诺的结论不得变差。"
+    evidence_refs: []
+    decision: "pending"
+    end_condition: "两个分支使用冻结输入完成并达到同一审校状态，盲审结果和全部实测成本已经登记；若 2026-08-31 前没有合适内容包，则复核并重新排期，不把未运行写成阴性结果。"
+
+assetization:
+  status: "prototype"
+  type: "skill_and_workflow"
+  target: "形成可由独立 Session 使用的洞察卡、实验合同和到期审计入口；若机制通过，再决定是否成为公众号观点稿局部门禁。"
+  authoritative_refs:
+    - ".agents/skills/insight-to-asset/SKILL.md"
+    - ".agents/skills/insight-to-asset/references/insight-contract.md"
+    - "共享/研究/洞察实验室/README.md"
+  regression_check: "CLI 校验严格结构、台账一致性、路径边界、WIP 和到期语义；隔离 Session 检查范围、反证与护栏是否能从 Skill 恢复。"
+  transfer_test: "2026-07-22 隔离 Session 只读取 Skill，面对「AI 摘要更快，所以所有团队都应完全自动化周报」时，主动缩窄到内部影子实验，保持 E0 / framed，写出 4 周期阈值、反证、维护成本、事实／隐私／外部发送护栏，并拒绝自动发送；通过。"
+  retirement_condition: "连续两轮维护成本高于避免的返工，或规则持续误报并降低内容质量。"
+  portable_core: "命题合同、反证、证据关系、实验门、资产合同和状态机。"
+  adapter_boundary: "品牌、平台、内容状态、目录、指标口径、审核角色、权限和保密等级。"
+
+next_action: "为下一篇符合范围的公众号 AI 解释稿冻结 brief、sources、运行时、质量门和分支顺序；未冻结前保持 framed，不进入 running。"
+
+decision_log:
+  - date: "2026-07-22"
+    decision: "framed"
+    rationale: "用户希望把抽象洞察落地；当前只能建立可验证机制和首轮实验，现有案例不足以支持职业或组织层面的远期结论。"
+    evidence_refs:
+      - "微信公众号/内容/2026/07/ai-agents-real-world-loss/retrospective.md#DLV-002"

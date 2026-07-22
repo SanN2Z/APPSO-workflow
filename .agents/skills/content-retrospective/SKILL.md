@@ -24,6 +24,8 @@ Treat raw feedback, company final copy, unpublished analytics, contacts, and aut
 - **Monthly review**: Audit SOP conflicts, recurring defects, stale rules, missing regression checks, and candidates for generalization.
 - **Migration review**: Separate invariant workflow logic from brand, platform, path, status, and confidentiality adapters so the workflow can move to another repository.
 
+If the request evaluates a strategic claim across several content cycles rather than promoting a concrete feedback mechanism, use [insight-to-asset](../insight-to-asset/SKILL.md). Keep raw feedback and SOP promotion decisions in this skill; send only source links and sanitized evidence relations to the insight record.
+
 ## Create or update the cycle record
 
 Use `scripts/init_retrospective.py <content-package>` to create `retrospective.md` without overwriting an existing record. Use `--dry-run` when only inspecting.

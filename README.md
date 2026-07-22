@@ -12,6 +12,7 @@
 4. 写稿前进入目标平台，继续阅读对应的 `AGENTS.md` 与 `CONTEXT.md`。
 5. 使用项目 skill：[`self-media-ops`](.agents/skills/self-media-ops/SKILL.md)。
 6. 稿件交付、发布或收到修改反馈后，使用 [`content-retrospective`](.agents/skills/content-retrospective/SKILL.md) 完成复盘和 SOP 升级判断。
+7. 需要把宏观判断压成可证伪实验和可迁移资产时，从 [`洞察实验室`](共享/研究/洞察实验室/README.md) 进入，并使用 [`insight-to-asset`](.agents/skills/insight-to-asset/SKILL.md)。
 
 ## 仓库结构
 
@@ -19,6 +20,7 @@
 |---|---|---|
 | `.agents/skills/self-media-ops/` | Codex 内容工作流、质量门和验证脚本 | 提交 |
 | `.agents/skills/content-retrospective/` | 发布反馈复盘、SOP 进化和工作流迁移 | 提交 |
+| `.agents/skills/insight-to-asset/` | 核心洞察的反证、实验、证据更新和资产化 | 提交 |
 | `上下文/` | 长期定位、作者声音、事实规范、版权规则与当前重点 | 提交 |
 | `APPSO-数字资产/` | 公司方法、栏目规则、SOP、模板和资产台账 | 脱敏内容提交；原件和受限资料忽略 |
 | `共享/` | 跨平台模板、公共事实包、权利明确素材与运营台账 | 按权利状态提交 |
@@ -67,6 +69,7 @@ Codex 最多自动推进到 `ready`。只有用户明确确认已经发布，才
 - 公开样本分析标记为 `public-derived`，不得写成 APPSO 官方规则。
 - 公司终稿、完整反馈、后台数据和原始品牌文件只建索引或留在 Git 忽略区。
 - 修改 SOP 时同步更新版本、日期、资产台账或变更记录。
+- 宏观洞察先进入 [`洞察实验室`](共享/研究/洞察实验室/README.md)，只有经过现实实验和复盘晋升门的机制才进入 SOP；个人比较和远期判断不得伪装成已核事实。
 
 详细规则见 [`CONTRIBUTING.md`](CONTRIBUTING.md)。
 
