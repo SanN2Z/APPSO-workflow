@@ -1,4 +1,21 @@
+version: 2
+updated: "2026-07-22"
 assets:
+  - file: "assets/x-openai-huggingface-incident.jpg"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "1042x1112"
+    source_type: "user_supplied_social_screenshot"
+    source: "https://x.com/OpenAI"
+    creator_or_rightsholder: "OpenAI 及 X 界面；截图由用户提供"
+    obtained_on: "2026-07-22"
+    modifications: "用户在当前会话提供；项目仅复制入内容包，未裁切、改字或调整画面"
+    rights_status: "user_confirmation_needed"
+    rights_basis: "用户明确要求将该截图用于本稿的署名报道与评论，但用户提供不等于确认 OpenAI 或 X 界面的通用转载许可"
+    rights_blocker: true
+    allowed_platforms: []
+    attribution: "OpenAI 关于与 Hugging Face 联合调查安全事件的公开帖；图源：OpenAI / X；截图由用户提供"
+
   - file: "assets/x-matt-shumer-file-deletion.png"
     used_in_draft: true
     used_as_cover: false
@@ -134,5 +151,5 @@ assets:
     allowed_platforms: []
     attribution: "Tomek Korbak 对任务时程与对齐偏差的公开评论；图源：X"
 
-# 正文当前使用 3 张原始证据图和 3 张 X 原帖截图；本轮新增的 Matt Shumer 截图已插入开头，Tibo 长截图保留为备选。所有截图均非 AI 生成。
+# 正文当前使用 4 张原始证据图和 4 张 X 原帖截图；本轮新增的 OpenAI / Hugging Face 截图已插入开头，Tibo 长截图保留为备选。所有截图均非 AI 生成。
 # 版权复核完成前，rights_checked 必须保持 false，稿件不得进入 ready。

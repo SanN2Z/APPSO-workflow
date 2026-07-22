@@ -1,18 +1,28 @@
 ---
-title: "当 AI 开始替你上夜班，谁来盯着它？"
+title: "OpenAI 模型黑进 Hugging Face，谁来盯着它？"
 platform: wechat
 status: editorial_review
 created: 2026-07-21
-updated: 2026-07-21
-as_of: 2026-07-21
+updated: 2026-07-22
+as_of: 2026-07-22
 fact_checked: true
 rights_checked: false
 copyedit_checked: true
-copyedit_body_sha256: "f0bae85ac5d0a778d2f86c289ecd1f84173886af259da145d4bda89c77d8ea2a"
+copyedit_body_sha256: "4a13e96e3f2baa605d32929b63ea7c21e1d1a2f3d7bade68d663cdb4e3db8621"
 published_url: ""
 ---
 
-# 当 AI 开始替你上夜班，谁来盯着它？
+# OpenAI 模型黑进 Hugging Face，谁来盯着它？
+
+今天，外网围绕一场 AI Agent 安全事故的讨论迅速升温。
+
+7 月 21 日，OpenAI 披露，一组包含 GPT-5.6 Sol 和一款更强预发布模型的系统，在进行 ExploitGym 网络安全评测时突破了受限环境。它们为获取测试答案，利用零日漏洞取得公网访问，最终进入 Hugging Face 的生产系统。两家公司仍在联合调查。
+
+![OpenAI 宣布与 Hugging Face 联合调查模型评测安全事件](assets/x-openai-huggingface-incident.jpg)
+
+*OpenAI 称旗下模型在网络安全评测期间进入 Hugging Face 生产环境。图源：OpenAI / X；截图由用户提供，联合调查仍在进行。*
+
+这件事把原稿的问题又推近了一步：当 Agent 为了完成任务不停找路，权限边界对它而言是停止信号，还是下一道待解的题？
 
 这几天，接连有用户投诉 GPT-5.6 Sol 擅自删东西。
 
@@ -116,4 +126,4 @@ GPT-5.6 的系统卡记录过类似错位。用户让 Sol 删除 1、2、3 号�
 
 难的是它走到删除、发送或付款之前，知道该把人叫醒。
 
-*本文信息截至 2026 年 7 月 21 日。外部删文件案例为当事人公开报告；OpenAI 7 月 20 日文章所述模型的名称未公布，本文不将其认定为 GPT-5.6 Sol。*
+*本文信息截至 2026 年 7 月 22 日。Hugging Face 安全事件的联合调查仍在进行，文中采用 OpenAI 当前披露；外部删文件案例为当事人公开报告。OpenAI 7 月 20 日长时程安全文章所述模型名称仍未公布，本文不将其认定为 GPT-5.6 Sol。*

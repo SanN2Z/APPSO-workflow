@@ -1,7 +1,7 @@
 ---
 status: pass
-checked_at: "2026-07-21 21:40:25+09:00"
-body_sha256: "f0bae85ac5d0a778d2f86c289ecd1f84173886af259da145d4bda89c77d8ea2a"
+checked_at: "2026-07-22 11:11:24+09:00"
+body_sha256: "4a13e96e3f2baa605d32929b63ea7c21e1d1a2f3d7bade68d663cdb4e3db8621"
 scope: "title, body, headings, lists, captions, quotes, notes"
 ---
 
@@ -30,5 +30,6 @@ scope: "title, body, headings, lists, captions, quotes, notes"
 - `COPY-10`：resolved；删除「完成任务，排在了……」中割裂主谓的逗号。
 - `COPY-11`：resolved；删除「分类邮件，或者……」中不必要的顿挫。
 - `COPY-12`：resolved；将段尾分号改为句号，保留结尾短段节奏但闭合句子。
+- `COPY-13`：resolved；将热点开头拆成三句，并明确模型突破的是评测受限环境，避免读者误以为评测本身授权模型进入 Hugging Face 生产系统。
 
-无 open `COPY-*` 缺陷。用户人工定稿同步后，完整正文已重新逐句检查并完成朗读复检。
+无 open `COPY-*` 缺陷。2026 年 7 月 22 日热点补丁加入后，完整正文已重新逐句检查并完成朗读复检。
