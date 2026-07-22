@@ -4,8 +4,9 @@ digest: "从聊天助手到自主 Agent，不到四年。当认知能力被快�
 cover: "assets/cover.png"
 source_url: ""
 project_adapter: "appsso"
+delivery_mode: "manual_editor"
 theme: "default"
-layout_profile: "appsso-article-v1"
+layout_profile: "default"
 highlight: "solarized-light"
 mac_style: false
 footnote: true

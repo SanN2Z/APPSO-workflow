@@ -146,4 +146,10 @@ For generic new images, start from `共享/模板/生图计划/通用直出计�
 
 ## WeChat publish configuration
 
-WeChat packages use `publish.yml` for the independently declared `project_adapter`, API-safe title, digest, cover, comments, allowlisted layout profile, and optional package-local body header/footer components. The image plan must declare the same adapter; brand and layout are separate, so changing `layout_profile` does not erase brand ownership. `draft.md` remains the only editable article source. See [wechat-publishing.md](wechat-publishing.md).
+WeChat packages use `publish.yml` for three independently declared routing fields plus API-safe title, digest, cover, comments, and optional package-local body header/footer components:
+
+- `project_adapter` declares the real brand or project owner. Changing delivery or layout must not erase it, and the image plan must declare the same adapter.
+- `delivery_mode` declares exactly one handoff capability. `manual_editor` produces a local editor handoff and must reject every API draft command; `sealed_draft` permits the draft dry-run and, only after explicit current-task authorization, creation of one WeChat draft.
+- `layout_profile` selects an allowlisted visual theme. It does not infer either the brand or the delivery mode. `manual_editor` uses `default`; a sealed draft selects a compatible controlled theme.
+
+New packages and old packages being handed off again must declare all three fields explicitly. A legacy package without `delivery_mode` may be previewed for migration, but it cannot create an editor handoff or an API draft. `draft.md` remains the only editable article source; generated handoff and preview files are disposable artifacts. See [wechat-publishing.md](wechat-publishing.md) for the execution and external-action contract.

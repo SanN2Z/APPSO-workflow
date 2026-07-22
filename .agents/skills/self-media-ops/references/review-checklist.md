@@ -33,7 +33,8 @@
 - Markdown uses package-relative image paths.
 - No blocking or major `HUMAN-AI-*` defect remains open.
 - No open `COPY-*` defect remains; captions and final notes were included in the copyedit scope.
-- `publish.yml` has an API-safe title and an explicit, registered, rights-cleared cover.
+- `publish.yml` has an API-safe title, explicit registered `project_adapter`, explicit `delivery_mode`, a compatible `layout_profile`, and a rights-cleared cover.
 - The pinned Wenyan renderer generated `dist/wechat-preview.html`; title, headings, lists, captions, and wide images were checked at phone width.
-- The draft command completed its default dry-run with no blocker. `--execute` remains a separately authorized external write.
-- After API draft creation, a human checks the real WeChat draft before any publish or mass-send action.
+- For `manual_editor`, the `handoff` command completed with no blocker, the versioned copy source contains every local image, and API draft commands are rejected.
+- For `sealed_draft`, the draft command completed its default dry-run with no blocker. `--execute` remains a separately authorized external write; the explicit credential file and displayed account fingerprint were checked, and any execute-time failure triggers a backend/material-library inspection before retry.
+- After manual copy or API draft creation, a human checks the real WeChat editor result before any publish or mass-send action; do not mark a mode backend-validated before copy/edit/save/reopen or draft/save/reopen passes.

@@ -103,10 +103,11 @@ Before any draft can become `ready`, read [references/wechat-copyedit-pass.md](r
    - Fix every reported error. Warnings require review but do not necessarily block a draft state.
 
 9. **WeChat preview and draft handoff**
-   - Keep `draft.md` as the editorial source and put API-specific title, cover, digest, and Wenyan theme in `publish.yml`.
+   - Keep `draft.md` as the editorial source and put the independently declared `project_adapter`, `delivery_mode`, API fields, and allowlisted layout settings in `publish.yml`.
    - Generate `dist/wechat-preview.html` locally with the pinned Wenyan CLI. Review the phone-width preview; generated `dist/` files are disposable artifacts, not new sources of truth.
-   - Run the draft command without `--execute` first. It must pass the package validator, `ready` state, fact/rights/copyedit flags, API field limits, and cover rights gate.
-   - Only after explicit current-task authorization, call `draft --execute`. This may upload body images and a permanent cover, then create one WeChat draft. It must never publish or mass-send.
+   - For `delivery_mode: "manual_editor"`, run the `handoff` command. It must build a versioned structure-only copy source with complete local images and must reject every API draft command. Complete the real WeChat editor copy/edit/save/reopen check before calling the mode backend-validated.
+   - For `delivery_mode: "sealed_draft"`, run the draft command without `--execute` first. It must pass the package validator, `ready` state, fact/rights/copyedit flags, API field limits, cover rights, layout, resource, and sealed-build gates.
+   - Only after explicit current-task authorization, call `draft --execute` for a sealed draft. The explicit `.env` file must be the only credential source; confirm the printed non-secret account fingerprint before proceeding. This may upload body images and a permanent cover, then create one WeChat draft. It must never publish or mass-send. Because those API calls are not atomic, inspect the target backend and material library before retrying after any execute-time failure.
 
 10. **Retrospective and SOP evolution**
    - When delivery, publication, feedback, or a requested revision is confirmed, create or update `retrospective.md` with the `content-retrospective` skill.

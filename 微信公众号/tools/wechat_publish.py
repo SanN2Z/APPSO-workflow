@@ -2,17 +2,19 @@
 """Bridge project content packages to the pinned Wenyan CLI.
 
 Wenyan owns Markdown rendering, image uploads, and WeChat API calls. This file
-only adapts the project's content-package schema and enforces local release
-gates. The default is preview/dry-run; ``draft --execute`` is the only command
-that can create an external WeChat draft.
+adapts the project's content-package schema, builds a no-network manual-editor
+handoff, and enforces local release gates. ``draft --execute`` is the only
+command that can create an external WeChat draft.
 """
 
 from __future__ import annotations
 
 import argparse
 import base64
+import binascii
 import hashlib
 import html
+import io
 import json
 import mimetypes
 import os
@@ -26,12 +28,13 @@ from dataclasses import asdict, dataclass
 from datetime import date, datetime, timedelta, timezone
 from html.parser import HTMLParser
 from pathlib import Path, PurePosixPath
-from typing import Any
+from typing import Any, Callable
 from urllib.parse import unquote, urlparse
 
 import yaml
+from markdown_it import MarkdownIt
 from PIL import Image, UnidentifiedImageError
-from tinycss2 import parse_declaration_list
+from tinycss2 import parse_declaration_list, serialize
 
 
 if hasattr(sys.stdout, "reconfigure"):
@@ -55,14 +58,23 @@ WENYAN_RUNTIME = WECHAT_ROOT / ".wenyan-runtime"
 THEMES_ROOT = WECHAT_ROOT / "themes"
 EDITORIAL_TIMEZONE = timezone(timedelta(hours=8), name="Asia/Shanghai")
 MAX_FOOTER_REVIEW_DAYS = 365
+MAX_HANDOFF_IMAGE_BYTES = 20 * 1024 * 1024
+MAX_HANDOFF_TOTAL_ASSET_BYTES = 60 * 1024 * 1024
+MAX_HANDOFF_COPY_HTML_BYTES = 64 * 1024 * 1024
+MAX_HANDOFF_CONTENT_HTML_BYTES = 16 * 1024 * 1024
+MAX_HANDOFF_DOCUMENT_BYTES = MAX_HANDOFF_COPY_HTML_BYTES + 8 * 1024 * 1024
+MAX_HANDOFF_PLAN_BYTES = 2 * 1024 * 1024
+MAX_CREDENTIAL_FILE_BYTES = 64 * 1024
+MAX_HANDOFF_IMAGE_PIXELS = 40_000_000
+MAX_HANDOFF_DECODED_FRAME_PIXELS = 400_000_000
+MAX_HANDOFF_IMAGE_FRAMES = 2_000
+MAX_HANDOFF_TOTAL_FRAMES = 5_000
+MAX_INLINE_IMAGE_REFERENCES = 200
+MAX_HANDOFF_OCCURRENCE_FRAMES = 10_000
+MAX_HANDOFF_TOTAL_DECODED_FRAME_PIXELS = 800_000_000
+MAX_HANDOFF_OCCURRENCE_DECODED_FRAME_PIXELS = 1_200_000_000
 
 FRONTMATTER_RE = re.compile(r"\A---\s*\r?\n(.*?)\r?\n---\s*\r?\n(.*)\Z", re.S)
-HTML_IMAGE_RE = re.compile(
-    r"(?P<prefix><img\b(?:(?!\s+src\s*=)[^>])*\s+src\s*=\s*)"
-    r"(?:(?P<quote>[\"'])(?P<quoted_target>.*?)(?P=quote)|"
-    r"(?P<unquoted_target>[^\s>]+))",
-    re.I,
-)
 ISO_DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 RELEASE_IMAGE_FORMATS = {
     ".gif": "GIF",
@@ -76,20 +88,49 @@ BLOCKED_REMOTE_IMAGE = (
 )
 ACTIVE_HTML_TAGS = {
     "audio",
+    "area",
     "base",
+    "button",
+    "canvas",
+    "details",
+    "dialog",
     "embed",
     "form",
     "iframe",
+    "input",
     "link",
+    "map",
+    "marquee",
     "meta",
     "object",
     "picture",
+    "plaintext",
     "script",
+    "select",
     "source",
     "style",
+    "summary",
     "svg",
+    "template",
+    "textarea",
     "track",
     "video",
+    "xmp",
+    "noscript",
+    "font",
+    "center",
+}
+ACTIVE_BEHAVIOR_ATTRIBUTES = {
+    "autofocus",
+    "contenteditable",
+    "download",
+    "draggable",
+    "hidden",
+    "inert",
+    "open",
+    "popover",
+    "spellcheck",
+    "tabindex",
 }
 SCRIPTABLE_URL_ATTRIBUTES = {
     "action",
@@ -111,6 +152,94 @@ CSS_RESOURCE_FUNCTIONS = {
     "paint",
     "url",
 }
+MANUAL_PRESENTATION_TAGS = {"center", "font"}
+MANUAL_ALLOWED_TAGS = {
+    "a",
+    "abbr",
+    "article",
+    "b",
+    "blockquote",
+    "br",
+    "caption",
+    "cite",
+    "code",
+    "col",
+    "colgroup",
+    "dd",
+    "del",
+    "div",
+    "dl",
+    "dt",
+    "em",
+    "figcaption",
+    "figure",
+    "h1",
+    "h2",
+    "h3",
+    "h4",
+    "h5",
+    "h6",
+    "hr",
+    "i",
+    "img",
+    "ins",
+    "kbd",
+    "li",
+    "mark",
+    "ol",
+    "p",
+    "pre",
+    "q",
+    "rp",
+    "rt",
+    "ruby",
+    "s",
+    "samp",
+    "section",
+    "small",
+    "span",
+    "strong",
+    "sub",
+    "sup",
+    "table",
+    "tbody",
+    "td",
+    "tfoot",
+    "th",
+    "thead",
+    "time",
+    "tr",
+    "u",
+    "ul",
+    "var",
+}
+MANUAL_GLOBAL_ATTRIBUTES = {"dir", "lang", "title"}
+MANUAL_TAG_ATTRIBUTES = {
+    "a": {"href", "id"},
+    "blockquote": {"cite"},
+    "col": {"span"},
+    "colgroup": {"span"},
+    "del": {"cite", "datetime"},
+    "img": {"alt", "src"},
+    "ins": {"cite", "datetime"},
+    "li": {"id", "value"},
+    "ol": {"start"},
+    "p": {"id"},
+    "q": {"cite"},
+    "sup": {"id"},
+    "td": {"colspan", "headers", "rowspan"},
+    "th": {"abbr", "colspan", "headers", "rowspan", "scope"},
+    "time": {"datetime"},
+}
+AUTHOR_GLOBAL_ATTRIBUTES = {"lang", "title"}
+AUTHOR_TAG_ATTRIBUTES = {
+    tag: attributes - {"id"} for tag, attributes in MANUAL_TAG_ATTRIBUTES.items()
+}
+MANUAL_BLOCKED_BEHAVIOR_ATTRIBUTES = {
+    *ACTIVE_BEHAVIOR_ATTRIBUTES,
+}
+MANUAL_VOID_TAGS = {"br", "col", "hr", "img"}
+MARKDOWN_PARSER = MarkdownIt("commonmark", {"html": True})
 
 RELEASE_RIGHTS_STATUSES = {
     "cc0_verified",
@@ -124,6 +253,7 @@ RELEASE_RIGHTS_STATUSES = {
 WENYAN_NOTES = [
     "Wenyan CLI 2.0.11 does not forward a custom digest to draft/add; WeChat will derive it, so check or edit the digest in the backend.",
     "Wenyan CLI 2.0.11 uploads body images as permanent image materials and caches repeat uploads.",
+    "WeChat draft creation is not atomic; after any execute-time failure, inspect the target account and material library before retrying.",
 ]
 
 
@@ -131,24 +261,120 @@ class WorkflowError(RuntimeError):
     """A user-actionable workflow failure."""
 
 
+class UniqueKeySafeLoader(yaml.SafeLoader):
+    """Safe YAML loader that rejects ambiguous duplicate mapping keys."""
+
+
+def construct_unique_mapping(
+    loader: UniqueKeySafeLoader, node: yaml.nodes.MappingNode, deep: bool = False
+) -> dict[Any, Any]:
+    loader.flatten_mapping(node)
+    mapping: dict[Any, Any] = {}
+    for key_node, value_node in node.value:
+        key = loader.construct_object(key_node, deep=deep)
+        try:
+            duplicate = key in mapping
+        except TypeError as exc:
+            raise WorkflowError(
+                f"unhashable YAML mapping key at line {key_node.start_mark.line + 1}"
+            ) from exc
+        if duplicate:
+            raise WorkflowError(
+                f"duplicate YAML key {key!r} at line {key_node.start_mark.line + 1}"
+            )
+        mapping[key] = loader.construct_object(value_node, deep=deep)
+    return mapping
+
+
+UniqueKeySafeLoader.add_constructor(
+    yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG,
+    construct_unique_mapping,
+)
+
+
 @dataclass(frozen=True)
 class LayoutProfile:
     profile_id: str
     custom_theme: Path | None = None
     required_header: bool = False
+    required_theme: str | None = None
+    required_highlight: str | None = None
+    required_mac_style: bool | None = None
+
+
+@dataclass(frozen=True)
+class ProjectAdapter:
+    adapter_id: str
     supports_body_components: bool = False
     component_class_prefix: str | None = None
 
 
+@dataclass(frozen=True)
+class DeliveryMode:
+    mode_id: str
+    strip_inline_styles: bool = False
+    api_draft_allowed: bool = False
+    produces_editor_handoff: bool = False
+
+
 LAYOUT_PROFILES = {
-    "default": LayoutProfile(profile_id="default"),
+    "default": LayoutProfile(
+        profile_id="default",
+        required_theme="default",
+        required_highlight="solarized-light",
+        required_mac_style=False,
+    ),
     "appsso-article-v1": LayoutProfile(
         profile_id="appsso-article-v1",
         custom_theme=WECHAT_ROOT / "themes" / "appsso-article-v1.css",
         required_header=True,
+        required_theme="default",
+        required_highlight="solarized-light",
+        required_mac_style=False,
+    ),
+}
+
+PROJECT_ADAPTERS = {
+    "generic": ProjectAdapter(adapter_id="generic"),
+    "appsso": ProjectAdapter(
+        adapter_id="appsso",
         supports_body_components=True,
         component_class_prefix="appsso-body",
     ),
+}
+
+DELIVERY_MODES = {
+    "manual_editor": DeliveryMode(
+        mode_id="manual_editor",
+        strip_inline_styles=True,
+        produces_editor_handoff=True,
+    ),
+    "sealed_draft": DeliveryMode(
+        mode_id="sealed_draft",
+        api_draft_allowed=True,
+    ),
+}
+PUBLISH_CONFIG_FIELDS = {
+    "author",
+    "content_source_url",
+    "cover",
+    "delivery_mode",
+    "digest",
+    "footer_alt",
+    "footer_image",
+    "footer_valid_until",
+    "footnote",
+    "header_alt",
+    "header_image",
+    "highlight",
+    "layout_profile",
+    "mac_style",
+    "need_open_comment",
+    "only_fans_can_comment",
+    "project_adapter",
+    "source_url",
+    "theme",
+    "title",
 }
 
 
@@ -159,6 +385,8 @@ class PublishConfig:
     digest: str = ""
     cover: str = ""
     source_url: str = ""
+    project_adapter: str = ""
+    delivery_mode: str = ""
     theme: str = "default"
     layout_profile: str = "default"
     highlight: str = "solarized-light"
@@ -195,24 +423,50 @@ class PreviewBuild:
     validator_ok: bool
     validator_report: str
     snapshot: BuildSnapshot
+    handoff_path: Path | None = None
+    handoff_plan_path: Path | None = None
+    handoff_plan_sha256: str | None = None
+
+
+@dataclass(frozen=True)
+class PreparedInlineImage:
+    path: str
+    payload: bytes
+    data_uri: str
+    sha256: str
+    width: int
+    height: int
+    pixels_per_frame: int
+    frame_count: int
+    decoded_frame_pixels: int
+
+
+@dataclass(frozen=True)
+class PreparedImageGraph:
+    images: dict[str, PreparedInlineImage]
+    image_order: list[str]
+    projected_copy_payload_bytes: int
+    source_sha256: str
+    rendered_fragment: str
 
 
 class ImageSourceParser(HTMLParser):
     """Extract rendered image sources and reserved APPSO component wrappers."""
 
-    def __init__(self) -> None:
+    def __init__(self, component_class_prefix: str | None = None) -> None:
         super().__init__(convert_charrefs=True)
         self.sources: list[str] = []
         self.component_counts = {"header": 0, "footer": 0}
+        self.component_class_prefix = component_class_prefix
 
     def inspect(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         attribute_map: dict[str, str] = {}
         for name, value in attrs:
             attribute_map.setdefault(name.casefold(), value or "")
-        if tag.casefold() == "section":
+        if tag.casefold() == "section" and self.component_class_prefix:
             classes = set(attribute_map.get("class", "").split())
             for kind in self.component_counts:
-                if f"appsso-body-{kind}" in classes:
+                if f"{self.component_class_prefix}-{kind}" in classes:
                     self.component_counts[kind] += 1
         if tag.casefold() == "img" and "src" in attribute_map:
             self.sources.append(attribute_map["src"])
@@ -228,19 +482,104 @@ class ImageSourceParser(HTMLParser):
         self.inspect(tag, attrs)
 
 
+class ImageRewriteHtmlParser(HTMLParser):
+    """Reserialize HTML while replacing only parsed img src attribute values."""
+
+    def __init__(self, replace_source: Callable[[str], str]) -> None:
+        super().__init__(convert_charrefs=False)
+        self.replace_source = replace_source
+        self.parts: list[str] = []
+        self.sources: list[str] = []
+
+    def serialized_start_tag(
+        self,
+        tag: str,
+        attrs: list[tuple[str, str | None]],
+        *,
+        self_closing: bool,
+    ) -> str:
+        serialized: list[str] = []
+        source_replaced = False
+        for name, value in attrs:
+            if tag.casefold() == "img" and name.casefold() == "src":
+                self.sources.append(value or "")
+                value = self.replace_source(value or "")
+                source_replaced = True
+            if value is None:
+                serialized.append(f" {name}")
+            else:
+                serialized.append(f' {name}="{html.escape(value, quote=True)}"')
+        if tag.casefold() == "img" and not source_replaced:
+            raise WorkflowError("rendered img has no src attribute during rewrite")
+        close = " />" if self_closing else ">"
+        return f"<{tag}{''.join(serialized)}{close}"
+
+    def handle_starttag(
+        self, tag: str, attrs: list[tuple[str, str | None]]
+    ) -> None:
+        self.parts.append(
+            self.serialized_start_tag(tag, attrs, self_closing=False)
+        )
+
+    def handle_startendtag(
+        self, tag: str, attrs: list[tuple[str, str | None]]
+    ) -> None:
+        self.parts.append(
+            self.serialized_start_tag(tag, attrs, self_closing=True)
+        )
+
+    def handle_endtag(self, tag: str) -> None:
+        self.parts.append(f"</{tag}>")
+
+    def handle_data(self, data: str) -> None:
+        self.parts.append(data)
+
+    def handle_entityref(self, name: str) -> None:
+        self.parts.append(f"&{name};")
+
+    def handle_charref(self, name: str) -> None:
+        self.parts.append(f"&#{name};")
+
+    def handle_comment(self, data: str) -> None:
+        self.parts.append(f"<!--{data}-->")
+
+    def handle_decl(self, decl: str) -> None:
+        self.parts.append(f"<!{decl}>")
+
+    def handle_pi(self, data: str) -> None:
+        self.parts.append(f"<?{data}>")
+
+    def rendered(self) -> str:
+        return "".join(self.parts)
+
+
 class PassiveHtmlParser(HTMLParser):
     """Reject active markup before a rendered fragment enters the local preview."""
 
-    def __init__(self) -> None:
+    def __init__(
+        self, allowed_presentation_tags: set[str] | None = None
+    ) -> None:
         super().__init__(convert_charrefs=True)
         self.problems: list[str] = []
+        self.open_tags: list[str] = []
+        self.allowed_presentation_tags = {
+            tag.casefold() for tag in (allowed_presentation_tags or set())
+        }
+        self.allowed_tags = MANUAL_ALLOWED_TAGS | self.allowed_presentation_tags
 
     def inspect(
         self, tag: str, attrs: list[tuple[str, str | None]]
     ) -> None:
         normalized_tag = tag.casefold()
-        if normalized_tag in ACTIVE_HTML_TAGS:
+        if (
+            normalized_tag in ACTIVE_HTML_TAGS
+            and normalized_tag not in self.allowed_presentation_tags
+        ):
             self.problems.append(f"active HTML tag <{normalized_tag}> is not allowed")
+        if normalized_tag not in self.allowed_tags:
+            self.problems.append(
+                f"unsupported article HTML tag <{normalized_tag}> is not allowed"
+            )
         normalized_names = [name.casefold() for name, _ in attrs]
         if normalized_tag == "img":
             src_count = normalized_names.count("src")
@@ -250,6 +589,10 @@ class PassiveHtmlParser(HTMLParser):
                 )
         for raw_name, raw_value in attrs:
             name = raw_name.casefold()
+            if name in ACTIVE_BEHAVIOR_ATTRIBUTES:
+                self.problems.append(
+                    f"interactive or hidden attribute {raw_name} is not allowed"
+                )
             if name in {"background", "data-src", "poster", "srcset"}:
                 self.problems.append(
                     f"resource-loading attribute {raw_name} is not allowed"
@@ -266,6 +609,12 @@ class PassiveHtmlParser(HTMLParser):
                 self.problems.append(
                     "resource reference in a rendered style attribute is not allowed"
                 )
+            if name == "style":
+                dangerous = dangerous_style_behavior(raw_value or "")
+                if dangerous is not None:
+                    self.problems.append(
+                        f"dangerous rendered style behavior is not allowed: {dangerous}"
+                    )
             if raw_value is None or name not in SCRIPTABLE_URL_ATTRIBUTES:
                 continue
             compact_value = re.sub(
@@ -281,11 +630,236 @@ class PassiveHtmlParser(HTMLParser):
         self, tag: str, attrs: list[tuple[str, str | None]]
     ) -> None:
         self.inspect(tag, attrs)
+        normalized = tag.casefold()
+        if normalized in self.allowed_tags and normalized not in MANUAL_VOID_TAGS:
+            self.open_tags.append(normalized)
 
     def handle_startendtag(
         self, tag: str, attrs: list[tuple[str, str | None]]
     ) -> None:
         self.inspect(tag, attrs)
+        normalized = tag.casefold()
+        if normalized in self.allowed_tags and normalized not in MANUAL_VOID_TAGS:
+            self.problems.append(
+                f"non-void article tag <{normalized}> must not be self-closing"
+            )
+
+    def handle_endtag(self, tag: str) -> None:
+        normalized = tag.casefold()
+        if normalized not in self.allowed_tags:
+            self.problems.append(
+                f"unsupported article closing tag </{normalized}> is not allowed"
+            )
+            return
+        if normalized in MANUAL_VOID_TAGS:
+            self.problems.append(
+                f"void article tag <{normalized}> must not have an end tag"
+            )
+            return
+        if not self.open_tags:
+            self.problems.append(f"unmatched article closing tag </{normalized}>")
+            return
+        expected = self.open_tags[-1]
+        if expected != normalized:
+            self.problems.append(
+                f"misnested article closing tag </{normalized}>; expected </{expected}>"
+            )
+            return
+        self.open_tags.pop()
+
+
+class AuthorHtmlParser(HTMLParser):
+    """Reject author-controlled presentation before adapter/theme rendering."""
+
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=True)
+        self.inspector = PassiveHtmlParser()
+        self.problems: list[str] = []
+
+    def inspect(
+        self, tag: str, attrs: list[tuple[str, str | None]]
+    ) -> None:
+        self.inspector.inspect(tag, attrs)
+        normalized_tag = tag.casefold()
+        allowed = AUTHOR_GLOBAL_ATTRIBUTES | AUTHOR_TAG_ATTRIBUTES.get(
+            normalized_tag, set()
+        )
+        for name, _ in attrs:
+            if name.casefold() not in allowed:
+                self.problems.append(
+                    f"author-controlled HTML attribute {name} on <{normalized_tag}> is not allowed; use Markdown or the selected layout profile"
+                )
+
+    def handle_starttag(
+        self, tag: str, attrs: list[tuple[str, str | None]]
+    ) -> None:
+        self.inspect(tag, attrs)
+
+    def handle_startendtag(
+        self, tag: str, attrs: list[tuple[str, str | None]]
+    ) -> None:
+        self.inspect(tag, attrs)
+
+    def handle_endtag(self, tag: str) -> None:
+        normalized = tag.casefold()
+        if normalized not in MANUAL_ALLOWED_TAGS:
+            self.problems.append(
+                f"unsupported author HTML closing tag </{normalized}> is not allowed"
+            )
+
+    def all_problems(self) -> list[str]:
+        return self.inspector.problems + self.problems
+
+
+class ManualHandoffHtmlParser(HTMLParser):
+    """Remove presentation markup while preserving semantic content and attributes."""
+
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=False)
+        self.parts: list[str] = []
+        self.removed_attributes: list[str] = []
+        self.removed_tags: list[str] = []
+        self.blocked_attributes: list[str] = []
+        self.blocked_tags: list[str] = []
+        self.open_tags: list[tuple[str, bool]] = []
+        self.structural_problems: list[str] = []
+
+    @property
+    def removed_style_attributes(self) -> int:
+        """Compatibility counter retained for existing checks and callers."""
+
+        return sum(name == "style" for name in self.removed_attributes)
+
+    def filtered_attributes(
+        self, tag: str, attrs: list[tuple[str, str | None]]
+    ) -> list[tuple[str, str | None]]:
+        filtered: list[tuple[str, str | None]] = []
+        allowed = MANUAL_GLOBAL_ATTRIBUTES | MANUAL_TAG_ATTRIBUTES.get(tag, set())
+        for name, value in attrs:
+            normalized = name.casefold()
+            if normalized in MANUAL_BLOCKED_BEHAVIOR_ATTRIBUTES:
+                self.blocked_attributes.append(normalized)
+                continue
+            if normalized not in allowed:
+                self.removed_attributes.append(normalized)
+                continue
+            filtered.append((name, value))
+        return filtered
+
+    def serialized_start_tag(
+        self,
+        tag: str,
+        attrs: list[tuple[str, str | None]],
+        *,
+        self_closing: bool,
+    ) -> str:
+        serialized_attrs: list[str] = []
+        for name, value in attrs:
+            if value is None:
+                serialized_attrs.append(f" {name}")
+            else:
+                serialized_attrs.append(
+                    f' {name}="{html.escape(value, quote=True)}"'
+                )
+        close = " />" if self_closing else ">"
+        return f"<{tag}{''.join(serialized_attrs)}{close}"
+
+    def handle_starttag(
+        self, tag: str, attrs: list[tuple[str, str | None]]
+    ) -> None:
+        normalized = tag.casefold()
+        filtered = self.filtered_attributes(normalized, attrs)
+        if normalized in MANUAL_PRESENTATION_TAGS:
+            self.removed_tags.append(normalized)
+            self.open_tags.append((normalized, False))
+            return
+        if normalized not in MANUAL_ALLOWED_TAGS:
+            self.blocked_tags.append(normalized)
+            return
+        if normalized in MANUAL_VOID_TAGS:
+            self.parts.append(
+                self.serialized_start_tag(tag, filtered, self_closing=False)
+            )
+            return
+        emit = True
+        if normalized == "span":
+            emit = bool(filtered)
+            if not emit:
+                self.removed_tags.append(normalized)
+        self.open_tags.append((normalized, emit))
+        if emit:
+            self.parts.append(
+                self.serialized_start_tag(tag, filtered, self_closing=False)
+            )
+
+    def handle_startendtag(
+        self, tag: str, attrs: list[tuple[str, str | None]]
+    ) -> None:
+        normalized = tag.casefold()
+        filtered = self.filtered_attributes(normalized, attrs)
+        if normalized not in MANUAL_VOID_TAGS:
+            self.structural_problems.append(
+                f"non-void tag <{normalized}> must not be self-closing"
+            )
+        if normalized in MANUAL_PRESENTATION_TAGS:
+            self.removed_tags.append(normalized)
+            return
+        if normalized not in MANUAL_ALLOWED_TAGS:
+            self.blocked_tags.append(normalized)
+            return
+        if normalized == "span" and not filtered:
+            self.removed_tags.append(normalized)
+            return
+        self.parts.append(self.serialized_start_tag(tag, filtered, self_closing=True))
+
+    def handle_endtag(self, tag: str) -> None:
+        normalized = tag.casefold()
+        if (
+            normalized not in MANUAL_PRESENTATION_TAGS
+            and normalized not in MANUAL_ALLOWED_TAGS
+        ):
+            self.blocked_tags.append(normalized)
+            return
+        if normalized in MANUAL_VOID_TAGS:
+            self.structural_problems.append(
+                f"void tag <{normalized}> must not have an end tag"
+            )
+            return
+        if not self.open_tags:
+            self.structural_problems.append(
+                f"unmatched closing tag </{normalized}>"
+            )
+            return
+        expected, emitted = self.open_tags[-1]
+        if expected != normalized:
+            self.structural_problems.append(
+                f"misnested closing tag </{normalized}>; expected </{expected}>"
+            )
+            return
+        self.open_tags.pop()
+        if emitted:
+            self.parts.append(f"</{tag}>")
+
+    def handle_data(self, data: str) -> None:
+        self.parts.append(data)
+
+    def handle_entityref(self, name: str) -> None:
+        self.parts.append(f"&{name};")
+
+    def handle_charref(self, name: str) -> None:
+        self.parts.append(f"&#{name};")
+
+    def handle_comment(self, data: str) -> None:
+        self.parts.append(f"<!--{data}-->")
+
+    def handle_decl(self, decl: str) -> None:
+        self.parts.append(f"<!{decl}>")
+
+    def handle_pi(self, data: str) -> None:
+        self.parts.append(f"<?{data}>")
+
+    def rendered(self) -> str:
+        return "".join(self.parts)
 
 
 def css_tokens_have_resource(tokens: list[Any]) -> bool:
@@ -314,6 +888,31 @@ def style_has_resource_reference(style: str) -> bool:
         if css_tokens_have_resource(list(getattr(declaration, "value", []))):
             return True
     return False
+
+
+def dangerous_style_behavior(style: str) -> str | None:
+    declarations = parse_declaration_list(
+        html.unescape(unquote(style)), skip_comments=True, skip_whitespace=True
+    )
+    for declaration in declarations:
+        if getattr(declaration, "type", "") != "declaration":
+            continue
+        name = str(getattr(declaration, "lower_name", ""))
+        value = serialize(list(getattr(declaration, "value", []))).strip().casefold()
+        compact = re.sub(r"\s+", "", value)
+        if name == "position" and compact in {"fixed", "sticky"}:
+            return f"position:{compact}"
+        if name == "display" and compact == "none":
+            return "display:none"
+        if name == "visibility" and compact in {"hidden", "collapse"}:
+            return f"visibility:{compact}"
+        if name == "content-visibility" and compact == "hidden":
+            return "content-visibility:hidden"
+        if name in {"pointer-events", "user-select"} and compact == "none":
+            return f"{name}:none"
+        if name == "opacity" and re.fullmatch(r"(?:0+(?:\.0*)?|\.0+)", compact):
+            return "opacity:0"
+    return None
 
 
 def is_link_or_junction(path: Path) -> bool:
@@ -355,13 +954,14 @@ def canonical_package_relative_path(
 def safe_dist(package: Path) -> Path:
     package_resolved = package.resolve()
     dist = package / "dist"
-    if dist.exists() or dist.is_symlink():
-        if is_link_or_junction(dist):
-            raise WorkflowError(f"dist must not be a symlink or junction: {dist}")
-        if not dist.is_dir():
-            raise WorkflowError(f"dist exists but is not a directory: {dist}")
-    else:
+    try:
         dist.mkdir(parents=True, exist_ok=False)
+    except FileExistsError:
+        pass
+    if is_link_or_junction(dist):
+        raise WorkflowError(f"dist must not be a symlink or junction: {dist}")
+    if not dist.is_dir():
+        raise WorkflowError(f"dist exists but is not a directory: {dist}")
     try:
         dist.resolve().relative_to(package_resolved)
     except ValueError as exc:
@@ -372,11 +972,12 @@ def safe_dist(package: Path) -> Path:
 def create_build_dir(package: Path) -> Path:
     dist = safe_dist(package)
     builds = dist / "builds"
-    if builds.exists() or builds.is_symlink():
-        if is_link_or_junction(builds) or not builds.is_dir():
-            raise WorkflowError(f"dist/builds must be a regular directory: {builds}")
-    else:
+    try:
         builds.mkdir(exist_ok=False)
+    except FileExistsError:
+        pass
+    if is_link_or_junction(builds) or not builds.is_dir():
+        raise WorkflowError(f"dist/builds must be a regular directory: {builds}")
     for _ in range(8):
         candidate = builds / f"build-{secrets.token_hex(12)}"
         try:
@@ -385,6 +986,25 @@ def create_build_dir(package: Path) -> Path:
             continue
         return candidate
     raise WorkflowError("could not allocate a unique Wenyan build directory")
+
+
+def create_handoff_dir(package: Path) -> Path:
+    dist = safe_dist(package)
+    handoffs = dist / "handoffs"
+    try:
+        handoffs.mkdir(exist_ok=False)
+    except FileExistsError:
+        pass
+    if is_link_or_junction(handoffs) or not handoffs.is_dir():
+        raise WorkflowError(f"dist/handoffs must be a regular directory: {handoffs}")
+    for _ in range(8):
+        candidate = handoffs / f"handoff-{secrets.token_hex(12)}"
+        try:
+            candidate.mkdir(exist_ok=False)
+        except FileExistsError:
+            continue
+        return candidate
+    raise WorkflowError("could not allocate a unique editor handoff directory")
 
 
 def atomic_write_bytes(path: Path, data: bytes) -> None:
@@ -439,14 +1059,35 @@ def file_sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
-def stable_file_bytes(path: Path) -> bytes:
+def stable_file_bytes(
+    path: Path,
+    *,
+    expected_size: int | None = None,
+    max_bytes: int | None = None,
+) -> bytes:
     if is_link_or_junction(path):
         raise WorkflowError(f"input must not be a symlink or junction: {path}")
+    for value, label in ((expected_size, "expected size"), (max_bytes, "byte ceiling")):
+        if value is not None and (
+            not isinstance(value, int) or isinstance(value, bool) or value < 0
+        ):
+            raise WorkflowError(f"invalid {label} for input: {path}")
+    if expected_size is not None and max_bytes is not None and expected_size > max_bytes:
+        raise WorkflowError(f"input exceeds its byte ceiling: {path}")
     with path.open("rb") as handle:
         before = os.fstat(handle.fileno())
         if before.st_nlink != 1:
             raise WorkflowError(f"input must not be a hardlink: {path}")
-        payload = handle.read()
+        if expected_size is not None and before.st_size != expected_size:
+            raise WorkflowError(f"input byte count mismatch: {path}")
+        if max_bytes is not None and before.st_size > max_bytes:
+            raise WorkflowError(f"input exceeds its byte ceiling: {path}")
+        read_ceiling = expected_size if expected_size is not None else max_bytes
+        payload = (
+            handle.read(read_ceiling + 1)
+            if read_ceiling is not None
+            else handle.read()
+        )
         after = os.fstat(handle.fileno())
     fingerprint_before = (
         before.st_dev,
@@ -462,7 +1103,86 @@ def stable_file_bytes(path: Path) -> bytes:
     )
     if fingerprint_before != fingerprint_after:
         raise WorkflowError(f"file changed while reading: {path}")
+    if len(payload) != after.st_size:
+        raise WorkflowError(f"file byte count changed while reading: {path}")
+    if read_ceiling is not None and len(payload) > read_ceiling:
+        raise WorkflowError(f"input exceeds its byte ceiling: {path}")
     return payload
+
+
+def stable_copy_file(
+    source: Path,
+    destination: Path,
+    *,
+    expected_hash: str | None = None,
+    max_bytes: int | None = None,
+) -> tuple[int, str]:
+    """Copy one regular file in bounded chunks while binding its source identity."""
+
+    if is_link_or_junction(source):
+        raise WorkflowError(f"input must not be a symlink or junction: {source}")
+    if max_bytes is not None and (
+        not isinstance(max_bytes, int) or isinstance(max_bytes, bool) or max_bytes < 0
+    ):
+        raise WorkflowError(f"invalid byte ceiling for input: {source}")
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    descriptor, temporary_name = tempfile.mkstemp(
+        prefix=f".{destination.name}.",
+        suffix=".tmp",
+        dir=destination.parent,
+    )
+    temporary_path = Path(temporary_name)
+    digest = hashlib.sha256()
+    total = 0
+    destination_installed = False
+    try:
+        with source.open("rb") as source_handle, os.fdopen(
+            descriptor, "wb"
+        ) as destination_handle:
+            descriptor = -1
+            before = os.fstat(source_handle.fileno())
+            if before.st_nlink != 1:
+                raise WorkflowError(f"input must not be a hardlink: {source}")
+            if max_bytes is not None and before.st_size > max_bytes:
+                raise WorkflowError(f"input exceeds its byte ceiling: {source}")
+            for chunk in iter(lambda: source_handle.read(1024 * 1024), b""):
+                total += len(chunk)
+                if max_bytes is not None and total > max_bytes:
+                    raise WorkflowError(f"input exceeds its byte ceiling: {source}")
+                digest.update(chunk)
+                destination_handle.write(chunk)
+            after = os.fstat(source_handle.fileno())
+            destination_handle.flush()
+            os.fsync(destination_handle.fileno())
+        fingerprint_before = (
+            before.st_dev,
+            before.st_ino,
+            before.st_size,
+            before.st_mtime_ns,
+        )
+        fingerprint_after = (
+            after.st_dev,
+            after.st_ino,
+            after.st_size,
+            after.st_mtime_ns,
+        )
+        if fingerprint_before != fingerprint_after or total != after.st_size:
+            raise WorkflowError(f"file changed while copying: {source}")
+        actual_hash = digest.hexdigest()
+        if expected_hash is not None and actual_hash != expected_hash:
+            raise WorkflowError(f"input hash mismatch while copying: {source}")
+        os.replace(temporary_path, destination)
+        destination_installed = True
+        if file_sha256(destination) != actual_hash:
+            raise WorkflowError(f"destination hash mismatch after copying: {destination}")
+        return total, actual_hash
+    except BaseException:
+        if descriptor >= 0:
+            os.close(descriptor)
+        temporary_path.unlink(missing_ok=True)
+        if destination_installed:
+            destination.unlink(missing_ok=True)
+        raise
 
 
 def package_input_hashes(package: Path) -> dict[str, str]:
@@ -511,15 +1231,17 @@ def sealed_package_snapshot(
             if any(part.casefold() == ".env" for part in relative_path.parts):
                 continue
             source = package / relative_path
-            payload = stable_file_bytes(source)
-            actual_hash = hashlib.sha256(payload).hexdigest()
-            if actual_hash != expected_hash:
+            destination = snapshot / relative_path
+            try:
+                stable_copy_file(
+                    source,
+                    destination,
+                    expected_hash=expected_hash,
+                )
+            except WorkflowError as exc:
                 raise WorkflowError(
                     f"content package changed while sealing input: {relative}"
-                )
-            destination = snapshot / relative_path
-            destination.parent.mkdir(parents=True, exist_ok=True)
-            atomic_write_bytes(destination, payload)
+                ) from exc
         yield snapshot
 
 
@@ -554,16 +1276,6 @@ def decode_image_target(target: str) -> str:
     return unquote(clean)
 
 
-def matched_html_image_target(match: re.Match[str]) -> str:
-    quoted = match.group("quoted_target")
-    return quoted if quoted is not None else match.group("unquoted_target")
-
-
-def replace_html_image_target(match: re.Match[str], target: str) -> str:
-    quote = match.group("quote") or '"'
-    return match.group("prefix") + quote + target + quote
-
-
 def raw_html_image_sources(fragment: str) -> list[str]:
     parser = ImageSourceParser()
     parser.feed(fragment)
@@ -571,10 +1283,37 @@ def raw_html_image_sources(fragment: str) -> list[str]:
     return parser.sources
 
 
-def ensure_passive_preview_html(fragment: str) -> None:
-    parser = PassiveHtmlParser()
+def ensure_author_html_safe(markdown: str) -> None:
+    parser = AuthorHtmlParser()
+
+    def inspect_tokens(tokens: list[Any]) -> None:
+        for token in tokens:
+            if token.type in {"html_block", "html_inline"}:
+                parser.feed(token.content)
+            if token.children:
+                inspect_tokens(token.children)
+
+    inspect_tokens(MARKDOWN_PARSER.parse(markdown))
+    parser.close()
+    problems = list(dict.fromkeys(parser.all_problems()))
+    if problems:
+        raise WorkflowError(
+            "draft contains author-controlled HTML that is unsafe for a controlled WeChat layout:\n- "
+            + "\n- ".join(problems)
+        )
+
+
+def ensure_passive_preview_html(
+    fragment: str,
+    *,
+    allowed_presentation_tags: set[str] | None = None,
+) -> None:
+    parser = PassiveHtmlParser(allowed_presentation_tags)
     parser.feed(fragment)
     parser.close()
+    parser.problems.extend(
+        f"unclosed article tag <{tag}>" for tag in reversed(parser.open_tags)
+    )
     if parser.problems:
         unique = list(dict.fromkeys(parser.problems))
         raise WorkflowError(
@@ -602,13 +1341,26 @@ def image_file_problem(path: Path) -> str | None:
     return None
 
 
+def parse_yaml_mapping(payload: str, label: str) -> dict[str, Any]:
+    try:
+        loaded = yaml.load(payload, Loader=UniqueKeySafeLoader)
+    except WorkflowError as exc:
+        raise WorkflowError(f"invalid YAML in {label}: {exc}") from exc
+    except yaml.YAMLError as exc:
+        raise WorkflowError(f"invalid YAML in {label}: {exc}") from exc
+    if loaded is None:
+        if payload.strip():
+            raise WorkflowError(f"YAML root must be an object: {label}")
+        loaded = {}
+    if not isinstance(loaded, dict):
+        raise WorkflowError(f"YAML root must be an object: {label}")
+    return loaded
+
+
 def load_yaml(path: Path) -> dict[str, Any]:
     if not path.is_file():
         return {}
-    loaded = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
-    if not isinstance(loaded, dict):
-        raise WorkflowError(f"YAML root must be an object: {path}")
-    return loaded
+    return parse_yaml_mapping(path.read_text(encoding="utf-8"), str(path))
 
 
 def load_draft(package: Path) -> tuple[dict[str, Any], str]:
@@ -618,9 +1370,7 @@ def load_draft(package: Path) -> tuple[dict[str, Any], str]:
     match = FRONTMATTER_RE.match(path.read_text(encoding="utf-8"))
     if not match:
         raise WorkflowError(f"draft frontmatter is missing or malformed: {path}")
-    metadata = yaml.safe_load(match.group(1)) or {}
-    if not isinstance(metadata, dict):
-        raise WorkflowError("draft frontmatter must be a YAML object")
+    metadata = parse_yaml_mapping(match.group(1), f"{path} frontmatter")
     return metadata, match.group(2).strip() + "\n"
 
 
@@ -642,26 +1392,106 @@ def strip_leading_h1(body: str) -> str:
 
 def load_publish_config(package: Path, metadata: dict[str, Any]) -> PublishConfig:
     raw = load_yaml(package / "publish.yml")
-    source_url = raw.get("source_url") or raw.get("content_source_url") or ""
-    return PublishConfig(
-        title=str(raw.get("title") or metadata.get("title") or "").strip(),
-        author=str(raw.get("author") or "").strip(),
-        digest=str(raw.get("digest") or "").strip(),
-        cover=str(raw.get("cover") or "").strip(),
-        source_url=str(source_url).strip(),
-        theme=str(raw.get("theme") or "default").strip(),
-        layout_profile=str(raw.get("layout_profile") or "default").strip(),
-        highlight=str(raw.get("highlight") or "solarized-light").strip(),
-        mac_style=bool(raw.get("mac_style", False)),
-        footnote=bool(raw.get("footnote", True)),
-        need_open_comment=bool(raw.get("need_open_comment", False)),
-        only_fans_can_comment=bool(raw.get("only_fans_can_comment", False)),
-        header_image=str(raw.get("header_image") or "").strip(),
-        header_alt=str(raw.get("header_alt") or "").strip(),
-        footer_image=str(raw.get("footer_image") or "").strip(),
-        footer_alt=str(raw.get("footer_alt") or "").strip(),
-        footer_valid_until=str(raw.get("footer_valid_until") or "").strip(),
+    non_string_fields = [repr(key) for key in raw if type(key) is not str]
+    if non_string_fields:
+        raise WorkflowError(
+            "publish.yml field names must be YAML strings: "
+            + ", ".join(non_string_fields)
+        )
+    unknown_fields = sorted(set(raw) - PUBLISH_CONFIG_FIELDS)
+    if unknown_fields:
+        raise WorkflowError(
+            "publish.yml contains unknown field(s): " + ", ".join(unknown_fields)
+        )
+    if "source_url" in raw and "content_source_url" in raw:
+        raise WorkflowError(
+            "publish.yml must not declare both source_url and content_source_url"
+        )
+
+    def strict_string(field: str, default: str = "") -> str:
+        if field not in raw:
+            return default
+        value = raw[field]
+        if type(value) is not str:
+            raise WorkflowError(
+                f"publish.yml field {field} must be a YAML string, not {type(value).__name__}"
+            )
+        return value.strip()
+
+    source_url_field = (
+        "source_url" if "source_url" in raw else "content_source_url"
     )
+    source_url = strict_string(source_url_field) if source_url_field in raw else ""
+    publish_title = strict_string("title")
+    if not publish_title:
+        metadata_title = metadata.get("title") or ""
+        if type(metadata_title) is not str:
+            raise WorkflowError("draft frontmatter title must be a YAML string")
+        publish_title = metadata_title.strip()
+
+    def strict_bool(field: str, default: bool) -> bool:
+        if field not in raw:
+            return default
+        value = raw[field]
+        if type(value) is not bool:
+            raise WorkflowError(
+                f"publish.yml field {field} must be a YAML boolean, not {type(value).__name__}"
+            )
+        return value
+
+    return PublishConfig(
+        title=publish_title,
+        author=strict_string("author"),
+        digest=strict_string("digest"),
+        cover=strict_string("cover"),
+        source_url=source_url,
+        project_adapter=strict_string("project_adapter"),
+        delivery_mode=strict_string("delivery_mode"),
+        theme=strict_string("theme", "default"),
+        layout_profile=strict_string("layout_profile", "default"),
+        highlight=strict_string("highlight", "solarized-light"),
+        mac_style=strict_bool("mac_style", False),
+        footnote=strict_bool("footnote", True),
+        need_open_comment=strict_bool("need_open_comment", False),
+        only_fans_can_comment=strict_bool("only_fans_can_comment", False),
+        header_image=strict_string("header_image"),
+        header_alt=strict_string("header_alt"),
+        footer_image=strict_string("footer_image"),
+        footer_alt=strict_string("footer_alt"),
+        footer_valid_until=strict_string("footer_valid_until"),
+    )
+
+
+def get_project_adapter(config: PublishConfig) -> ProjectAdapter | None:
+    if not config.project_adapter:
+        return None
+    adapter = PROJECT_ADAPTERS.get(config.project_adapter)
+    if adapter is None:
+        choices = ", ".join(sorted(PROJECT_ADAPTERS))
+        raise WorkflowError(
+            f"unknown project_adapter {config.project_adapter!r}; choose one of: {choices}"
+        )
+    return adapter
+
+
+def get_delivery_mode(
+    config: PublishConfig, *, require_explicit: bool = False
+) -> DeliveryMode | None:
+    if not config.delivery_mode:
+        if require_explicit:
+            choices = ", ".join(sorted(DELIVERY_MODES))
+            raise WorkflowError(
+                "publish.yml must explicitly set delivery_mode before handoff or draft; "
+                f"choose one of: {choices}"
+            )
+        return None
+    mode = DELIVERY_MODES.get(config.delivery_mode)
+    if mode is None:
+        choices = ", ".join(sorted(DELIVERY_MODES))
+        raise WorkflowError(
+            f"unknown delivery_mode {config.delivery_mode!r}; choose one of: {choices}"
+        )
+    return mode
 
 
 def get_layout_profile(config: PublishConfig) -> LayoutProfile:
@@ -735,15 +1565,18 @@ def layout_image_section(
 
 
 def apply_layout_components(package: Path, body: str, config: PublishConfig) -> str:
-    profile = get_layout_profile(config)
-    if (config.header_image or config.footer_image) and not profile.supports_body_components:
+    get_layout_profile(config)
+    adapter = get_project_adapter(config)
+    if (
+        config.header_image or config.footer_image
+    ) and (adapter is None or not adapter.supports_body_components):
         raise WorkflowError(
-            f"layout_profile {profile.profile_id} does not support header_image or footer_image"
+            "header_image and footer_image require a project_adapter that supports body components"
         )
-    class_prefix = profile.component_class_prefix
-    if profile.supports_body_components and not class_prefix:
+    class_prefix = adapter.component_class_prefix if adapter is not None else None
+    if adapter is not None and adapter.supports_body_components and not class_prefix:
         raise WorkflowError(
-            f"layout_profile {profile.profile_id} has no component class prefix"
+            f"project_adapter {adapter.adapter_id} has no component class prefix"
         )
     parts: list[str] = []
     if config.header_image:
@@ -789,6 +1622,7 @@ def prepare_source(
 ) -> tuple[Path, dict[str, Any], PublishConfig, str]:
     metadata, body = load_draft(package)
     config = load_publish_config(package, metadata)
+    ensure_author_html_safe(body)
     stripped_body = strip_leading_h1(body)
     layout_body = apply_layout_components(package, stripped_body, config)
     frontmatter = yaml.safe_dump(
@@ -835,10 +1669,70 @@ def wenyan_args(
 
 
 def wenyan_environment() -> dict[str, str]:
-    """Keep Wenyan token/material caches private and local to this project."""
-    environment = os.environ.copy()
+    """Keep caches local and make the explicit env file the credential source."""
+    blocked = {
+        "wechat_app_id",
+        "wechat_app_secret",
+        "node_options",
+        "node_path",
+    }
+    environment = {
+        key: value
+        for key, value in os.environ.items()
+        if key.casefold() not in blocked
+    }
     environment["XDG_CONFIG_HOME"] = str(WENYAN_RUNTIME)
     return environment
+
+
+def wechat_credential_metadata(env_path: Path) -> tuple[str, str]:
+    """Validate the explicit env file and return non-secret identity metadata."""
+
+    payload = stable_file_bytes(env_path, max_bytes=MAX_CREDENTIAL_FILE_BYTES)
+    try:
+        content = payload.decode("utf-8-sig")
+    except UnicodeError as exc:
+        raise WorkflowError("credential file must be UTF-8") from exc
+    values: dict[str, str] = {}
+    required = {"WECHAT_APP_ID", "WECHAT_APP_SECRET"}
+    for line_number, raw_line in enumerate(content.splitlines(), start=1):
+        line = raw_line.strip()
+        if not line or line.startswith("#"):
+            continue
+        if line.startswith("export "):
+            line = line[7:].lstrip()
+        if "=" not in line:
+            continue
+        key, raw_value = line.split("=", 1)
+        key = key.strip()
+        if key not in required:
+            continue
+        if key in values:
+            raise WorkflowError(
+                f"credential file contains duplicate {key} at line {line_number}"
+            )
+        value = raw_value.strip()
+        if value.startswith(("'", '"')):
+            quote = value[0]
+            if len(value) < 2 or not value.endswith(quote):
+                raise WorkflowError(
+                    f"credential file contains an unterminated quoted {key}"
+                )
+            value = value[1:-1]
+        elif " #" in value:
+            value = value.split(" #", 1)[0].rstrip()
+        if not value or any(character in value for character in "\r\n\x00"):
+            raise WorkflowError(f"credential file contains an invalid {key}")
+        values[key] = value
+    missing = sorted(required - values.keys())
+    if missing:
+        raise WorkflowError(
+            "credential file must explicitly define " + " and ".join(missing)
+        )
+    account_fingerprint = hashlib.sha256(
+        values["WECHAT_APP_ID"].encode("utf-8")
+    ).hexdigest()[:12]
+    return account_fingerprint, hashlib.sha256(payload).hexdigest()
 
 
 def run_wenyan_render(
@@ -863,37 +1757,462 @@ def run_wenyan_render(
     return rendered
 
 
-def data_uri(path: Path) -> str:
-    mime = mimetypes.guess_type(path.name)[0] or "application/octet-stream"
-    encoded = base64.b64encode(path.read_bytes()).decode("ascii")
-    return f"data:{mime};base64,{encoded}"
+def strip_inline_style_attributes(rendered: str) -> str:
+    """Remove presentation markup; prose containing ``style=`` is unchanged."""
+
+    parser = ManualHandoffHtmlParser()
+    parser.feed(rendered)
+    parser.close()
+    if parser.structural_problems or parser.open_tags:
+        structure = list(parser.structural_problems)
+        structure.extend(
+            f"unclosed tag <{tag}>" for tag, _ in reversed(parser.open_tags)
+        )
+        raise WorkflowError(
+            "manual editor handoff contains invalid HTML structure: "
+            + "; ".join(dict.fromkeys(structure))
+        )
+    if parser.blocked_tags or parser.blocked_attributes:
+        blocked = sorted(
+            set(parser.blocked_tags + parser.blocked_attributes)
+        )
+        raise WorkflowError(
+            "manual editor handoff contains unsupported interactive or hidden markup: "
+            + ", ".join(blocked)
+        )
+    cleaned = parser.rendered()
+    verifier = ManualHandoffHtmlParser()
+    verifier.feed(cleaned)
+    verifier.close()
+    if (
+        verifier.removed_attributes
+        or verifier.removed_tags
+        or verifier.blocked_attributes
+        or verifier.blocked_tags
+        or verifier.structural_problems
+        or verifier.open_tags
+    ):
+        leftovers = sorted(
+            set(
+                verifier.removed_attributes
+                + verifier.removed_tags
+                + verifier.blocked_attributes
+                + verifier.blocked_tags
+                + verifier.structural_problems
+                + [tag for tag, _ in verifier.open_tags]
+            )
+        )
+        raise WorkflowError(
+            "manual editor handoff still contains presentation markup: "
+            + ", ".join(leftovers)
+        )
+    return cleaned
 
 
-def inline_preview_images(fragment: str, image_base: Path) -> str:
-    def replace(match: re.Match[str]) -> str:
-        target = decode_image_target(matched_html_image_target(match))
-        if target.startswith("data:"):
-            return match.group(0)
-        if is_remote_or_special(target):
-            return replace_html_image_target(match, BLOCKED_REMOTE_IMAGE)
-        resolved = (image_base / target).resolve()
+def apply_delivery_mode(rendered: str, config: PublishConfig) -> str:
+    """Adapt rendered HTML for its delivery mode without changing semantic content."""
+
+    mode = get_delivery_mode(config)
+    if mode is not None and mode.strip_inline_styles:
+        return strip_inline_style_attributes(rendered)
+    return rendered
+
+
+def image_payload_metadata(
+    path: Path,
+    payload: bytes,
+    *,
+    frame_ceiling: int | None = None,
+    decoded_pixel_ceiling: int | None = None,
+) -> dict[str, int | str]:
+    expected_format = RELEASE_IMAGE_FORMATS.get(path.suffix.casefold())
+    if expected_format is None:
+        raise WorkflowError(f"unsupported inline image extension: {path.suffix}")
+    allowed_frames = (
+        MAX_HANDOFF_IMAGE_FRAMES if frame_ceiling is None else frame_ceiling
+    )
+    allowed_decoded_pixels = (
+        MAX_HANDOFF_DECODED_FRAME_PIXELS
+        if decoded_pixel_ceiling is None
+        else decoded_pixel_ceiling
+    )
+    try:
+        with Image.open(io.BytesIO(payload)) as image:
+            actual_format = image.format
+            width, height = image.size
+            image.verify()
+        if actual_format != expected_format:
+            raise WorkflowError(
+                f"inline image format {actual_format or 'unknown'} does not match {path.suffix}"
+            )
+        pixels_per_frame = width * height
+        if width <= 0 or height <= 0:
+            raise WorkflowError("inline image dimensions must be positive")
+        if pixels_per_frame > MAX_HANDOFF_IMAGE_PIXELS:
+            raise WorkflowError(
+                f"inline image exceeds the internal {MAX_HANDOFF_IMAGE_PIXELS}-pixel ceiling: {path}"
+            )
+        effective_frame_ceiling = min(
+            allowed_frames,
+            allowed_decoded_pixels // pixels_per_frame,
+        )
+        if effective_frame_ceiling < 1:
+            raise WorkflowError(
+                f"inline image exceeds the remaining frame or decoded-pixel budget: {path}"
+            )
+        with Image.open(io.BytesIO(payload)) as image:
+            frame_count = 1
+            while frame_count <= effective_frame_ceiling:
+                try:
+                    image.seek(frame_count)
+                except EOFError:
+                    break
+                frame_count += 1
+        if frame_count > effective_frame_ceiling:
+            raise WorkflowError(
+                f"inline image exceeds the internal frame or decoded-pixel ceiling: {path}"
+            )
+    except (UnidentifiedImageError, OSError, ValueError, Image.DecompressionBombError) as exc:
+        raise WorkflowError(
+            f"inline image cannot be decoded ({path.name}): {type(exc).__name__}"
+        ) from exc
+    return {
+        "width": width,
+        "height": height,
+        "pixels_per_frame": pixels_per_frame,
+        "frame_count": frame_count,
+        "decoded_frame_pixels": pixels_per_frame * frame_count,
+    }
+
+
+def handoff_resource_blockers(
+    assets: dict[str, dict[str, Any]], copy_payload_bytes: int
+) -> list[str]:
+    """Apply internal safety ceilings before allocating inline image payloads."""
+
+    blockers: list[str] = []
+    total_asset_bytes = sum(int(item["bytes"]) for item in assets.values())
+    total_frames = sum(int(item.get("frame_count", 1)) for item in assets.values())
+    image_references = sum(int(item.get("occurrences", 1)) for item in assets.values())
+    occurrence_frames = sum(
+        int(item.get("frame_count", 1)) * int(item.get("occurrences", 1))
+        for item in assets.values()
+    )
+    total_decoded_pixels = sum(
+        int(
+            item.get(
+                "decoded_frame_pixels",
+                int(item["pixels_per_frame"]) * int(item.get("frame_count", 1)),
+            )
+        )
+        for item in assets.values()
+    )
+    occurrence_decoded_pixels = sum(
+        int(
+            item.get(
+                "decoded_frame_pixels",
+                int(item["pixels_per_frame"]) * int(item.get("frame_count", 1)),
+            )
+        )
+        * int(item.get("occurrences", 1))
+        for item in assets.values()
+    )
+    if total_asset_bytes > MAX_HANDOFF_TOTAL_ASSET_BYTES:
+        blockers.append(
+            "inline image bytes exceed the internal "
+            f"{MAX_HANDOFF_TOTAL_ASSET_BYTES}-byte ceiling"
+        )
+    if copy_payload_bytes > MAX_HANDOFF_COPY_HTML_BYTES:
+        blockers.append(
+            "inline HTML payload exceeds the internal "
+            f"{MAX_HANDOFF_COPY_HTML_BYTES}-byte ceiling"
+        )
+    if total_frames > MAX_HANDOFF_TOTAL_FRAMES:
+        blockers.append(
+            "inline image frames exceed the internal "
+            f"{MAX_HANDOFF_TOTAL_FRAMES}-frame aggregate ceiling"
+        )
+    if image_references > MAX_INLINE_IMAGE_REFERENCES:
+        blockers.append(
+            "inline image references exceed the internal "
+            f"{MAX_INLINE_IMAGE_REFERENCES}-reference ceiling"
+        )
+    if occurrence_frames > MAX_HANDOFF_OCCURRENCE_FRAMES:
+        blockers.append(
+            "inline image occurrences exceed the internal "
+            f"{MAX_HANDOFF_OCCURRENCE_FRAMES}-frame ceiling"
+        )
+    if total_decoded_pixels > MAX_HANDOFF_TOTAL_DECODED_FRAME_PIXELS:
+        blockers.append(
+            "inline images exceed the internal "
+            f"{MAX_HANDOFF_TOTAL_DECODED_FRAME_PIXELS}-decoded-pixel aggregate ceiling"
+        )
+    if occurrence_decoded_pixels > MAX_HANDOFF_OCCURRENCE_DECODED_FRAME_PIXELS:
+        blockers.append(
+            "inline image occurrences exceed the internal "
+            f"{MAX_HANDOFF_OCCURRENCE_DECODED_FRAME_PIXELS}-decoded-pixel ceiling"
+        )
+    for path, item in assets.items():
+        if int(item["bytes"]) > MAX_HANDOFF_IMAGE_BYTES:
+            blockers.append(
+                f"inline image exceeds the internal {MAX_HANDOFF_IMAGE_BYTES}-byte ceiling: {path}"
+            )
+        if int(item["pixels_per_frame"]) > MAX_HANDOFF_IMAGE_PIXELS:
+            blockers.append(
+                f"inline image exceeds the internal {MAX_HANDOFF_IMAGE_PIXELS}-pixel ceiling: {path}"
+            )
+        frame_count = int(item.get("frame_count", 1))
+        if frame_count > MAX_HANDOFF_IMAGE_FRAMES:
+            blockers.append(
+                f"inline image exceeds the internal {MAX_HANDOFF_IMAGE_FRAMES}-frame ceiling: {path}"
+            )
+        decoded_frame_pixels = int(
+            item.get(
+                "decoded_frame_pixels",
+                int(item["pixels_per_frame"]) * frame_count,
+            )
+        )
+        if decoded_frame_pixels > MAX_HANDOFF_DECODED_FRAME_PIXELS:
+            blockers.append(
+                "inline animation exceeds the internal "
+                f"{MAX_HANDOFF_DECODED_FRAME_PIXELS}-decoded-pixel ceiling: {path}"
+            )
+    return blockers
+
+
+def prepare_inline_image_graph(
+    fragment: str, image_base: Path
+) -> PreparedImageGraph:
+    """Validate budgets, then encode each unique local image exactly once."""
+
+    source_parser = ImageSourceParser()
+    source_parser.feed(fragment)
+    source_parser.close()
+    image_order: list[str] = []
+    unique_targets: dict[str, str] = {}
+    raw_images: dict[str, tuple[Path, bytes, dict[str, int | str]]] = {}
+    image_base_resolved = image_base.resolve()
+    for raw_target in source_parser.sources:
+        target = decode_image_target(raw_target)
+        if target.startswith("data:") or is_remote_or_special(target):
+            continue
+        normalized = canonical_package_relative_path(
+            target, "rendered inline image", require_assets=True
+        )
+        image_order.append(normalized)
+        unique_targets.setdefault(normalized, target)
+
+    occurrence_counts = {
+        normalized: image_order.count(normalized) for normalized in unique_targets
+    }
+    running_asset_bytes = 0
+    running_frames = 0
+    running_occurrence_frames = 0
+    running_decoded_pixels = 0
+    running_occurrence_decoded_pixels = 0
+    for normalized, target in unique_targets.items():
+        resolved = (image_base / Path(normalized)).resolve()
         try:
-            resolved.relative_to(image_base.resolve())
+            resolved.relative_to(image_base_resolved)
         except ValueError as exc:
-            raise WorkflowError(f"rendered image path escapes staged build: {target}") from exc
+            raise WorkflowError(
+                f"rendered image path escapes staged build: {target}"
+            ) from exc
         if not resolved.is_file():
             raise WorkflowError(f"rendered local image is missing: {target}")
-        problem = image_file_problem(resolved)
-        if problem is not None:
+        remaining_asset_bytes = max(
+            0, MAX_HANDOFF_TOTAL_ASSET_BYTES - running_asset_bytes
+        )
+        read_ceiling = min(MAX_HANDOFF_IMAGE_BYTES, remaining_asset_bytes)
+        try:
+            payload = stable_file_bytes(resolved, max_bytes=read_ceiling)
+        except WorkflowError as exc:
             raise WorkflowError(
-                f"rendered local image is not a valid preview image ({target}): {problem}"
+                "inline image resource preflight failed before encoding or handoff copy:\n- "
+                f"{exc}"
+            ) from exc
+        occurrences = occurrence_counts[normalized]
+        remaining_frames = max(0, MAX_HANDOFF_TOTAL_FRAMES - running_frames)
+        remaining_occurrence_frames = max(
+            0, MAX_HANDOFF_OCCURRENCE_FRAMES - running_occurrence_frames
+        )
+        frame_ceiling = min(
+            MAX_HANDOFF_IMAGE_FRAMES,
+            remaining_frames,
+            remaining_occurrence_frames // occurrences,
+        )
+        remaining_decoded_pixels = max(
+            0,
+            MAX_HANDOFF_TOTAL_DECODED_FRAME_PIXELS - running_decoded_pixels,
+        )
+        remaining_occurrence_decoded_pixels = max(
+            0,
+            MAX_HANDOFF_OCCURRENCE_DECODED_FRAME_PIXELS
+            - running_occurrence_decoded_pixels,
+        )
+        decoded_pixel_ceiling = min(
+            MAX_HANDOFF_DECODED_FRAME_PIXELS,
+            remaining_decoded_pixels,
+            remaining_occurrence_decoded_pixels // occurrences,
+        )
+        metadata = image_payload_metadata(
+            resolved,
+            payload,
+            frame_ceiling=frame_ceiling,
+            decoded_pixel_ceiling=decoded_pixel_ceiling,
+        )
+        raw_images[normalized] = (
+            resolved,
+            payload,
+            metadata,
+        )
+        running_asset_bytes += len(payload)
+        running_frames += int(metadata["frame_count"])
+        running_occurrence_frames += int(metadata["frame_count"]) * occurrences
+        running_decoded_pixels += int(metadata["decoded_frame_pixels"])
+        running_occurrence_decoded_pixels += (
+            int(metadata["decoded_frame_pixels"]) * occurrences
+        )
+
+    asset_details: dict[str, dict[str, Any]] = {}
+    for normalized, (_, payload, metadata) in raw_images.items():
+        asset_details[normalized] = {
+            "sha256": hashlib.sha256(payload).hexdigest(),
+            "bytes": len(payload),
+            **metadata,
+            "occurrences": occurrence_counts[normalized],
+        }
+
+    projected_upper_bound = len(fragment.encode("utf-8")) * 6
+    for raw_target in source_parser.sources:
+        target = decode_image_target(raw_target)
+        if target.startswith("data:"):
+            continue
+        if is_remote_or_special(target):
+            replacement_length = len(BLOCKED_REMOTE_IMAGE)
+        else:
+            normalized = canonical_package_relative_path(
+                target, "rendered inline image", require_assets=True
             )
-        return replace_html_image_target(match, data_uri(resolved))
+            resolved, payload, _ = raw_images[normalized]
+            mime = mimetypes.guess_type(resolved.name)[0] or "application/octet-stream"
+            replacement_length = len(f"data:{mime};base64,") + 4 * (
+                (len(payload) + 2) // 3
+            )
+        projected_upper_bound += replacement_length
 
-    return HTML_IMAGE_RE.sub(replace, fragment)
+    blockers = handoff_resource_blockers(asset_details, projected_upper_bound)
+    if blockers:
+        raise WorkflowError(
+            "inline image resource preflight failed before encoding or handoff copy:\n- "
+            + "\n- ".join(blockers)
+        )
+
+    prepared: dict[str, PreparedInlineImage] = {}
+    for normalized, (resolved, payload, metadata) in raw_images.items():
+        mime = mimetypes.guess_type(resolved.name)[0] or "application/octet-stream"
+        encoded = base64.b64encode(payload).decode("ascii")
+        prepared[normalized] = PreparedInlineImage(
+            path=normalized,
+            payload=payload,
+            data_uri=f"data:{mime};base64,{encoded}",
+            sha256=hashlib.sha256(payload).hexdigest(),
+            width=int(metadata["width"]),
+            height=int(metadata["height"]),
+            pixels_per_frame=int(metadata["pixels_per_frame"]),
+            frame_count=int(metadata["frame_count"]),
+            decoded_frame_pixels=int(metadata["decoded_frame_pixels"]),
+        )
+    rewritten_order: list[str] = []
+
+    def replace_source(raw_target: str) -> str:
+        target = decode_image_target(raw_target)
+        if target.startswith("data:"):
+            return raw_target
+        if is_remote_or_special(target):
+            return BLOCKED_REMOTE_IMAGE
+        normalized = canonical_package_relative_path(
+            target, "rendered inline image", require_assets=True
+        )
+        rewritten_order.append(normalized)
+        image = prepared.get(normalized)
+        if image is None:
+            raise WorkflowError(
+                f"rendered inline image was not bound by resource preflight: {target}"
+            )
+        return image.data_uri
+
+    rewriter = ImageRewriteHtmlParser(replace_source)
+    rewriter.feed(fragment)
+    rewriter.close()
+    rendered_fragment = rewriter.rendered()
+    if rewriter.sources != source_parser.sources or rewritten_order != image_order:
+        raise WorkflowError(
+            "parsed image order changed while preparing the inline preview"
+        )
+    actual_bytes = len(rendered_fragment.encode("utf-8"))
+    actual_blockers = handoff_resource_blockers(asset_details, actual_bytes)
+    if actual_blockers:
+        raise WorkflowError(
+            "inline image resource preflight changed after HTML rewrite:\n- "
+            + "\n- ".join(actual_blockers)
+        )
+    return PreparedImageGraph(
+        images=prepared,
+        image_order=image_order,
+        projected_copy_payload_bytes=actual_bytes,
+        source_sha256=hashlib.sha256(fragment.encode("utf-8")).hexdigest(),
+        rendered_fragment=rendered_fragment,
+    )
 
 
-def stage_asset_bytes(source: Path, build_dir: Path, relative_path: str) -> None:
+def inline_preview_images(
+    fragment: str,
+    image_base: Path,
+    prepared_graph: PreparedImageGraph | None = None,
+) -> str:
+    graph = prepared_graph or prepare_inline_image_graph(fragment, image_base)
+    if hashlib.sha256(fragment.encode("utf-8")).hexdigest() != graph.source_sha256:
+        raise WorkflowError(
+            "rendered HTML changed after inline image resource preflight"
+        )
+    if len(graph.rendered_fragment.encode("utf-8")) != graph.projected_copy_payload_bytes:
+        raise WorkflowError("inline image payload size no longer matches its graph")
+    return graph.rendered_fragment
+
+
+def copy_handoff_images(
+    graph: PreparedImageGraph, handoff_dir: Path
+) -> tuple[dict[str, dict[str, Any]], list[str]]:
+    """Copy every local body image beside the versioned handoff source."""
+
+    copied: dict[str, dict[str, Any]] = {}
+    for normalized, prepared in graph.images.items():
+        destination = handoff_dir / Path(normalized)
+        destination.parent.mkdir(parents=True, exist_ok=True)
+        atomic_write_bytes(destination, prepared.payload)
+        if hashlib.sha256(stable_file_bytes(destination)).hexdigest() != prepared.sha256:
+            raise WorkflowError(f"handoff image copy hash mismatch: {normalized}")
+        copied[normalized] = {
+            "sha256": prepared.sha256,
+            "bytes": len(prepared.payload),
+            "width": prepared.width,
+            "height": prepared.height,
+            "pixels_per_frame": prepared.pixels_per_frame,
+            "frame_count": prepared.frame_count,
+            "decoded_frame_pixels": prepared.decoded_frame_pixels,
+            "occurrences": graph.image_order.count(normalized),
+        }
+    return copied, list(graph.image_order)
+
+
+def stage_asset_bytes(
+    source: Path,
+    build_dir: Path,
+    relative_path: str,
+    *,
+    max_bytes: int | None = None,
+) -> int:
     if is_link_or_junction(source) or is_multiply_linked_file(source):
         raise WorkflowError(
             f"release asset must not be a symlink, junction, or hardlink: {relative_path}"
@@ -903,10 +2222,18 @@ def stage_asset_bytes(source: Path, build_dir: Path, relative_path: str) -> None
         destination.resolve().relative_to(build_dir.resolve())
     except ValueError as exc:
         raise WorkflowError(f"staged asset path escapes build: {relative_path}") from exc
-    destination.parent.mkdir(parents=True, exist_ok=True)
-    atomic_write_bytes(destination, source.read_bytes())
-    if file_sha256(destination) != file_sha256(source):
-        raise WorkflowError(f"staged asset copy hash mismatch: {relative_path}")
+    byte_ceiling = MAX_HANDOFF_IMAGE_BYTES if max_bytes is None else max_bytes
+    try:
+        copied_bytes, _ = stable_copy_file(
+            source,
+            destination,
+            max_bytes=byte_ceiling,
+        )
+    except WorkflowError as exc:
+        raise WorkflowError(
+            f"release asset staging failed for {relative_path}: {exc}"
+        ) from exc
+    return copied_bytes
 
 
 def rendered_image_gate_and_stage(
@@ -918,7 +2245,11 @@ def rendered_image_gate_and_stage(
     """Audit the actual Wenyan image graph, then copy approved inputs to this build."""
 
     blockers: list[str] = []
-    rendered_parser = ImageSourceParser()
+    adapter = get_project_adapter(config)
+    component_prefix = (
+        adapter.component_class_prefix if adapter is not None else None
+    )
+    rendered_parser = ImageSourceParser(component_prefix)
     rendered_parser.feed(rendered)
     rendered_parser.close()
     manifest = load_yaml(package / "asset-manifest.yml")
@@ -955,6 +2286,7 @@ def rendered_image_gate_and_stage(
 
     rendered_counts: dict[str, int] = {}
     staged: set[str] = set()
+    staged_asset_bytes = 0
     for raw_target in rendered_parser.sources:
         label = f"rendered body image {raw_target!r}"
         try:
@@ -1006,7 +2338,15 @@ def rendered_image_gate_and_stage(
                 )
 
         if normalized not in staged:
-            stage_asset_bytes(source, build_dir, normalized)
+            remaining_bytes = max(
+                0, MAX_HANDOFF_TOTAL_ASSET_BYTES - staged_asset_bytes
+            )
+            staged_asset_bytes += stage_asset_bytes(
+                source,
+                build_dir,
+                normalized,
+                max_bytes=min(MAX_HANDOFF_IMAGE_BYTES, remaining_bytes),
+            )
             staged.add(normalized)
 
     for normalized, expected_use in component_uses.items():
@@ -1024,7 +2364,8 @@ def rendered_image_gate_and_stage(
         actual_count = rendered_parser.component_counts[kind]
         if actual_count != expected_count:
             blockers.append(
-                f"appsso-body-{kind} wrapper must appear {expected_count} time(s) "
+                f"{component_prefix or 'body-component'}-{kind} wrapper must appear "
+                f"{expected_count} time(s) "
                 f"after Wenyan render; found {actual_count}"
             )
 
@@ -1040,7 +2381,15 @@ def rendered_image_gate_and_stage(
             if image_file_problem(cover_source) is not None:
                 raise WorkflowError(f"cover is not a valid release image: {config.cover}")
             if normalized_cover not in staged:
-                stage_asset_bytes(cover_source, build_dir, normalized_cover)
+                remaining_bytes = max(
+                    0, MAX_HANDOFF_TOTAL_ASSET_BYTES - staged_asset_bytes
+                )
+                staged_asset_bytes += stage_asset_bytes(
+                    cover_source,
+                    build_dir,
+                    normalized_cover,
+                    max_bytes=min(MAX_HANDOFF_IMAGE_BYTES, remaining_bytes),
+                )
         except (ValueError, WorkflowError) as exc:
             message = str(exc)
             if message and message not in blockers:
@@ -1171,6 +2520,67 @@ def publication_blockers(package: Path, metadata: dict[str, Any], config: Publis
         )
 
     profile = get_layout_profile(config)
+    adapter = get_project_adapter(config)
+    mode = get_delivery_mode(config)
+    if adapter is None:
+        blockers.append(
+            "publish.yml must explicitly set project_adapter to a registered adapter"
+        )
+    if mode is None:
+        blockers.append(
+            "publish.yml must explicitly set delivery_mode to manual_editor or sealed_draft"
+        )
+    elif mode.produces_editor_handoff:
+        if config.theme != "default":
+            blockers.append(
+                "delivery_mode manual_editor requires theme default; visual formatting belongs in the WeChat editor"
+            )
+        if config.mac_style:
+            blockers.append(
+                "delivery_mode manual_editor requires mac_style false; visual formatting belongs in the WeChat editor"
+            )
+        if profile.profile_id != "default":
+            blockers.append(
+                "delivery_mode manual_editor requires layout_profile default; visual formatting belongs in the WeChat editor"
+            )
+    if profile.required_theme is not None and config.theme != profile.required_theme:
+        blockers.append(
+            f"layout_profile {profile.profile_id} requires theme {profile.required_theme}"
+        )
+    if (
+        profile.required_highlight is not None
+        and config.highlight != profile.required_highlight
+    ):
+        blockers.append(
+            f"layout_profile {profile.profile_id} requires highlight {profile.required_highlight}"
+        )
+    if (
+        profile.required_mac_style is not None
+        and config.mac_style is not profile.required_mac_style
+    ):
+        expected = str(profile.required_mac_style).lower()
+        blockers.append(
+            f"layout_profile {profile.profile_id} requires mac_style {expected}"
+        )
+    if profile.profile_id == "appsso-article-v1":
+        if adapter is None or adapter.adapter_id != "appsso":
+            blockers.append(
+                "layout_profile appsso-article-v1 requires project_adapter appsso"
+            )
+        if mode is None or mode.mode_id != "sealed_draft":
+            blockers.append(
+                "layout_profile appsso-article-v1 requires delivery_mode sealed_draft"
+            )
+    if (
+        adapter is not None
+        and adapter.adapter_id == "appsso"
+        and mode is not None
+        and mode.mode_id == "sealed_draft"
+        and profile.profile_id != "appsso-article-v1"
+    ):
+        blockers.append(
+            "project_adapter appsso with delivery_mode sealed_draft requires layout_profile appsso-article-v1"
+        )
     if profile.required_header and not config.header_image:
         blockers.append(
             f"layout_profile {profile.profile_id} requires a rights-cleared header_image"
@@ -1220,6 +2630,7 @@ def layout_plan(
         theme_sha256 = hashlib.sha256(custom_theme.read_bytes()).hexdigest()
     return {
         "profile": profile.profile_id,
+        "project_adapter": config.project_adapter or None,
         "custom_theme": theme_path,
         "custom_theme_sha256": theme_sha256,
         "theme_snapshot": theme_snapshot.name if theme_snapshot else None,
@@ -1290,6 +2701,47 @@ def verify_build_snapshot(package: Path, build: PreviewBuild) -> None:
         )
 
 
+def handoff_document(
+    title: str,
+    fragment: str,
+    validator_ok: bool,
+    report: str,
+    blockers: list[str],
+    image_order: list[str] | None = None,
+    copy_payload_bytes: int = 0,
+) -> str:
+    ready = validator_ok and not blockers
+    status = "人工编辑交接已通过本地门禁" if ready else "人工编辑交接尚未通过本地门禁"
+    issues = "".join(f"<li>{html.escape(item)}</li>" for item in blockers)
+    blocker_box = f"<ul>{issues}</ul>" if issues else "<p>本地交接门禁无阻塞项。</p>"
+    ordered_images = image_order or []
+    fallback_items = "".join(
+        f"<li>{index}. <code>{html.escape(path)}</code></li>"
+        for index, path in enumerate(ordered_images, start=1)
+    )
+    fallback_box = (
+        "<ol>" + fallback_items + "</ol>"
+        if fallback_items
+        else "<p>本稿没有正文图片。</p>"
+    )
+    disabled = "" if ready else " disabled"
+    nonce = secrets.token_urlsafe(18)
+    return f"""<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src data:; style-src 'unsafe-inline'; script-src 'nonce-{nonce}'; connect-src 'none'; frame-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{html.escape(title)} - 公众号人工编辑交接</title>
+<style>
+*{{box-sizing:border-box}}body{{margin:0;background:#eef1f5;color:#222;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif}}
+.toolbar{{position:sticky;top:0;z-index:2;padding:12px 16px;background:#20242a;color:#fff;text-align:center}}.toolbar button{{padding:8px 16px;border:0;border-radius:6px;background:#fd4606;color:#fff;font-weight:600;cursor:pointer}}.toolbar button:disabled{{background:#777;cursor:not-allowed}}.toolbar span{{margin-left:10px;font-size:13px}}
+.gate{{width:min(720px,calc(100% - 24px));margin:16px auto;padding:12px 16px;border:1px solid #e1bb68;border-radius:8px;background:#fff8e8;font-size:13px;line-height:1.6}}.gate pre{{white-space:pre-wrap;word-break:break-word;color:#666}}.gate ul,.gate ol{{margin:6px 0;padding-left:20px}}.gate code{{word-break:break-all}}
+.sheet{{width:min(760px,100%);margin:16px auto 40px;padding:28px 16px 54px;background:#fff}}.sheet h1{{margin:0 0 24px;font-size:24px;line-height:1.4}}.wechat-handoff-content img{{display:block;max-width:100%;height:auto}}.wechat-handoff-content pre{{max-width:100%;overflow:auto;white-space:pre-wrap;word-break:break-word}}
+</style></head><body><div class="toolbar"><button id="copy-article" type="button"{disabled}>复制正文</button><span id="copy-status">请使用按钮复制，不要复制本页门禁说明。</span></div>
+<aside class="gate"><strong>{html.escape(status)}</strong>{blocker_box}<p>复制载荷：{copy_payload_bytes} 字节。本机复制成功不代表公众号后台已验收；粘贴后仍须检查图片、修改、保存并重开。</p><details><summary>图片未随正文粘贴时的降级顺序</summary><p>只从本次版本化交接目录上传下列已登记文件，并按正文顺序插入：</p>{fallback_box}</details><details><summary>查看校验输出</summary><pre>{html.escape(report)}</pre></details></aside>
+<main class="sheet"><h1>{html.escape(title)}</h1><article id="wechat-handoff-content" class="wechat-handoff-content">{fragment}</article></main>
+<script nonce="{nonce}">(function(){{var button=document.getElementById('copy-article');var article=document.getElementById('wechat-handoff-content');var status=document.getElementById('copy-status');if(!button||button.disabled)return;button.addEventListener('click',function(){{var onCopy=function(event){{event.clipboardData.setData('text/html',article.innerHTML);event.clipboardData.setData('text/plain',article.innerText);event.preventDefault();}};document.addEventListener('copy',onCopy,{{once:true}});var copied=document.execCommand('copy');status.textContent=copied?'正文已复制；请粘贴到公众号后台并完成编辑检查。':'浏览器未允许自动复制；请只选中正文区域手动复制。';}});}})();</script></body></html>"""
+
+
 def preview_document(
     title: str,
     fragment: str,
@@ -1314,7 +2766,7 @@ def preview_document(
 .gate pre{{white-space:pre-wrap;word-break:break-word;color:#666}}.gate ul{{margin:6px 0;padding-left:20px}}
 .viewport{{display:flex;justify-content:center;gap:8px;margin:12px auto 0;font-size:13px}}.viewport button{{padding:5px 10px;border:1px solid #c8cdd4;border-radius:6px;background:#fff;color:#333;cursor:pointer}}
 .phone{{width:390px;max-width:100%;min-height:100vh;margin:18px auto 40px;padding:28px 0 54px;background:#fff;box-shadow:0 12px 40px rgba(24,31,43,.15)}}
-.title{{margin:0 16px 22px;font-size:24px;line-height:1.4;color:#111}}@media(max-width:520px){{.phone{{margin:0 auto;box-shadow:none}}}}
+.title{{margin:0 16px 22px;font-size:24px;line-height:1.4;color:#111}}.phone img{{display:block;max-width:100%;height:auto}}.phone pre{{max-width:100%;overflow:auto;white-space:pre-wrap;word-break:break-word}}@media(max-width:520px){{.phone{{margin:0 auto;box-shadow:none}}}}
 </style></head><body><div class="bar">本机预览 · Wenyan 渲染 · 不会上传</div>
 <aside class="gate"><strong>{html.escape(status)}</strong>{blocker_box}<details><summary>查看 Wenyan 版本说明</summary><ul>{notes}</ul></details><details><summary>查看校验输出</summary><pre>{html.escape(report)}</pre></details></aside>
 <nav class="viewport" aria-label="预览宽度"><button type="button" data-width="375">375 px</button><button type="button" data-width="390">390 px</button></nav>
@@ -1332,6 +2784,7 @@ def build_preview(package_arg: str | Path) -> PreviewBuild:
     with sealed_package_snapshot(package, initial_package_files) as sealed_package:
         source, metadata, config, _ = prepare_source(sealed_package, build_dir)
         profile = get_layout_profile(config)
+        delivery_mode = get_delivery_mode(config)
         canonical_theme_before = (
             file_sha256(profile.custom_theme) if profile.custom_theme else None
         )
@@ -1340,7 +2793,7 @@ def build_preview(package_arg: str | Path) -> PreviewBuild:
         theme_snapshot_before_render = (
             file_sha256(theme_snapshot) if theme_snapshot else None
         )
-        rendered = run_wenyan_render(source, config, theme_snapshot)
+        raw_rendered = run_wenyan_render(source, config, theme_snapshot)
         if file_sha256(source) != source_before_render:
             raise WorkflowError(
                 "generated Wenyan source changed while rendering; run the command again"
@@ -1351,16 +2804,29 @@ def build_preview(package_arg: str | Path) -> PreviewBuild:
             raise WorkflowError(
                 "staged layout theme changed while rendering; run the command again"
             )
-        ensure_passive_preview_html(rendered)
+        raw_presentation_tags = (
+            MANUAL_PRESENTATION_TAGS
+            if delivery_mode is not None and delivery_mode.strip_inline_styles
+            else None
+        )
+        ensure_passive_preview_html(
+            raw_rendered,
+            allowed_presentation_tags=raw_presentation_tags,
+        )
         validator_ok, report = validator_report(sealed_package)
         blockers = publication_blockers(sealed_package, metadata, config)
         blockers.extend(
             rendered_image_gate_and_stage(
-                sealed_package, build_dir, rendered, config
+                sealed_package, build_dir, raw_rendered, config
             )
         )
         blockers = list(dict.fromkeys(blockers))
-        rendered_for_preview = inline_preview_images(rendered, build_dir)
+        rendered = apply_delivery_mode(raw_rendered, config)
+        ensure_passive_preview_html(rendered)
+        prepared_images = prepare_inline_image_graph(rendered, build_dir)
+        rendered_for_preview = inline_preview_images(
+            rendered, build_dir, prepared_images
+        )
     final_package_files = package_input_hashes(package)
     if final_package_files != initial_package_files:
         raise WorkflowError(
@@ -1377,15 +2843,6 @@ def build_preview(package_arg: str | Path) -> PreviewBuild:
         file_sha256(theme_snapshot) != canonical_theme_before
     ):
         raise WorkflowError("staged layout theme does not match the canonical theme")
-    content_path = dist / "wechat-content.html"
-    preview_path = dist / "wechat-preview.html"
-    atomic_write_text(content_path, rendered)
-    atomic_write_text(
-        preview_path,
-        preview_document(
-            config.title, rendered_for_preview, validator_ok, report, blockers
-        ),
-    )
     snapshot = capture_build_snapshot(
         package,
         source,
@@ -1401,11 +2858,185 @@ def build_preview(package_arg: str | Path) -> PreviewBuild:
         raise WorkflowError(
             "canonical layout theme changed while recording the build; run the command again"
         )
+    content_path = dist / "wechat-content.html"
+    preview_path = dist / "wechat-preview.html"
+    handoff_path: Path | None = None
+    handoff_content_path: Path | None = None
+    handoff_copy_payload_path: Path | None = None
+    handoff_plan_path: Path | None = None
+    handoff_plan_sha256: str | None = None
+    handoff_asset_hashes: dict[str, str] = {}
+    handoff_asset_details: dict[str, dict[str, Any]] = {}
+    handoff_image_order: list[str] = []
+    copy_payload_bytes = 0
+    if delivery_mode is not None and delivery_mode.produces_editor_handoff:
+        handoff_dir = create_handoff_dir(package)
+        handoff_asset_details, handoff_image_order = copy_handoff_images(
+            prepared_images, handoff_dir
+        )
+        handoff_asset_hashes = {
+            path: str(item["sha256"])
+            for path, item in handoff_asset_details.items()
+        }
+        handoff_content_path = handoff_dir / "wechat-content.html"
+        handoff_copy_payload_path = handoff_dir / "wechat-copy-payload.html"
+        handoff_path = handoff_dir / "wechat-handoff.html"
+        atomic_write_text(handoff_content_path, rendered)
+        atomic_write_text(handoff_copy_payload_path, rendered_for_preview)
+        copy_payload_bytes = handoff_copy_payload_path.stat().st_size
+        blockers.extend(
+            handoff_resource_blockers(
+                handoff_asset_details, copy_payload_bytes
+            )
+        )
+        blockers = list(dict.fromkeys(blockers))
+        atomic_write_text(
+            handoff_path,
+            handoff_document(
+                config.title,
+                rendered_for_preview,
+                validator_ok,
+                report,
+                blockers,
+                handoff_image_order,
+                copy_payload_bytes,
+            ),
+        )
+    atomic_write_text(content_path, rendered_for_preview)
+    atomic_write_text(
+        preview_path,
+        preview_document(
+            config.title, rendered_for_preview, validator_ok, report, blockers
+        ),
+    )
     plan = {
         "renderer": "@wenyan-md/cli@2.0.11",
+        "path_base": "dist",
         "source": source.relative_to(dist).as_posix(),
         "preview": preview_path.name,
+        "content": content_path.name,
         "config": asdict(config),
+        "delivery": {
+            "mode": (
+                delivery_mode.mode_id
+                if delivery_mode is not None
+                else "legacy_unspecified"
+            ),
+            "api_draft_allowed": bool(
+                delivery_mode is not None and delivery_mode.api_draft_allowed
+            ),
+            "handoff": (
+                handoff_path.relative_to(dist).as_posix()
+                if handoff_path is not None
+                else None
+            ),
+            "handoff_content": (
+                handoff_content_path.relative_to(dist).as_posix()
+                if handoff_content_path is not None
+                else None
+            ),
+            "handoff_content_sha256": (
+                file_sha256(handoff_content_path)
+                if handoff_content_path is not None
+                else None
+            ),
+            "handoff_content_bytes": (
+                handoff_content_path.stat().st_size
+                if handoff_content_path is not None
+                else None
+            ),
+            "handoff_document_sha256": (
+                file_sha256(handoff_path)
+                if handoff_path is not None
+                else None
+            ),
+            "handoff_document_bytes": (
+                handoff_path.stat().st_size if handoff_path is not None else None
+            ),
+            "copy_payload": (
+                handoff_copy_payload_path.relative_to(dist).as_posix()
+                if handoff_copy_payload_path is not None
+                else None
+            ),
+            "copy_payload_sha256": (
+                file_sha256(handoff_copy_payload_path)
+                if handoff_copy_payload_path is not None
+                else None
+            ),
+            "copy_payload_bytes": (
+                copy_payload_bytes
+                if handoff_copy_payload_path is not None
+                else None
+            ),
+            "copy_payload_hash_scope": (
+                "HTML supplied to the handoff page before browser DOM normalization"
+                if handoff_copy_payload_path is not None
+                else None
+            ),
+            "handoff_asset_path_base": (
+                "handoff" if handoff_path is not None else None
+            ),
+            "handoff_asset_sha256": handoff_asset_hashes,
+            "handoff_assets": handoff_asset_details,
+            "handoff_image_order": handoff_image_order,
+            "handoff_resource_summary": (
+                {
+                    "image_references": len(handoff_image_order),
+                    "unique_images": len(handoff_asset_details),
+                    "unique_asset_bytes": sum(
+                        int(item["bytes"])
+                        for item in handoff_asset_details.values()
+                    ),
+                    "largest_image_bytes": max(
+                        (
+                            int(item["bytes"])
+                            for item in handoff_asset_details.values()
+                        ),
+                        default=0,
+                    ),
+                    "total_frames": sum(
+                        int(item["frame_count"])
+                        for item in handoff_asset_details.values()
+                    ),
+                    "occurrence_frames": sum(
+                        int(item["frame_count"]) * int(item["occurrences"])
+                        for item in handoff_asset_details.values()
+                    ),
+                    "total_decoded_frame_pixels": sum(
+                        int(item["decoded_frame_pixels"])
+                        for item in handoff_asset_details.values()
+                    ),
+                    "occurrence_decoded_frame_pixels": sum(
+                        int(item["decoded_frame_pixels"])
+                        * int(item["occurrences"])
+                        for item in handoff_asset_details.values()
+                    ),
+                    "internal_limits": {
+                        "image_bytes": MAX_HANDOFF_IMAGE_BYTES,
+                        "total_asset_bytes": MAX_HANDOFF_TOTAL_ASSET_BYTES,
+                        "copy_html_bytes": MAX_HANDOFF_COPY_HTML_BYTES,
+                        "content_html_bytes": MAX_HANDOFF_CONTENT_HTML_BYTES,
+                        "handoff_document_bytes": MAX_HANDOFF_DOCUMENT_BYTES,
+                        "handoff_plan_bytes": MAX_HANDOFF_PLAN_BYTES,
+                        "pixels_per_frame": MAX_HANDOFF_IMAGE_PIXELS,
+                        "decoded_frame_pixels": MAX_HANDOFF_DECODED_FRAME_PIXELS,
+                        "frames_per_image": MAX_HANDOFF_IMAGE_FRAMES,
+                        "total_frames": MAX_HANDOFF_TOTAL_FRAMES,
+                        "image_references": MAX_INLINE_IMAGE_REFERENCES,
+                        "occurrence_frames": MAX_HANDOFF_OCCURRENCE_FRAMES,
+                        "total_decoded_frame_pixels": MAX_HANDOFF_TOTAL_DECODED_FRAME_PIXELS,
+                        "occurrence_decoded_frame_pixels": MAX_HANDOFF_OCCURRENCE_DECODED_FRAME_PIXELS,
+                    },
+                }
+                if handoff_path is not None
+                else None
+            ),
+            "wechat_backend_roundtrip": (
+                "pending"
+                if delivery_mode is not None
+                else "not_configured"
+            ),
+        },
         "layout": layout_plan(config, theme_snapshot),
         "snapshot": {
             "package_sha256": snapshot.package_sha256,
@@ -1422,16 +3053,20 @@ def build_preview(package_arg: str | Path) -> PreviewBuild:
         "known_limitations": WENYAN_NOTES,
         "external_effect": "none; local render only",
     }
-    atomic_write_text(
-        dist / "publish-plan.json",
-        json.dumps(plan, ensure_ascii=False, indent=2) + "\n",
-    )
+    serialized_plan = json.dumps(plan, ensure_ascii=False, indent=2) + "\n"
+    atomic_write_text(dist / "publish-plan.json", serialized_plan)
+    if handoff_path is not None:
+        handoff_plan_path = handoff_path.parent / "publish-plan.json"
+        atomic_write_text(handoff_plan_path, serialized_plan)
+        handoff_plan_sha256 = file_sha256(handoff_plan_path)
     print(f"[preview] {preview_path}")
+    if handoff_path is not None:
+        print(f"[editor handoff] {handoff_path}")
     print(f"[renderer] Wenyan CLI 2.0.11; html_chars={len(rendered)}")
     if report:
         print(report)
     if blockers:
-        print("[draft blockers]")
+        print("[delivery blockers]")
         for item in blockers:
             print(f"- {item}")
     for item in WENYAN_NOTES:
@@ -1446,7 +3081,215 @@ def build_preview(package_arg: str | Path) -> PreviewBuild:
         validator_ok=validator_ok,
         validator_report=report,
         snapshot=snapshot,
+        handoff_path=handoff_path,
+        handoff_plan_path=handoff_plan_path,
+        handoff_plan_sha256=handoff_plan_sha256,
     )
+
+
+def verify_handoff_artifact(build: PreviewBuild) -> None:
+    """Recheck every handoff artifact's verify-time integrity before opening it."""
+
+    if build.handoff_path is None or build.handoff_plan_path is None:
+        raise WorkflowError("editor handoff artifact or plan is missing")
+    if not build.handoff_plan_sha256:
+        raise WorkflowError("editor handoff plan has no build-time integrity hash")
+    handoff_path = build.handoff_path
+    handoff_dir = handoff_path.parent
+    dist = handoff_dir.parent.parent
+
+    def regular_file(path: Path, label: str) -> None:
+        if not path.is_file():
+            raise WorkflowError(f"{label} is missing: {path}")
+        if is_link_or_junction(path) or is_multiply_linked_file(path):
+            raise WorkflowError(f"{label} must not be a symlink, junction, or hardlink")
+
+    def verified_bytes(
+        path: Path,
+        expected_hash: Any,
+        label: str,
+        expected_size: Any = None,
+        max_bytes: int | None = None,
+    ) -> bytes:
+        regular_file(path, label)
+        if expected_size is not None and (
+            not isinstance(expected_size, int)
+            or isinstance(expected_size, bool)
+            or expected_size < 0
+        ):
+            raise WorkflowError(f"{label} has an invalid byte count")
+        payload = stable_file_bytes(
+            path,
+            expected_size=expected_size,
+            max_bytes=max_bytes,
+        )
+        if (
+            not isinstance(expected_hash, str)
+            or hashlib.sha256(payload).hexdigest() != expected_hash
+        ):
+            raise WorkflowError(f"{label} hash mismatch")
+        if expected_size is not None and len(payload) != expected_size:
+            raise WorkflowError(f"{label} byte count mismatch")
+        return payload
+
+    plan_payload = verified_bytes(
+        build.handoff_plan_path,
+        build.handoff_plan_sha256,
+        "editor handoff plan",
+        max_bytes=MAX_HANDOFF_PLAN_BYTES,
+    )
+    try:
+        plan = json.loads(plan_payload.decode("utf-8"))
+    except (UnicodeError, json.JSONDecodeError) as exc:
+        raise WorkflowError("editor handoff plan cannot be read as JSON") from exc
+    if not isinstance(plan, dict) or plan.get("path_base") != "dist":
+        raise WorkflowError("editor handoff plan must declare path_base dist")
+    delivery = plan.get("delivery")
+    if not isinstance(delivery, dict) or delivery.get("mode") != "manual_editor":
+        raise WorkflowError("editor handoff plan does not describe manual_editor")
+
+    def resolve_under(root: Path, raw: Any, label: str) -> Path:
+        if not isinstance(raw, str) or not raw:
+            raise WorkflowError(f"editor handoff plan has no {label} path")
+        normalized = canonical_package_relative_path(raw, label)
+        resolved = (root / Path(normalized)).resolve()
+        try:
+            resolved.relative_to(root.resolve())
+        except ValueError as exc:
+            raise WorkflowError(f"editor handoff {label} path escapes its base") from exc
+        return resolved
+
+    planned_handoff = resolve_under(dist, delivery.get("handoff"), "handoff")
+    if planned_handoff != handoff_path.resolve():
+        raise WorkflowError("editor handoff path does not match its build result")
+    handoff_document_payload = verified_bytes(
+        planned_handoff,
+        delivery.get("handoff_document_sha256"),
+        "editor handoff document",
+        delivery.get("handoff_document_bytes"),
+        MAX_HANDOFF_DOCUMENT_BYTES,
+    )
+
+    content_path = resolve_under(
+        dist, delivery.get("handoff_content"), "handoff content"
+    )
+    content_payload = verified_bytes(
+        content_path,
+        delivery.get("handoff_content_sha256"),
+        "editor handoff content",
+        delivery.get("handoff_content_bytes"),
+        MAX_HANDOFF_CONTENT_HTML_BYTES,
+    )
+    copy_payload_path = resolve_under(
+        dist, delivery.get("copy_payload"), "copy payload"
+    )
+    copy_payload = verified_bytes(
+        copy_payload_path,
+        delivery.get("copy_payload_sha256"),
+        "editor handoff copy payload",
+        delivery.get("copy_payload_bytes"),
+        MAX_HANDOFF_COPY_HTML_BYTES,
+    )
+
+    assets = delivery.get("handoff_assets")
+    legacy_hashes = delivery.get("handoff_asset_sha256")
+    if not isinstance(assets, dict) or not isinstance(legacy_hashes, dict):
+        raise WorkflowError("editor handoff plan has invalid asset metadata")
+    if delivery.get("handoff_asset_path_base") != "handoff":
+        raise WorkflowError("editor handoff plan has an invalid asset path base")
+    expected_hashes: dict[str, str] = {}
+    for raw_path, item in assets.items():
+        if not isinstance(raw_path, str) or not isinstance(item, dict):
+            raise WorkflowError("editor handoff plan has malformed asset metadata")
+        normalized = canonical_package_relative_path(
+            raw_path, "handoff asset", require_assets=True
+        )
+        asset_path = (handoff_dir / Path(normalized)).resolve()
+        try:
+            asset_path.relative_to(handoff_dir.resolve())
+        except ValueError as exc:
+            raise WorkflowError("editor handoff asset path escapes its base") from exc
+        expected_hash = item.get("sha256")
+        verified_bytes(
+            asset_path,
+            expected_hash,
+            f"editor handoff asset {normalized}",
+            item.get("bytes"),
+            MAX_HANDOFF_IMAGE_BYTES,
+        )
+        expected_hashes[normalized] = str(expected_hash)
+    if legacy_hashes != expected_hashes:
+        raise WorkflowError("editor handoff asset hash indexes disagree")
+
+    actual_asset_files = {
+        path.relative_to(handoff_dir).as_posix()
+        for path in (handoff_dir / "assets").rglob("*")
+        if path.is_file()
+    } if (handoff_dir / "assets").is_dir() else set()
+    if actual_asset_files != set(expected_hashes):
+        raise WorkflowError("editor handoff asset directory does not match its plan")
+
+    image_order = delivery.get("handoff_image_order")
+    if not isinstance(image_order, list) or not all(
+        isinstance(item, str) for item in image_order
+    ):
+        raise WorkflowError("editor handoff plan has an invalid image order")
+    try:
+        content_fragment = content_payload.decode("utf-8")
+        copy_fragment = copy_payload.decode("utf-8")
+        handoff_document_text = handoff_document_payload.decode("utf-8")
+    except UnicodeError as exc:
+        raise WorkflowError("editor handoff HTML is not valid UTF-8") from exc
+    normalized_content_order = [
+        canonical_package_relative_path(
+            decode_image_target(target),
+            "handoff content image",
+            require_assets=True,
+        )
+        for target in raw_html_image_sources(content_fragment)
+    ]
+    if normalized_content_order != image_order:
+        raise WorkflowError("editor handoff content image order does not match its plan")
+    occurrence_counts = {
+        path: normalized_content_order.count(path) for path in set(normalized_content_order)
+    }
+    for path, item in assets.items():
+        if item.get("occurrences") != occurrence_counts.get(path, 0):
+            raise WorkflowError(
+                f"editor handoff asset occurrence count mismatch: {path}"
+            )
+
+    copy_sources = raw_html_image_sources(copy_fragment)
+    if len(copy_sources) != len(image_order):
+        raise WorkflowError("editor handoff copy payload image count mismatch")
+    for index, (target, planned_path) in enumerate(
+        zip(copy_sources, image_order, strict=True), start=1
+    ):
+        match = re.fullmatch(
+            r"data:[^;,]+;base64,(?P<payload>[A-Za-z0-9+/=]+)", target
+        )
+        if match is None:
+            raise WorkflowError(
+                f"editor handoff copy payload image {index} is not embedded data"
+            )
+        try:
+            payload = base64.b64decode(match.group("payload"), validate=True)
+        except (binascii.Error, ValueError) as exc:
+            raise WorkflowError(
+                f"editor handoff copy payload image {index} has invalid base64"
+            ) from exc
+        if hashlib.sha256(payload).hexdigest() != expected_hashes.get(planned_path):
+            raise WorkflowError(
+                f"editor handoff copy payload image {index} hash mismatch"
+            )
+
+    expected_article = (
+        '<article id="wechat-handoff-content" class="wechat-handoff-content">'
+        + copy_fragment
+        + "</article>"
+    )
+    if expected_article not in handoff_document_text:
+        raise WorkflowError("editor handoff document does not embed its copy payload")
 
 
 def command_preview(args: argparse.Namespace) -> int:
@@ -1458,9 +3301,40 @@ def command_preview(args: argparse.Namespace) -> int:
     return 0
 
 
+def command_handoff(args: argparse.Namespace) -> int:
+    build = build_preview(args.package)
+    mode = get_delivery_mode(build.config, require_explicit=True)
+    if mode is None or not mode.produces_editor_handoff:
+        raise WorkflowError(
+            "handoff command requires delivery_mode manual_editor"
+        )
+    if not build.validator_ok:
+        raise WorkflowError(
+            f"content-package validator blocks editor handoff:\n{build.validator_report}"
+        )
+    if build.blockers:
+        raise WorkflowError(
+            "editor handoff is blocked:\n- " + "\n- ".join(build.blockers)
+        )
+    if build.handoff_path is None or not build.handoff_path.is_file():
+        raise WorkflowError("editor handoff artifact was not created")
+    verify_handoff_artifact(build)
+    print(f"[handoff ready] {build.handoff_path}")
+    if args.open:
+        if os.name != "nt":
+            raise WorkflowError("--open is currently implemented for Windows only")
+        os.startfile(build.handoff_path)  # type: ignore[attr-defined]
+    return 0
+
+
 def command_draft(args: argparse.Namespace) -> int:
     package = Path(args.package).resolve()
     build = build_preview(package)
+    mode = get_delivery_mode(build.config, require_explicit=True)
+    if mode is None or not mode.api_draft_allowed:
+        raise WorkflowError(
+            "delivery_mode manual_editor cannot create a WeChat API draft; use the handoff command"
+        )
     if not build.validator_ok:
         raise WorkflowError(
             f"content-package validator blocks draft creation:\n{build.validator_report}"
@@ -1480,53 +3354,90 @@ def command_draft(args: argparse.Namespace) -> int:
         raise WorkflowError(
             "credential file is missing. Copy 微信公众号/.env.example to 微信公众号/.env and fill it locally; never paste the secret into chat."
         )
+    account_fingerprint, credential_file_sha256 = wechat_credential_metadata(env_path)
     command = wenyan_args(
         "publish", build.source, build.config, build.theme_snapshot
     ) + ["--env-file", str(env_path)]
-    with exclusive_publish_lock(package):
-        verify_build_snapshot(package, build)
-        print("[execute] invoking pinned Wenyan CLI to upload assets and create one WeChat draft")
-        result = subprocess.run(
-            command,
-            cwd=WECHAT_ROOT,
-            env=wenyan_environment(),
-            check=False,
-        )
-        if result.returncode != 0:
-            raise WorkflowError(f"Wenyan publish failed with exit code {result.returncode}")
-        try:
+    external_attempt_started = False
+    try:
+        with exclusive_publish_lock(package):
             verify_build_snapshot(package, build)
-        except WorkflowError as exc:
+            current_fingerprint, current_credential_hash = wechat_credential_metadata(
+                env_path
+            )
+            if (
+                current_fingerprint != account_fingerprint
+                or current_credential_hash != credential_file_sha256
+            ):
+                raise WorkflowError(
+                    "credential file changed after preflight; run the command again"
+                )
+            print(
+                "[account] explicit credential file selected; "
+                f"app_id_sha256={account_fingerprint}"
+            )
+            print(
+                "[execute] invoking pinned Wenyan CLI to upload assets and create one WeChat draft"
+            )
+            external_attempt_started = True
+            result = subprocess.run(
+                command,
+                cwd=WECHAT_ROOT,
+                env=wenyan_environment(),
+                check=False,
+            )
+            if result.returncode != 0:
+                raise WorkflowError(
+                    f"Wenyan publish failed with exit code {result.returncode}"
+                )
+            verify_build_snapshot(package, build)
+            _, final_credential_hash = wechat_credential_metadata(env_path)
+            if final_credential_hash != credential_file_sha256:
+                raise WorkflowError("credential file changed during upload")
+            record = {
+                "renderer": "@wenyan-md/cli@2.0.11",
+                "title": build.config.title,
+                "wechat_account_fingerprint": account_fingerprint,
+                "package_sha256": build.snapshot.package_sha256,
+                "source_sha256": build.snapshot.source_sha256,
+                "theme_sha256": build.snapshot.theme_snapshot_sha256,
+                "external_effect": "created one WeChat draft; did not publish or mass-send",
+            }
+            dist = safe_dist(package)
+            atomic_write_text(
+                dist / "wechat-draft-result.json",
+                json.dumps(record, ensure_ascii=False, indent=2) + "\n",
+            )
+    except (Exception, KeyboardInterrupt) as exc:
+        if external_attempt_started:
             raise WorkflowError(
-                "one draft may have been created, but sealed build integrity changed during upload; "
-                "inspect and delete the draft before retrying"
+                "the WeChat draft attempt did not complete locally; permanent body/cover "
+                "materials may already have been uploaded and one draft may have been created. "
+                "Inspect the target account backend and material library before retrying. "
+                f"Local cause: {exc}"
             ) from exc
-    record = {
-        "renderer": "@wenyan-md/cli@2.0.11",
-        "title": build.config.title,
-        "package_sha256": build.snapshot.package_sha256,
-        "source_sha256": build.snapshot.source_sha256,
-        "theme_sha256": build.snapshot.theme_snapshot_sha256,
-        "external_effect": "created one WeChat draft; did not publish or mass-send",
-    }
-    dist = safe_dist(package)
-    atomic_write_text(
-        dist / "wechat-draft-result.json",
-        json.dumps(record, ensure_ascii=False, indent=2) + "\n",
-    )
+        raise
     print("[done] one WeChat draft was created; nothing was published or mass-sent")
     return 0
 
 
 def make_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        description="Preview a content package with Wenyan and optionally create one WeChat draft."
+        description="Preview, hand off, or create one sealed WeChat draft from a content package."
     )
     subparsers = parser.add_subparsers(dest="command", required=True)
     preview = subparsers.add_parser("preview", help="render a local phone-width preview")
     preview.add_argument("package", help="path to a WeChat content package")
     preview.add_argument("--open", action="store_true", help="open preview in the default browser")
     preview.set_defaults(func=command_preview)
+    handoff = subparsers.add_parser(
+        "handoff", help="build an editable, no-network WeChat editor handoff"
+    )
+    handoff.add_argument("package", help="path to a WeChat content package")
+    handoff.add_argument(
+        "--open", action="store_true", help="open the editor handoff in the default browser"
+    )
+    handoff.set_defaults(func=command_handoff)
     draft = subparsers.add_parser("draft", help="dry-run by default; --execute creates one draft")
     draft.add_argument("package", help="path to a WeChat content package")
     draft.add_argument("--execute", action="store_true", help="create one WeChat draft through Wenyan")

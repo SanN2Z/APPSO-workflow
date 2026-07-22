@@ -7,8 +7,9 @@ digest: ""
 cover: "assets/cover.png"
 source_url: ""
 project_adapter: "generic"
+delivery_mode: "manual_editor"
 theme: "default"
-# APPSO 普通长文改为 appsso-article-v1；Hunt Good 与个人公众号不得套用。
+# 人工编辑保持 default；密封草稿必须显式改为 sealed_draft 并选择经过验证的主题。
 layout_profile: "default"
 highlight: "solarized-light"
 mac_style: false

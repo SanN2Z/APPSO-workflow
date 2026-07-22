@@ -5,7 +5,7 @@
 ## 当前阶段
 
 - 状态：事实、文字、独立冷审与文章视觉已通过；等待用户人工审稿，停留在 `editorial_review`
-- 视觉：封面、时间线和 3 张 Anthropic 官方报道素材已入稿；APPSO 固定正文头图仍缺可直接发布的内部原件
+- 视觉：封面、时间线和 3 张 Anthropic 官方报道素材已入稿；本稿按公众号后台继续手调的交付方式使用中性排版，不注入固定 APPSO CSS
 
 ## 固定质量门
 
@@ -29,7 +29,8 @@
 - [x] 当前正文 4 张图片引用均可解析
 - [x] `asset-manifest.yml` 与正文图片引用一致
 - [x] 封面与当前文章视觉权利已检查
-- [ ] APPSO 固定正文头图已取得内部原件并完成登记
+- [x] 人工编辑交接使用 `project_adapter: "appsso"`、`delivery_mode: "manual_editor"`、`layout_profile: "default"`；版本化交接包的结构、图片路径、哈希、375 px / 390 px 检查入口、页面级图片防溢出规则与 API 阻断已通过本地检查，Chromium smoke 已确认 4 张正文图加载且复制按钮可触发
+- [ ] 在真实公众号后台完成复制、字号／段距／缩进／对齐／图片调整、保存和重开检查
 - [x] 验证脚本 0 error；warning 已说明
 - [x] `fact_checked`、`rights_checked` 与状态字段真实
 
@@ -61,4 +62,5 @@
 | COPY-001—006 | major | 文字编辑 / 主笔 | 初稿型号密度、loss 与 METR 定义、模板转场、并列结构和结尾长句 | 按能力范式压缩并完成逐项修复；正文哈希锁定 | resolved |
 | VISUAL-001 | minor | 视觉与版权编辑 | 本轮仅有文字，尚未确定封面和正文信息图 | 发布前完成视觉方案、素材权利与 manifest 登记 | resolved |
 | VISUAL-002 | blocker | 视觉与版权编辑 | `publish.yml` 未绑定封面，manifest 无发布素材 | 生成或取得已授权封面并完成登记 | resolved |
-| LAYOUT-001 | blocker | APPSO 资产管理员 / 主编 | `appsso-article-v1` 要求固定正文头图，但仓库明确没有可直接发布的内部原件 | 取得权利明确的内部原件，存入包内并登记 `wechat_body_header` | open |
+| LAYOUT-001 | blocker | APPSO 资产管理员 / 主编 | `appsso-article-v1` 要求固定正文头图，但仓库明确没有可直接发布的内部原件 | 手动后台交付不启用固定 profile；仅在密封草稿模式另行取得并登记头图 | resolved |
+| LAYOUT-002 | major | 排版编辑 | 固定字号、行高、缩进和图片样式进入公众号后台后难以继续手调 | 使用 `manual_editor + default` 生成版本化交接包；本地门禁通过后，再做真实后台复制、编辑、保存与重开验证 | local_pass / backend_pending |

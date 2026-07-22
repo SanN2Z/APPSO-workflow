@@ -1,6 +1,6 @@
 # APPSO 内容生产 SOP
 
-版本：1.5
+版本：1.6
 
 更新日期：2026 年 7 月 22 日
 
@@ -209,12 +209,14 @@
 
 ## 7. 排版与交付
 
-- APPSO 普通公众号长文从[发布配置模板](<../04-模板/APPSO 公众号发布配置.yml>)创建 `publish.yml`，并显式选择 `appsso-article-v1`；样式真源、历史样本和头尾组件边界见 [`微信公众号/themes/README.md`](<../../微信公众号/themes/README.md>)。
-- `publish.yml` 的 `project_adapter: "appsso"` 是内容归属声明，不等于排版 profile；Hunt Good 或其他 APPSO 稿型即使更换 `layout_profile` 也保留该字段。
+- 发布配置必须把三个概念分开：`project_adapter: "appsso"` 只声明品牌归属，`delivery_mode` 只决定交付方式，`layout_profile` 只选择视觉主题。Hunt Good 或其他 APPSO 稿型即使更换后两者也保留真实 adapter。
+- 默认采用「人工编辑交接模式」：`delivery_mode: "manual_editor"`、`layout_profile: "default"`。运行 `handoff` 后，从版本化 `dist/handoffs/handoff-*/wechat-handoff.html` 的「复制正文」按钮交接；正文结构和本地图必须完整，表现层标记必须按文章语义 allowlist 清理，隐藏或交互结构必须阻断，API 草稿命令必须被阻断。
+- 只有用户明确要求「按既定样式生成密封草稿、后台原则上不再手调」时，才使用 `delivery_mode: "sealed_draft"`、`layout_profile: "appsso-article-v1"`。首次启用或主题变化后，可在当前任务明确授权下创建一条资格验证草稿；后台 round-trip 通过前，任何此类草稿都只用于资格验证，不能作为生产交付。验证通过后，精确公众号账号与主题版本组合才取得生产资格。截至 2026 年 7 月 22 日，该 profile 仍待真实后台验证。
+- 两种模式的通用执行与安全合同以 [`wechat-publishing.md`](<../../.agents/skills/self-media-ops/references/wechat-publishing.md>) 为真源；固定 profile 的能力、样式参数和头尾组件边界见 [`微信公众号/themes/README.md`](<../../微信公众号/themes/README.md>)。
 - 头图与尾图由 `publish.yml` 的受控插槽注入，不写入正文真源；图片必须位于内容包、登记发布用途并通过权利门禁。
 - 招聘、活动等时效尾图必须按 Asia/Shanghai 填写内部复核截止日；该日期不是招聘或活动的真实截止日，从本次确认日起最长不得超过 365 天，复核逾期即阻断。Hunt Good 和个人公众号不得继承普通长文 profile。
-- 本机预览同时检查 375 px 与 390 px；以 Wenyan 实际 HTML 复核图片、资源属性和头尾组件次数。结构有效的包内图片可暂存到本次独立构建供预览；只要存在未登记、权利未明确或其他 blocker，整个密封构建就不得进入 `--execute`。
-- `publish-plan.json` 中的 profile、CSS、package 与 staged build 哈希必须与草稿创建时一致。
+- 本机预览同时检查 375 px 与 390 px；以 Wenyan 实际 HTML 复核图片、资源属性和头尾组件次数。人工模式的版本化交接目录必须包含可解析且哈希一致的本地图；只要存在未登记、权利未明确或其他 blocker，交接命令和密封草稿命令都不得通过。
+- 密封草稿模式下，`publish-plan.json` 中的 profile、CSS、package 与 staged build 哈希必须与草稿创建时一致；人工模式封存交接页、结构正文、复制输入与图片哈希，不把 APPSO 自定义 CSS 带入复制正文。
 - 公众号标题层级、图片宽度、图注与来源在手机宽度检查。
 - 原始图片不要只保留在临时微信或飞书 URL。
 - `draft.md` 是正文真源；预览文件是可重建产物，不反向编辑。

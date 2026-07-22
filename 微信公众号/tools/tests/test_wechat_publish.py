@@ -3,11 +3,13 @@ from __future__ import annotations
 import io
 import importlib.util
 import hashlib
+import json
 import os
 import re
 import sys
 import tempfile
 import unittest
+from concurrent.futures import ThreadPoolExecutor
 from contextlib import redirect_stderr, redirect_stdout
 from datetime import datetime, timedelta
 from pathlib import Path
@@ -77,6 +79,8 @@ Section body.
         (package / "publish.yml").write_text(
             """title: "API title"
 cover: "assets/cover.png"
+project_adapter: "generic"
+delivery_mode: "sealed_draft"
 theme: "default"
 """,
             encoding="utf-8",
@@ -92,6 +96,32 @@ theme: "default"
         )
         return package
 
+    def register_body_image(self, package: Path) -> None:
+        manifest_path = package / "asset-manifest.yml"
+        manifest = manifest_path.read_text(encoding="utf-8")
+        if 'file: "assets/body.png"' in manifest:
+            return
+        manifest_path.write_text(
+            manifest
+            + """  - file: "assets/body.png"
+    used_in_draft: true
+    rights_status: "project_owned"
+    allowed_platforms: ["wechat"]
+""",
+            encoding="utf-8",
+        )
+
+    def enable_manual_editor(self, package: Path) -> None:
+        publish_path = package / "publish.yml"
+        publish_path.write_text(
+            publish_path.read_text(encoding="utf-8").replace(
+                'delivery_mode: "sealed_draft"',
+                'delivery_mode: "manual_editor"',
+            ),
+            encoding="utf-8",
+        )
+        self.register_body_image(package)
+
     def enable_appsso_layout(
         self,
         package: Path,
@@ -101,6 +131,9 @@ theme: "default"
     ) -> None:
         self.write_test_image(package / "assets" / "appsso-header.gif")
         publish = (package / "publish.yml").read_text(encoding="utf-8")
+        publish = publish.replace(
+            'project_adapter: "generic"', 'project_adapter: "appsso"'
+        )
         publish += (
             'layout_profile: "appsso-article-v1"\n'
             'header_image: "assets/appsso-header.gif"\n'
@@ -350,6 +383,30 @@ theme: "default"
             self.assertIn('src="assets/appsso-header.gif"', generated)
             self.assertIn('src="assets/appsso-footer.jpg"', generated)
 
+    def test_appsso_body_components_are_independent_from_manual_delivery_mode(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            package = self.make_package(Path(temp))
+            self.enable_appsso_layout(package)
+            publish_path = package / "publish.yml"
+            publish_path.write_text(
+                publish_path.read_text(encoding="utf-8")
+                .replace(
+                    'delivery_mode: "sealed_draft"',
+                    'delivery_mode: "manual_editor"',
+                )
+                .replace(
+                    'layout_profile: "appsso-article-v1"',
+                    'layout_profile: "default"',
+                ),
+                encoding="utf-8",
+            )
+            source, metadata, config, body = MODULE.prepare_source(package)
+            self.assertTrue(source.is_file())
+            self.assertIn("appsso-body-header", body)
+            self.assertEqual(
+                MODULE.publication_blockers(package, metadata, config), []
+            )
+
     def test_appsso_profile_uses_allowlisted_custom_theme_for_render_and_publish(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)
@@ -450,6 +507,116 @@ theme: "default"
         with self.assertRaisesRegex(MODULE.WorkflowError, "unknown layout_profile"):
             MODULE.get_layout_profile(config)
 
+    def test_delivery_mode_project_adapter_and_layout_profile_are_independent_gates(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            missing_adapter = self.make_package(root, "missing-adapter")
+            publish_path = missing_adapter / "publish.yml"
+            publish_path.write_text(
+                publish_path.read_text(encoding="utf-8").replace(
+                    'project_adapter: "generic"\n', ""
+                )
+                + 'layout_profile: "appsso-article-v1"\n',
+                encoding="utf-8",
+            )
+            metadata, _ = MODULE.load_draft(missing_adapter)
+            config = MODULE.load_publish_config(missing_adapter, metadata)
+            blockers = MODULE.publication_blockers(missing_adapter, metadata, config)
+            self.assertIn(
+                "publish.yml must explicitly set project_adapter to a registered adapter",
+                blockers,
+            )
+            self.assertIn(
+                "layout_profile appsso-article-v1 requires project_adapter appsso",
+                blockers,
+            )
+
+            appsso_default = self.make_package(root, "appsso-default")
+            appsso_publish = appsso_default / "publish.yml"
+            appsso_publish.write_text(
+                appsso_publish.read_text(encoding="utf-8").replace(
+                    'project_adapter: "generic"',
+                    'project_adapter: "appsso"',
+                ),
+                encoding="utf-8",
+            )
+            metadata, _ = MODULE.load_draft(appsso_default)
+            config = MODULE.load_publish_config(appsso_default, metadata)
+            blockers = MODULE.publication_blockers(appsso_default, metadata, config)
+            self.assertIn(
+                "project_adapter appsso with delivery_mode sealed_draft requires layout_profile appsso-article-v1",
+                blockers,
+            )
+
+            manual_fixed = self.make_package(root, "manual-fixed")
+            self.enable_appsso_layout(manual_fixed)
+            manual_publish = manual_fixed / "publish.yml"
+            manual_publish.write_text(
+                manual_publish.read_text(encoding="utf-8")
+                .replace(
+                    'delivery_mode: "sealed_draft"',
+                    'delivery_mode: "manual_editor"',
+                )
+                .replace('theme: "default"', 'theme: "nondefault"'),
+                encoding="utf-8",
+            )
+            metadata, _ = MODULE.load_draft(manual_fixed)
+            config = MODULE.load_publish_config(manual_fixed, metadata)
+            blockers = MODULE.publication_blockers(manual_fixed, metadata, config)
+            self.assertIn(
+                "delivery_mode manual_editor requires layout_profile default; visual formatting belongs in the WeChat editor",
+                blockers,
+            )
+            self.assertIn(
+                "delivery_mode manual_editor requires theme default; visual formatting belongs in the WeChat editor",
+                blockers,
+            )
+            self.assertIn(
+                "layout_profile appsso-article-v1 requires delivery_mode sealed_draft",
+                blockers,
+            )
+
+            manual_mac = self.make_package(root, "manual-mac")
+            self.enable_manual_editor(manual_mac)
+            manual_mac_publish = manual_mac / "publish.yml"
+            manual_mac_publish.write_text(
+                manual_mac_publish.read_text(encoding="utf-8")
+                + "mac_style: true\n",
+                encoding="utf-8",
+            )
+            metadata, _ = MODULE.load_draft(manual_mac)
+            config = MODULE.load_publish_config(manual_mac, metadata)
+            blockers = MODULE.publication_blockers(manual_mac, metadata, config)
+            self.assertIn(
+                "delivery_mode manual_editor requires mac_style false; visual formatting belongs in the WeChat editor",
+                blockers,
+            )
+
+            sealed_knobs = self.make_package(root, "sealed-knobs")
+            self.enable_appsso_layout(sealed_knobs)
+            sealed_publish = sealed_knobs / "publish.yml"
+            sealed_publish.write_text(
+                sealed_publish.read_text(encoding="utf-8")
+                .replace('theme: "default"', 'theme: "orange"')
+                + 'highlight: "github"\nmac_style: true\n',
+                encoding="utf-8",
+            )
+            metadata, _ = MODULE.load_draft(sealed_knobs)
+            config = MODULE.load_publish_config(sealed_knobs, metadata)
+            blockers = MODULE.publication_blockers(
+                sealed_knobs, metadata, config
+            )
+            self.assertIn(
+                "layout_profile appsso-article-v1 requires theme default", blockers
+            )
+            self.assertIn(
+                "layout_profile appsso-article-v1 requires highlight solarized-light",
+                blockers,
+            )
+            self.assertIn(
+                "layout_profile appsso-article-v1 requires mac_style false", blockers
+            )
+
     def test_default_profile_does_not_silently_accept_appsso_components(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
             package = self.make_package(Path(temp))
@@ -457,7 +624,7 @@ theme: "default"
             publish = (package / "publish.yml").read_text(encoding="utf-8")
             publish += 'header_image: "assets/standalone-header.png"\n'
             (package / "publish.yml").write_text(publish, encoding="utf-8")
-            with self.assertRaisesRegex(MODULE.WorkflowError, "does not support"):
+            with self.assertRaisesRegex(MODULE.WorkflowError, "supports body components"):
                 MODULE.prepare_source(package)
 
     def test_default_profile_does_not_load_appsso_custom_theme(self) -> None:
@@ -469,6 +636,317 @@ theme: "default"
             with mock.patch.object(MODULE, "WENYAN_CMD", fake_wenyan):
                 args = MODULE.wenyan_args("render", root / "draft.md", config)
             self.assertNotIn("--custom-theme", args)
+
+    def test_manual_editor_mode_strips_style_attributes_but_keeps_structure_and_prose(self) -> None:
+        config = MODULE.PublishConfig(
+            title="Test",
+            delivery_mode="manual_editor",
+            layout_profile="default",
+        )
+        rendered = (
+            '<section id="wenyan" style="font-size: 16px; line-height: 1.75">'
+            '<h2 style="margin: 1em 0">标题</h2>'
+            '<p STYLE=color:red>Use style="color:red" in prose.</p>'
+            '<img src="assets/body.png" alt="图片" style="max-width: 100%">'
+            '</section>'
+        )
+
+        handoff = MODULE.apply_delivery_mode(rendered, config)
+
+        parser = MODULE.ManualHandoffHtmlParser()
+        parser.feed(handoff)
+        parser.close()
+        self.assertEqual(parser.removed_style_attributes, 0)
+        self.assertIn('<h2>标题</h2>', handoff)
+        self.assertIn('Use style="color:red" in prose.', handoff)
+        self.assertIn('src="assets/body.png"', handoff)
+
+    def test_manual_editor_sanitizes_legacy_presentation_markup_only(self) -> None:
+        config = MODULE.PublishConfig(
+            title="Test",
+            delivery_mode="manual_editor",
+            layout_profile="default",
+        )
+        rendered = (
+            '<section id="article" class="wenyan" data-tool="x" '
+            'align="center" lang="zh-CN">'
+            '<center><font color="#f00" size="4">'
+            '<h2 STYLE="font-size:20px">标题 &amp; 判断</h2>'
+            '<p bgcolor="#fff"><span style="color:red"><strong>正文</strong></span> '
+            '<a href="https://example.com" title="来源">链接</a></p>'
+            '<img src="assets/body.png" alt="图片" title="图注" '
+            'width="640" height="480">'
+            '</font></center></section>'
+        )
+
+        handoff = MODULE.apply_delivery_mode(rendered, config)
+
+        self.assertIn('<section lang="zh-CN">', handoff)
+        self.assertIn('<h2>标题 &amp; 判断</h2>', handoff)
+        self.assertIn('<strong>正文</strong>', handoff)
+        self.assertIn(
+            '<a href="https://example.com" title="来源">链接</a>', handoff
+        )
+        self.assertIn(
+            '<img src="assets/body.png" alt="图片" title="图注">', handoff
+        )
+        for forbidden in (
+            "<font",
+            "<center",
+            "<span",
+            " style=",
+            " class=",
+            " data-tool=",
+            " align=",
+            " bgcolor=",
+            " width=",
+            " height=",
+        ):
+            self.assertNotIn(forbidden, handoff.casefold())
+        self.assertEqual(
+            MODULE.raw_html_image_sources(rendered),
+            MODULE.raw_html_image_sources(handoff),
+        )
+        verifier = MODULE.ManualHandoffHtmlParser()
+        verifier.feed(handoff)
+        verifier.close()
+        self.assertEqual([], verifier.removed_attributes)
+        self.assertEqual([], verifier.removed_tags)
+        self.assertEqual([], verifier.blocked_attributes)
+        self.assertEqual([], verifier.blocked_tags)
+
+    def test_manual_editor_rejects_hidden_or_interactive_markup(self) -> None:
+        config = MODULE.PublishConfig(
+            title="Test",
+            delivery_mode="manual_editor",
+            layout_profile="default",
+        )
+        for fragment in (
+            "<p hidden>不可见正文</p>",
+            '<p contenteditable="false">不可编辑正文</p>',
+            "<template><p>模板正文</p></template>",
+            "<dialog open>遮罩正文</dialog>",
+            "<details open><p>折叠正文</p></details>",
+            "<input value=\"伪正文\">",
+            "<button>按钮</button>",
+        ):
+            with self.subTest(fragment=fragment), self.assertRaisesRegex(
+                MODULE.WorkflowError,
+                "unsupported interactive or hidden markup",
+            ):
+                MODULE.apply_delivery_mode(fragment, config)
+
+        cleaned = MODULE.apply_delivery_mode(
+            '<p>正文 <span id="decorative">仍可见</span></p>', config
+        )
+        self.assertEqual("<p>正文 仍可见</p>", cleaned)
+
+    def test_manual_editor_rejects_unbalanced_or_misnested_markup(self) -> None:
+        config = MODULE.PublishConfig(
+            title="Test",
+            delivery_mode="manual_editor",
+            layout_profile="default",
+        )
+        for fragment in (
+            "</article><p>正文逃出复制区</p>",
+            "<p><strong>错位</p></strong>",
+            "<p>未闭合",
+            "<p />",
+            "<img src=\"assets/body.png\"></img>",
+        ):
+            with self.subTest(fragment=fragment), self.assertRaisesRegex(
+                MODULE.WorkflowError, "invalid HTML structure"
+            ):
+                MODULE.apply_delivery_mode(fragment, config)
+
+    def test_author_html_cannot_override_controlled_layout(self) -> None:
+        MODULE.ensure_author_html_safe(
+            "`<p style=\"position:fixed\">example</p>`\n\n"
+            "```html\n<p class=\"demo\">example</p>\n```\n"
+        )
+        for markdown in (
+            '<p style="color:red">正文</p>',
+            '<p class="appsso-body-header">正文</p>',
+            '<p hidden>正文</p>',
+            '<template><p>正文</p></template>',
+            '<p align="right">正文</p>',
+            '<img src="assets/body.png" alt="图" width="1" height="1">',
+            '<table border="99" bgcolor="red"><tr><td>正文</td></tr></table>',
+            '<p dir="rtl">正文</p>',
+            '<p id="footnotes">正文</p>',
+        ):
+            with self.subTest(markdown=markdown), self.assertRaisesRegex(
+                MODULE.WorkflowError, "author-controlled HTML"
+            ):
+                MODULE.ensure_author_html_safe(markdown)
+
+    def test_manual_editor_mode_is_handoff_ready_but_cannot_create_api_draft(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            package = self.make_package(Path(temp))
+            publish_path = package / "publish.yml"
+            publish_path.write_text(
+                publish_path.read_text(encoding="utf-8").replace(
+                    'delivery_mode: "sealed_draft"',
+                    'delivery_mode: "manual_editor"',
+                ),
+                encoding="utf-8",
+            )
+            metadata, _ = MODULE.load_draft(package)
+            config = MODULE.load_publish_config(package, metadata)
+            blockers = MODULE.publication_blockers(package, metadata, config)
+            self.assertEqual(blockers, [])
+
+            fake_build = SimpleNamespace(
+                config=config,
+                validator_ok=True,
+                validator_report="",
+                blockers=[],
+            )
+            args = SimpleNamespace(package=str(package), execute=True, env=None)
+            with (
+                mock.patch.object(MODULE, "build_preview", return_value=fake_build),
+                mock.patch.object(MODULE.subprocess, "run") as subprocess_run,
+                self.assertRaisesRegex(MODULE.WorkflowError, "cannot create a WeChat API draft"),
+            ):
+                MODULE.command_draft(args)
+            subprocess_run.assert_not_called()
+
+    def test_missing_and_unknown_delivery_mode_fail_before_external_draft(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            package = self.make_package(Path(temp))
+            publish_path = package / "publish.yml"
+            publish_path.write_text(
+                publish_path.read_text(encoding="utf-8").replace(
+                    'delivery_mode: "sealed_draft"\n', ""
+                ),
+                encoding="utf-8",
+            )
+            metadata, _ = MODULE.load_draft(package)
+            config = MODULE.load_publish_config(package, metadata)
+            self.assertTrue(
+                any(
+                    "must explicitly set delivery_mode" in item
+                    for item in MODULE.publication_blockers(package, metadata, config)
+                )
+            )
+            with self.assertRaisesRegex(MODULE.WorkflowError, "must explicitly set delivery_mode"):
+                MODULE.get_delivery_mode(config, require_explicit=True)
+
+        unknown = MODULE.PublishConfig(title="Test", delivery_mode="unknown")
+        with self.assertRaisesRegex(MODULE.WorkflowError, "unknown delivery_mode"):
+            MODULE.get_delivery_mode(unknown)
+
+    def test_duplicate_yaml_keys_block_draft_before_any_external_command(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            package = self.make_package(Path(temp))
+            publish_path = package / "publish.yml"
+            publish_path.write_text(
+                publish_path.read_text(encoding="utf-8")
+                + 'delivery_mode: "manual_editor"\n',
+                encoding="utf-8",
+            )
+            args = SimpleNamespace(package=str(package), execute=True, env=None)
+            with (
+                mock.patch.object(MODULE.subprocess, "run") as subprocess_run,
+                self.assertRaisesRegex(MODULE.WorkflowError, "duplicate YAML key"),
+            ):
+                MODULE.command_draft(args)
+            subprocess_run.assert_not_called()
+
+    def test_yaml_root_and_publish_field_types_are_strict(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            for index, payload in enumerate(
+                ("[]\n", "false\n", "0\n", '""\n', "null\n")
+            ):
+                package = self.make_package(root, f"root-{index}")
+                (package / "publish.yml").write_text(payload, encoding="utf-8")
+                metadata, _ = MODULE.load_draft(package)
+                with self.subTest(payload=payload), self.assertRaisesRegex(
+                    MODULE.WorkflowError, "YAML root must be an object"
+                ):
+                    MODULE.load_publish_config(package, metadata)
+
+            for name, mutation, message in (
+                (
+                    "bool-string",
+                    lambda value: value + 'mac_style: "false"\n',
+                    "mac_style must be a YAML boolean",
+                ),
+                (
+                    "theme-bool",
+                    lambda value: value.replace('theme: "default"', "theme: false"),
+                    "theme must be a YAML string",
+                ),
+                (
+                    "unknown",
+                    lambda value: value + "layuot_profile: default\n",
+                    "unknown field",
+                ),
+                (
+                    "non-string-key",
+                    lambda value: value + "1: value\n",
+                    "field names must be YAML strings",
+                ),
+                (
+                    "alias-conflict",
+                    lambda value: value
+                    + 'source_url: "https://example.com/source"\n'
+                    + 'content_source_url: "https://example.com/legacy"\n',
+                    "must not declare both source_url and content_source_url",
+                ),
+            ):
+                package = self.make_package(root, name)
+                publish_path = package / "publish.yml"
+                publish_path.write_text(
+                    mutation(publish_path.read_text(encoding="utf-8")),
+                    encoding="utf-8",
+                )
+                metadata, _ = MODULE.load_draft(package)
+                with self.subTest(name=name), self.assertRaisesRegex(
+                    MODULE.WorkflowError, message
+                ):
+                    MODULE.load_publish_config(package, metadata)
+
+    def test_handoff_command_accepts_only_manual_editor_without_network(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            handoff_path = root / "wechat-handoff.html"
+            handoff_path.write_text("<p>ready</p>", encoding="utf-8")
+            manual_build = SimpleNamespace(
+                config=MODULE.PublishConfig(
+                    title="Test", delivery_mode="manual_editor"
+                ),
+                validator_ok=True,
+                validator_report="",
+                blockers=[],
+                handoff_path=handoff_path,
+            )
+            args = SimpleNamespace(package=str(root), open=False)
+            with (
+                mock.patch.object(MODULE, "build_preview", return_value=manual_build),
+                mock.patch.object(MODULE, "verify_handoff_artifact") as verify_handoff,
+                mock.patch.object(MODULE.subprocess, "run") as subprocess_run,
+                redirect_stdout(io.StringIO()),
+            ):
+                self.assertEqual(MODULE.command_handoff(args), 0)
+            subprocess_run.assert_not_called()
+            verify_handoff.assert_called_once_with(manual_build)
+
+            sealed_build = SimpleNamespace(
+                config=MODULE.PublishConfig(
+                    title="Test", delivery_mode="sealed_draft"
+                ),
+                validator_ok=True,
+                validator_report="",
+                blockers=[],
+                handoff_path=None,
+            )
+            with (
+                mock.patch.object(MODULE, "build_preview", return_value=sealed_build),
+                self.assertRaisesRegex(MODULE.WorkflowError, "requires delivery_mode manual_editor"),
+            ):
+                MODULE.command_handoff(args)
 
     def test_url_encoded_local_image_with_chinese_space_and_ampersand(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
@@ -500,7 +978,7 @@ theme: "default"
             )
             self.assertRegex(inlined, r'\ssrc="data:image/png;base64,[^"]+"')
 
-    def test_data_src_is_not_relocated_or_treated_as_duplicate_src(self) -> None:
+    def test_author_raw_html_cannot_smuggle_alternate_image_sources(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
             package = self.make_package(Path(temp))
             self.enable_appsso_layout(package)
@@ -514,11 +992,10 @@ theme: "default"
                 encoding="utf-8",
             )
 
-            _, _, _, body = MODULE.prepare_source(package)
-
-            self.assertIn('data-src="assets/appsso-header.gif"', body)
-            self.assertIn('src="assets/body.png"', body)
-            self.assertNotIn('data-src="../assets/appsso-header.gif"', body)
+            with self.assertRaisesRegex(
+                MODULE.WorkflowError, "resource-loading attribute data-src"
+            ):
+                MODULE.prepare_source(package)
 
     def test_unquoted_html_src_is_safely_inlined(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
@@ -530,8 +1007,125 @@ theme: "default"
                 package / "assets" / "body.png", build_dir, "assets/body.png"
             )
             inlined = MODULE.inline_preview_images(fragment, build_dir)
-            self.assertIn("data-src=lazy.png", inlined)
+            self.assertIn('data-src="lazy.png"', inlined)
             self.assertRegex(inlined, r'\ssrc="data:image/png;base64,[^"]+"')
+
+    def test_parser_based_inline_handles_gt_inside_an_attribute(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            package = self.make_package(Path(temp))
+            build_dir = MODULE.create_build_dir(package)
+            MODULE.stage_asset_bytes(
+                package / "assets" / "body.png", build_dir, "assets/body.png"
+            )
+            fragment = '<img alt=">" src="assets/body.png">'
+
+            inlined = MODULE.inline_preview_images(fragment, build_dir)
+
+            self.assertIn('alt="&gt;"', inlined)
+            self.assertRegex(inlined, r'\ssrc="data:image/png;base64,[^"]+"')
+            self.assertEqual(1, len(MODULE.raw_html_image_sources(inlined)))
+
+    def test_inline_preflight_encodes_each_unique_image_once_and_fails_before_encoding(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            package = self.make_package(Path(temp))
+            build_dir = MODULE.create_build_dir(package)
+            MODULE.stage_asset_bytes(
+                package / "assets" / "body.png", build_dir, "assets/body.png"
+            )
+            fragment = (
+                '<p><img src="assets/body.png" alt="一"></p>'
+                '<p><img src="assets/body.png" alt="二"></p>'
+            )
+            real_encode = MODULE.base64.b64encode
+            with mock.patch.object(
+                MODULE.base64, "b64encode", wraps=real_encode
+            ) as encode:
+                graph = MODULE.prepare_inline_image_graph(fragment, build_dir)
+                inlined = MODULE.inline_preview_images(fragment, build_dir, graph)
+            self.assertEqual(1, encode.call_count)
+            self.assertEqual(2, graph.image_order.count("assets/body.png"))
+            self.assertEqual(2, inlined.count("data:image/png;base64,"))
+
+            with (
+                mock.patch.object(MODULE, "MAX_HANDOFF_IMAGE_BYTES", 1),
+                mock.patch.object(MODULE.base64, "b64encode") as blocked_encode,
+                self.assertRaisesRegex(
+                    MODULE.WorkflowError, "before encoding or handoff copy"
+                ),
+            ):
+                MODULE.prepare_inline_image_graph(fragment, build_dir)
+            blocked_encode.assert_not_called()
+
+    def test_inline_preflight_applies_aggregate_byte_budget_while_reading(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            package = self.make_package(Path(temp))
+            build_dir = MODULE.create_build_dir(package)
+            first = build_dir / "assets" / "body.png"
+            second = build_dir / "assets" / "second.png"
+            MODULE.stage_asset_bytes(
+                package / "assets" / "body.png", build_dir, "assets/body.png"
+            )
+            self.write_test_image(second)
+            first_size = first.stat().st_size
+            second_size = second.stat().st_size
+            fragment = (
+                '<img src="assets/body.png" alt="一">'
+                '<img src="assets/second.png" alt="二">'
+            )
+            real_reader = MODULE.stable_file_bytes
+            with (
+                mock.patch.object(
+                    MODULE,
+                    "MAX_HANDOFF_IMAGE_BYTES",
+                    max(first_size, second_size) + 1,
+                ),
+                mock.patch.object(
+                    MODULE,
+                    "MAX_HANDOFF_TOTAL_ASSET_BYTES",
+                    first_size + second_size - 1,
+                ),
+                mock.patch.object(
+                    MODULE, "stable_file_bytes", wraps=real_reader
+                ) as reader,
+                mock.patch.object(MODULE.base64, "b64encode") as blocked_encode,
+                self.assertRaisesRegex(
+                    MODULE.WorkflowError, "before encoding or handoff copy"
+                ),
+            ):
+                MODULE.prepare_inline_image_graph(fragment, build_dir)
+            self.assertEqual(2, reader.call_count)
+            self.assertEqual(
+                second_size - 1,
+                reader.call_args_list[-1].kwargs["max_bytes"],
+            )
+            blocked_encode.assert_not_called()
+
+    def test_animated_image_frame_scan_stops_at_the_internal_ceiling(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            path = Path(temp) / "animated.gif"
+            frames = [
+                Image.new("RGB", (2, 2), color=color)
+                for color in ((255, 0, 0), (0, 255, 0), (0, 0, 255))
+            ]
+            try:
+                frames[0].save(
+                    path,
+                    format="GIF",
+                    save_all=True,
+                    append_images=frames[1:],
+                    duration=10,
+                    loop=0,
+                )
+            finally:
+                for frame in frames:
+                    frame.close()
+            with (
+                mock.patch.object(MODULE, "MAX_HANDOFF_IMAGE_FRAMES", 2),
+                self.assertRaisesRegex(
+                    MODULE.WorkflowError, "frame or decoded-pixel ceiling"
+                ),
+            ):
+                MODULE.image_payload_metadata(path, path.read_bytes())
 
     def test_rendered_gate_stages_only_registered_package_images(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
@@ -602,6 +1196,14 @@ theme: "default"
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)
             wrapper_package = self.make_package(root, "reserved-wrapper")
+            wrapper_publish = wrapper_package / "publish.yml"
+            wrapper_publish.write_text(
+                wrapper_publish.read_text(encoding="utf-8").replace(
+                    'project_adapter: "generic"',
+                    'project_adapter: "appsso"',
+                ),
+                encoding="utf-8",
+            )
             metadata, _ = MODULE.load_draft(wrapper_package)
             wrapper_config = MODULE.load_publish_config(wrapper_package, metadata)
             wrapper_blockers = MODULE.rendered_image_gate_and_stage(
@@ -677,6 +1279,191 @@ theme: "default"
         self.assertIn('data-width="375"', document)
         self.assertIn('data-width="390"', document)
         self.assertIn('data-preview-width="390"', document)
+        self.assertIn(".phone img{display:block;max-width:100%;height:auto}", document)
+
+    def test_manual_editor_build_creates_versioned_handoff_with_resolvable_images(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            package = self.make_package(Path(temp))
+            publish_path = package / "publish.yml"
+            publish_path.write_text(
+                publish_path.read_text(encoding="utf-8").replace(
+                    'delivery_mode: "sealed_draft"',
+                    'delivery_mode: "manual_editor"',
+                ),
+                encoding="utf-8",
+            )
+            manifest_path = package / "asset-manifest.yml"
+            manifest_path.write_text(
+                manifest_path.read_text(encoding="utf-8")
+                + """  - file: "assets/body.png"
+    used_in_draft: true
+    rights_status: "project_owned"
+    allowed_platforms: ["wechat"]
+""",
+                encoding="utf-8",
+            )
+            rendered = (
+                '<section id="wenyan" style="font-size:16px">'
+                '<h2 style="margin:1em 0">标题</h2>'
+                '<p style="padding:0 16px">正文</p>'
+                '<p><img src="assets/body.png" alt="图片" '
+                'style="max-width:100%;height:auto"></p>'
+                '</section>'
+            )
+            with (
+                mock.patch.object(MODULE, "run_wenyan_render", return_value=rendered),
+                mock.patch.object(MODULE, "validator_report", return_value=(True, "pass")),
+            ):
+                build = MODULE.build_preview(package)
+
+            self.assertEqual(build.blockers, [])
+            self.assertIsNotNone(build.handoff_path)
+            handoff_path = build.handoff_path
+            assert handoff_path is not None
+            content_path = handoff_path.parent / "wechat-content.html"
+            content = content_path.read_text(encoding="utf-8")
+            style_parser = MODULE.ManualHandoffHtmlParser()
+            style_parser.feed(content)
+            style_parser.close()
+            self.assertEqual(style_parser.removed_style_attributes, 0)
+            self.assertTrue((content_path.parent / "assets" / "body.png").is_file())
+            self.assertIn('src="assets/body.png"', content)
+
+            handoff = handoff_path.read_text(encoding="utf-8")
+            self.assertIn('id="copy-article"', handoff)
+            self.assertIn(".wechat-handoff-content img", handoff)
+            self.assertRegex(handoff, r'src="data:image/png;base64,[^"]+"')
+
+            latest_content = (package / "dist" / "wechat-content.html").read_text(
+                encoding="utf-8"
+            )
+            self.assertRegex(latest_content, r'src="data:image/png;base64,[^"]+"')
+            latest_style_parser = MODULE.ManualHandoffHtmlParser()
+            latest_style_parser.feed(latest_content)
+            latest_style_parser.close()
+            self.assertEqual(latest_style_parser.removed_style_attributes, 0)
+            plan = json.loads(
+                (handoff_path.parent / "publish-plan.json").read_text(encoding="utf-8")
+            )
+            MODULE.verify_handoff_artifact(build)
+            self.assertEqual(plan["path_base"], "dist")
+            self.assertEqual(plan["delivery"]["mode"], "manual_editor")
+            self.assertFalse(plan["delivery"]["api_draft_allowed"])
+            self.assertEqual(
+                plan["delivery"]["handoff_asset_sha256"]["assets/body.png"],
+                MODULE.file_sha256(package / "assets" / "body.png"),
+            )
+            self.assertEqual(
+                plan["delivery"]["handoff_assets"]["assets/body.png"]["bytes"],
+                (package / "assets" / "body.png").stat().st_size,
+            )
+            copy_payload = handoff_path.parent / "wechat-copy-payload.html"
+            self.assertEqual(
+                plan["delivery"]["copy_payload_sha256"],
+                MODULE.file_sha256(copy_payload),
+            )
+            self.assertEqual(
+                plan["delivery"]["handoff_document_sha256"],
+                MODULE.file_sha256(handoff_path),
+            )
+            self.assertEqual(
+                plan["delivery"]["handoff_content_bytes"],
+                content_path.stat().st_size,
+            )
+
+    def test_manual_pipeline_unwraps_presentation_tags_before_global_gate(self) -> None:
+        rendered = (
+            '<center><font color="#f00"><p style="margin:1em">正文</p>'
+            '</font></center><img src="assets/body.png" alt="图片">'
+        )
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            manual_package = self.make_package(root, "manual")
+            self.enable_manual_editor(manual_package)
+            with (
+                mock.patch.object(MODULE, "run_wenyan_render", return_value=rendered),
+                mock.patch.object(MODULE, "validator_report", return_value=(True, "pass")),
+            ):
+                build = MODULE.build_preview(manual_package)
+            assert build.handoff_path is not None
+            content = (build.handoff_path.parent / "wechat-content.html").read_text(
+                encoding="utf-8"
+            )
+            self.assertNotIn("<center", content)
+            self.assertNotIn("<font", content)
+            self.assertNotIn("style=", content)
+            self.assertIn("<p>正文</p>", content)
+
+            sealed_package = self.make_package(root, "sealed")
+            with (
+                mock.patch.object(MODULE, "run_wenyan_render", return_value=rendered),
+                self.assertRaisesRegex(MODULE.WorkflowError, "unsafe for local preview"),
+            ):
+                MODULE.build_preview(sealed_package)
+
+    def test_appsso_manual_build_gates_components_before_sanitizing_classes(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            package = self.make_package(Path(temp))
+            self.enable_appsso_layout(package, include_footer=True)
+            self.register_body_image(package)
+            publish_path = package / "publish.yml"
+            publish_path.write_text(
+                publish_path.read_text(encoding="utf-8")
+                .replace(
+                    'delivery_mode: "sealed_draft"',
+                    'delivery_mode: "manual_editor"',
+                )
+                .replace(
+                    'layout_profile: "appsso-article-v1"',
+                    'layout_profile: "default"',
+                ),
+                encoding="utf-8",
+            )
+            rendered = (
+                '<section class="appsso-body-header" style="width:100%">'
+                '<img src="assets/appsso-header.gif" alt="头图" width="900">'
+                '</section><h2 style="color:red">标题</h2>'
+                '<p><img src="assets/body.png" alt="正文图"></p>'
+                '<section class="appsso-body-footer" style="width:100%">'
+                '<img src="assets/appsso-footer.jpg" alt="尾图" width="900">'
+                '</section>'
+            )
+            with (
+                mock.patch.object(MODULE, "run_wenyan_render", return_value=rendered),
+                mock.patch.object(
+                    MODULE, "validator_report", return_value=(True, "pass")
+                ),
+            ):
+                build = MODULE.build_preview(package)
+            self.assertEqual([], build.blockers)
+            assert build.handoff_path is not None
+            content = (
+                build.handoff_path.parent / "wechat-content.html"
+            ).read_text(encoding="utf-8")
+            self.assertNotIn("appsso-body-header", content)
+            self.assertNotIn("appsso-body-footer", content)
+            self.assertNotIn(" style=", content.casefold())
+            self.assertNotIn(" width=", content.casefold())
+            self.assertLess(
+                content.index("assets/appsso-header.gif"),
+                content.index("assets/body.png"),
+            )
+            self.assertLess(
+                content.index("assets/body.png"),
+                content.index("assets/appsso-footer.jpg"),
+            )
+            plan = json.loads(
+                build.handoff_plan_path.read_text(encoding="utf-8")
+            )
+            self.assertEqual(
+                [
+                    "assets/appsso-header.gif",
+                    "assets/body.png",
+                    "assets/appsso-footer.jpg",
+                ],
+                plan["delivery"]["handoff_image_order"],
+            )
+            MODULE.verify_handoff_artifact(build)
 
     def test_preview_csp_blocks_network_and_binds_script_nonce(self) -> None:
         first = MODULE.preview_document("Test", "<p>Body</p>", True, "", [])
@@ -708,6 +1495,75 @@ theme: "default"
         self.assertIsNotNone(second_nonce)
         self.assertNotEqual(nonce, second_nonce.group(1) if second_nonce else nonce)
 
+    def test_handoff_integrity_rejects_page_content_payload_asset_and_plan_tampering(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            package = self.make_package(Path(temp))
+            self.enable_manual_editor(package)
+            rendered = (
+                '<section style="font-size:16px"><h2>标题</h2>'
+                '<p>正文</p><img src="assets/body.png" alt="图片"></section>'
+            )
+            with (
+                mock.patch.object(MODULE, "run_wenyan_render", return_value=rendered),
+                mock.patch.object(
+                    MODULE, "validator_report", return_value=(True, "pass")
+                ),
+            ):
+                build = MODULE.build_preview(package)
+            self.assertEqual([], build.blockers)
+            MODULE.verify_handoff_artifact(build)
+            assert build.handoff_path is not None
+            assert build.handoff_plan_path is not None
+            paths = {
+                "document": build.handoff_path,
+                "content": build.handoff_path.parent / "wechat-content.html",
+                "copy payload": build.handoff_path.parent
+                / "wechat-copy-payload.html",
+                "asset": build.handoff_path.parent / "assets" / "body.png",
+                "plan": build.handoff_plan_path,
+            }
+            originals = {name: path.read_bytes() for name, path in paths.items()}
+            for name, path in paths.items():
+                with self.subTest(artifact=name):
+                    path.write_bytes(originals[name] + b"tampered")
+                    with self.assertRaises(MODULE.WorkflowError):
+                        MODULE.verify_handoff_artifact(build)
+                    path.write_bytes(originals[name])
+                    MODULE.verify_handoff_artifact(build)
+
+            build.handoff_path.write_bytes(originals["document"] + b"tampered")
+            args = SimpleNamespace(package=str(package), open=True)
+            with (
+                mock.patch.object(MODULE, "build_preview", return_value=build),
+                mock.patch.object(MODULE.os, "startfile", create=True) as startfile,
+                self.assertRaises(MODULE.WorkflowError),
+            ):
+                MODULE.command_handoff(args)
+            startfile.assert_not_called()
+
+    def test_handoff_resource_ceilings_are_inclusive_and_fail_above_limit(self) -> None:
+        asset = {
+            "assets/body.png": {
+                "bytes": 10,
+                "pixels_per_frame": 20,
+                "frame_count": 1,
+                "decoded_frame_pixels": 20,
+            }
+        }
+        with (
+            mock.patch.object(MODULE, "MAX_HANDOFF_IMAGE_BYTES", 10),
+            mock.patch.object(MODULE, "MAX_HANDOFF_TOTAL_ASSET_BYTES", 10),
+            mock.patch.object(MODULE, "MAX_HANDOFF_COPY_HTML_BYTES", 30),
+            mock.patch.object(MODULE, "MAX_HANDOFF_IMAGE_PIXELS", 20),
+            mock.patch.object(MODULE, "MAX_HANDOFF_DECODED_FRAME_PIXELS", 20),
+        ):
+            self.assertEqual([], MODULE.handoff_resource_blockers(asset, 30))
+            asset["assets/body.png"]["bytes"] = 11
+            asset["assets/body.png"]["pixels_per_frame"] = 21
+            asset["assets/body.png"]["decoded_frame_pixels"] = 21
+            blockers = MODULE.handoff_resource_blockers(asset, 31)
+        self.assertEqual(5, len(blockers))
+
     def test_preview_rejects_active_rendered_html(self) -> None:
         MODULE.ensure_passive_preview_html(
             "<pre><code>&lt;script&gt;example&lt;/script&gt;</code></pre>"
@@ -724,6 +1580,15 @@ theme: "default"
             '<span style="background-image:url(https://example.invalid/x.png)">x</span>',
             '<span style="background-image:u\\72l(https://example.invalid/x.png)">x</span>',
             '<span style="background-image:image-set(\'https://example.invalid/x.png\' 1x)">x</span>',
+            '<p hidden>Hidden</p>',
+            '<p contenteditable="false">Locked</p>',
+            '<template><p>Template</p></template>',
+            '<dialog open>Dialog</dialog>',
+            '<details open><p>Details</p></details>',
+            '<button>Button</button>',
+            '<p style="position:fixed;z-index:999999">Overlay</p>',
+            '<p style="display:none">Hidden style</p>',
+            '</main><p>Escaped wrapper</p>',
         ):
             with self.subTest(fragment=fragment), self.assertRaisesRegex(
                 MODULE.WorkflowError, "unsafe for local preview"
@@ -737,6 +1602,9 @@ theme: "default"
     def test_blocked_draft_dry_run_returns_nonzero_without_network(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
             fake_build = SimpleNamespace(
+                config=MODULE.PublishConfig(
+                    title="Test", delivery_mode="sealed_draft"
+                ),
                 validator_ok=True,
                 validator_report="",
                 blockers=["layout header is missing"],
@@ -765,7 +1633,10 @@ theme: "default"
             build = self.capture_preview_snapshot(package)
             (build.source.parent / "assets" / "body.png").write_bytes(b"tampered")
             env_path = root / ".env"
-            env_path.write_text("WECHAT_APP_ID=test\n", encoding="utf-8")
+            env_path.write_text(
+                "WECHAT_APP_ID=test\nWECHAT_APP_SECRET=secret\n",
+                encoding="utf-8",
+            )
             fake_wenyan = root / "wenyan.cmd"
             fake_wenyan.write_text("test", encoding="utf-8")
             args = SimpleNamespace(
@@ -788,7 +1659,10 @@ theme: "default"
             package = self.make_package(root)
             build = self.capture_preview_snapshot(package)
             env_path = root / ".env"
-            env_path.write_text("WECHAT_APP_ID=test\n", encoding="utf-8")
+            env_path.write_text(
+                "WECHAT_APP_ID=test\nWECHAT_APP_SECRET=secret\n",
+                encoding="utf-8",
+            )
             fake_wenyan = root / "wenyan.cmd"
             fake_wenyan.write_text("test", encoding="utf-8")
             args = SimpleNamespace(
@@ -814,6 +1688,106 @@ theme: "default"
             ):
                 MODULE.command_draft(args)
             subprocess_run.assert_called_once()
+
+    def test_execute_failure_reports_non_atomic_external_side_effects(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            package = self.make_package(root)
+            build = self.capture_preview_snapshot(package)
+            env_path = root / ".env"
+            env_path.write_text(
+                "WECHAT_APP_ID=test\nWECHAT_APP_SECRET=secret\n",
+                encoding="utf-8",
+            )
+            fake_wenyan = root / "wenyan.cmd"
+            fake_wenyan.write_text("test", encoding="utf-8")
+            args = SimpleNamespace(
+                package=str(package), execute=True, env=str(env_path)
+            )
+
+            with (
+                mock.patch.object(MODULE, "build_preview", return_value=build),
+                mock.patch.object(MODULE, "WENYAN_CMD", fake_wenyan),
+                mock.patch.object(
+                    MODULE.subprocess,
+                    "run",
+                    return_value=SimpleNamespace(returncode=9),
+                ) as subprocess_run,
+                self.assertRaisesRegex(
+                    MODULE.WorkflowError,
+                    "permanent body/cover materials may already have been uploaded",
+                ),
+                redirect_stdout(io.StringIO()),
+            ):
+                MODULE.command_draft(args)
+            subprocess_run.assert_called_once()
+
+    def test_wenyan_environment_uses_only_the_explicit_credential_file(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            env_path = Path(temp) / ".env"
+            env_path.write_text(
+                'WECHAT_APP_ID="target-account"\n'
+                "WECHAT_APP_SECRET='target-secret'\n",
+                encoding="utf-8",
+            )
+            fingerprint, payload_hash = MODULE.wechat_credential_metadata(env_path)
+            self.assertEqual(
+                hashlib.sha256(b"target-account").hexdigest()[:12], fingerprint
+            )
+            self.assertEqual(hashlib.sha256(env_path.read_bytes()).hexdigest(), payload_hash)
+            with mock.patch.dict(
+                MODULE.os.environ,
+                {
+                    "WECHAT_APP_ID": "wrong-account",
+                    "WECHAT_APP_SECRET": "wrong-secret",
+                    "NODE_OPTIONS": "--env-file=wrong.env",
+                    "NODE_PATH": "wrong-modules",
+                },
+                clear=False,
+            ):
+                environment = MODULE.wenyan_environment()
+            for key in (
+                "WECHAT_APP_ID",
+                "WECHAT_APP_SECRET",
+                "NODE_OPTIONS",
+                "NODE_PATH",
+            ):
+                self.assertNotIn(key, environment)
+
+    def test_execute_wraps_local_record_failure_as_possible_external_effect(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            package = self.make_package(root)
+            build = self.capture_preview_snapshot(package)
+            env_path = root / ".env"
+            env_path.write_text(
+                "WECHAT_APP_ID=test\nWECHAT_APP_SECRET=secret\n",
+                encoding="utf-8",
+            )
+            fake_wenyan = root / "wenyan.cmd"
+            fake_wenyan.write_text("test", encoding="utf-8")
+            args = SimpleNamespace(
+                package=str(package), execute=True, env=str(env_path)
+            )
+            with (
+                mock.patch.object(MODULE, "build_preview", return_value=build),
+                mock.patch.object(MODULE, "WENYAN_CMD", fake_wenyan),
+                mock.patch.object(
+                    MODULE.subprocess,
+                    "run",
+                    return_value=SimpleNamespace(returncode=0),
+                ),
+                mock.patch.object(
+                    MODULE,
+                    "atomic_write_text",
+                    side_effect=OSError("local disk failure"),
+                ),
+                self.assertRaisesRegex(
+                    MODULE.WorkflowError, "one draft may have been created"
+                ),
+                redirect_stdout(io.StringIO()),
+            ):
+                MODULE.command_draft(args)
 
     def test_build_snapshot_detects_package_source_and_staged_theme_drift(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
@@ -872,21 +1846,14 @@ theme: "default"
         with tempfile.TemporaryDirectory() as temp:
             package = self.make_package(Path(temp))
             expected = MODULE.package_input_hashes(package)
-            real_reader = MODULE.stable_file_bytes
+            draft = package / "draft.md"
+            draft.write_text(
+                draft.read_text(encoding="utf-8") + "\ntransient change\n",
+                encoding="utf-8",
+            )
 
-            def changed_draft(path: Path) -> bytes:
-                payload = real_reader(path)
-                if path == package / "draft.md":
-                    return payload + b"\ntransient change\n"
-                return payload
-
-            with (
-                mock.patch.object(
-                    MODULE, "stable_file_bytes", side_effect=changed_draft
-                ),
-                self.assertRaisesRegex(
-                    MODULE.WorkflowError, "changed while sealing input: draft.md"
-                ),
+            with self.assertRaisesRegex(
+                MODULE.WorkflowError, "changed while sealing input: draft.md"
             ):
                 with MODULE.sealed_package_snapshot(package, expected):
                     self.fail("mismatched package bytes must not be yielded")
@@ -904,6 +1871,54 @@ theme: "default"
                 self.skipTest(f"hardlinks unavailable: {exc}")
             with self.assertRaisesRegex(MODULE.WorkflowError, "must not be a hardlink"):
                 MODULE.package_input_hashes(package)
+
+    def test_stable_file_bytes_enforces_expected_size_and_ceiling(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            path = Path(temp) / "artifact.bin"
+            path.write_bytes(b"1234")
+            self.assertEqual(
+                b"1234",
+                MODULE.stable_file_bytes(path, expected_size=4, max_bytes=4),
+            )
+            with self.assertRaisesRegex(MODULE.WorkflowError, "byte count mismatch"):
+                MODULE.stable_file_bytes(path, expected_size=3, max_bytes=4)
+            with self.assertRaisesRegex(MODULE.WorkflowError, "byte ceiling"):
+                MODULE.stable_file_bytes(path, max_bytes=3)
+
+    def test_stage_asset_enforces_ceiling_before_copying_payload(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            source = root / "source.png"
+            source.write_bytes(b"1234")
+            build_dir = root / "build"
+            build_dir.mkdir()
+            with (
+                mock.patch.object(MODULE, "file_sha256") as hash_file,
+                self.assertRaisesRegex(MODULE.WorkflowError, "byte ceiling"),
+            ):
+                MODULE.stage_asset_bytes(
+                    source,
+                    build_dir,
+                    "assets/source.png",
+                    max_bytes=3,
+                )
+            hash_file.assert_not_called()
+            self.assertFalse((build_dir / "assets" / "source.png").exists())
+            self.assertEqual([], list(build_dir.rglob("*.tmp")))
+
+    def test_stable_copy_removes_installed_destination_after_hash_failure(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            source = root / "source.bin"
+            destination = root / "destination.bin"
+            source.write_bytes(b"payload")
+            with (
+                mock.patch.object(MODULE, "file_sha256", return_value="0" * 64),
+                self.assertRaisesRegex(MODULE.WorkflowError, "destination hash mismatch"),
+            ):
+                MODULE.stable_copy_file(source, destination, max_bytes=7)
+            self.assertFalse(destination.exists())
+            self.assertEqual([], list(root.glob("*.tmp")))
 
     def test_safe_dist_rejects_regular_file_and_link_indicator(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
@@ -935,6 +1950,22 @@ theme: "default"
             ):
                 MODULE.safe_dist(linked_package)
 
+    def test_first_concurrent_build_and_handoff_directory_allocation_is_unique(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            package = self.make_package(Path(temp))
+            with ThreadPoolExecutor(max_workers=4) as executor:
+                build_dirs = list(
+                    executor.map(lambda _: MODULE.create_build_dir(package), range(4))
+                )
+                handoff_dirs = list(
+                    executor.map(
+                        lambda _: MODULE.create_handoff_dir(package), range(4)
+                    )
+                )
+            self.assertEqual(4, len(set(build_dirs)))
+            self.assertEqual(4, len(set(handoff_dirs)))
+            self.assertTrue(all(path.is_dir() for path in build_dirs + handoff_dirs))
+
     @unittest.skipUnless(MODULE.WENYAN_CMD.is_file(), "Wenyan is not installed")
     def test_real_wenyan_blockquote_reference_image_passes_rendered_gate(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
@@ -964,6 +1995,38 @@ theme: "default"
             )
         self.assertIn("<blockquote", rendered)
         self.assertEqual([], blockers)
+
+    @unittest.skipUnless(MODULE.WENYAN_CMD.is_file(), "Wenyan is not installed")
+    def test_real_wenyan_manual_handoff_removes_presentation_markup(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            package = self.make_package(Path(temp))
+            self.enable_manual_editor(package)
+            source, _, config, _ = MODULE.prepare_source(package)
+            raw = MODULE.run_wenyan_render(source, config)
+            MODULE.ensure_passive_preview_html(raw)
+            blockers = MODULE.rendered_image_gate_and_stage(
+                package, source.parent, raw, config
+            )
+            cleaned = MODULE.apply_delivery_mode(raw, config)
+            MODULE.ensure_passive_preview_html(cleaned)
+
+        self.assertEqual([], blockers)
+        self.assertIn("style=", raw.casefold())
+        self.assertNotIn("style=", cleaned.casefold())
+        self.assertEqual(
+            MODULE.raw_html_image_sources(raw),
+            MODULE.raw_html_image_sources(cleaned),
+        )
+        for tag in ("h2", "p", "img"):
+            self.assertEqual(
+                len(re.findall(fr"<{tag}\b", raw, re.I)),
+                len(re.findall(fr"<{tag}\b", cleaned, re.I)),
+            )
+        verifier = MODULE.ManualHandoffHtmlParser()
+        verifier.feed(cleaned)
+        verifier.close()
+        self.assertEqual([], verifier.removed_attributes)
+        self.assertEqual([], verifier.removed_tags)
 
     @unittest.skipUnless(MODULE.WENYAN_CMD.is_file(), "Wenyan is not installed")
     def test_real_wenyan_render_inlines_appsso_contract(self) -> None:

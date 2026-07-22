@@ -21,5 +21,10 @@
 
 - 本轮用户反馈说明：仅在文字记录中写明 `appsso-004`，不能防止首次调用被通用科技媒体模板覆盖。
 - 后续候选图统一以 `research/image-generation-plan.json` 为执行真源。当前生产计划只锁定 `cover` 与 `capability-timeline`；此前已经否决的「相变示意图」和「反馈闭环图」不重新进入制作范围。
-- 每个任务先生成不对外展示的结构参考图，再以该输入执行 `appsso-004` 重绘；两个阶段分别预检。风格冲突、Prompt 哈希变化、参考图缺失、改编权未确认或最终模式为 `text_to_image` 时直接停止。
+- 当前两个任务分别复用已登记的 `cover-base-v01.png` 与 `model-timeline-base.png`，直接执行 `appsso-004` 重绘，不重复生成结构参考。两项 `final` preflight 均已通过；风格冲突、Prompt 哈希变化、参考图缺失、改编权未确认或最终模式为 `text_to_image` 时仍直接停止。
 - 该计划与 preflight receipt 只证明调用配置通过，不证明图片已经生成、质检或入稿。只有成品进入 `assets/`、完成原尺寸检查并登记 manifest 后，任务才算完成；回归测试用例不自动升级为真实生产任务。
+
+## 排版交付修正
+
+- 本稿交付后仍需在公众号后台人工微调，因此使用 `delivery_mode: "manual_editor"` 与 `layout_profile: "default"`；版本化交接包保留结构与本地图，复制正文不携带 Wenyan 元素级视觉样式。
+- `project_adapter: "appsso"` 继续表示品牌归属，但不再把字号、行高、段间距和块级缩进写死为 APPSO 固定 profile。

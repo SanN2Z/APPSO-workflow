@@ -137,15 +137,15 @@ assets:
     rights_status: "project_owned_method"
     allowed_use: "APPSO 普通公众号长文的本机预览与草稿箱准备"
     contains_credentials: false
-    notes: "绑定 appsso-article-v1；头图需内容包本地原件与权利登记；招聘尾图默认关闭，启用后要求最长 365 天的内部复核截止日，该日期不代表招聘真实截止日"
+    notes: "默认声明 manual_editor + default；密封主题在后台验证前只用于资格验证草稿，精确公众号账号与主题版本组合通过后才取得生产资格。头图需内容包本地原件与权利登记；招聘尾图默认关闭，启用后要求最长 365 天的内部复核截止日，该日期不代表招聘真实截止日"
 
   - id: "appsso-013"
     title: "APPSO 公众号版式反馈与样本证据"
     path: "02-方法与知识/视觉与排版/APPSO 公众号版式反馈与样本证据.md"
-    source: "用户 2026-07-21 排版反馈与 3 篇 APPSO 公开文章的结构化测量"
+    source: "用户 2026-07-21 排版反馈、2026-07-22 后台手调反馈与 3 篇 APPSO 公开文章的结构化测量"
     obtained_on: "2026-07-21"
     classification: "internal"
     rights_status: "project_analysis"
-    allowed_use: "APPSO 普通公众号长文版式回归；不得复制样本正文或把公开 CDN 图片视为已授权原件"
+    allowed_use: "APPSO 普通公众号长文人工交接与密封草稿版式回归；不得复制样本正文或把公开 CDN 图片视为已授权原件"
     contains_credentials: false
-    notes: "记录 LAYOUT-FB-001、LAYOUT-SAMPLE-001、LAYOUT-ASSET-001 和 LAYOUT-ASSET-002；草稿箱 round-trip 待授权后验证"
+    notes: "记录 LAYOUT-FB-001、LAYOUT-FB-002、LAYOUT-SAMPLE-001、LAYOUT-ASSET-001 和 LAYOUT-ASSET-002；人工交接的复制编辑保存重开与密封主题资格验证草稿两类 round-trip 均待验证"

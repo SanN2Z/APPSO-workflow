@@ -42,9 +42,9 @@
 
 ## 本机预览与草稿箱
 
-排版、图片上传和微信草稿 API 复用开源 [Wenyan CLI](https://github.com/caol64/wenyan-cli)，项目固定为 `@wenyan-md/cli@2.0.11`；本地适配层不重复实现渲染器和微信客户端。APPSO 普通长文显式选择 `appsso-article-v1`，Hunt Good 与个人公众号使用独立 profile；版式入口见 [themes/README.md](themes/README.md)。
+排版、图片上传和微信草稿 API 复用开源 [Wenyan CLI](https://github.com/caol64/wenyan-cli)，项目固定为 `@wenyan-md/cli@2.0.11`；本地适配层不重复实现渲染器和微信客户端。配置把品牌 `project_adapter`、交付方式 `delivery_mode` 与视觉主题 `layout_profile` 分开；APPSO、Hunt Good 与个人公众号不得互相猜测或继承。交付模式、命令和安全边界见 [wechat-publishing.md](../.agents/skills/self-media-ops/references/wechat-publishing.md)，主题能力与精确样式见 [themes/README.md](themes/README.md)。
 
-当前固定版本会把正文图片作为永久图片素材上传并缓存重复素材；自定义摘要暂不随 API 提交，需在公众号后台检查微信自动生成的摘要。其余已知限制记录在发布参考文档中。
+当前固定版本会把正文图片作为永久图片素材上传并缓存重复素材；自定义摘要暂不随 API 提交，需在公众号后台检查微信自动生成的摘要。`draft --execute` 只接受显式 `.env` 作为凭证真源并显示非敏感账号指纹；上传和建草稿不是原子事务，执行期失败后必须先检查目标账号后台和素材库，再决定是否重试。其余已知限制记录在发布参考文档中。
 
 首次安装（从仓库根目录运行）：
 
@@ -61,6 +61,9 @@ Copy-Item 微信公众号/.env.example 微信公众号/.env
 ```powershell
 # 本机手机宽预览，不上传
 python 微信公众号/tools/wechat_publish.py preview <内容包路径> --open
+
+# 人工编辑交接，不上传；生成版本化复制页
+python 微信公众号/tools/wechat_publish.py handoff <内容包路径> --open
 
 # 草稿箱预检，默认 dry-run
 python 微信公众号/tools/wechat_publish.py draft <内容包路径>

@@ -15,6 +15,20 @@
 
 目标不是生成另一份需粘贴后再修的 HTML，而是让本机预览与草稿创建使用同一个可版本化 profile。
 
+## `LAYOUT-FB-002`：后台手调回归
+
+2026 年 7 月 22 日，用户检查「AI 撞上现实」稿件预览后指出：固定版式被写入渲染结果，进入微信公众号后台继续手调时表现很奇怪。
+
+这条反馈暴露了 `LAYOUT-FB-001` 的范围遗漏：它希望减少重复排版，但没有区分「后台还要人工调整」和「按固定样式直接创建密封草稿」。本机 375 px / 390 px 预览只能证明视觉结果，不足以证明公众号编辑器内仍然易于修改。
+
+修正规则：
+
+- 后台继续手调：使用 `delivery_mode: "manual_editor"` 与 `layout_profile: "default"`，以 HTML parser 按文章语义 allowlist 移除表现层标记并阻断隐藏或交互结构，保留正文、标题、图片和图注；版本化交接目录必须封存复制页、结构正文、复制输入和可解析本地图的匹配哈希。
+- 密封草稿：只有用户明确选择时才使用 `delivery_mode: "sealed_draft"` 与 `layout_profile: "appsso-article-v1"`；固定头图先完成权利闭环。后台验证前，任何此类草稿都只作为明确授权的资格验证草稿；验证通过后，精确公众号账号与主题版本组合才取得生产资格。
+- `project_adapter: "appsso"` 只表示品牌归属，头尾组件与交付模式正交；`delivery_mode` 和 `layout_profile` 不再混为一个字段。
+
+本地机制复现：固定 APPSO 主题会把正文的字号、行高、边距、左右 padding 和对齐写入元素级 `style`；Wenyan `default` 同样会产生大量行内样式。因此仅切回默认主题不能恢复后台可编辑性。人工模式改用 tag-aware 语义 allowlist，而不是文本正则，避免误删正文中作为示例出现的 `style="..."`，并阻断 `hidden`、`contenteditable`、`template`、`dialog` 等隐藏或交互结构。自动化已验证结构保留、交接页／结构正文／复制输入／图片哈希一致、预览页具备 375 px / 390 px 检查入口与页面级图片防溢出规则，以及 API 草稿能力被阻断；Chromium 本地交接页 smoke 已确认 4 张正文图加载且「复制正文」按钮可触发。以上均不等于微信公众号后台已经验收，复制、修改、保存和重开的 round-trip 仍待用户验证。
+
 ## `LAYOUT-SAMPLE-001`：3 篇公开样本
 
 访问日期均为 2026 年 7 月 21 日：
@@ -52,7 +66,8 @@
 ## 实现与验证状态
 
 - 数值样式真源：[`微信公众号/themes/appsso-article-v1.css`](<../../../微信公众号/themes/appsso-article-v1.css>)。
-- 完整 profile 合同：[`微信公众号/themes/README.md`](<../../../微信公众号/themes/README.md>)。
+- Profile 能力合同：[`微信公众号/themes/README.md`](<../../../微信公众号/themes/README.md>)；交付模式与安全合同：[`wechat-publishing.md`](<../../../.agents/skills/self-media-ops/references/wechat-publishing.md>)。
 - 本轮用临时测试包完成真实 Wenyan 渲染和 Edge 375 px / 390 px 人工检查；检查环境为 Edge `150.0.4078.83`，CSS SHA-256 为 `1e942c101bddb50be8940792bfef50a82560da3adf30d7c4dbbf0fcf10089a2f`。截图是可丢弃生成物，未作为知识资产入库。复现时在仓库根目录运行 `python 微信公众号/tools/wechat_publish.py preview <content-package> --open`，再在预览页依次切换 375 px 与 390 px。
 - 尚未执行公众号草稿箱 round-trip；当前任务没有对外创建草稿的授权。
+- `LAYOUT-FB-002` 已证明固定 profile 不能作为人工后台交付的默认值；模板现显式使用 `delivery_mode: "manual_editor"` 与 `layout_profile: "default"`。`appsso-article-v1` 在后台验证前只用于资格验证草稿；此处的本地门禁通过不等于真实公众号后台已经验收。
 - Hunt Good 的 24 px 栏目名来自其专项培训资料；本轮只验证它不会自动继承普通长文 profile，没有声称已完成 Hunt Good 专项渲染。
