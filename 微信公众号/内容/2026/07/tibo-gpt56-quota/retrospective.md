@@ -7,9 +7,9 @@ source_status: "editorial_review"
 review_kind: "feedback"
 review_status: "open"
 created: 2026-07-21
-updated: 2026-07-21
+updated: 2026-07-22
 next_review_on: 2026-07-28
-sop_promotions: 4
+sop_promotions: 5
 ---
 
 # 内容复盘：AI 模型再聪明，用到一半没额度也白搭
@@ -37,6 +37,7 @@ sop_promotions: 4
 | TIBO-F-03 | 实习老师 | GPT-5.6 共同事实缺失 | 默认读者看过发布材料 | 分析前补 60 秒最小事实卡 | 冷读能复述基础事实 | promoted |
 | TIBO-F-04 | 实习老师 | 开头口语，中段报告体 | 把网感当成段子而非信息推进 | 术语首次翻译，人话与冷读检查覆盖全文 | `review.md` 冷读记录 | promoted |
 | TIBO-F-05 | 实习老师 | 结尾让调侃抢走判断 | 结尾只回扣，没有信息增量 | 最后两三段回收框架和长期判断 | 末句可单独表达结论 | promoted |
+| TIBO-COST-001 | 实习老师反馈的「成本可预测性」转译与本稿准确性边界；不是老师单独提出的第 6 条反馈 | token 单价或单项速度不能代表完成同一任务的总成本 | 比较口径没有覆盖重试、工具调用、等待、总用量、人工验收与收尾 | brief 和正文改为同一任务、工具与验收标准下的总成本判断；未取得的变量明确标为未知 | `brief.md` 第 43、55、73 行；`draft.md`「成本可预测性」一节；`research/editor-feedback-2026-07-10.md` 第 17—22 行 | 与 `CLAUDE-FB-002-VALUE` 构成 E2，promoted 为 `APPSO-VALUE-001` |
 | TIBO-COPY-001—034 | 逐句终校 | 语法、指代、搭配与标点缺陷 | 冷读不能替代句法硬门 | 由主笔逐条修复后重算正文哈希 | 当前未完成 | case_only / regression set |
 
 ## 因果复盘
@@ -65,6 +66,7 @@ sop_promotions: 4
 | CORE-FACTCARD-001 | 同上 | 分析前补足读者理解所需的最小事实卡 | TIBO-F-03；Opta FB-009 |
 | CORE-HUMAN-001 | `self-media-ops/references/wechat-human-voice-pass.md` | 人话检查覆盖信息结构和全文推进，不只替换词汇 | TIBO-F-04；OPTA-FB-014—018 |
 | CORE-COPYEDIT-001 | `self-media-ops/references/wechat-copyedit-pass.md` | 冷读之后仍需独立逐句终校与正文哈希 | TIBO-COPY-001—034；OPTA-OPEN-001 |
+| APPSO-VALUE-001 | `APPSO-数字资产/03-SOP/APPSO 内容生产 SOP.md` | 声称 AI 产品值得用、提效或省钱时，用同一任务的端到端耗时、用量、人工收尾与结果判断，不以单价或一次演示代替 | TIBO-COST-001；CLAUDE-FB-002-VALUE |
 
 ## 下一轮动作
 

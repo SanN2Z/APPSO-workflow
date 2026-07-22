@@ -316,3 +316,29 @@ changes:
     promoted_rules:
       - "WECHAT-HUMAN-002 (E2 provisional)"
     next_review_on: "2026-08-22"
+
+  - id: "SOP-CHANGE-20260722-006"
+    date: "2026-07-22"
+    change: "为 APPSO 的 AI 产品与工作流稿增加端到端价值判断门：固定同一任务和基线，以总耗时、用量、人工监督与收尾、完成率和新材料稳定性判断是否值得用，不再用单价、一次演示或按钮速度替代总体价值"
+    source_cases:
+      - "tibo-gpt56-quota:TIBO-COST-001"
+      - "claude-cowork-record-a-skill:CLAUDE-FB-002-VALUE"
+    affected_sources:
+      - "APPSO-数字资产/03-SOP/APPSO 内容生产 SOP.md"
+      - "APPSO-数字资产/00-治理/内部资产索引.md"
+      - "APPSO-数字资产/00-治理/变更记录.md"
+      - "共享/运营/复盘/反馈模式台账.yml"
+      - "微信公众号/知识库/反馈库/2026-07-22-Claude-Record-a-Skill-编辑diff.md"
+      - "微信公众号/内容/2026/07/claude-cowork-record-a-skill/retrospective.md"
+      - "微信公众号/内容/2026/07/tibo-gpt56-quota/retrospective.md"
+    classification: "scoped_rule_promotion"
+    validation:
+      - "两个独立内容包均把产品价值从单点指标改为同一任务的端到端成本与结果；证据可追溯"
+      - "失败回归命中只列 token 单价、单次成功演示或按钮速度便宣布『值得用 / 更省』的写法"
+      - "通过回归要求比较任务与基线明确，决定性变量已测或标为未知，读者能说出什么结果会推翻判断"
+      - "反例放行不作效率判断的短讯，以及以权限、可逆性与事故后果为主要变量的安全稿"
+      - "动作与核心判断、结尾复跑和重复铺垫分别回收到已有规则或本稿案例，没有借成本规则捆绑晋升"
+      - "restricted 原句和截图继续只留在反馈库；中央规则仅保存脱敏机制"
+    promoted_rules:
+      - "APPSO-VALUE-001 (E2 provisional)"
+    next_review_on: "2026-08-22"

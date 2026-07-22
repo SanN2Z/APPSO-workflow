@@ -71,6 +71,23 @@ patterns:
     regression_check: "正例：『先别急着喊革命』『这笔账躲不掉』『入口到账』和连续交卷 / 考试隐喻必须命中；反例：『本次 API 调用账单增加 12%』作为真实计费表述必须放行"
     next_review_on: "2026-08-22"
 
+  - id: "APPSO-VALUE-001"
+    pattern: "APPSO 的 AI 产品或工作流稿只用一次演示、按钮速度、公开单价或单项跑分就宣布值得用、提效或省钱，忽略同一任务的总耗时、用量、人工收尾与结果质量"
+    evidence_level: "E2"
+    source_cases: ["tibo-gpt56-quota:TIBO-COST-001", "claude-cowork-record-a-skill:CLAUDE-FB-002-VALUE"]
+    disposition: "promoted_provisional"
+    rule_source: "APPSO-数字资产/03-SOP/APPSO 内容生产 SOP.md#ai-产品与工作流的端到端价值判断"
+    trigger: "APPSO 的 AI 产品或工作流稿声称某项功能值得用、变快、变便宜、提效或可以替代人工流程"
+    action: "先固定同一任务和比较基线，再选择会改变结论的端到端变量：配置或录制、运行与重试、token / 额度 / 金钱用量、人工监督 / 异常 / 验收 / 收尾、完成率 / 质量 / 新材料稳定性；关键未知项必须明示"
+    pass_condition: "读者能指出比较任务、基线、已测与未知的决定性变量，以及什么结果会推翻当前判断"
+    failure_signal: "用单价、单次演示、成功点击或鼠标速度直接推出总体价值，或省略仍需人工全程监督与收尾的成本"
+    scope: "APPSO 的 AI 产品稿与工作流解释稿；不作效率判断的短讯不强制成本表，安全稿可优先使用权限、可逆性与事故后果"
+    owner: "evidence_editor_and_feature_writer"
+    classification: "internal"
+    introduced_on: "2026-07-22"
+    regression_check: "失败例：只列 token 单价或演示速度便宣布『更省』；通过例：同一任务基线明确，决定性变量已测或标 unknown；反例：只报道功能上线且不作价值判断时不要求完整端到端表"
+    next_review_on: "2026-08-22"
+
   - id: "CORE-COPYEDIT-001"
     pattern: "冷读通过后，正文仍可能残留主谓、比较、格式，以及依赖聊天、brief 或版本历史才能理解的内部指代"
     evidence_level: "E2"
