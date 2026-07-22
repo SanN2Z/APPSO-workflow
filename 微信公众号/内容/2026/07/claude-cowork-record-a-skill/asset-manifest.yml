@@ -1,0 +1,80 @@
+version: 2
+updated: "2026-07-22"
+assets:
+  - file: "assets/claude-record-a-skill-official-post.png"
+    used_in_draft: true
+    source_type: "user_supplied_social_screenshot"
+    source: "https://x.com/claudeai/status/2079595988998554047"
+    creator_or_rightsholder: "Anthropic PBC / X screenshot supplied by user"
+    obtained_on: "2026-07-22"
+    dimensions: "830x1053"
+    modifications: "Copied from the user-provided attachment; no content edits"
+    rights_status: "needs_review"
+    rights_basis: "Official social post supplied by the user for attributed editorial commentary; no commercial reuse license located"
+    allowed_platforms: ["wechat"]
+    attribution: "@claudeai"
+
+  - file: "assets/claude-record-a-skill-official-ui.jpg"
+    used_in_draft: true
+    source_type: "official_product_image"
+    source: "https://pbs.twimg.com/media/HNwzRgjWkAA4tKq.jpg?name=orig"
+    creator_or_rightsholder: "Anthropic PBC"
+    obtained_on: "2026-07-22"
+    dimensions: "1920x1080"
+    modifications: "Downloaded at original dimensions; no content edits"
+    rights_status: "needs_review"
+    rights_basis: "Official product image used with attribution for product commentary; no commercial reuse license located"
+    allowed_platforms: ["wechat"]
+    attribution: "Claude 官方 X 账号"
+
+  - file: "assets/bruce-show-dont-tell-reaction-user.png"
+    used_in_draft: true
+    source_type: "user_supplied_social_screenshot"
+    source: "Social post by @realbrucemartin; exact post URL pending"
+    creator_or_rightsholder: "@realbrucemartin / screenshot supplied by user"
+    obtained_on: "2026-07-22"
+    dimensions: "810x222"
+    modifications: "Copied from the user-provided attachment; no content edits"
+    rights_status: "needs_review"
+    rights_basis: "User supplied the screenshot for attributed commentary; exact source URL and reuse rights remain to be confirmed"
+    allowed_platforms: ["wechat"]
+    attribution: "@realbrucemartin"
+
+  - file: "assets/rohitsabu-computer-use-critique-user.png"
+    used_in_draft: true
+    source_type: "user_supplied_social_screenshot"
+    source: "Social post by @rohitsabu_; exact post URL pending"
+    creator_or_rightsholder: "@rohitsabu_ / screenshot supplied by user"
+    obtained_on: "2026-07-22"
+    dimensions: "801x285"
+    modifications: "Copied from the user-provided attachment; no content edits"
+    rights_status: "needs_review"
+    rights_basis: "User supplied the screenshot for attributed commentary; exact source URL and reuse rights remain to be confirmed"
+    allowed_platforms: ["wechat"]
+    attribution: "@rohitsabu_"
+
+  - file: "assets/show-rule-replay-doodle.png"
+    used_in_draft: true
+    source_type: "user_supplied_ai_generated_illustration"
+    source: "User-provided attachment in the current task"
+    creator_or_rightsholder: "User supplied; generation provenance not yet confirmed"
+    obtained_on: "2026-07-22"
+    dimensions: "1448x1086"
+    modifications: "Copied from the user-provided attachment; no content edits"
+    rights_status: "needs_review"
+    rights_basis: "Used as an explicitly labelled AI-generated explanatory illustration; generation tool and usage terms remain to be confirmed"
+    allowed_platforms: ["wechat"]
+    attribution: "AI 生成示意图，用户提供"
+
+  - file: "assets/priorshift-codex-claude-compare-user.png"
+    used_in_draft: true
+    source_type: "user_supplied_social_screenshot"
+    source: "Social post by @priorshift; exact post URL pending"
+    creator_or_rightsholder: "@priorshift / screenshot supplied by user"
+    obtained_on: "2026-07-22"
+    dimensions: "681x405"
+    modifications: "Copied from the user-provided attachment; no content edits"
+    rights_status: "needs_review"
+    rights_basis: "User supplied the screenshot for attributed comparison commentary; exact source URL and reuse rights remain to be confirmed"
+    allowed_platforms: ["wechat"]
+    attribution: "@priorshift"
