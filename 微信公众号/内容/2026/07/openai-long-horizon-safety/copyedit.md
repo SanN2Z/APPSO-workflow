@@ -1,11 +1,13 @@
 ---
-status: pass
-checked_at: "2026-07-22 11:11:24+09:00"
-body_sha256: "4a13e96e3f2baa605d32929b63ea7c21e1d1a2f3d7bade68d663cdb4e3db8621"
+status: needs_fix
+checked_at: ""
+body_sha256: ""
 scope: "title, body, headings, lists, captions, quotes, notes"
 ---
 
 # 语法终校
+
+> 2026 年 7 月 22 日热点开头改写后，上一版终校签字已失效。等待用户人工精修，再对精确正文重新终校并锁定哈希。以下记录仅保留为历史检查证据。
 
 ## 检查结果
 

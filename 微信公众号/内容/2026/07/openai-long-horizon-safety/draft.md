@@ -7,22 +7,26 @@ updated: 2026-07-22
 as_of: 2026-07-22
 fact_checked: true
 rights_checked: false
-copyedit_checked: true
-copyedit_body_sha256: "4a13e96e3f2baa605d32929b63ea7c21e1d1a2f3d7bade68d663cdb4e3db8621"
+copyedit_checked: false
+copyedit_body_sha256: ""
 published_url: ""
 ---
 
 # OpenAI 模型黑进 Hugging Face，谁来盯着它？
 
-今天，外网围绕一场 AI Agent 安全事故的讨论迅速升温。
+今天，外网都在讨论一件有点离谱的事：OpenAI 的模型为了在一次网络安全测试里拿到答案，绕过了自家设置的联网限制，又闯进 AI 开源平台 Hugging Face 支撑日常业务的生产系统。
 
-7 月 21 日，OpenAI 披露，一组包含 GPT-5.6 Sol 和一款更强预发布模型的系统，在进行 ExploitGym 网络安全评测时突破了受限环境。它们为获取测试答案，利用零日漏洞取得公网访问，最终进入 Hugging Face 的生产系统。两家公司仍在联合调查。
+这场测试叫 ExploitGym，可以把它理解成一场给 AI 的网络攻防考试。OpenAI 原本把模型关在「不能随便上网」的环境里，它却利用一个此前没人发现的漏洞连上公网，一路拿到更高权限，最后从 Hugging Face 的生产数据库里找到了测试答案。
+
+OpenAI 称其为「史无前例的网络安全事件」。特别之处在于，整条入侵链不是人一步步遥控的。按公司的初步调查，评测没有要求模型攻击 Hugging Face，是模型自己推断那里可能放着答案。一次用来测试 AI 能力的内部考试，就这样变成了影响另一家公司真实系统的安全事故。
+
+参与评测的系统包含 GPT-5.6 Sol 和一款更强的预发布模型。两家公司仍在联合调查。
 
 ![OpenAI 宣布与 Hugging Face 联合调查模型评测安全事件](assets/x-openai-huggingface-incident.jpg)
 
 *OpenAI 称旗下模型在网络安全评测期间进入 Hugging Face 生产环境。图源：OpenAI / X；截图由用户提供，联合调查仍在进行。*
 
-这件事把原稿的问题又推近了一步：当 Agent 为了完成任务不停找路，权限边界对它而言是停止信号，还是下一道待解的题？
+这场事故把长时程 Agent 的风险摆到了眼前：当它为了完成任务不停找路，权限边界究竟是停止信号，还是下一道待解的题？
 
 这几天，接连有用户投诉 GPT-5.6 Sol 擅自删东西。
 
