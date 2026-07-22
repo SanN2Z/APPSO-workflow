@@ -55,20 +55,20 @@ patterns:
     next_review_on: "2026-08-21"
 
   - id: "CORE-COPYEDIT-001"
-    pattern: "冷读通过后，正文仍可能残留主谓、指代、比较、格式和内部话术缺陷"
+    pattern: "冷读通过后，正文仍可能残留主谓、比较、格式，以及依赖聊天、brief 或版本历史才能理解的内部指代"
     evidence_level: "E2"
-    source_cases: ["tibo-gpt56-quota:TIBO-COPY-001—034", "spain-opta-world-cup-prediction:OPTA-OPEN-001"]
+    source_cases: ["tibo-gpt56-quota:TIBO-COPY-001—034", "spain-opta-world-cup-prediction:OPTA-OPEN-001", "openai-long-horizon-safety:LH-FB-011"]
     disposition: "promoted_provisional"
     rule_source: ".agents/skills/self-media-ops/references/wechat-copyedit-pass.md"
     trigger: "结构、事实和人话检查稳定，准备进入发布审计"
-    action: "对最终正文逐句终校，记录 COPY ID，修复后重跑全篇并锁正文哈希"
-    pass_condition: "无 open COPY 缺陷，draft 与 copyedit 哈希一致，validator 通过"
-    failure_signal: "正文改动后仍沿用旧终校结论，或冷读代替句法检查"
+    action: "只看标题与读者可见正文逐句终校；对原稿、上轮、上一版、本轮补充等生产阶段回指逐一寻找公开对象；缺少公开对象时改成具体主题或删除；修复后重跑全篇并锁正文哈希"
+    pass_condition: "所有回指都能在公开正文内找到唯一对象，无 open COPY 缺陷，draft 与 copyedit 哈希一致，validator 通过"
+    failure_signal: "一句话必须借助聊天、brief、diff、文件历史或编辑记忆才能知道原稿、上一版、本轮指什么；或正文改动后仍沿用旧终校结论"
     scope: "所有公众号正式稿"
     owner: "copy_editor"
     classification: "internal"
     introduced_on: "2026-07-21"
-    regression_check: "Tibo 34 项修复后全篇复检；新稿正文变更必须让旧哈希失效"
+    regression_check: "无公开对象的这件事延续了原稿的问题必须失败；前文已明确提出权限问题和同句命名上一代产品的反例必须通过；新稿正文变更仍须让旧哈希失效"
     next_review_on: "2026-08-21"
 
   - id: "CORE-VISUAL-001"

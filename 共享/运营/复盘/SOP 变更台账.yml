@@ -187,3 +187,22 @@ changes:
     promoted_rules:
       - "PROJECT-APPSO-AI-STYLE-001 (project configuration)"
     next_review_on: "2026-08-22"
+
+  - id: "SOP-CHANGE-20260722-003"
+    date: "2026-07-22"
+    change: "强化 CORE-COPYEDIT-001 的读者可见指代门：内部版本称谓和生产阶段回指必须在公开标题或正文中找到对象，不能让聊天、brief、diff 或编辑记忆替读者补上下文"
+    source_cases:
+      - "openai-long-horizon-safety:LH-FB-011"
+    affected_sources:
+      - ".agents/skills/self-media-ops/references/wechat-copyedit-pass.md"
+      - "共享/运营/复盘/反馈模式台账.yml"
+      - "微信公众号/内容/2026/07/openai-long-horizon-safety/retrospective.md"
+    classification: "core_rule_regression_fix"
+    validation:
+      - "无公开对象的「这件事延续了原稿的问题」按新门禁失败"
+      - "公开正文已出现具体权限问题时，回指「前文提到的权限问题」通过"
+      - "同句明确命名比较对象的「上一代产品」通过，避免机械禁词"
+      - "该稿按用户要求停止后续处理，没有为验证规则继续改写正文"
+    promoted_rules:
+      - "CORE-COPYEDIT-001 (reader-visible reference regression strengthened; remains E2 provisional)"
+    next_review_on: "2026-08-21"
