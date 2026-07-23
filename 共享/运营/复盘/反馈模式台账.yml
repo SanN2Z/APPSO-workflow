@@ -1,12 +1,12 @@
 schema_version: 1
-updated_on: "2026-07-22"
+updated_on: "2026-07-23"
 
 # 原始反馈留在内容包或受限反馈库；这里只保存脱敏后的跨案例模式。
 patterns:
   - id: "CORE-PROMISE-001"
     pattern: "标题、开头、正文框架和结尾争夺多个承诺，导致读者无法复述中心问题"
     evidence_level: "E2"
-    source_cases: ["tibo-gpt56-quota:TIBO-F-01", "spain-opta-world-cup-prediction:OPTA-FB-001—005,016"]
+    source_cases: ["tibo-gpt56-quota:TIBO-F-01", "spain-opta-world-cup-prediction:OPTA-FB-001—005,016", "amazon-agi-ai-hiring-signals:FB-007"]
     disposition: "promoted_provisional"
     rule_source: "共享/运营/SOP/内容工作流.md#可执行核心规则"
     trigger: "一篇内容同时出现多个标题钩子、中心问题或结尾落点"
@@ -17,7 +17,7 @@ patterns:
     owner: "managing_editor"
     classification: "internal"
     introduced_on: "2026-07-21"
-    regression_check: "在下一篇非世界杯、非模型额度稿中做冷读反例测试"
+    regression_check: "Amazon 就业分析稿隐藏小标题后只能复述『公司还会不会招第二个人』一个中心问题；方法稿若 brief 明确承诺清单，结尾交付清单必须放行"
     next_review_on: "2026-08-21"
 
   - id: "CORE-FACTCARD-001"
@@ -40,18 +40,20 @@ patterns:
   - id: "CORE-HUMAN-001"
     pattern: "AI 味来自报告式结构、机械分节和重复总结，而不只是某几个词"
     evidence_level: "E2"
-    source_cases: ["tibo-gpt56-quota:TIBO-F-04—05", "spain-opta-world-cup-prediction:OPTA-FB-014—018"]
+    source_cases: ["tibo-gpt56-quota:TIBO-F-04—05", "spain-opta-world-cup-prediction:OPTA-FB-014—018", "openai-long-horizon-safety:LH-FB-003,005", "amazon-agi-ai-hiring-signals:FB-007—009"]
     disposition: "promoted_provisional"
-    rule_source: ".agents/skills/self-media-ops/references/wechat-human-voice-pass.md"
+    rule_source: "共享/运营/SOP/内容工作流.md#可执行核心规则"
+    execution_checklist: ".agents/skills/self-media-ops/references/wechat-human-voice-pass.md"
+    detection_spec: ".agents/skills/self-media-ops/references/wechat-ai-pattern-pass.md"
     trigger: "开头口语但正文报告化、段落工作重复、结尾复述目录或笑话抢走判断"
-    action: "先修读者路径和段落工作，再做全文声音、节奏、术语与结尾检查"
-    pass_condition: "冷读者能重建问题、判断、证据、限制、读者后果和末句信息"
-    failure_signal: "只能通过替换词语改善，或删掉结尾反而让主旨更强"
+    action: "先给每段唯一工作；线性论证按读者下一问建立依赖，平行证据共享明确的问题、指标或比较尺度；再检查抽象词、自然转场、短句任务、口语落点、强修辞稀缺性、全文声音与结尾；隐藏小标题验证顺序或并列关系"
+    pass_condition: "冷读者能重建问题、判断、证据、限制、读者后果和末句信息；线性材料有可复述依赖或平行材料有统一比较尺度，每个独立短句与口语都有可复述的信息任务"
+    failure_signal: "只能通过替换词语改善；按来源写成几份小报告；口语均匀撒布或强对比反复承担转场；删掉结尾反而让主旨更强"
     scope: "微信公众号长文；其他平台使用对应 adapter"
     owner: "feature_writer_and_release_auditor"
     classification: "internal"
     introduced_on: "2026-07-21"
-    regression_check: "下一篇使用不同稿型，验证规则不会强迫同一种叙事骨架"
+    regression_check: "Amazon 多来源长文应命中材料关系、短句任务和结尾分叉；平行证据结构可凭统一比较尺度通过；350 字事实快讯、必要产品分类与方法清单反例不得被强迫套用问题开头、口语配额或同一种叙事骨架"
     next_review_on: "2026-08-21"
 
   - id: "WECHAT-HUMAN-002"
@@ -190,19 +192,36 @@ patterns:
     regression_check: "正例：已登记本地参考可直接通过最终阶段，无参考图时参考阶段通过、登记输入后最终阶段通过；tool_request 精确映射三种输入绑定且不落盘；反例：缺参考、错误模式、冲突正向词与未授权输入均在调用前失败；通用无参考图 profile 仍可直接生成且不注入 appsso-004"
     next_review_on: "2026-08-22"
 
-  - id: "PROJECT-WECHAT-LAYOUT-001"
-    pattern: "固定视觉主题适合后台不再重排的密封草稿；若交付后还要人工编辑，元素级行内样式会与公众号编辑器叠加，增加返工"
+  - id: "PROJECT-APPSO-VOICE-001"
+    pattern: "APPSO 冷静分析型长文虽然事实完整，却按来源写成几份小报告；之后再均匀添加短句、口语和否定对比，形成新的模板节奏"
     evidence_level: "project_configuration"
-    source_cases: ["spain-opta-world-cup-prediction:OPTA-FB-029", "APPSO-公众号版式反馈与样本证据:LAYOUT-FB-001", "ai-agents-real-world-loss:DLV-006", "APPSO-公众号版式反馈与样本证据:LAYOUT-FB-002"]
+    source_cases: ["amazon-agi-ai-hiring-signals:FB-007—009", "spain-opta-world-cup-prediction:OPTA-FB-014—018", "openai-long-horizon-safety:LH-FB-003,005"]
     disposition: "project_adapter"
-    rule_source: "APPSO-数字资产/03-SOP/APPSO 内容生产 SOP.md#7-排版与交付"
+    rule_source: "APPSO-数字资产/03-SOP/APPSO 内容生产 SOP.md#冷静分析型长文的叙事与节奏-adapter"
+    trigger: "APPSO 约 2500—7000 个中文字符、需要连接多组事实或来源的冷静分析型长文进入人话编辑"
+    action: "先锁唯一问题和材料的事实 / 机制 / 限制 / 后果角色，建立线性依赖或平行比较尺度并删除报告脚手架；再标语义换挡短句、4—5 个候选口语落点、框架词簇，并扫描高显著强对比是否必要；结尾只兑现原承诺"
+    pass_condition: "隐藏小标题后仍能复述线性依赖或平行比较尺度；候选口语不均匀撒布且每处承担判断、动作或后果；同类框架词不扎堆；高显著强对比默认可以为 0，实际保留项承担真实逻辑区分；末句不另开方法论"
+    failure_signal: "日期式通稿开头延迟读者问题；每个来源各写一份小报告；每节固定插入口语；独立短句没有语义任务；结尾收束后又出现第二套个人建议"
+    scope: "APPSO 冷静分析型长文；短资讯、步骤教程、法规条件、事故通报、平行证据结构、必要分类、真实逻辑排除和来源原话按反例放行；4—5 是候选编辑靶点，不是成稿配额；强对比默认 0，确有核心区分时全文最多 1—2 处"
+    owner: "feature_writer_and_release_auditor"
+    classification: "internal"
+    introduced_on: "2026-07-23"
+    regression_check: "计划回归：Amazon 就业分析稿应命中材料关系、短句任务、框架词簇与结尾分叉；350 字事实快讯不要求问题开头、4—5 个口语落点或高显著强对比，平行证据、教程步骤清单和中段真实术语消歧继续放行"
+    next_review_on: "2026-08-23"
+
+  - id: "PROJECT-WECHAT-LAYOUT-001"
+    pattern: "公众号交付必须区分仓库交付能力与公司浏览器执行通道；固定主题、可编辑交接和浏览器直写具有不同真源、授权、回退与验收条件"
+    evidence_level: "project_configuration"
+    source_cases: ["spain-opta-world-cup-prediction:OPTA-FB-029", "APPSO-公众号版式反馈与样本证据:LAYOUT-FB-001", "ai-agents-real-world-loss:DLV-006", "APPSO-公众号版式反馈与样本证据:LAYOUT-FB-002", "amazon-agi-ai-hiring-signals:FB-011—012", "APPSO-公众号版式反馈与样本证据:LAYOUT-FB-003"]
+    disposition: "project_adapter"
+    rule_source: "APPSO-数字资产/03-SOP/公司飞书到公众号浏览器排版 SOP.md#4-公司浏览器版式合同"
     trigger: "APPSO 普通公众号长文准备交付排版"
-    action: "将 project_adapter、delivery_mode、layout_profile 分开声明；人工编辑使用 manual_editor + default 和版本化交接包，密封草稿使用 sealed_draft + 受控主题；人工模式首次或变更后执行真实后台验收，密封主题在精确公众号账号与主题版本组合上先完成资格验证"
-    pass_condition: "人工模式保留语义结构，图片可解析且哈希一致，无冲突性元素样式，具备 375 px / 390 px 检查入口与页面级图片防溢出规则，API 草稿被阻断，后台复制编辑保存重开通过；密封模式通过主题、权利、资源与哈希门禁，后台保存重开后无需再次排版，精确账号与主题版本取得生产资格"
-    failure_signal: "未确认模式便注入固定 CSS；人工交接正文或图片缺失、溢出、样式打架或可调用 API；密封主题未经资格验证便用于生产，或草稿创建后仍需大量手调"
+    action: "将 project_adapter、delivery_mode、layout_profile 与外部 execution_route 分开；公司稿按精确版本使用 company_browser，显式绑定受限飞书定稿、AppSo 品牌、目标草稿和图片映射；manual_editor 与 sealed_draft 保留为仓库降级路径"
+    pass_condition: "公司浏览器通道具备当前任务授权、唯一目标草稿、精确扩展版本和显式 AppSo 选择；标题、摘要、正文、图片和保存均无警告，重开后结构与样式一致，缓存已清除；人工与密封模式分别通过既有结构／资源／哈希与资格验证门"
+    failure_signal: "把公司浏览器直写冒充密封草稿；从正文猜品牌；受限公司终稿被复制进 Git；目标草稿不明便强制覆盖；警告或部分保存被当成功；未重开验收或未清缓存"
     scope: "APPSO 普通公众号长文；Hunt Good、个人公众号和 X 不自动继承"
     owner: "publishing_adapter"
     classification: "internal"
     introduced_on: "2026-07-21"
-    regression_check: "自动测试三字段显式声明与组合合法性、parser 清理反例、资源完整性、375 px / 390 px 检查入口、页面级图片防溢出规则与 API 阻断；Chromium 本地 smoke 检查图片加载和复制按钮；人工模式做复制编辑保存重开，密封模式做授权资格验证草稿 round-trip；另测 Hunt Good 不继承 APPSO 主题"
+    regression_check: "公司扩展升级时记录 manifest 哈希并在空白草稿测试标题层级、摘要、引用、列表、连续图片、超限图、GIF、保存后重开和缓存清理；仓库模式继续测试三字段组合、parser 清理、资源完整性、API 阻断与密封构建；另测 Hunt Good 不继承 APPSO 规则"
     next_review_on: "2026-07-29"

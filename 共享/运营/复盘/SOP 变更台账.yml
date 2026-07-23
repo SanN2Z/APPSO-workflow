@@ -1,5 +1,5 @@
 schema_version: 1
-updated_on: "2026-07-22"
+updated_on: "2026-07-23"
 
 changes:
   - id: "SOP-CHANGE-20260721-001"
@@ -342,3 +342,76 @@ changes:
     promoted_rules:
       - "APPSO-VALUE-001 (E2 provisional)"
     next_review_on: "2026-08-22"
+
+  - id: "SOP-CHANGE-20260723-001"
+    date: "2026-07-23"
+    change: "根据 Amazon AGI 招聘信号稿内部第三版正文—公司终稿 diff，强化唯一承诺与结构性人话流程，并新增 APPSO 冷静分析型长文声音 adapter：先建立问题链和材料角色，再用语义短句、候选口语落点、框架词簇与强对比稀缺性调节节奏；结尾不得另开未承诺的方法论"
+    source_cases:
+      - "amazon-agi-ai-hiring-signals:FB-007—009"
+      - "spain-opta-world-cup-prediction:OPTA-FB-014—018"
+      - "openai-long-horizon-safety:LH-FB-003,005"
+      - "tibo-gpt56-quota:TIBO-F-04—05"
+    affected_sources:
+      - "共享/运营/SOP/内容工作流.md"
+      - ".agents/skills/self-media-ops/references/wechat-human-voice-pass.md"
+      - ".agents/skills/self-media-ops/references/wechat-ai-pattern-pass.md"
+      - "APPSO-数字资产/03-SOP/APPSO 内容生产 SOP.md"
+      - "APPSO-数字资产/00-治理/变更记录.md"
+      - "共享/运营/复盘/反馈模式台账.yml"
+      - "微信公众号/内容/2026/07/amazon-agi-ai-hiring-signals/retrospective.md"
+      - "微信公众号/内容/2026/07/amazon-agi-ai-hiring-signals/research/editor-diff-2026-07-23.md"
+    classification: "project_adapter_strengthening"
+    validation:
+      - "公司完整终稿继续按 restricted 处理，Git 只保存脱敏 diff、短例证与机制，不复制原文"
+      - "通用层只强化唯一承诺、线性依赖或平行比较尺度、短句信息任务、口语信息任务和结尾压力测试；4—5 个候选口语落点与本地禁用词只进入 APPSO adapter"
+      - "规则定义已覆盖日期式通稿开头、按来源分成三份小报告、均匀口语、框架词扎堆、强对比反复与结尾另开方法论等失效模式"
+      - "APPSO adapter 明确高显著强对比默认可以为 0；确有核心区分时全文最多 1—2 处"
+      - "『说白了』不是『翻译一下就是』的机械替换；删除框架词后可直接表达时优先直接表达"
+      - "本轮不覆盖 draft.md，不改变 fact / rights / copyedit 状态，也不把用户称为终稿等同于已发布"
+    planned_regression:
+      - "Amazon 就业分析稿应命中材料关系、短句任务、框架词簇、重复强对比与结尾分叉"
+      - "350 字事实快讯不要求问题开头或 4—5 个口语落点；教程步骤清单、必要产品分类、真实逻辑排除、证据限定、来源原话与平行证据继续放行"
+    promoted_rules:
+      - "PROJECT-APPSO-VOICE-001 (project_configuration)"
+      - "CORE-PROMISE-001 (existing E2 regression strengthened)"
+      - "CORE-HUMAN-001 (existing E2 regression strengthened)"
+    next_review_on: "2026-08-23"
+
+  - id: "SOP-CHANGE-20260723-002"
+    date: "2026-07-23"
+    change: "登记公司爱范儿一键排版 Chrome 扩展 v1.10.0，新增受控 company_browser 执行通道；公司飞书定稿与知识库工作稿分离，扩展负责运行时样式和公众号写入，既有事实、权利、授权、保存后重开与缓存清理门继续生效"
+    source_cases:
+      - "amazon-agi-ai-hiring-signals:FB-011—012"
+      - "APPSO-公众号版式反馈与样本证据:LAYOUT-FB-003"
+    affected_sources:
+      - ".gitignore"
+      - ".agents/skills/self-media-ops/SKILL.md"
+      - ".agents/skills/self-media-ops/references/content-package.md"
+      - ".agents/skills/self-media-ops/references/review-checklist.md"
+      - ".agents/skills/self-media-ops/references/wechat-publishing.md"
+      - "APPSO-数字资产/README.md"
+      - "APPSO-数字资产/00-治理/资产台账.yml"
+      - "APPSO-数字资产/00-治理/内部资产索引.md"
+      - "APPSO-数字资产/00-治理/变更记录.md"
+      - "APPSO-数字资产/02-方法与知识/视觉与排版/APPSO 公众号版式反馈与样本证据.md"
+      - "APPSO-数字资产/03-SOP/APPSO 内容生产 SOP.md"
+      - "APPSO-数字资产/03-SOP/公司飞书到公众号浏览器排版 SOP.md"
+      - "微信公众号/themes/README.md"
+      - "共享/模板/微信公众号内容包/publish-record.md"
+      - "共享/运营/复盘/反馈模式台账.yml"
+      - "微信公众号/内容/2026/07/amazon-agi-ai-hiring-signals/asset-manifest.yml"
+      - "微信公众号/内容/2026/07/amazon-agi-ai-hiring-signals/publish-record.md"
+      - "微信公众号/内容/2026/07/amazon-agi-ai-hiring-signals/review.md"
+      - "微信公众号/内容/2026/07/amazon-agi-ai-hiring-signals/retrospective.md"
+    classification: "project_adapter_update"
+    validation:
+      - "manifest.json 版本为 1.10.0，SHA-256 已登记；11 个 JavaScript 文件均通过 node --check"
+      - "静态网络审计未发现第三方遥测、远程脚本、硬编码凭据或动态执行；运行范围为飞书、微信公众号与未附带实现的本机 127.0.0.1 回退"
+      - "公司扩展原始包与内嵌品牌素材按 restricted local-only 处理，并由根 .gitignore 排除"
+      - "公司浏览器通道没有伪装成 publish.yml 的第三种 delivery_mode；manual_editor 与 sealed_draft 仍是仓库可执行降级路径"
+      - "Amazon 当前内容包只保存受限飞书链接和 3 张图片映射，不复制公司完整终稿；用户已确认允许复用已登记工作稿图片"
+      - "本地直接调用扩展 v1.10.0 buildFixture 完成排版预演：正文源与渲染结果均为 2850 个字符，指纹均为 b0b6255b；3 张正文图无占位、媒体警告或特殊块警告"
+      - "真实公众号目标草稿、保存后重开、图片托管和缓存清理尚未执行，明确保留为待验收项"
+    promoted_rules:
+      - "PROJECT-WECHAT-LAYOUT-001 (company browser execution route added)"
+    next_review_on: "2026-07-30"

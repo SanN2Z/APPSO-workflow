@@ -4,9 +4,11 @@
 
 用户反馈、3 篇公开样本、计算样式和头尾图资源指纹只在 [APPSO 公众号版式反馈与样本证据](<../../APPSO-数字资产/02-方法与知识/视觉与排版/APPSO 公众号版式反馈与样本证据.md>)维护；本文件只保存当前可执行合同。
 
+公司 APPSO 稿另有爱范儿一键排版 Chrome 扩展 v1.10.0 执行通道。该通道的运行时样式由公司扩展版本控制，不由本目录 CSS 复刻；入口与资格验证见 [公司飞书到公众号浏览器排版 SOP](<../../APPSO-数字资产/03-SOP/公司飞书到公众号浏览器排版 SOP.md>)。`appsso-article-v1` 继续作为仓库 `sealed_draft` 的独立回退 profile。
+
 ## `appsso-article-v1`
 
-适用范围：`project_adapter: "appsso"` 且 `delivery_mode: "sealed_draft"` 的 APPSO 普通长文。人工编辑交接、Hunt Good 与个人公众号不适用。
+适用范围：`project_adapter: "appsso"` 且 `delivery_mode: "sealed_draft"` 的 APPSO 普通长文。公司浏览器扩展、人工编辑交接、Hunt Good 与个人公众号不适用。
 
 截至 2026 年 7 月 22 日，该 profile 只完成本机 375 px / 390 px 预览，尚未完成真实后台往返验证。验证前，任何使用该 profile 创建的草稿都只能称为「资格验证草稿」；只有后台 round-trip 通过后，经过验证的精确公众号账号与主题版本组合才取得生产密封草稿资格。
 

@@ -50,18 +50,22 @@ Flag sections that remain equally valid after paragraph shuffling, repeat the sa
 - formulaic scene-setting that delays the actual event;
 - repeated “不是 A，而是 B” or three-part cadence without a real distinction;
 - “下面来看”“值得注意的是”“这意味着”等 meta narration where the relation should be stated directly;
+- clusters of framing labels such as 「严格来说」「奇怪的是」「有意思的是」「说白了」 in adjacent paragraphs or sections, when they repeatedly announce interpretation instead of adding one;
 - self-labeling such as “最关键的一点是” without evidence that earns the emphasis;
 - generic future-looking endings that could close any AI article.
+- an ending that completes the title promise and then starts a new advice framework, checklist, or thesis that the brief did not promise.
 
 ### 4. Uniform rhythm and over-organization
 
-Flag identical paragraph lengths, repeated section shapes, every paragraph ending in a mini-conclusion, excessive bullets, or prose forced into symmetrical clauses. Repair for meaning and reading rhythm, not merely for sentence-length variation.
+Flag identical paragraph lengths, repeated section shapes, every paragraph ending in a mini-conclusion, excessive bullets, or prose forced into symmetrical clauses. Also flag standalone short sentences and colloquial verbs that appear at regular intervals but carry no turn, judgment, action, or consequence. Repair for meaning and reading rhythm, not merely for sentence-length variation.
 
 ### 5. Manufactured personality
 
 Flag fake emotional reactions, forced slang, unexplained memes, canned agreement, or invented labels that are not used by the source or helpful to the reader. Do not “humanize” copy by injecting casual language at random.
 
-Also flag stock Chinese colloquial frames and nonliteral metaphors that manufacture emphasis without carrying information, such as「先别急着……」「喊革命」「……到账」「这笔账……」or a repeated exam / war / finance metaphor chain. Apply a transfer test: if the whole phrase could move unchanged to another AI product article and deleting it loses no fact or judgment, remove it. If it has a real job, rewrite it with a concrete actor, action, condition, cost, or result. Preserve sourced quotations and literal uses such as an actual bill, payment arrival, historical revolution, or real examination.
+An individual colloquial phrase may be deliberate. The defect is regular, low-information placement: for example, every section receives one slang verb or reveal phrase even though deleting it changes no fact, judgment, or reader consequence.
+
+Also flag stock Chinese colloquial frames and nonliteral metaphors that manufacture emphasis without carrying information, such as 「先别急着……」「喊革命」「……到账」「这笔账……」 or a repeated exam / war / finance metaphor chain. Apply a transfer test: if the whole phrase could move unchanged to another AI product article and deleting it loses no fact or judgment, remove it. If it has a real job, rewrite it with a concrete actor, action, condition, cost, or result. Preserve sourced quotations and literal uses such as an actual bill, payment arrival, historical revolution, or real examination.
 
 ### 6. Speculative gap filling
 
@@ -74,6 +78,7 @@ Flag precise motives, causes, product mechanisms, safety guarantees, or future o
 - English em-dash limits or a ban on Chinese curly quotation marks;
 - a generic AI-detector score, probability, or “sounds AI” verdict;
 - forced first-person anecdotes, slang, typos, or sentence fragments added only to appear human.
+- universal quotas for short sentences, colloquial phrases, transition words, or rhetorical contrasts. A project adapter may define an editorial range, but it cannot replace the information-role test or its stated counterexamples.
 
 These may be observations when they reveal a concrete reader problem, but none is a gate by itself.
 

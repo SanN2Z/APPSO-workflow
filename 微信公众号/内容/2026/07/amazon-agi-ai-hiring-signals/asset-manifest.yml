@@ -35,9 +35,9 @@ assets:
     creator_or_rightsholder: "Amazon.com, Inc. or its affiliates"
     obtained_on: "2026-07-23"
     modifications: "Downloaded from the official Amazon Jobs CDN; no crop, annotation, text replacement, or other content edits"
-    rights_status: "user_requested_editorial_commentary_needs_final_review"
-    rights_basis: "用户在当前任务中明确要求寻找亚马逊 AGI 团队相关的高级感配图；图片仅作为有出处的新闻评论素材使用，不构成通用转载或商业授权"
-    rights_blocker: true
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "用户于 2026-07-23 明确确认公司飞书定稿可以复用本内容包 draft 已登记图片；图片仅作为有出处的新闻评论素材使用，不构成通用转载或商业授权"
+    rights_blocker: false
     allowed_platforms: ["wechat"]
     attribution: "Amazon Jobs"
     editorial_note: "Official Agentic AI concept artwork on Amazon's AGI recruiting page; not a photograph of the employees affected by the July 22 staffing change"

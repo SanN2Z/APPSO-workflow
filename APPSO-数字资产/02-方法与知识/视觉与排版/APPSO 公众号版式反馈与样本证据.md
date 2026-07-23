@@ -29,6 +29,29 @@
 
 本地机制复现：固定 APPSO 主题会把正文的字号、行高、边距、左右 padding 和对齐写入元素级 `style`；Wenyan `default` 同样会产生大量行内样式。因此仅切回默认主题不能恢复后台可编辑性。人工模式改用 tag-aware 语义 allowlist，而不是文本正则，避免误删正文中作为示例出现的 `style="..."`，并阻断 `hidden`、`contenteditable`、`template`、`dialog` 等隐藏或交互结构。自动化已验证结构保留、交接页／结构正文／复制输入／图片哈希一致、预览页具备 375 px / 390 px 检查入口与页面级图片防溢出规则，以及 API 草稿能力被阻断；Chromium 本地交接页 smoke 已确认 4 张正文图加载且「复制正文」按钮可触发。以上均不等于微信公众号后台已经验收，复制、修改、保存和重开的 round-trip 仍待用户验证。
 
+## `LAYOUT-FB-003`：公司浏览器排版格式
+
+2026 年 7 月 23 日，用户提供爱范儿一键排版 Chrome 扩展 v1.10.0，并确认「用这个格式，这个是公司的」。这条决定新增一条公司浏览器执行通道：
+
+- 公司 APPSO 稿从编辑确认的飞书定稿进入扩展；
+- 扩展 v1.10.0 的运行时样式是该通道的格式真源；
+- `LAYOUT-FB-001` 的 20 px 固定 profile 只继续服务仓库 `sealed_draft` 回退，不覆盖公司扩展；
+- 公司浏览器通道不改造成 Wenyan 主题，也不与 `appsso-article-v1` 混用。
+
+静态审计确认 v1.10.0 当前生成：
+
+- 第一种飞书标题层级映射为 22 px；
+- 第二种飞书标题层级映射为 18 px；
+- 正文 15 px、左右块级边距各 16 px、行高 `1.8`；
+- 正文没有强制 `text-align: justify`；
+- APPSO 稿需在扩展中手动选择 `AppSo`，避免自动品牌判断回落到爱范儿题图。
+
+用户同时指定，本轮 Amazon AGI／AI 招聘稿以公司飞书定稿为交付来源，正文图片可以复用仓库工作稿已登记的图片。公司定稿保持 `restricted`，不因排版需要复制进 Git；当前内容包只记录来源链接、允许复用的图片映射和脱敏 diff。
+
+本地排版预演已于 2026 年 7 月 23 日完成。预演没有另写近似 CSS，而是直接加载扩展 v1.10.0 的 `feishu-page-reader.js`，调用其公开的 `buildFixture` 生成 AppSo 题图、正文块和 3 张正文图，再用 Edge 手机宽度渲染检查。结果为：正文源与渲染结果均为 2850 个字符，FNV 文本指纹均为 `b0b6255b`；3 张正文图全部计入，无占位、媒体警告、特殊块警告或横滑图库。完整公司终稿和 Base64 图片只留在 `D:\tmp\amazon-agi-company-layout` 临时目录，不进入 Git。
+
+该决定批准了「格式来源」，不等于已经完成运行验收。v1.10.0 仍需在精确公司公众号账号上完成一次空白资格验证草稿的写入、保存、重开、图片托管和缓存清理，才能把对应账号 × 扩展版本组合标为生产已验证。
+
 ## `LAYOUT-SAMPLE-001`：3 篇公开样本
 
 访问日期均为 2026 年 7 月 21 日：
@@ -68,6 +91,7 @@
 - 数值样式真源：[`微信公众号/themes/appsso-article-v1.css`](<../../../微信公众号/themes/appsso-article-v1.css>)。
 - Profile 能力合同：[`微信公众号/themes/README.md`](<../../../微信公众号/themes/README.md>)；交付模式与安全合同：[`wechat-publishing.md`](<../../../.agents/skills/self-media-ops/references/wechat-publishing.md>)。
 - 本轮用临时测试包完成真实 Wenyan 渲染和 Edge 375 px / 390 px 人工检查；检查环境为 Edge `150.0.4078.83`，CSS SHA-256 为 `1e942c101bddb50be8940792bfef50a82560da3adf30d7c4dbbf0fcf10089a2f`。截图是可丢弃生成物，未作为知识资产入库。复现时在仓库根目录运行 `python 微信公众号/tools/wechat_publish.py preview <content-package> --open`，再在预览页依次切换 375 px 与 390 px。
-- 尚未执行公众号草稿箱 round-trip；当前任务没有对外创建草稿的授权。
+- 公司扩展的本地 `buildFixture` 排版与 Edge 手机宽度预演已通过；尚未执行公众号草稿箱 round-trip。两者必须分开记录，本地通过不等于后台已保存。
 - `LAYOUT-FB-002` 已证明固定 profile 不能作为人工后台交付的默认值；模板现显式使用 `delivery_mode: "manual_editor"` 与 `layout_profile: "default"`。`appsso-article-v1` 在后台验证前只用于资格验证草稿；此处的本地门禁通过不等于真实公众号后台已经验收。
+- `LAYOUT-FB-003` 使公司浏览器扩展成为 APPSO 公司稿的选定格式来源；它是外部执行通道，不改变 `publish.yml` 目前只认识的仓库交付模式。完整入口、外部写入门与降级流程见 [`公司飞书到公众号浏览器排版 SOP`](<../../03-SOP/公司飞书到公众号浏览器排版 SOP.md>)。
 - Hunt Good 的 24 px 栏目名来自其专项培训资料；本轮只验证它不会自动继承普通长文 profile，没有声称已完成 Hunt Good 专项渲染。

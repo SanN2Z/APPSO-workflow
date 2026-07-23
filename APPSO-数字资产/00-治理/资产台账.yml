@@ -1,5 +1,5 @@
 schema_version: 1
-updated_on: "2026-07-21"
+updated_on: "2026-07-23"
 
 assets:
   - id: "appsso-001"
@@ -149,3 +149,29 @@ assets:
     allowed_use: "APPSO 普通公众号长文人工交接与密封草稿版式回归；不得复制样本正文或把公开 CDN 图片视为已授权原件"
     contains_credentials: false
     notes: "记录 LAYOUT-FB-001、LAYOUT-FB-002、LAYOUT-SAMPLE-001、LAYOUT-ASSET-001 和 LAYOUT-ASSET-002；人工交接的复制编辑保存重开与密封主题资格验证草稿两类 round-trip 均待验证"
+
+  - id: "appsso-014"
+    title: "公司飞书到公众号浏览器排版 SOP"
+    path: "03-SOP/公司飞书到公众号浏览器排版 SOP.md"
+    source: "用户 2026-07-23 提供的公司排版扩展 v1.10.0 与本地静态架构审计"
+    obtained_on: "2026-07-23"
+    classification: "internal"
+    rights_status: "project_owned_method"
+    allowed_use: "公司飞书定稿到微信公众号草稿的受控排版与验收"
+    contains_credentials: false
+    notes: "扩展负责运行时样式与浏览器写入；事实、终校、权利、授权和发布状态仍由现有门禁控制。首次真实后台往返验收待完成"
+
+  - id: "appsso-015"
+    title: "爱范儿一键排版 Chrome 扩展 v1.10.0"
+    path: "../ifanr-feishu-wechat-layout-v1.10.0-browser/ifanr-feishu-wechat-layout-v1.10.0-browser/extension"
+    source: "user_supplied_company_tool"
+    obtained_on: "2026-07-23"
+    classification: "restricted"
+    rights_status: "internal_reference"
+    allowed_use: "获授权的公司飞书与微信公众号环境；不得迁移到个人稿或公开分发"
+    contains_credentials: false
+    version: "1.10.0"
+    manifest_sha256: "AA4E61E879FDE34DDB09383F51AB0B99DB373BEACB89EEC456D4CFAF4F635396"
+    appso_title_sha256: "C047A3E80CEA40D3174E847ADB8FD20D2E75386E6B2B01374EFE6C81CD722314"
+    ifanr_title_sha256: "EE9E488FF73B56802FF24C7BA918092D7FF76F2CF562D6C5922C50438E887ABA"
+    notes: "原始包与内嵌品牌素材为 local-only，并由根 .gitignore 排除；当前体验包未附带 127.0.0.1:43127 增强服务"

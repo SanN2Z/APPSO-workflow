@@ -55,9 +55,11 @@ footer_valid_until: ""
 
 The cover must exist inside the package, be registered in `asset-manifest.yml` with `use: "wechat_cover"` or `used_as_cover: true`, allow `wechat`, and have a resolved rights status. Do not use an unresolved paper figure or screenshot as the cover merely to satisfy the API.
 
-## 两种交付模式
+## 仓库交付模式与公司执行通道
 
-`project_adapter`、`delivery_mode` 和 `layout_profile` 是三个独立声明字段：前者声明品牌归属，中间字段决定如何交接，最后一个字段只选择视觉主题。新内容包和任何再次交付的旧内容包都必须显式填写 `delivery_mode`；缺失字段的旧包只能兼容预览，不能创建交接稿或 API 草稿。
+`project_adapter`、`delivery_mode` 和 `layout_profile` 是三个独立声明字段：前者声明品牌归属，中间字段决定仓库工具提供哪种交接能力，最后一个字段只选择仓库视觉主题。新内容包和任何再次交付的旧内容包都必须显式填写 `delivery_mode`；缺失字段的旧包只能兼容预览，不能创建交接稿或 API 草稿。
+
+仓库发布适配器仍只实现 `manual_editor` 与 `sealed_draft` 两种 `delivery_mode`。公司提供的浏览器扩展属于单独的 `execution_route`：它不由 `publish.yml` 或 `wechat_publish.py` 自动调用，实际使用情况写入 `publish-record.md`。这样可以保留现有验证和降级能力，又不会把依赖浏览器 DOM 的直接写入伪装成哈希密封草稿。
 
 ### 人工编辑交接模式
 
@@ -87,9 +89,28 @@ layout_profile: "<受控主题>"
 
 新主题第一次启用或主题版本变化后，可以在明确授权下创建一条「资格验证草稿」完成后台 round-trip。验证前，任何使用该主题创建的草稿都只用于资格验证，不能作为生产交付；验证通过后，精确公众号账号与主题版本组合才取得生产密封草稿资格。
 
+### 公司浏览器排版执行通道
+
+公司明确提供并指定浏览器排版扩展时，可以在现有内容与权利门之后使用 `execution_route: "company_browser"`。该值只写入 `publish-record.md`，不是当前 `publish.yml` 的 `delivery_mode`。记录必须同时保留仓库 `project_adapter`、仓库 `delivery_mode`、外部 `handoff_brand` 和外部 `execution_route`，不能把两条轴压成一个「交付通道」字段。
+
+该通道的共同合同：
+
+- 公司编辑确认的飞书文档可以作为受限交付定稿；不得仅为自动化方便把 `restricted` 终稿完整复制进 Git。
+- 扩展只负责飞书读取、固定样式转换、公众号编辑器写入、图片托管等待和草稿保存，不提供事实、权利、终校或发布授权。
+- 外部公司终稿只复用旧内容包资产时，把旧包标为 `asset_donor`，保留原 `project_adapter` 与生图凭据；在 `publish-record.md` 另记公司 `handoff_brand` 和用户对具体图片的复用许可，不把历史 generic 凭据改写成 APPSO 凭据。
+- 每次点击覆盖都属于外部写操作。必须明确目标公众号账号与草稿，取得当前任务授权，并只保留 1 个公众号编辑页。
+- 扩展版本与运行时格式绑定。版本变化后先写空白资格验证草稿，完成保存、重开与手机预览，再授予精确账号 × 版本组合生产资格。
+- 样式旁路、标题／摘要未确认、图片占位、保存未确认或重开不一致均为失败；因为页面可能已经自动保存，先检查草稿再重试。
+- 公司扩展缓存的全文、来源 URL 和 Base64 图片在完成或终止后必须清除；技术详情脱敏后才能反馈。
+- `manual_editor` 是结构不兼容、图片需要人工身份核对或浏览器写入失败时的默认降级路径；`sealed_draft` 只在用户另行明确选择仓库 API 草稿时使用。
+
+具体 APPSO 版本、入口、样式合同、题图与尾图处理见 [`公司飞书到公众号浏览器排版 SOP`](<../../../../APPSO-数字资产/03-SOP/公司飞书到公众号浏览器排版 SOP.md>)。
+
 ## APPSO 普通长文适配
 
-APPSO 的模式选择以 [`APPSO 内容生产 SOP`](<../../../../APPSO-数字资产/03-SOP/APPSO 内容生产 SOP.md#7-排版与交付>) 为真源。本适配器接受人工交接的 `project_adapter: "appsso"`、`delivery_mode: "manual_editor"`、`layout_profile: "default"` 组合，以及密封草稿的 `delivery_mode: "sealed_draft"`、`layout_profile: "appsso-article-v1"` 组合。该 profile 只映射到仓库内受控的 [`themes/appsso-article-v1.css`](../../../../微信公众号/themes/appsso-article-v1.css)，不接受内容包传入任意 CSS 路径。样本依据、头尾图识别结果和适用边界见 [`themes/README.md`](../../../../微信公众号/themes/README.md)。截至 2026 年 7 月 22 日，它尚未通过真实后台往返验证，因此任何创建结果都只能作为资格验证草稿。
+APPSO 的模式选择以 [`APPSO 内容生产 SOP`](<../../../../APPSO-数字资产/03-SOP/APPSO 内容生产 SOP.md#7-排版与交付>) 为真源。公司稿选定爱范儿一键排版 Chrome 扩展 v1.10.0 为格式来源；它走上节的 `company_browser` 执行通道，不由本适配器创建。
+
+本适配器继续接受人工交接的 `project_adapter: "appsso"`、`delivery_mode: "manual_editor"`、`layout_profile: "default"` 组合，以及密封草稿的 `delivery_mode: "sealed_draft"`、`layout_profile: "appsso-article-v1"` 组合。该 profile 只映射到仓库内受控的 [`themes/appsso-article-v1.css`](../../../../微信公众号/themes/appsso-article-v1.css)，不接受内容包传入任意 CSS 路径。它是公司扩展不可用时的独立回退，不复刻扩展样式。样本依据、头尾图识别结果和适用边界见 [`themes/README.md`](../../../../微信公众号/themes/README.md)。
 
 头尾图不写入 `draft.md`，由 `publish.yml` 指向内容包内文件后自动注入：
 
