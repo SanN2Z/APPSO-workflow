@@ -16,6 +16,7 @@
 | S08 | Anthropic：Labor market impacts of AI: A new measure and early evidence | https://www.anthropic.com/research/labor-market-impacts | 厂商研究 / P0 | 高 AI 暴露职业失业率未出现系统性上升；22 至 25 岁劳动者进入高暴露职业的找到新工作率相对 2022 年平均下降 14%；限制与替代解释 | 使用 Claude 数据构造暴露指标；14% 结果仅刚达到统计显著；相关性和因果需要谨慎区分 |
 | S09 | Peter McCrory：Why hasn’t AI increased unemployment? | https://x.com/PeterMcCrory/status/2079979321607745905 | 作者长文 / P1 | 作者当前判断：AI 尚未实质推高美国失业率；当前 AI 更接近偏技能、增强劳动的技术；年轻人招聘证据需谨慎解释 | 作者简介为 Anthropic「Head of Economics」，不是来源页自称的「Chief Economist」；文章注明观点代表个人 |
 | S10 | Anthropic：Launching the Anthropic Economic Futures Programme in the UK and Europe | https://www.anthropic.com/news/economic-futures-uk-europe | 厂商官方 / P0 | Peter McCrory 的正式职务为 Head of Economics at Anthropic | 仅用于核对人物身份 |
+| S11 | 财通社：梁文锋 4 小时投资人会议实录 | https://finance.jrj.com.cn/2026/07/23130757880460.shtml | 会议录音整理稿 / P2 | DeepSeek 将 AGI 作为长期主线；3D、视频生成和世界模型不是主线；开源、克制与「后面还有西瓜，前面的可能都是芝麻」的战略取舍 | 来源页明确注明文稿未经梁文锋本人确认；只能写成公开流传的整理稿内容，不能当作 DeepSeek 官方声明 |
 
 ## 引用与判断边界
 
@@ -23,3 +24,4 @@
 - 「一名熟练员工承担过去接近两个人的工作」是解释企业人数计算的假设场景，不是已核实的普遍生产率数据。
 - 亚马逊案例只支持「热门方向中的具体岗位也会被重配」，不能支持「AI 已替代亚马逊 AGI 员工」。
 - 美国就业数据用于解释统计机制，不直接外推中国白领就业比例。
+- DeepSeek 段落来自未经本人确认的会议整理稿。正文保留来源性质和确认状态，不把整理稿写成公司正式战略公告。
