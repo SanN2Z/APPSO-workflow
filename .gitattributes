@@ -13,3 +13,7 @@
 
 # PDF text extraction may contain embedded NUL bytes and preserved CRLF data.
 **/research/source-assets/arxiv-*.txt -text -diff
+
+# Preserve imported company-tool versions byte for byte so registered hashes stay reproducible.
+# Whitespace lint is disabled only for these immutable upstream copies.
+tools/company/*/v*/** -text -whitespace

@@ -1,6 +1,6 @@
 ---
 title: 公司飞书到公众号浏览器排版 SOP
-version: "1.0"
+version: "1.1"
 updated: "2026-07-23"
 classification: internal
 status: active
@@ -25,14 +25,16 @@ runtime_qualification: "本地 buildFixture 排版预演已通过；首次真实
 
 ## 2. 使用入口与版本锁定
 
-- 用户提供的本地包：`D:\projects\自媒体运营\ifanr-feishu-wechat-layout-v1.10.0-browser`
-- Chrome 实际加载目录：`D:\projects\自媒体运营\ifanr-feishu-wechat-layout-v1.10.0-browser\ifanr-feishu-wechat-layout-v1.10.0-browser\extension`
+- 仓库规范入口：`tools/company/ifanr-feishu-wechat-layout/README.md`
+- v1.10.0 源码目录：`tools/company/ifanr-feishu-wechat-layout/v1.10.0`
+- Chrome 应加载目录：`D:\projects\自媒体运营\tools\company\ifanr-feishu-wechat-layout\v1.10.0\extension`
 - 扩展版本：`1.10.0`
 - `manifest.json` SHA-256：`AA4E61E879FDE34DDB09383F51AB0B99DB373BEACB89EEC456D4CFAF4F635396`
+- 原始 22 文件树指纹：`50E9DE945BECBCAE5EAA1A068A4E3CEE63EB5CCAF3F983E40150877C07068862`
 
 安装时在 `chrome://extensions` 打开开发者模式，选择「加载已解压的扩展程序」，加载上述 `extension` 目录。升级后必须重新记录扩展版本和 `manifest.json` 哈希，并重新做一次资格验证草稿。
 
-原始工具包和内嵌品牌素材按公司资产处理，只在授权公司环境内使用，不自动提交到知识库 Git，也不向个人项目或公开仓库迁移。
+源码和内嵌品牌素材按 `restricted`、`private-repository-only` 处理，只保存到当前私有知识库的 `tools/company/`，并只在授权公司环境内使用。根目录的用户原始交付包是本地归档副本，不是运行真源；不得把公司工具迁移到个人项目或公开仓库。
 
 ## 3. 架构与工作原理
 
@@ -104,7 +106,7 @@ v1.10.0 当前合同：
 10. 补充封面、作者、原文链接和经授权且仍有效的尾图；扩展不会完整处理这些字段。
 11. 保存后刷新或关闭重开草稿，再做一次手机预览与结构检查。
 12. 在 `publish-record.md` 记录工具版本、飞书定稿标识、目标草稿、检查结果和异常。
-13. 回到飞书页打开扩展，点击「清除」，删除 `chrome.storage.local` 中暂存的全文与 Base64 图片。
+13. 回到飞书页打开扩展，点击「清除」，删除 `chrome.storage.local` 中暂存的主要全文与 Base64 图片。v1.10.0 的 `ifanrWechatPageStatus` 可能仍保留草稿 ID 或标题；处理敏感稿、离开共享设备或停用专用 Profile 前，还要在扩展调试页清空该扩展的本地存储。
 
 ## 7. 硬失败与重试
 
@@ -141,7 +143,7 @@ v1.10.0 当前合同：
 | GIF | 微信托管完成；失败时原位明确标记 |
 | 标题／摘要接近上限 | 没有静默截断 |
 | 写入失败 | 不误判成功；先检查已自动保存的部分结果 |
-| 缓存清理 | 清除后不再保留上一次全文与图片内容包 |
+| 缓存清理 | 清除后不再保留上一次全文、图片内容包、草稿 ID 或标题；v1.10.0 需额外复核 `ifanrWechatPageStatus` |
 
 首次真实后台往返通过前，v1.10.0 的「格式来源」已经按用户决定启用，但「生产运行资格」仍记为待验收。本地直接调用扩展 `buildFixture` 生成预演稿，只能证明排版器、正文保真和本地图片输入可工作，不能替代飞书 DOM 抓取、微信编辑器写入、图片托管、自动保存和重开检查。通过后把精确公众号账号、扩展版本、Chrome 版本和验收日期写回版式证据文档。
 
@@ -149,6 +151,7 @@ v1.10.0 当前合同：
 
 - 扩展未发现第三方遥测、远程脚本或硬编码凭据；网络范围主要是飞书、微信公众号和本机回退服务。
 - 全文、飞书 URL 与 Base64 图片会保存在 Chrome 本地存储，使用结束必须手动清除。
+- v1.10.0 的「清除」不会完整覆盖 `ifanrWechatPageStatus`；在修复并完成回归前，公司专用 Chrome Profile 与额外本地存储清理仍是硬要求。
 - 「查看技术详情」可能包含飞书 URL、稿件标题和小标题。提交反馈前先脱敏，不向外部渠道发送完整详情。
 - 不提交 Cookie、Token、密码、AppSecret、登录态或完整请求头。
-- 公司扩展与内嵌品牌素材只用于获授权的公司账号，不迁移到个人稿或公开项目。
+- 公司扩展与内嵌品牌素材只用于获授权的公司账号；源码只进入当前私有仓库的版本化工具目录，不迁移到个人稿、个人项目或公开仓库。

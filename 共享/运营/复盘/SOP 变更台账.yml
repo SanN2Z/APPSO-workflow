@@ -384,6 +384,7 @@ changes:
       - "amazon-agi-ai-hiring-signals:FB-011—012"
       - "APPSO-公众号版式反馈与样本证据:LAYOUT-FB-003"
     affected_sources:
+      - ".gitattributes"
       - ".gitignore"
       - ".agents/skills/self-media-ops/SKILL.md"
       - ".agents/skills/self-media-ops/references/content-package.md"
@@ -415,3 +416,39 @@ changes:
     promoted_rules:
       - "PROJECT-WECHAT-LAYOUT-001 (company browser execution route added)"
     next_review_on: "2026-07-30"
+
+  - id: "SOP-CHANGE-20260723-003"
+    date: "2026-07-23"
+    change: "根据用户对仓库边界的明确修正，将爱范儿一键排版扩展从 restricted local-only 调整为 restricted private-repository-only：规范副本按版本进入 tools/company，原始交付重复目录继续忽略；凭据、浏览器 Profile、Cookie、登录态、扩展存储导出、缓存与日志仍永不入库"
+    source_cases:
+      - "user-feedback:2026-07-23-private-company-tool-import"
+      - "APPSO-资产台账:appsso-015"
+    affected_sources:
+      - ".gitignore"
+      - "AGENTS.md"
+      - "CONTRIBUTING.md"
+      - "README.md"
+      - "tools/company/README.md"
+      - "tools/company/ifanr-feishu-wechat-layout/README.md"
+      - "tools/company/ifanr-feishu-wechat-layout/v1.10.0/"
+      - "共享/运营/SOP/Git 提交与仓库整理 SOP.md"
+      - "共享/运营/复盘/反馈模式台账.yml"
+      - "APPSO-数字资产/README.md"
+      - "APPSO-数字资产/00-治理/保密分级与使用边界.md"
+      - "APPSO-数字资产/00-治理/资产台账.yml"
+      - "APPSO-数字资产/00-治理/内部资产索引.md"
+      - "APPSO-数字资产/00-治理/变更记录.md"
+      - "APPSO-数字资产/03-SOP/资产入库 SOP.md"
+      - "APPSO-数字资产/03-SOP/公司飞书到公众号浏览器排版 SOP.md"
+    classification: "project_governance_correction"
+    validation:
+      - "规范版本目录含原始 22 个文件，共 3,347,963 bytes；没有复制外层重复目录"
+      - "tools/company 的不可变版本目录按原字节入库，并只对这些上游副本关闭行尾转换与空白修复；Git 检出不会改写源码后破坏已登记哈希"
+      - "11 个 JavaScript 文件通过 node --check，manifest 可解析，本地资源引用存在"
+      - "静态扫描未发现凭据、Cookie、浏览器 Profile、账号导出、第三方遥测、远程脚本或构建缓存"
+      - "文件树指纹、manifest 哈希、品牌 GIF 哈希、缺少 LICENSE / NOTICE 与未附带 127.0.0.1:43127 服务均已登记"
+      - "正例：明确授权、Private 已核且审计通过的公司工具进入 tools/company；反例：公司终稿、后台数据、授权凭证和浏览器运行态继续被拒绝"
+      - "旧 SOP-CHANGE-20260723-002 保留当时 local-only 决策作为历史，本条明确取代该工具的存储策略，不改写历史记录"
+    promoted_rules:
+      - "REPO-COMPANY-TOOL-001 (project_configuration)"
+    next_review_on: "2026-08-23"

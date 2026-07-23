@@ -163,15 +163,19 @@ assets:
 
   - id: "appsso-015"
     title: "爱范儿一键排版 Chrome 扩展 v1.10.0"
-    path: "../ifanr-feishu-wechat-layout-v1.10.0-browser/ifanr-feishu-wechat-layout-v1.10.0-browser/extension"
+    path: "../tools/company/ifanr-feishu-wechat-layout/v1.10.0/extension"
     source: "user_supplied_company_tool"
     obtained_on: "2026-07-23"
     classification: "restricted"
-    rights_status: "internal_reference"
-    allowed_use: "获授权的公司飞书与微信公众号环境；不得迁移到个人稿或公开分发"
+    rights_status: "private_repository_only"
+    allowed_use: "获授权的公司飞书与微信公众号环境，以及当前私有知识库中的版本维护；不得迁移到个人项目或公开分发"
     contains_credentials: false
     version: "1.10.0"
+    source_file_count: 22
+    source_total_bytes: 3347963
+    source_tree_sha256: "50E9DE945BECBCAE5EAA1A068A4E3CEE63EB5CCAF3F983E40150877C07068862"
+    source_tree_sha256_scope: "v1.10.0 下 22 个原始文件；按 POSIX 相对路径排序，以「路径<TAB>文件 SHA-256 大写值<LF>」组成 UTF-8 文本后计算"
     manifest_sha256: "AA4E61E879FDE34DDB09383F51AB0B99DB373BEACB89EEC456D4CFAF4F635396"
     appso_title_sha256: "C047A3E80CEA40D3174E847ADB8FD20D2E75386E6B2B01374EFE6C81CD722314"
     ifanr_title_sha256: "EE9E488FF73B56802FF24C7BA918092D7FF76F2CF562D6C5922C50438E887ABA"
-    notes: "原始包与内嵌品牌素材为 local-only，并由根 .gitignore 排除；当前体验包未附带 127.0.0.1:43127 增强服务"
+    notes: "用户于 2026-07-23 明确授权将源码与内嵌品牌素材保存到当前私有仓库；规范副本位于 tools/company，根目录原始交付副本继续忽略。浏览器 Profile、Cookie、登录态、chrome.storage.local 导出、缓存和日志永不提交。当前体验包未附带 127.0.0.1:43127 增强服务，也未附 LICENSE 或 NOTICE"

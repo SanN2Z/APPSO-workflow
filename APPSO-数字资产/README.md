@@ -9,6 +9,7 @@
 - [Hunt Good 周报保姆级指南](<01-栏目与品牌/Hunt-Good/Hunt Good 周报保姆级指南.md>)
 - [APPSO 内容生产 SOP](<03-SOP/APPSO 内容生产 SOP.md>)
 - [公司飞书到公众号浏览器排版 SOP](<03-SOP/公司飞书到公众号浏览器排版 SOP.md>)
+- [爱范儿一键排版扩展（私有工具）](<../tools/company/ifanr-feishu-wechat-layout/README.md>)
 - [APPSO 公众号发布配置模板](<04-模板/APPSO 公众号发布配置.yml>)
 - [APPSO 普通长文版式 profile](<../微信公众号/themes/README.md>)
 - [APPSO 公众号版式反馈与样本证据](<02-方法与知识/视觉与排版/APPSO 公众号版式反馈与样本证据.md>)
@@ -42,6 +43,7 @@
 4. 公开样本研究可以保存方法总结，不保存未经许可的完整参考文章。
 5. 公司稿与个人稿只共享已核事实，不共享成稿表达、图片、独特结构和结尾。
 6. 密码、Cookie、Token、API Key、验证码、登录态和完整请求头永不入库。
+7. 经明确授权、Private 远端已核且凭据与运行态审计通过的公司内部工具，以 `tools/company/<tool>/<version>/` 为唯一 Git 真源；这项例外不覆盖公司终稿、后台数据或浏览器会话。
 
 ## 使用原则
 
