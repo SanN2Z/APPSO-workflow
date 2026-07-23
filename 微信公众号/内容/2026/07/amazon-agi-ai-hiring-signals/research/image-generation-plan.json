@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "updated": "2026-07-23",
+  "project_adapter": "generic",
+  "profile_registry": "共享/运营/SOP/生图风格档案.json",
+  "style_policy": {
+    "profile": "generic-direct-v1",
+    "scope": "task",
+    "new_image_strategy": "direct",
+    "allow_final_text_to_image": true
+  },
+  "tasks": [
+    {
+      "id": "cover-doodle",
+      "visual_type": "general_editorial",
+      "purpose": "用一张有趣但不轻浮的横版涂鸦，表现 AI 先改变企业的人数账，而不是让某个职业瞬间消失。",
+      "reference_strategy": "none",
+      "final_stage": {
+        "mode": "text_to_image",
+        "prompt_ref": "generic-direct-v1",
+        "input_assets": [],
+        "output": "assets/ai-job-headcount-cover-doodle.png",
+        "receipt": "research/image-generation-runs/cover-doodle-final-preflight.json",
+        "present_to_user": true,
+        "content_prompt": "A deliberately awkward hand-drawn editorial doodle on warm off-white textured paper. Wide office scene: at the center, one capable white-collar worker sits at a laptop while a tiny friendly AI helper robot rapidly handles a stack of documents beside them. Immediately next to the worker is a conspicuously empty office chair with a small unused coffee mug and an unissued employee badge resting on it, suggesting the second person who was never hired. In the background, a manager quietly recalculates a simple headcount board using pictograms: two human figures becoming one human plus one small robot. A few neutral cardboard boxes and server-cloud shapes hint at company reorganization, without showing any real brand. The emotional tone is witty and slightly uneasy, not celebratory about layoffs. Uneven black ink outlines, visible pencil wobble, sparse colored-pencil accents in cobalt blue, orange, red, and green, playful arrows and scribbles, simple expressive faces, handmade zine quality. Strong visual hierarchy, mobile-readable silhouettes, centered subject, generous crop-safe space near all edges. No photorealism.",
+        "output_constraints": [
+          "Horizontal 16:9 composition with all essential subjects inside the central 75% crop-safe area",
+          "No readable words or numbers inside the image",
+          "High contrast and simple silhouettes suitable for a WeChat article header and body image"
+        ],
+        "avoid": [
+          "Logos, trademarks, recognizable Amazon branding, watermarks, readable text, garbled text, fake screenshots, real-person likenesses, photorealism, polished corporate vector art, cheerful celebration of layoffs"
+        ]
+      }
+    },
+    {
+      "id": "employment-chain-doodle",
+      "visual_type": "general_editorial",
+      "purpose": "把「AI 使用被测量、团队资源被重配、招聘先收紧」这条变化链做成一眼能懂的正文图。",
+      "reference_strategy": "none",
+      "final_stage": {
+        "mode": "text_to_image",
+        "prompt_ref": "generic-direct-v1",
+        "input_assets": [],
+        "output": "assets/ai-employment-chain-doodle.png",
+        "receipt": "research/image-generation-runs/employment-chain-doodle-final-preflight.json",
+        "present_to_user": true,
+        "content_prompt": "A deliberately awkward hand-drawn three-stage editorial doodle on warm off-white textured paper, read clearly from left to right. Stage one: a simple computer dashboard with tiny human-and-robot activity icons being measured by a curious manager holding a magnifying glass. Stage two: the same manager rearranges employee cards and budget tokens on an organization board, moving resources between teams. Stage three: an office project grows with taller stacks of finished work, but a recruiting desk leaves one chair empty and one employee badge unused. Connect the three stages with bold hand-drawn arrows. Include a small recurring AI helper robot and ordinary office workers so the chain feels human rather than abstract. Uneven black ink lines, intentionally clumsy proportions, colored-pencil accents in cobalt blue, orange, red, and green, visible eraser marks and margin scribbles, handmade notebook-zine feeling. Clear mobile-readable composition, humorous details, slightly uneasy but balanced mood. No photorealism.",
+        "output_constraints": [
+          "Horizontal 16:9 composition split into three visually distinct stages",
+          "No readable words or numbers inside the image",
+          "Each stage must remain understandable when displayed at phone width"
+        ],
+        "avoid": [
+          "Logos, trademarks, watermarks, readable text, garbled text, fake product interfaces, graphs that imply unverified statistics, real-person likenesses, photorealism, sleek corporate infographic style"
+        ]
+      }
+    }
+  ]
+}

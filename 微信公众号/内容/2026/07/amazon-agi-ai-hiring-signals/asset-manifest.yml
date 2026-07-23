@@ -1,3 +1,80 @@
 version: 2
 updated: "2026-07-23"
-assets: []
+assets:
+  - file: "assets/ai-job-headcount-cover-doodle.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "1672x941"
+    source_type: "ai_generated"
+    source: "Generated with Codex built-in image_gen in the user's authenticated session; governed task recorded as cover-doodle"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-07-23"
+    modifications: "No post-generation edits; visually reviewed at original resolution"
+    rights_status: "project_owned"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "AI 生成"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "text_to_image"
+    prompt_ref: "generic-direct-v1"
+    prompt_sha256: "056a5a4a3153a1cd7589fe241c59429531b769cc6d253fbeb0ff67df82dafd31"
+    invocation_prompt_sha256: "056a5a4a3153a1cd7589fe241c59429531b769cc6d253fbeb0ff67df82dafd31"
+    generation_constraints: "16:9 横版笨拙涂鸦；用一名员工、AI 助手和空椅子表现公司重新计算人数；不出现可读文字、品牌标识、真实人物或新闻现场"
+    input_assets: []
+    generated_on: "2026-07-23"
+    preflight_receipt: "research/image-generation-runs/cover-doodle-final-preflight.json"
+
+  - file: "assets/github-copilot-impact-dashboard-official.jpg"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "2400x1260"
+    source_type: "official_product_image"
+    source: "https://github.blog/changelog/2026-07-22-new-copilot-usage-metrics-impact-dashboard/"
+    creator_or_rightsholder: "GitHub, Inc."
+    obtained_on: "2026-07-23"
+    modifications: "Downloaded from GitHub's official image URL; no crop, annotation, text replacement, or other content edits"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "用户在当前任务中明确要求寻找相关官方图，用于对 GitHub 新功能的署名评论与报道；这不构成通用转载或商业授权"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "GitHub"
+
+  - file: "assets/anthropic-unemployment-exposure-figure6-official.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "4584x2579"
+    source_type: "official_research_figure"
+    source: "https://www.anthropic.com/research/labor-market-impacts"
+    creator_or_rightsholder: "Anthropic PBC"
+    obtained_on: "2026-07-23"
+    modifications: "Downloaded from Anthropic's official CDN; no crop, annotation, text replacement, or other content edits"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "用户在当前任务中明确要求寻找相关官方图，用于对 Anthropic 就业研究的署名评论与报道；这不构成通用转载或商业授权"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "Anthropic，Figure 6"
+
+  - file: "assets/ai-employment-chain-doodle.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "1672x941"
+    source_type: "ai_generated"
+    source: "Generated with Codex built-in image_gen in the user's authenticated session; governed task recorded as employment-chain-doodle"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-07-23"
+    modifications: "No post-generation edits; visually reviewed at original resolution"
+    rights_status: "project_owned"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "AI 生成；逻辑链由本文整理"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "text_to_image"
+    prompt_ref: "generic-direct-v1"
+    prompt_sha256: "5dfdc4c42e08ad82cacbebb71624db28c368b16704b8682b764dad8eb90d4b15"
+    invocation_prompt_sha256: "5dfdc4c42e08ad82cacbebb71624db28c368b16704b8682b764dad8eb90d4b15"
+    generation_constraints: "16:9 横版三阶段笨拙涂鸦；依次表现 AI 使用被测量、团队和预算被重配、招聘席位变空；不出现可读文字、品牌标识或未经核实的数据"
+    input_assets: []
+    generated_on: "2026-07-23"
+    preflight_receipt: "research/image-generation-runs/employment-chain-doodle-final-preflight.json"
