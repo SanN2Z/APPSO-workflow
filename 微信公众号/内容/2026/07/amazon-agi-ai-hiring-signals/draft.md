@@ -18,9 +18,9 @@ published_url: ""
 
 这件事说起来有点好笑：当我们都在争论 AI 会不会抢走普通人的饭碗时，这次连造 AI 的人也被裁了。
 
-![笨拙涂鸦：一名员工和 AI 助手忙着工作，旁边却留着一把空椅子](assets/ai-job-headcount-cover-doodle.png)
+![亚马逊官方 AGI 招聘页的 Agentic AI 协作主视觉](assets/amazon-agi-agentic-ai-official.jpg)
 
-*AI 生成涂鸦：当一名员工配合 AI 接下更多工作，公司会不会还招「第二个人」？*
+*亚马逊官方 AGI 招聘页使用的 Agentic AI 协作主视觉。该图是概念插画，并非本次调整涉及团队的实拍照片。图源：Amazon Jobs。*
 
 但这并不意味着 AGI 失宠了。亚马逊仍将大模型视为最重要的工作之一，只是要进一步聚焦「对客户最重要的项目」。相关报道中反复出现的词也很一致：聚焦、客户、提速、重要项目。
 

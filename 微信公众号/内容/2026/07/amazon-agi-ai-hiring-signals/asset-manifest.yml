@@ -2,7 +2,7 @@ version: 2
 updated: "2026-07-23"
 assets:
   - file: "assets/ai-job-headcount-cover-doodle.png"
-    used_in_draft: true
+    used_in_draft: false
     used_as_cover: false
     dimensions: "1672x941"
     source_type: "ai_generated"
@@ -24,6 +24,23 @@ assets:
     input_assets: []
     generated_on: "2026-07-23"
     preflight_receipt: "research/image-generation-runs/cover-doodle-final-preflight.json"
+
+  - file: "assets/amazon-agi-agentic-ai-official.jpg"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "2000x1125"
+    source_type: "official_editorial_image"
+    source: "https://amazon.jobs/content/en/teams/agi"
+    source_file: "https://cdn.cms.amazon.jobs/f6/e8/10fd15a64d61aca6efe156b2e6ab/agentic-ai-hero-v3-lm.jpg"
+    creator_or_rightsholder: "Amazon.com, Inc. or its affiliates"
+    obtained_on: "2026-07-23"
+    modifications: "Downloaded from the official Amazon Jobs CDN; no crop, annotation, text replacement, or other content edits"
+    rights_status: "user_requested_editorial_commentary_needs_final_review"
+    rights_basis: "用户在当前任务中明确要求寻找亚马逊 AGI 团队相关的高级感配图；图片仅作为有出处的新闻评论素材使用，不构成通用转载或商业授权"
+    rights_blocker: true
+    allowed_platforms: ["wechat"]
+    attribution: "Amazon Jobs"
+    editorial_note: "Official Agentic AI concept artwork on Amazon's AGI recruiting page; not a photograph of the employees affected by the July 22 staffing change"
 
   - file: "assets/github-copilot-impact-dashboard-official.jpg"
     used_in_draft: true
