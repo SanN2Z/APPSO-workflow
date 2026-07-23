@@ -78,3 +78,27 @@ assets:
     input_assets: []
     generated_on: "2026-07-23"
     preflight_receipt: "research/image-generation-runs/employment-chain-doodle-final-preflight.json"
+
+  - file: "assets/second-person-empty-workstation-editorial.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "1672x941"
+    source_type: "ai_generated"
+    source: "Generated with Codex built-in image_gen in the user's authenticated session; governed task recorded as empty-workstation-editorial"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-07-23"
+    modifications: "No post-generation edits; visually reviewed at original resolution"
+    rights_status: "project_owned"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "AI 生成"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "text_to_image"
+    prompt_ref: "generic-direct-v1"
+    prompt_sha256: "f9d72f19c7d8b96a5956ee68d205920165394c11f16f4f10e52e4c525f249408"
+    invocation_prompt_sha256: "f9d72f19c7d8b96a5956ee68d205920165394c11f16f4f10e52e4c525f249408"
+    generation_constraints: "16:9 横版高级杂志感概念插画；以继续工作的白领、抽象 AI 冷光和始终无人使用的相邻工位表现「从未被招聘的第二个人」；不出现品牌、可读文字、真实人物或裁员现场"
+    input_assets: []
+    generated_on: "2026-07-23"
+    preflight_receipt: "research/image-generation-runs/empty-workstation-editorial-final-preflight.json"

@@ -55,6 +55,30 @@
           "Logos, trademarks, watermarks, readable text, garbled text, fake product interfaces, graphs that imply unverified statistics, real-person likenesses, photorealism, sleek corporate infographic style"
         ]
       }
+    },
+    {
+      "id": "empty-workstation-editorial",
+      "visual_type": "general_editorial",
+      "purpose": "为最后一节提供一张有高级杂志感的情绪图，把「没有收到裁员邮件、却从未被招聘的第二个人」落成一个安静而有余味的画面。",
+      "reference_strategy": "none",
+      "final_stage": {
+        "mode": "text_to_image",
+        "prompt_ref": "generic-direct-v1",
+        "input_assets": [],
+        "output": "assets/second-person-empty-workstation-editorial.png",
+        "receipt": "research/image-generation-runs/empty-workstation-editorial-final-preflight.json",
+        "present_to_user": true,
+        "content_prompt": "Use case: stylized-concept. Asset type: premium editorial illustration for the final section of a Chinese technology magazine article. Scene: an open-plan office at dusk, quiet and spacious. One ordinary white-collar worker remains at a softly lit desk, finishing work with a subtle abstract AI presence represented only by thin translucent blue light traces flowing through the laptop and documents. Immediately beside them is an impeccably arranged but permanently empty second desk: unused chair pushed in, unopened employee badge, untouched ceramic mug, dark monitor. The vacant desk should feel like a person who was never hired, not someone who was dramatically fired. Farther offices recede into deep navy shadow. Style: sophisticated contemporary editorial illustration, restrained cinematic composition, tactile print grain, subtle paper-cut depth and painterly geometric forms, premium magazine art direction, not a literal news photograph. Color palette: deep navy, charcoal, warm bone, muted amber, and a very limited electric blue accent. Lighting: a narrow warm pool around the working employee, cool dim light around the empty desk. Mood: reflective, slightly uneasy, humane, neither dystopian nor celebratory. No brands, logos, interface details, or real-person likenesses.",
+        "output_constraints": [
+          "Horizontal 16:9 composition with the working desk and empty desk as two clear mobile-readable focal points",
+          "Keep all essential subjects inside the central 80% crop-safe area",
+          "No readable words, letters, numbers, charts, captions, or watermarks inside the image",
+          "The illustration must feel editorial and conceptual rather than like a staged stock photo or an actual layoff scene"
+        ],
+        "avoid": [
+          "Amazon branding, company logos, readable text, fake software interfaces, identifiable real people, robots replacing humans, dramatic firing gestures, cardboard-box layoff clichés, neon cyberpunk, glossy corporate stock photography, sentimental melodrama, cheerful celebration"
+        ]
+      }
     }
   ]
 }

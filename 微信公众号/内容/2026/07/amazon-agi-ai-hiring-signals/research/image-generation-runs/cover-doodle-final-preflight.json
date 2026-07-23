@@ -23,7 +23,7 @@
   "output": "assets/ai-job-headcount-cover-doodle.png",
   "present_to_user": true,
   "plan": "research/image-generation-plan.json",
-  "plan_sha256": "92c59fc0570a0736f35c3ed78ba7ee89e0878d4397c99f64959a5986148270f6",
+  "plan_sha256": "e7c6d6f42b5bbc528836de65a45b537a71fcfd8757970036fa5dfc8d42a944b9",
   "profile_registry": "共享/运营/SOP/生图风格档案.json",
   "profile_registry_sha256": "7524172c9c233431adff70756d58f3d00cab2b8ed1959113c4be51801d21a3c6",
   "prompt_source": null,
