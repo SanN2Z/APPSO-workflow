@@ -23,7 +23,7 @@
   "output": "assets/cover-image2-v01.png",
   "present_to_user": true,
   "plan": "research/image-generation-plan.json",
-  "plan_sha256": "2e701eac0587e025f9bc20e6759a44162335f513f9b61b341cec435537af68a0",
+  "plan_sha256": "cdda878e24fd6359caf63bd744b55f6eba6a80fab411330a0007a8bd814b04d0",
   "profile_registry": "共享/运营/SOP/生图风格档案.json",
   "profile_registry_sha256": "7524172c9c233431adff70756d58f3d00cab2b8ed1959113c4be51801d21a3c6",
   "prompt_source": null,

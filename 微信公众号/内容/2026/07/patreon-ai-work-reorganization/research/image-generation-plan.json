@@ -37,6 +37,31 @@
           "Logos, trademarks, watermarks, extra text, garbled text, fake interfaces, charts, or unverified claims"
         ]
       }
+    },
+    {
+      "id": "work-reorganization-doodle",
+      "visual_type": "general_editorial",
+      "purpose": "作为正文配图，用笨拙涂鸦把 AI 加快搜索与整理、人工继续核对与判断、公司随后重新分配任务这条链路画清楚。",
+      "reference_strategy": "none",
+      "final_stage": {
+        "mode": "text_to_image",
+        "prompt_ref": "generic-direct-v1",
+        "input_assets": [],
+        "output": "assets/work-reorganization-doodle-v01.png",
+        "receipt": "research/image-generation-runs/work-reorganization-doodle-final-preflight.json",
+        "present_to_user": true,
+        "content_prompt": "Use case: illustration-story. Asset type: body illustration for a Chinese technology essay. Create a deliberately awkward hand-drawn editorial doodle on warm off-white textured paper, read clearly from left to right in three connected beats. First, a tiny friendly abstract AI helper rapidly searches and sorts a loose pile of paper sheets and evidence cards, with quick motion lines. Second, one ordinary human researcher at a messy desk checks the same material with a magnifying glass and red pencil, compares two evidence cards, and deliberately chooses one branch at a fork. Third, a manager quietly rearranges the same task cards around a small team board, changing who handles which pieces without erasing the people. Connect the beats with bold uneven arrows so the point is clear: some steps speed up, human judgment remains, and the work is reorganized. Use wobbly black ink outlines, intentionally clumsy proportions, sparse colored-pencil accents in cobalt blue, orange, red, and green, visible eraser marks and margin scribbles, handmade notebook-zine quality. Keep the mood witty and thoughtful rather than polished, cheerful, or dystopian. No photorealism.",
+        "output_constraints": [
+          "Horizontal 16:9 composition with three visually distinct beats and all essential subjects inside the central 80% crop-safe area",
+          "No readable words, letters, numbers, labels, captions, or interface text inside the image",
+          "Simple high-contrast silhouettes and bold arrows that remain understandable at 375 px and 390 px phone width"
+        ],
+        "avoid": [
+          "Layoff scenes, firing gestures, people disappearing, sad workers carrying boxes, threatening robots, replacement metaphors, or claims that AI caused Patreon layoffs",
+          "Patreon, Google, Gemini, Image2, or any third-party logos and trademarks",
+          "Watermarks, readable text, garbled text, fake interfaces, charts, unverified statistics, real-person likenesses, photorealism, sleek corporate vector art, or glossy stock-image polish"
+        ]
+      }
     }
   ]
 }

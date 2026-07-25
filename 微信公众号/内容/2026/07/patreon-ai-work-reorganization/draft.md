@@ -8,7 +8,7 @@ as_of: 2026-07-25
 fact_checked: false
 rights_checked: false
 copyedit_checked: true
-copyedit_body_sha256: "7d61274593b883544e50ffbbc4a5527c9d042f20ea4fe8bd9c424d441834b397"
+copyedit_body_sha256: "7ac06c2ea724d7a123d1a3061f91e55ff4bc19f43c27f52fb2198eb043b0c269"
 published_url: ""
 ---
 
@@ -71,6 +71,10 @@ AI 给我省时间最多的地方，是资料整理和调研。它可以很快�
 拿资料整理来说。以前一个岗位里，可能同时塞着搜索、粗读、核对和写结论。现在前两步快了，公司就可能重新问：这些活还要不要捆在一个岗位里？同样的产出，原来要几个人，现在又要几个人？
 
 AI 不用把整份工作做完，这些问题也会出现。只要一个环节变快，后面的分工、人数和预算就可能跟着变。
+
+![笨拙涂鸦：AI 加快资料整理，人继续核对和判断，公司再重新分配任务](assets/work-reorganization-doodle-v01.png)
+
+*AI 生成涂鸦：前面的步骤变快了，核对和判断没有消失，后面的任务分配也会跟着变。*
 
 这是我的推断。Patreon 的公开信没有证明它，Google ATLAS 也没有。两份材料彼此独立：ATLAS 没有测量 Patreon，Patreon 也没有公开每项任务里到底用了多少 AI。
 

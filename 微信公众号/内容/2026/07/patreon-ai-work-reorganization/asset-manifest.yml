@@ -26,6 +26,30 @@ assets:
     generated_on: "2026-07-25"
     preflight_receipt: "research/image-generation-runs/cover-human-ai-collaboration-final-preflight.json"
 
+  - file: "assets/work-reorganization-doodle-v01.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "1672x941"
+    source_type: "ai_generated"
+    source: "Generated with Codex built-in image_gen in the user's authenticated session; governed task recorded as work-reorganization-doodle"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-07-25"
+    modifications: "No post-generation edits; visually reviewed at original resolution"
+    rights_status: "project_owned"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "AI 生成；画面逻辑由本文整理"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "text_to_image"
+    prompt_ref: "generic-direct-v1"
+    prompt_sha256: "ad8a4e939503edaabd4536e144929fdfb34e9f1a7bef9021d4da0803a4d77a83"
+    invocation_prompt_sha256: "ad8a4e939503edaabd4536e144929fdfb34e9f1a7bef9021d4da0803a4d77a83"
+    generation_constraints: "16:9 横版三段笨拙涂鸦；依次表现 AI 加快搜索与整理、人工核对与判断、公司重排任务；无可读文字、品牌标识、真实人物、裁员现场或未经核实的数据"
+    input_assets: []
+    generated_on: "2026-07-25"
+    preflight_receipt: "research/image-generation-runs/work-reorganization-doodle-final-preflight.json"
+
   - file: "research/source-assets/google-atlas-official-hero-original.png"
     use: "research_reference"
     used_in_draft: false

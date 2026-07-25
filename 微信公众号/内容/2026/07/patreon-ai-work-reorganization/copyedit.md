@@ -1,7 +1,7 @@
 ---
 status: pass
-checked_at: "2026-07-25 21:20:19+09:00"
-body_sha256: "7d61274593b883544e50ffbbc4a5527c9d042f20ea4fe8bd9c424d441834b397"
+checked_at: "2026-07-25 21:47:08+09:00"
+body_sha256: "7ac06c2ea724d7a123d1a3061f91e55ff4bc19f43c27f52fb2198eb043b0c269"
 scope: "title, body, headings, lists, captions, quotes, notes"
 ---
 
@@ -9,9 +9,16 @@ scope: "title, body, headings, lists, captions, quotes, notes"
 
 ## 当前精确版本
 
-- 正文 body SHA-256：`7d61274593b883544e50ffbbc4a5527c9d042f20ea4fe8bd9c424d441834b397`
+- 正文 body SHA-256：`7ac06c2ea724d7a123d1a3061f91e55ff4bc19f43c27f52fb2198eb043b0c269`
 - 检查范围：标题、正文、小标题、图片替代文本、图注、引语和末句
 - 结论：pass；无 open `COPY-*` 缺陷
+
+## 笨拙涂鸦回填后的完整复检
+
+- 新增图片替代文本的主语和三步关系明确，`AI` 与中文之间的间距正确。
+- 新增图注没有把任务重排写成 Patreon 的事实，也没有把 AI 写成裁员原因。
+- 图片文件名为消除密钥扫描误报而改名；读者可见的替代文本与图注没有变化，相对路径已重新核对。
+- 对最新版标题、全部正文、小标题、两张图片替代文本、两条图注、引语和末句重新逐句检查并朗读，未发现新的 `COPY-*` 缺陷。
 
 ## 本轮新增缺陷
 

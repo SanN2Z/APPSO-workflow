@@ -6,8 +6,8 @@
 ## 当前状态
 
 - 稿件状态：`draft`
-- 当前正文 body SHA-256：`7d61274593b883544e50ffbbc4a5527c9d042f20ea4fe8bd9c424d441834b397`
-- 本轮范围：Fast edit；中心思想、事实主张、图片和来源不变
+- 当前正文 body SHA-256：`7ac06c2ea724d7a123d1a3061f91e55ff4bc19f43c27f52fb2198eb043b0c269`
+- 本轮范围：Fast edit + 视觉补漏；中心思想、事实主张和来源不变，新增 1 张 AI 生成正文涂鸦及图注
 - 人声与 AI-pattern 结论：`pass`
 - 逐句终校：`pass`
 - Release Auditor 建议：保持 `draft`；事实复核、权利状态和共创记录未满足 `ready` 条件
@@ -17,7 +17,9 @@
 ## 本轮用户反馈与修复
 
 - 用户要求：在首轮「前半段已经接近笨拙版，后半段又写回标准分析稿」的判断上继续优化。
+- 用户追加反馈：预览里没有「笨拙涂鸦」配图；现有封面候选不属于涂鸦，也未进入正文。
 - 修复范围：保留开头与个人经验段；把 Google 方法限制移回 ATLAS 证据段；把「任务组合、岗位配置、付费选择」改写为工作、人数、预算和责任；删除漂亮但信息增量低的结尾总结。
+- 视觉修复：在「公司可能会重新分工作」一节加入三段式笨拙涂鸦，依次表现 AI 整理、人工核对与判断、团队重排任务；没有文字、品牌、真实人物或裁员因果暗示。
 - 事实处理：未增加数字、日期、人物、产品或因果主张；涉及组织变化的句子继续标为作者推断，Patreon 与 ATLAS 继续明确为两份独立材料。
 
 ## AI-pattern diagnostic
@@ -70,7 +72,7 @@
 ## Copyedit 与状态边界
 
 - `copyedit.md`：`pass`
-- `copyedit_body_sha256`：`7d61274593b883544e50ffbbc4a5527c9d042f20ea4fe8bd9c424d441834b397`
+- `copyedit_body_sha256`：`7ac06c2ea724d7a123d1a3061f91e55ff4bc19f43c27f52fb2198eb043b0c269`
 - `fact_checked`：`false`；发布前仍须重新打开 Patreon 公开信、ATLAS PDF 与 Google Blog。
 - `rights_checked`：`false`；虽然清单记录了本稿图片依据，frontmatter 尚未完成最终权利门。
 - `research/judgment-workshop.md`：缺失。本轮不改变中心思想，按 Fast edit 执行；没有倒推或伪造此前 3–5 轮讨论。进入 `ready` 前仍需按真实历史补齐，或由用户重新完成确认。

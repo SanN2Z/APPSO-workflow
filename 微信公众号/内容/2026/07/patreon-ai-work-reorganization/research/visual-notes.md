@@ -4,12 +4,13 @@
 
 ## 当前资产状态
 
-- `asset-manifest.yml` 已按 `version: 2` 登记 1 张 AI 封面候选、2 张 Google 官方发布素材及各自的研究原件；`.gitkeep` 仍不算发布素材。
+- `asset-manifest.yml` 已按 `version: 2` 登记 1 张 AI 封面候选、1 张 AI 正文涂鸦、2 张 Google 官方发布素材及各自的研究原件；`.gitkeep` 仍不算发布素材。
 - `assets/cover-image2-v01.png` 已生成并完成原尺寸审阅，但 manifest 当前仍标为 `use: "unused"`、`used_as_cover: false`。
+- `assets/work-reorganization-doodle-v01.png` 已生成、完成原尺寸审阅并接入正文「公司可能会重新分工作」一节；它是通用原创 AI 图，没有调用或复制 APPSO 品牌 Prompt。
 - `publish.yml` 仍指向不存在的 `assets/cover.png`。在 managing editor 选定封面并同步配置、manifest 用途前，封面链路仍是发布阻断项。
 - `assets/google-atlas-official-hero.png` 与 `assets/google-atlas-ai-adoption-official.png` 均来自 Google 官方博客；后者只做 WebP 到 PNG 的无内容转换。
 - Patreon 官方公开信页面在 Playwright 中返回 Cloudflare `403` 安全验证。本轮没有绕过门禁、没有伪造截图，也没有用 X 二手截图替代；正文仍需用可点击的一手链接承担事实追溯。
-- 独立复核时，`draft.md` 尚未出现图片相对路径或图注；正文接图后必须再核对一次引用、顺序与 caption。
+- `draft.md` 现已使用相对路径引用 Google 官方头图和 AI 生成涂鸦，并在图片附近保留来源或生成属性图注。
 
 ## 2026 年 7 月 25 日独立复核
 
@@ -34,6 +35,14 @@
 - 三种绿色分别代表 `non-negligible AI use`、`intensive AI use` 与 `full automation`，是同一条形内的不同阈值 / 分类，不是可拿来与全文的 `68%` 职业覆盖、`21%` 任务覆盖中位数直接对照的三项指标。图注不得写成「绿色越多 = 68% / 21% / 少于 10%」或暗示三者共用同一分母。
 - 修复选择：优先仅使用官方头图，并让正文承担 `68%`、`88.4%`、`21%` 与「少于 10%」的精确口径；若保留 Chart 1，需从官方原图制作透明披露的移动端局部裁切 / 分段展示，保留标题、坐标、图例和出处，再在 375 px / 390 px 下复核。不得放大重画、改色或用自制大字卡冒充官方图。
 - 建议图注：`Google ATLAS v1.0 按职业大类展示达到不同 AI 使用门槛的任务占比。三种绿色代表不同使用 / 自动化分类，不等同于全文的 68% 职业覆盖、21% 任务覆盖中位数；来源：Google AI Blog。`
+
+### VISUAL-004：正文笨拙涂鸦通过
+
+- 原图尺寸为 `1672 × 941`，约为 `16:9`。左、中、右三段依次表现 AI 快速整理资料、人工核对并选择、团队任务被重新安排，能直接服务正文的论证链。
+- 画面采用故意不齐的黑色墨线、彩铅色块、擦除痕迹和纸张纹理，属于笨拙涂鸦；没有可读文字、Logo、真实人物、伪界面或新闻现场元素。
+- 右侧人员仍完整保留，画面没有使用人物消失、被开除或搬箱子等符号，不会把 Patreon 裁员画成 AI 导致的事实。
+- 关键人物、箭头和任务卡在中心安全区内；缩至手机正文宽度后，三段关系仍可通过大轮廓和箭头辨认，不依赖小字。
+- 该图由通用 `generic-direct-v1` 路由直接生成，不依赖外部参考图或 APPSO 品牌资产；manifest 已登记生成模型、Prompt 哈希、receipt、用途、权利状态与 `AI 生成` attribution。
 
 ### Patreon 图缺口
 
