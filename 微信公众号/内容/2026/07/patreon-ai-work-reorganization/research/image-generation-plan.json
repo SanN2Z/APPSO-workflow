@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "template_only": false,
+  "updated": "2026-07-25",
+  "project_adapter": "generic",
+  "profile_registry": "共享/运营/SOP/生图风格档案.json",
+  "style_policy": {
+    "profile": "generic-direct-v1",
+    "scope": "task",
+    "new_image_strategy": "direct",
+    "allow_final_text_to_image": true
+  },
+  "tasks": [
+    {
+      "id": "cover-human-ai-collaboration",
+      "visual_type": "general_editorial",
+      "purpose": "作为公众号封面，用一个清晰主体表现 AI 加速资料流动、人的判断仍处于工作中心。",
+      "reference_strategy": "none",
+      "final_stage": {
+        "mode": "text_to_image",
+        "prompt_ref": "generic-direct-v1",
+        "input_assets": [],
+        "output": "assets/cover-image2-v01.png",
+        "receipt": "research/image-generation-runs/cover-human-ai-collaboration-final-preflight.json",
+        "present_to_user": true,
+        "content_prompt": "Use case: stylized-concept. Asset type: WeChat technology essay cover. Create a mature editorial visual about AI reorganizing work rather than replacing an entire job. Show one human researcher at a desk in three-quarter view. One hand sorts a small set of printed research papers and evidence cards; the other hand deliberately guides a luminous stream of document fragments, task nodes, and connecting lines into a new arrangement. The human is visibly attentive and in control, expressing judgment rather than passivity. Use a refined mixed-media editorial illustration with tactile paper-collage textures, subtle dimensional lighting, and a restrained ivory, charcoal, coral, and cobalt palette. Keep one strong central focal point and generous clean margins. The visual should feel like a sophisticated technology magazine cover, not a cartoon or corporate advertisement.",
+        "output_constraints": [
+          "Very wide landscape composition suitable for a 2.35:1 WeChat cover crop",
+          "Keep the human, hands, papers, and main light flow inside the central 60% safe area so both wide and square crops remain meaningful",
+          "No title, captions, labels, UI copy, or other legible text",
+          "Readable as a small mobile thumbnail without relying on tiny details"
+        ],
+        "avoid": [
+          "Robots firing workers, layoffs scenes, sad office workers, replacement metaphors, giant brains, humanoid AI faces, or threatening machinery",
+          "Doodle style, childish line art, meme aesthetics, generic stock-photo polish, or decorative clutter",
+          "Patreon, Google, Gemini, Image2, or any third-party logos and trademarks",
+          "Logos, trademarks, watermarks, extra text, garbled text, fake interfaces, charts, or unverified claims"
+        ]
+      }
+    }
+  ]
+}

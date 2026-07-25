@@ -1,0 +1,94 @@
+version: 2
+updated: "2026-07-25"
+assets:
+  - file: "assets/cover-image2-v01.png"
+    use: "unused"
+    used_in_draft: false
+    used_as_cover: false
+    dimensions: "1921x819"
+    source_type: "ai_generated"
+    source: "Generated with Codex built-in image_gen in the user's authenticated session; governed task recorded as cover-human-ai-collaboration"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-07-25"
+    modifications: "No post-generation edits; visually reviewed at original resolution"
+    rights_status: "project_owned"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "AI 生成"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "text_to_image"
+    prompt_ref: "generic-direct-v1"
+    prompt_sha256: "75e89f94ed2bdded1a07d47f72a4e7f8760a741617b9aa402bc9b0a8e599d0fd"
+    invocation_prompt_sha256: "75e89f94ed2bdded1a07d47f72a4e7f8760a741617b9aa402bc9b0a8e599d0fd"
+    generation_constraints: "2.35:1 公众号封面安全构图；中心 60% 保留人物、双手、资料与光流；无标题、标签、界面文字、品牌标识、机器人裁员、笨拙涂鸦或新闻现场感"
+    input_assets: []
+    generated_on: "2026-07-25"
+    preflight_receipt: "research/image-generation-runs/cover-human-ai-collaboration-final-preflight.json"
+
+  - file: "research/source-assets/google-atlas-official-hero-original.png"
+    use: "research_reference"
+    used_in_draft: false
+    used_as_cover: false
+    dimensions: "1300x731"
+    source_type: "official_research_image"
+    source: "https://blog.google/innovation-and-ai/technology/research/understanding-the-ai-economy/"
+    source_file: "https://storage.googleapis.com/gweb-uniblog-publish-prod/images/hero_image_3_1.width-1300.png"
+    creator_or_rightsholder: "Google LLC"
+    obtained_on: "2026-07-25"
+    modifications: "Downloaded from the official Google Blog CDN; no crop, annotation, text replacement, or other content edits"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "用户于 2026-07-25 明确要求在本稿中结合互联网一手官方图；仅作为有出处的微信报道评论素材使用，不构成通用转载或商业授权"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "Google AI Blog"
+
+  - file: "assets/google-atlas-official-hero.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "1300x731"
+    source_type: "official_research_image"
+    source: "https://blog.google/innovation-and-ai/technology/research/understanding-the-ai-economy/"
+    source_file: "https://storage.googleapis.com/gweb-uniblog-publish-prod/images/hero_image_3_1.width-1300.png"
+    creator_or_rightsholder: "Google LLC"
+    obtained_on: "2026-07-25"
+    modifications: "Exact project copy of the official Google Blog image; no crop, annotation, text replacement, or other content edits"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "用户于 2026-07-25 明确要求在本稿中结合互联网一手官方图；仅作为有出处的微信报道评论素材使用，不构成通用转载或商业授权"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "Google AI Blog"
+
+  - file: "research/source-assets/google-atlas-chart-1-original.webp"
+    use: "research_reference"
+    used_in_draft: false
+    used_as_cover: false
+    dimensions: "1000x1000"
+    source_type: "official_research_figure"
+    source: "https://blog.google/innovation-and-ai/technology/research/understanding-the-ai-economy/"
+    source_file: "https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Chart_1_Light.width-1000.format-webp.webp"
+    creator_or_rightsholder: "Google LLC"
+    obtained_on: "2026-07-25"
+    modifications: "Downloaded from the official Google Blog CDN; no crop, annotation, text replacement, or other content edits"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "用户于 2026-07-25 明确要求在本稿中结合互联网一手官方图；仅作为有出处的微信报道评论素材使用，不构成通用转载或商业授权"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "Google AI Blog，AI Adoption by occupation category"
+
+  - file: "assets/google-atlas-ai-adoption-official.png"
+    use: "unused"
+    used_in_draft: false
+    used_as_cover: false
+    dimensions: "1000x1000"
+    source_type: "official_research_figure"
+    source: "https://blog.google/innovation-and-ai/technology/research/understanding-the-ai-economy/"
+    source_file: "https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Chart_1_Light.width-1000.format-webp.webp"
+    creator_or_rightsholder: "Google LLC"
+    obtained_on: "2026-07-25"
+    modifications: "Converted from the official WebP to PNG without crop, annotation, redrawing, text replacement, or content edits"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "用户于 2026-07-25 明确要求在本稿中结合互联网一手官方图；仅作为有出处的微信报道评论素材使用，不构成通用转载或商业授权"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "Google AI Blog，AI Adoption by occupation category"
