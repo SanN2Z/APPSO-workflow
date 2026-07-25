@@ -1,6 +1,6 @@
 # APPSO 内容生产 SOP
 
-版本：2.1
+版本：2.2
 
 更新日期：2026 年 7 月 25 日
 
@@ -165,6 +165,14 @@
 
 ## 5. 写作
 
+### 核心判断共创与笨拙初稿
+
+APPSO 需要形成作者判断的分析型长稿和结构重写，在提纲和正文前执行 [`PROJECT-WECHAT-JUDGMENT-001`](<../../.agents/skills/self-media-ops/references/wechat-judgment-workshop.md>)。Codex 先给出 3–5 个候选判断，再与用户完成 3–5 轮真实讨论，锁定一个普通读者能复述的主判断、2–4 个支撑判断、共同处境、证据关系、放弃方向和结尾落点。记录未 `locked` 或用户未确认时，不开始提纲和全文。
+
+APPSO 默认选择 `company`。个人经历可以帮助发现问题，但公司正文要改用公开、可核实的新闻、研究、数据、产品变化或真实案例承接；不能把个人经历改写成「很多人都这样」。纯事实短资讯、周报单条和不改变中心思想的快速修订不自动触发。
+
+思想锁定后，主笔按 [`wechat-clumsy-writing.yml`](<../../.agents/skills/self-media-ops/references/wechat-clumsy-writing.yml>) 的 `company_restrained` 模式生成或重写初稿。这里的「笨拙」只负责减少过度完整、机械转场、整齐三段式和匀速节奏，不允许引入错字、病句、事实错误、逻辑断裂、虚构案例、假共识或损坏术语。Prompt 只在真源维护，本 SOP 不复制正文。
+
 ### 开头
 
 开头在「当天事件」和「读者问题」中选择更能立即兑现标题承诺的一项，另一项必须在首屏补齐。
@@ -268,6 +276,8 @@
 - [ ] 结尾提供新信息，没有重复开头。
 - [ ] 已运行 AI-pattern diagnostic，`review.md` 状态为 `pass`，且没有 open 的 blocker 或 major `HUMAN-AI-*`；`WECHAT-HUMAN-002` 候选已完成字面／引用、可迁移、删除和具体化检查。
 - [ ] 已按 `PROJECT-APPSO-EXPR-001` 先审 `P0 / default_avoid`、再审 `P1 / semantic_review`；每个 `WX-EXPR-*` 命中或放行都有语义理由，没有使用关键词黑名单或机械计数。
+- [ ] 适用长稿已完成 `PROJECT-WECHAT-JUDGMENT-001`：3–5 个候选、3–5 轮用户决定、一个主判断、2–4 个支撑判断、共同处境、公司模式和用户确认均可追溯。
+- [ ] 初稿已引用 `PROJECT-CLUMSY-WRITING-001` 的唯一 Prompt 真源并使用 `company_restrained`；终校没有把笨拙误解成错误、虚构或刻意低质。
 - [ ] 若属于 APPSO 冷静分析型长文，已按 `PROJECT-APPSO-VOICE-001` 检查问题链、报告脚手架、短句任务、候选口语落点、框架词簇、强对比与结尾分叉；短资讯和教程反例没有被强迫套用。
 
 ### 视觉与权利

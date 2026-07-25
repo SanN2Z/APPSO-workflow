@@ -11,6 +11,7 @@ content-package/
 ├─ review.md
 ├─ asset-manifest.yml
 ├─ assets/
+├─ research/judgment-workshop.md  # conditional requirement for analytical long-form and structural rewrites
 ├─ publish.yml          # WeChat API and Wenyan settings
 └─ publish-record.md
 ```
@@ -43,6 +44,7 @@ fact_checked: false
 rights_checked: false
 copyedit_checked: false
 copyedit_body_sha256: ""
+judgment_workshop: "research/judgment-workshop.md"
 published_url: ""
 ---
 ```
@@ -60,6 +62,27 @@ Rules:
 - Any body edit invalidates the copyedit pass. Set `copyedit_checked: false`, clear the hash, and re-run the complete sentence-level gate.
 - `published` requires a real `published_url` or an explicit user-confirmed offline record.
 - Use an ISO date for `created`, `updated`, and `as_of`.
+
+## Judgment workshop record
+
+New WeChat analytical long-form packages and structural rewrites declare `judgment_workshop: "research/judgment-workshop.md"` in draft frontmatter and copy the repository template into that path.
+
+The workshop uses YAML frontmatter:
+
+```yaml
+---
+status: discussing
+voice_mode: ""
+rounds_completed: 0
+user_confirmed: false
+confirmed_on: ""
+reason: ""
+---
+```
+
+Allowed states are `discussing`, `locked`, and `not_required`. An applicable package cannot enter `draft` or a later state while the workshop is `discussing`. `locked` requires 3–5 real user-response rounds, `personal` or `company` voice mode, explicit user confirmation, and non-empty sections for the ordinary-person situation, main judgment, 2–4 supporting judgments, rejected directions, and reader takeaway. `not_required` needs a concrete reason such as a pure factual brief or an unchanged fast edit.
+
+Historical packages without the frontmatter pointer remain readable. When a historical article receives a structural rewrite, add the pointer and workshop instead of inferring an old discussion record.
 
 ## Copyedit record
 

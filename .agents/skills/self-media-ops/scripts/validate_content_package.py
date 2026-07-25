@@ -45,6 +45,31 @@ ALLOWED_STATES = {
 }
 BOOLEAN_VALUES = {"true", "false"}
 COPYEDIT_STATES = {"pass", "needs_fix"}
+JUDGMENT_WORKSHOP_POINTER = "research/judgment-workshop.md"
+JUDGMENT_WORKSHOP_STATUSES = {"discussing", "locked", "not_required"}
+JUDGMENT_WORKSHOP_GATED_STATES = {
+    "draft",
+    "fact_checked",
+    "editorial_review",
+    "ready",
+    "published",
+}
+JUDGMENT_WORKSHOP_VOICE_MODES = {"personal", "company"}
+JUDGMENT_WORKSHOP_LOCKED_SECTIONS = (
+    "共同处境",
+    "主判断",
+    "支撑判断",
+    "放弃的方向",
+    "读者带走什么",
+)
+JUDGMENT_WORKSHOP_PLACEHOLDERS = {
+    "待讨论",
+    "待锁定",
+    "待记录",
+    "（待讨论）",
+    "（待锁定）",
+    "（待记录）",
+}
 AI_PATTERN_DIAGNOSTIC_TITLES = {
     "ai-pattern diagnostic",
     "ai 痕迹诊断",
@@ -1461,6 +1486,163 @@ def copyedit_body_sha256(draft: str) -> str:
     return hashlib.sha256(body.encode("utf-8")).hexdigest()
 
 
+def markdown_inline_text(token: object) -> str:
+    """Return visible text from a markdown-it inline token."""
+
+    children = getattr(token, "children", None)
+    if children is None:
+        return " ".join(str(getattr(token, "content", "")).split())
+    text = "".join(
+        str(getattr(child, "content", ""))
+        for child in children
+        if getattr(child, "type", "") in {"text", "code_inline"}
+    )
+    return " ".join(text.split())
+
+
+def nonempty_markdown_sections(
+    body: str,
+    required_titles: tuple[str, ...],
+) -> dict[str, bool]:
+    """Return whether each named Markdown section has non-heading content."""
+
+    tokens = MARKDOWN_PARSER.parse(body)
+    results = dict.fromkeys(required_titles, False)
+    for index, token in enumerate(tokens):
+        if token.type != "heading_open" or index + 1 >= len(tokens):
+            continue
+        title_token = tokens[index + 1]
+        if title_token.type != "inline":
+            continue
+        title = markdown_inline_text(title_token)
+        if title not in results:
+            continue
+
+        level = int(token.tag[1:])
+        end_index = len(tokens)
+        for later_index in range(index + 2, len(tokens)):
+            later = tokens[later_index]
+            if (
+                later.type == "heading_open"
+                and int(later.tag[1:]) <= level
+            ):
+                end_index = later_index
+                break
+
+        has_content = False
+        for content_index in range(index + 2, end_index):
+            content_token = tokens[content_index]
+            if content_token.type == "inline":
+                if (
+                    content_index > 0
+                    and tokens[content_index - 1].type == "heading_open"
+                ):
+                    continue
+                visible_text = markdown_inline_text(content_token)
+                if (
+                    visible_text
+                    and visible_text not in JUDGMENT_WORKSHOP_PLACEHOLDERS
+                ):
+                    has_content = True
+                    break
+            elif content_token.type in {"code_block", "fence", "html_block"}:
+                if str(content_token.content).strip():
+                    has_content = True
+                    break
+        results[title] = results[title] or has_content
+    return results
+
+
+def validate_judgment_workshop(
+    package: Path,
+    draft_metadata: dict[str, str],
+    draft_status: str,
+) -> list[str]:
+    """Validate the opt-in judgment workshop record referenced by draft.md."""
+
+    if draft_metadata.get("judgment_workshop") != JUDGMENT_WORKSHOP_POINTER:
+        return []
+
+    workshop_path = package / JUDGMENT_WORKSHOP_POINTER
+    if not workshop_path.is_file():
+        return [
+            "draft.md judgment_workshop points to missing file: "
+            f"{JUDGMENT_WORKSHOP_POINTER}"
+        ]
+
+    try:
+        workshop = workshop_path.read_text(encoding="utf-8")
+        workshop_metadata, workshop_body = split_frontmatter(
+            workshop,
+            JUDGMENT_WORKSHOP_POINTER,
+        )
+    except (OSError, UnicodeError, ValueError) as exc:
+        return [f"could not parse {JUDGMENT_WORKSHOP_POINTER}: {exc}"]
+
+    issues: list[str] = []
+    workshop_status = workshop_metadata.get("status", "")
+    if workshop_status not in JUDGMENT_WORKSHOP_STATUSES:
+        issues.append(
+            "judgment workshop status must be discussing, locked, or not_required; "
+            f"got: {workshop_status or '<empty>'}"
+        )
+        return issues
+
+    if (
+        workshop_status == "discussing"
+        and draft_status in JUDGMENT_WORKSHOP_GATED_STATES
+    ):
+        issues.append(
+            f"{draft_status} status cannot use a discussing judgment workshop"
+        )
+
+    if workshop_status == "locked":
+        voice_mode = workshop_metadata.get("voice_mode", "")
+        if voice_mode not in JUDGMENT_WORKSHOP_VOICE_MODES:
+            issues.append(
+                "locked judgment workshop voice_mode must be personal or company; "
+                f"got: {voice_mode or '<empty>'}"
+            )
+
+        rounds_completed = workshop_metadata.get("rounds_completed", "")
+        if re.fullmatch(r"[3-5]", rounds_completed) is None:
+            issues.append(
+                "locked judgment workshop rounds_completed must be an integer "
+                f"from 3 to 5; got: {rounds_completed or '<empty>'}"
+            )
+
+        if workshop_metadata.get("user_confirmed", "").lower() != "true":
+            issues.append("locked judgment workshop requires user_confirmed: true")
+
+        confirmed_on = workshop_metadata.get("confirmed_on", "")
+        if not is_iso_date(confirmed_on):
+            issues.append(
+                "locked judgment workshop confirmed_on must be an ISO date "
+                "(YYYY-MM-DD)"
+            )
+
+        sections = nonempty_markdown_sections(
+            workshop_body,
+            JUDGMENT_WORKSHOP_LOCKED_SECTIONS,
+        )
+        for title in JUDGMENT_WORKSHOP_LOCKED_SECTIONS:
+            if not sections[title]:
+                issues.append(
+                    "locked judgment workshop section is missing or empty: "
+                    f"{title}"
+                )
+
+    if (
+        workshop_status == "not_required"
+        and not workshop_metadata.get("reason", "").strip()
+    ):
+        issues.append(
+            "not_required judgment workshop requires a non-empty reason"
+        )
+
+    return issues
+
+
 def extract_ai_pattern_diagnostic(review: str) -> str | None:
     """Return the diagnostic section through its next peer or ancestor heading."""
 
@@ -1857,6 +2039,7 @@ def validate(package: Path) -> tuple[list[str], list[str], int]:
         errors.append(f"unsupported platform: {platform}")
     if status and status not in ALLOWED_STATES:
         errors.append(f"unsupported status: {status}")
+    errors.extend(validate_judgment_workshop(package, metadata, status))
     for key in ("fact_checked", "rights_checked", "copyedit_checked"):
         value = metadata.get(key, "").lower()
         if value not in BOOLEAN_VALUES:

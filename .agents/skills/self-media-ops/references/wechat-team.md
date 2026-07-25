@@ -28,23 +28,25 @@ If uncertain, use Standard. Never use Fast to bypass fact, rights, or state gate
 
 ## Workflow
 
-1. The managing editor writes or refreshes `brief.md`, including the reader blind spot, one-sentence promise, one primary hook, required background, argument map, counterpoint, and ending job.
-2. The evidence editor and visual editor may work in parallel. The evidence editor writes `sources.md` and `research/fact-sheet.md`; the visual editor inventories assets and rights.
-3. The managing editor locks the brief only after the evidence needed for the opening fact card and core argument is usable.
-4. The feature writer becomes the sole writer of `draft.md`. Other roles report defects without editing the body concurrently.
-5. The evidence editor verifies changed claims and the visual editor verifies final image use in parallel. They do not rewrite prose.
-6. The release auditor runs [wechat-ai-pattern-pass.md](wechat-ai-pattern-pass.md) in `detect` mode, then reads the package cold, grades the structural and reader-facing gates, and writes `HUMAN-AI-*` plus other defects in `review.md`. The auditor does not rewrite the body or use an AI-detector score as a gate.
-7. The feature writer performs targeted repairs; the evidence editor rechecks any changed meaning. The release auditor re-runs the diagnostic and cold-read checks until no blocking or major defect remains.
-8. Only after those repairs, the copy editor runs [wechat-copyedit-pass.md](wechat-copyedit-pass.md) on the complete exact body, writes `copyedit.md`, and reports `COPY-*` defects without editing the draft. The feature writer repairs them, and the copy editor re-runs the whole body.
-9. After a copyedit pass, the managing editor records the same body hash in `copyedit.md` and draft frontmatter. Any later body edit invalidates this gate.
-10. The release auditor confirms the copyedit status and hash, runs the validator, and recommends state. The feature writer may perform at most two targeted repair rounds per gate; repeated material defects become blockers.
-11. The managing editor updates frontmatter only when evidence, editorial, copyedit, and rights results support the state. Publication remains a user-controlled external action.
+1. The managing editor writes or refreshes `brief.md`, including the reader blind spot, one-sentence promise, one primary hook, required background, counterpoint, and ending job.
+2. The evidence editor and visual editor may work in parallel. The evidence editor starts `sources.md` and `research/fact-sheet.md`; the visual editor inventories assets and rights.
+3. For an applicable analytical long-form article, the managing editor follows [wechat-judgment-workshop.md](wechat-judgment-workshop.md): propose 3–5 candidate judgments and conduct 3–5 real decision rounds with the user.
+4. The evidence editor maps usable evidence and unresolved claims to the selected main and supporting judgments. Personal observations remain distinct from public evidence.
+5. The managing editor locks `research/judgment-workshop.md` and then `brief.md` only after the ordinary-person situation, one main judgment, 2–4 supporting judgments, voice mode, rejected directions, and user confirmation are recoverable.
+6. The feature writer becomes the sole writer of `draft.md` and applies the exact [clumsy-writing Prompt](wechat-clumsy-writing.yml) in the declared mode. Other roles report defects without editing the body concurrently.
+7. The evidence editor verifies changed claims and the visual editor verifies final image use in parallel. They do not rewrite prose.
+8. The release auditor runs [wechat-ai-pattern-pass.md](wechat-ai-pattern-pass.md) in `detect` mode, then reads the package cold, grades the structural and reader-facing gates, and writes `HUMAN-AI-*` plus other defects in `review.md`. The auditor does not rewrite the body or use an AI-detector score as a gate.
+9. The feature writer performs targeted repairs; the evidence editor rechecks any changed meaning. The release auditor re-runs the diagnostic and cold-read checks until no blocking or major defect remains.
+10. Only after those repairs, the copy editor runs [wechat-copyedit-pass.md](wechat-copyedit-pass.md) on the complete exact body, writes `copyedit.md`, and reports `COPY-*` defects without editing the draft. The feature writer repairs them, and the copy editor re-runs the whole body.
+11. After a copyedit pass, the managing editor records the same body hash in `copyedit.md` and draft frontmatter. Any later body edit invalidates this gate.
+12. The release auditor confirms the copyedit status and hash, runs the validator, and recommends state. The feature writer may perform at most two targeted repair rounds per gate; repeated material defects become blockers.
+13. The managing editor updates frontmatter only when evidence, editorial, copyedit, and rights results support the state. Publication remains a user-controlled external action.
 
 ## File ownership
 
 | File or area | Primary writer | Other roles |
 |---|---|---|
-| `brief.md`, `research/argument-map.md` | Managing editor | Comment through handoff |
+| `brief.md`, `research/judgment-workshop.md`, `research/argument-map.md` | Managing editor | Comment through handoff |
 | `sources.md`, `research/fact-sheet.md` | Evidence editor | Read only |
 | `draft.md`, `research/title-lab.md` | Feature writer | Defect reports only |
 | `copyedit.md` | Copy editor | Feature writer resolves listed defects in `draft.md` |

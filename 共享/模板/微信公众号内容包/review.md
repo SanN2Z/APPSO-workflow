@@ -5,6 +5,9 @@
 ## 固定质量门
 
 - [ ] 读者、盲区、单一主钩子和文章承诺明确
+- [ ] 适用长稿的 `research/judgment-workshop.md` 已经用户确认并锁定，含 3–5 个候选判断、3–5 轮真实决定、1 个主判断和 2–4 个支撑判断
+- [ ] 普通人的共同处境贯穿开头、证据和结尾，没有在末尾临时补一段
+- [ ] `personal` / `company` 模式明确；公司稿没有把个人经历改写成普遍事实
 - [ ] 标题五秒可复述，开头快速兑现同一承诺
 - [ ] 分析前已有理解全文所需的极简事实卡
 - [ ] 核心框架在正文前 25% 用文字提出，图文口径一致
@@ -15,6 +18,8 @@
 - [ ] 无未解决的阻断/重大 `HUMAN-AI-*` 问题
 - [ ] 独立冷读能复述发生了什么、作者判断和读者关系
 - [ ] 开头、中段、结尾声音一致，无反复模板腔
+- [ ] 已按 `.agents/skills/self-media-ops/references/wechat-clumsy-writing.yml` 的声明模式生成或重写初稿；终校只修复影响理解与正确性的地方，没有机械磨平全部节奏
+- [ ] 「笨拙」没有引入错字、病句、事实错误、逻辑断裂、虚构案例、假共识或刻意网络用语
 - [ ] 最后两三段回答标题，末句落在核心判断
 
 ## 事实、视觉与状态
@@ -31,6 +36,19 @@
 ## 任务特定标准
 
 - [ ] 从 `brief.md` 和编辑反馈补充 3–8 个可观察标准
+
+## 核心判断与笨拙写作记录
+
+- Workshop：`research/judgment-workshop.md`
+- Workshop status：discussing | locked | not_required
+- Rounds completed：
+- Voice mode：personal | company
+- User confirmed：true | false
+- Clumsy Prompt：`.agents/skills/self-media-ops/references/wechat-clumsy-writing.yml`
+- Prompt version：0.1
+- Prompt SHA-256：
+- Applied mode：personal_visible | company_restrained
+- Result：pass | needs_fix | blocked
 
 ## AI-pattern diagnostic
 

@@ -7,7 +7,8 @@ Apply every fixed gate, then add criteria derived from the current brief and exp
 - Identify the reader and the knowledge gap the article must bridge.
 - Name the article type and verify that its structure matches that job; a quick news item, product test, method guide, and opinion piece must not share a generic outline by default.
 - Express one reader-facing promise and one primary hook.
-- State the thesis as a causal claim with evidence needs and a boundary.
+- For an applicable analytical long-form article, confirm that `research/judgment-workshop.md` is locked after 3–5 real user rounds with one ordinary-person situation, one main judgment, 2–4 supporting judgments, a declared personal/company mode, and explicit user confirmation.
+- State what supports the main judgment and where it may be saying too much.
 
 ## Gate 2: title and opening
 
@@ -26,6 +27,7 @@ Apply every fixed gate, then add criteria derived from the current brief and exp
 - Introduce the organizing framework in prose within the first quarter of the article.
 - Use identical dimension names in prose, headings, and graphics.
 - Map each major section to `judgment -> evidence -> limitation -> reader consequence`.
+- Keep the ordinary-person situation active across the opening, evidence, and ending; do not add it as a generic final paragraph.
 - Do not let one example ambiguously prove several dimensions without explaining the link.
 - Address at least one serious counterexample, alternative explanation, or scope limit.
 

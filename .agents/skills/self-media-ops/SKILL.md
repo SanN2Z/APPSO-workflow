@@ -35,6 +35,7 @@ Do not load unrelated research-project instructions unless the user explicitly b
 Read [references/content-package.md](references/content-package.md) when creating or restructuring a package. Read [references/review-checklist.md](references/review-checklist.md) before changing a draft to `ready`.
 
 For a WeChat new article, research package, rewrite, or full editorial review, also read [references/wechat-team.md](references/wechat-team.md). It defines the manager-led writing team, file ownership, handoffs, and stopping rules. Read [references/wechat-editorial-gates.md](references/wechat-editorial-gates.md) before approving the brief or final copy.
+For a WeChat analytical long-form article or structural rewrite, read [references/wechat-judgment-workshop.md](references/wechat-judgment-workshop.md) before outlining or drafting. The managing editor must propose 3–5 candidate judgments, conduct 3–5 real decision rounds with the user, and lock one main judgment plus 2–4 supporting judgments. After that lock, apply the versioned [clumsy-writing Prompt](references/wechat-clumsy-writing.yml) in the declared personal or company mode. X posts, pure factual briefs, research-only work, and fast edits that do not change the article's central thought do not inherit this gate automatically.
 For drafting, rewriting, or voice polishing a WeChat article, read [references/wechat-human-voice-pass.md](references/wechat-human-voice-pass.md), [references/wechat-ai-pattern-pass.md](references/wechat-ai-pattern-pass.md), and its [Chinese technology-writing expression candidate library](references/wechat-expression-library.yml). Run the writer self-pass, the Chinese-adapted detect-only AI-pattern diagnostic, repairs, and the independent cold-read pass in that order. The diagnostic uses the globally installed `avoid-ai-writing` skill as a supplemental checklist; it is not a detector-score gate or an automatic rewrite command. `P0 / default_avoid → P1 / semantic_review` is an APPSO adapter order unless another project explicitly adopts it; X does not inherit it.
 Before any draft can become `ready`, read [references/wechat-copyedit-pass.md](references/wechat-copyedit-pass.md) and run its sentence-level grammar gate on the exact final body. Do not treat cold-read comprehension or validator success as a substitute for copyediting.
 
@@ -50,7 +51,13 @@ Before any draft can become `ready`, read [references/wechat-copyedit-pass.md](r
    - Record what each source supports, its type, access date, and limitations in `sources.md`.
    - Separate fact, vendor self-report, third-party result, inference, and joke/commentary.
 
-3. **Assets**
+3. **Judgment workshop**
+   - For an applicable WeChat long-form article, propose 3–5 concrete judgments after the initial facts are usable; do not hand the user a blank question.
+   - Use 3–5 separate user-response rounds to decide the shared ordinary-person situation, main judgment, evidence and possible overreach, case and voice route, then opening and ending.
+   - Lock `research/judgment-workshop.md` with one main judgment, 2–4 supporting judgments, evidence mapping, rejected directions, voice mode, and explicit user confirmation.
+   - Do not write the outline or body while the workshop is still `discussing`.
+
+4. **Assets**
    - Keep publication assets in `assets/`; put unused originals and superseded versions in `research/source-assets/`.
    - Register every asset in `asset-manifest.yml`.
    - Do not mark rights as cleared merely because a file was supplied by the user.
@@ -64,32 +71,34 @@ Before any draft can become `ready`, read [references/wechat-copyedit-pass.md](r
    - Inspect the result at original resolution, iterate with one targeted change at a time, then save the selected output in the target package, label it as AI-generated, and record both the input-image rights and generation details.
    - Use asset manifest `version: 2` for new or materially edited packages. Record generation mode, governed prompt hash, run constraints, input assets, runtime, model, and generation date. Missing release-bound metadata may remain visible as warnings during drafting but blocks `ready`.
 
-4. **Draft**
+5. **Draft**
+   - Apply the exact versioned Prompt in `wechat-clumsy-writing.yml` after the judgment workshop is locked. Use `personal_visible` for an approved personal byline and `company_restrained` for company copy.
+   - Treat clumsiness as an antidote to over-polishing, not permission to add errors, fake hesitation, invented cases, unsupported consensus, or damaged terminology.
    - Write for the target platform rather than mechanically shortening or expanding another platform's copy.
    - Use natural Chinese by default. Lead with the useful scene or judgment.
    - Remove repeated explanations, template transitions, empty conclusions, and numbers that do not change the story.
    - Preserve meaning when translating jokes or quotes; never turn inference into confirmed motive.
 
-5. **Human voice and AI-pattern review**
+6. **Human voice and AI-pattern review**
    - Run the feature writer's human-voice self-pass first.
    - Run `avoid-ai-writing` in `detect` mode with the Chinese adaptation in `wechat-ai-pattern-pass.md`; record `HUMAN-AI-*` defects in `review.md` instead of rewriting automatically.
    - Let the feature writer repair confirmed defects, then re-run the diagnostic and the independent cold read.
    - For WeChat packages, keep the structured AI-pattern diagnostic status in `review.md`. `ready` and `published` require `pass` and no open blocker or major `HUMAN-AI-*`; the package validator enforces this record without scanning the article for banned words.
    - Do not use English vocabulary lists, stylometric thresholds, or a detector score as a Chinese quality gate.
 
-6. **Sentence-level copyedit**
+7. **Sentence-level copyedit**
    - Check the exact final body for grammar, comparison structure, parallel clauses, referents, connector anchors, punctuation, and terminology.
    - Record `COPY-*` defects in `copyedit.md`; the copy editor reports and the feature writer repairs.
    - Store the passing body SHA-256 in both `copyedit.md` and draft frontmatter. Any later body edit invalidates the pass.
 
-7. **Review and state**
+8. **Review and state**
    - Build a task-specific rubric from the brief, user feedback, and fixed platform gates. Do not rely on a generic "writing quality" score.
    - Update `review.md` with completed and unresolved checks.
    - Use only the states defined in root `AGENTS.md`.
    - Do not use `ready` while facts, links, image rights, blocking/major `HUMAN-AI-*` defects, copyedit, or required platform checks remain unresolved.
    - Do not use `published` without a real publication URL or explicit user confirmation.
 
-8. **Validate**
+9. **Validate**
    - In a fresh checkout, install the pinned parser dependencies once:
 
      ```powershell
@@ -104,7 +113,7 @@ Before any draft can become `ready`, read [references/wechat-copyedit-pass.md](r
 
    - Fix every reported error. Warnings require review but do not necessarily block a draft state.
 
-9. **WeChat preview and draft handoff**
+10. **WeChat preview and draft handoff**
    - Keep `draft.md` as the editorial source and put the independently declared `project_adapter`, `delivery_mode`, API fields, and allowlisted layout settings in `publish.yml`.
    - Generate `dist/wechat-preview.html` locally with the pinned Wenyan CLI. Review the phone-width preview; generated `dist/` files are disposable artifacts, not new sources of truth.
    - For `delivery_mode: "manual_editor"`, run the `handoff` command. It must build a versioned structure-only copy source with complete local images and must reject every API draft command. Complete the real WeChat editor copy/edit/save/reopen check before calling the mode backend-validated.
@@ -112,7 +121,7 @@ Before any draft can become `ready`, read [references/wechat-copyedit-pass.md](r
    - Only after explicit current-task authorization, call `draft --execute` for a sealed draft. The explicit `.env` file must be the only credential source; confirm the printed non-secret account fingerprint before proceeding. This may upload body images and a permanent cover, then create one WeChat draft. It must never publish or mass-send. Because those API calls are not atomic, inspect the target backend and material library before retrying after any execute-time failure.
    - If an approved company browser extension is selected, keep it outside `publish.yml` and record `execution_route: company_browser` in `publish-record.md`. Read the project-specific tool SOP, bind the exact version, restricted company final, explicit brand, target draft and permitted image mapping, then require current-task authorization before any browser write. Treat warnings or partial saves as failures, inspect the saved draft before retrying, complete save/reopen review, and clear the extension cache. Do not copy a restricted company final into Git merely to satisfy the repository workflow.
 
-10. **Retrospective and SOP evolution**
+11. **Retrospective and SOP evolution**
    - When delivery, publication, feedback, or a requested revision is confirmed, create or update `retrospective.md` with the `content-retrospective` skill.
    - Preserve the user's requested changes and the actual repair in the package; central ledgers receive only sanitized cross-case patterns.
    - Keep one-off wording and temporary decisions in the case. Promote repeatable mechanisms to the narrowest SOP with a regression check.
@@ -128,6 +137,9 @@ Drafting, local organization, source checks, and dry-runs are allowed. Posting, 
 - [references/review-checklist.md](references/review-checklist.md): shared and platform-specific release checks.
 - [references/wechat-team.md](references/wechat-team.md): reusable WeChat writing team and handoff protocol.
 - [references/wechat-editorial-gates.md](references/wechat-editorial-gates.md): fixed and task-specific WeChat quality gates.
+- [references/wechat-judgment-workshop.md](references/wechat-judgment-workshop.md): 3–5 candidate judgments, 3–5 user decision rounds, ordinary-person situation, and thought-lock contract before outlining.
+- [references/wechat-clumsy-writing.yml](references/wechat-clumsy-writing.yml): single Prompt source and personal/company execution modes for the deliberately less polished first draft.
+- [references/wechat-clumsy-writing-regression.yml](references/wechat-clumsy-writing-regression.yml): semantic allow/reject cases that keep deliberate roughness from degrading facts, logic, grammar, or company voice.
 - [references/wechat-human-voice-pass.md](references/wechat-human-voice-pass.md): cold-reader comprehension and anti-template-language pass.
 - [references/wechat-ai-pattern-pass.md](references/wechat-ai-pattern-pass.md): Chinese-adapted, detect-only use of the global `avoid-ai-writing` skill.
 - [references/wechat-expression-library.yml](references/wechat-expression-library.yml): 20 explainable Chinese technology-writing candidate groups, split into default-avoid and semantic-review passes with counterexample boundaries.

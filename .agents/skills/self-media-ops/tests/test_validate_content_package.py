@@ -1850,5 +1850,189 @@ assets:
         self.assertTrue(any("missing AI generation field" in item for item in errors))
 
 
+class JudgmentWorkshopValidationTests(unittest.TestCase):
+    def write_workshop(self, package: Path, frontmatter: str, body: str = "") -> None:
+        path = package / "research" / "judgment-workshop.md"
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(
+            f"---\n{frontmatter}---\n{body}",
+            encoding="utf-8",
+        )
+
+    def valid_locked_body(self) -> str:
+        return """# 核心判断共创
+
+## 共同处境
+
+第一次找工作的年轻人发现初级岗位正在减少。
+
+## 主判断
+
+AI 对就业的早期影响可能先表现为岗位不再被创造。
+
+## 支撑判断
+
+1. 离职岗位可能不再补人。
+2. 初级任务更容易先被自动化。
+
+## 放弃的方向
+
+不把个别裁员直接写成整个行业已经被 AI 替代。
+
+## 读者带走什么
+
+除了裁员数字，还要观察招聘和补员是否减少。
+"""
+
+    def test_historical_package_without_pointer_is_unchanged(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            issues = VALIDATOR.validate_judgment_workshop(
+                Path(temp_dir),
+                {},
+                "ready",
+            )
+        self.assertEqual([], issues)
+
+    def test_discussing_workshop_blocks_draft_but_not_research(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            package = Path(temp_dir)
+            self.write_workshop(
+                package,
+                "status: discussing\n"
+                'voice_mode: ""\n'
+                "rounds_completed: 0\n"
+                "user_confirmed: false\n"
+                'confirmed_on: ""\n'
+                'reason: ""\n',
+            )
+            metadata = {
+                "judgment_workshop": VALIDATOR.JUDGMENT_WORKSHOP_POINTER
+            }
+            draft_issues = VALIDATOR.validate_judgment_workshop(
+                package,
+                metadata,
+                "draft",
+            )
+            research_issues = VALIDATOR.validate_judgment_workshop(
+                package,
+                metadata,
+                "research",
+            )
+        self.assertTrue(any("cannot use a discussing" in item for item in draft_issues))
+        self.assertEqual([], research_issues)
+
+    def test_valid_locked_workshop_passes(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            package = Path(temp_dir)
+            self.write_workshop(
+                package,
+                "status: locked\n"
+                "voice_mode: company\n"
+                "rounds_completed: 4\n"
+                "user_confirmed: true\n"
+                'confirmed_on: "2026-07-25"\n'
+                'reason: ""\n',
+                self.valid_locked_body(),
+            )
+            issues = VALIDATOR.validate_judgment_workshop(
+                package,
+                {"judgment_workshop": VALIDATOR.JUDGMENT_WORKSHOP_POINTER},
+                "draft",
+            )
+        self.assertEqual([], issues)
+
+    def test_locked_workshop_rejects_invalid_contract(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            package = Path(temp_dir)
+            self.write_workshop(
+                package,
+                "status: locked\n"
+                "voice_mode: brand\n"
+                "rounds_completed: 2\n"
+                "user_confirmed: false\n"
+                'confirmed_on: "25/07/2026"\n'
+                'reason: ""\n',
+                "## 共同处境\n\n只有这一节。\n",
+            )
+            issues = VALIDATOR.validate_judgment_workshop(
+                package,
+                {"judgment_workshop": VALIDATOR.JUDGMENT_WORKSHOP_POINTER},
+                "editorial_review",
+            )
+        joined = "\n".join(issues)
+        self.assertIn("voice_mode", joined)
+        self.assertIn("rounds_completed", joined)
+        self.assertIn("user_confirmed", joined)
+        self.assertIn("confirmed_on", joined)
+        self.assertIn("主判断", joined)
+        self.assertIn("支撑判断", joined)
+        self.assertIn("放弃的方向", joined)
+        self.assertIn("读者带走什么", joined)
+
+    def test_locked_workshop_rejects_template_placeholders(self) -> None:
+        placeholder_body = """# 核心判断共创
+
+## 共同处境
+
+- 待讨论
+
+## 主判断
+
+- 待锁定
+
+## 支撑判断
+
+1. （待锁定）
+2. （待锁定）
+
+## 放弃的方向
+
+- （待记录）
+
+## 读者带走什么
+
+- （待锁定）
+"""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            package = Path(temp_dir)
+            self.write_workshop(
+                package,
+                "status: locked\n"
+                "voice_mode: personal\n"
+                "rounds_completed: 3\n"
+                "user_confirmed: true\n"
+                'confirmed_on: "2026-07-25"\n'
+                'reason: ""\n',
+                placeholder_body,
+            )
+            issues = VALIDATOR.validate_judgment_workshop(
+                package,
+                {"judgment_workshop": VALIDATOR.JUDGMENT_WORKSHOP_POINTER},
+                "draft",
+            )
+        joined = "\n".join(issues)
+        for title in VALIDATOR.JUDGMENT_WORKSHOP_LOCKED_SECTIONS:
+            self.assertIn(title, joined)
+
+    def test_not_required_workshop_needs_reason(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            package = Path(temp_dir)
+            self.write_workshop(
+                package,
+                "status: not_required\n"
+                'voice_mode: ""\n'
+                "rounds_completed: 0\n"
+                "user_confirmed: false\n"
+                'confirmed_on: ""\n'
+                'reason: ""\n',
+            )
+            issues = VALIDATOR.validate_judgment_workshop(
+                package,
+                {"judgment_workshop": VALIDATOR.JUDGMENT_WORKSHOP_POINTER},
+                "draft",
+            )
+        self.assertTrue(any("non-empty reason" in item for item in issues))
+
+
 if __name__ == "__main__":
     unittest.main()

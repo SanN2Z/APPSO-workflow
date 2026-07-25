@@ -24,6 +24,9 @@ triggers:
   public_media_reference_refresh:
     action: "复核公开科技媒体的官方入口、robots 与版权边界；低频更新元数据目录，抽样复查结构 adapter，不保存正文或把样本自动升级为 SOP"
     schedule: "每月 1 日；站点规则或授权状态变化时立即复核"
+  judgment_and_clumsy_writing_trial:
+    action: "复核适用长稿是否完成真实共创、公司／个人案例路线是否正确、主判断能否复述、结构返工是否减少，以及笨拙初稿有没有增加事实、逻辑、语法缺陷或讨论成本"
+    schedule: "累计 3 篇符合条件的长稿，或 2026 年 8 月 25 日，以先到者为准"
 
 promotion:
   default_min_independent_cases: 2

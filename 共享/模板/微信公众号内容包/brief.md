@@ -15,8 +15,14 @@
 ## 背景与论点
 
 - 前置极简事实卡：
-- 核心判断（因为 A/B/C，所以 X）：
+- 判断共创记录：`research/judgment-workshop.md`
+- 共创状态：discussing / locked / not_required
+- 写作模式：personal / company
+- 普通人的共同处境：
+- 已锁定主判断：
+- 2–4 个支撑判断：
 - 最强反例 / 替代解释：
+- 已放弃的方向：
 - 结尾必须完成：
 
 ## 交付约束
