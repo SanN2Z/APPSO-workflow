@@ -74,6 +74,7 @@ Before any draft can become `ready`, read [references/wechat-copyedit-pass.md](r
    - Run the feature writer's human-voice self-pass first.
    - Run `avoid-ai-writing` in `detect` mode with the Chinese adaptation in `wechat-ai-pattern-pass.md`; record `HUMAN-AI-*` defects in `review.md` instead of rewriting automatically.
    - Let the feature writer repair confirmed defects, then re-run the diagnostic and the independent cold read.
+   - For WeChat packages, keep the structured AI-pattern diagnostic status in `review.md`. `ready` and `published` require `pass` and no open blocker or major `HUMAN-AI-*`; the package validator enforces this record without scanning the article for banned words.
    - Do not use English vocabulary lists, stylometric thresholds, or a detector score as a Chinese quality gate.
 
 6. **Sentence-level copyedit**
@@ -129,6 +130,7 @@ Drafting, local organization, source checks, and dry-runs are allowed. Posting, 
 - [references/wechat-editorial-gates.md](references/wechat-editorial-gates.md): fixed and task-specific WeChat quality gates.
 - [references/wechat-human-voice-pass.md](references/wechat-human-voice-pass.md): cold-reader comprehension and anti-template-language pass.
 - [references/wechat-ai-pattern-pass.md](references/wechat-ai-pattern-pass.md): Chinese-adapted, detect-only use of the global `avoid-ai-writing` skill.
+- [references/wechat-ai-pattern-regression.yml](references/wechat-ai-pattern-regression.yml): manual semantic regression cases for `WECHAT-HUMAN-002`; keeps literal facts and sourced quotations out of keyword bans.
 - [references/wechat-copyedit-pass.md](references/wechat-copyedit-pass.md): exact-version grammar, syntax, reference, and body-hash gate.
 - [references/wechat-publishing.md](references/wechat-publishing.md): Wenyan-based local preview, developer credentials, draft dry-run, and external-action boundary.
 - [references/wechat-writing-research.md](references/wechat-writing-research.md): research basis; read only when evolving or evaluating the team.

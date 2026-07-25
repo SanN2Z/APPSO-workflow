@@ -1,0 +1,86 @@
+schema_version: 1
+rule_id: "WECHAT-HUMAN-002"
+mode: "manual_semantic_regression"
+purpose: "验证套式口语与非字面隐喻门能命中无信息增量的 AI 腔，同时放行字面事实、必要术语与来源原话；不得改造成关键词黑名单"
+
+cases:
+  - id: "flag-revolution-frame"
+    text: "先别急着喊革命。"
+    context: "AI 产品功能上线；正文没有历史或政治革命事实"
+    literal_or_sourced: false
+    transfer_test: "可整句移植到多数 AI 新品稿"
+    deletion_test: "删除后不损失事实、判断或读者后果"
+    expected: "flag"
+    repair_target: "直接交代功能、限制或作者判断"
+
+  - id: "flag-arrival-frame"
+    text: "这个入口终于到账了。"
+    context: "产品入口开放；没有款项、资源交付或排队状态的字面含义"
+    literal_or_sourced: false
+    transfer_test: "可移植到任何灰度开放功能"
+    deletion_test: "只损失口气，不损失开放范围与时间"
+    expected: "flag"
+    repair_target: "写明谁在什么时间、平台或地区获得入口"
+
+  - id: "flag-bill-frame"
+    text: "这份账单终于寄给普通人。"
+    context: "段落讨论 AI 的抽象社会影响，没有真实账单、付款主体或成本分配证据"
+    literal_or_sourced: false
+    transfer_test: "可移植到就业、隐私、能源或版权文章"
+    deletion_test: "删除后没有可复述成本或责任关系"
+    expected: "flag"
+    repair_target: "写清哪项成本、由谁承担、在什么条件下出现"
+
+  - id: "flag-metaphor-chain"
+    text: "第一轮先交卷，第二轮换原题，第三轮才看它能不能通过考试。"
+    context: "实际动作是生成 Skill、换新材料并测试异常分支；没有真实教学测验"
+    literal_or_sourced: false
+    transfer_test: "考试链可以无改动套入多数评测文章"
+    deletion_test: "隐喻遮住了三轮测试各自的输入和判定条件"
+    expected: "flag"
+    repair_target: "逐轮写明材料、异常分支和通过标准"
+
+  - id: "allow-literal-api-bill"
+    text: "本次 API 调用账单增加 12%。"
+    context: "有账单记录、比较基线和来源"
+    literal_or_sourced: true
+    transfer_test: "数字与对象绑定当前事实，不能无改动迁移"
+    deletion_test: "删除会损失一条已核成本事实"
+    expected: "allow"
+    repair_target: "保留并注明来源与比较口径"
+
+  - id: "allow-real-payment-arrival"
+    text: "退款已于 7 月 23 日到账。"
+    context: "付款记录中的真实到账时间"
+    literal_or_sourced: true
+    transfer_test: "日期与款项绑定当前事实"
+    deletion_test: "删除会损失付款状态"
+    expected: "allow"
+    repair_target: "保留"
+
+  - id: "allow-historical-revolution"
+    text: "工业革命改变了纺织业的生产组织。"
+    context: "历史背景段落，有可靠来源"
+    literal_or_sourced: true
+    transfer_test: "历史事件与当前论证绑定"
+    deletion_test: "删除会损失必要历史事实"
+    expected: "allow"
+    repair_target: "保留并核对来源"
+
+  - id: "allow-literal-cost-allocation"
+    text: "电网升级账单最终由开发商、供电公司还是居民承担，取决于当地费率审批。"
+    context: "讨论数据中心基础设施的真实成本分配，并有监管文件支持"
+    literal_or_sourced: true
+    transfer_test: "主体与审批机制绑定当前事实"
+    deletion_test: "删除会损失核心成本分配问题"
+    expected: "allow"
+    repair_target: "保留并写明地区与政策口径"
+
+  - id: "allow-sourced-quotation"
+    text: "受访者原话是：『这像一场考试。』"
+    context: "引语真实、说话人和上下文完整；正文没有把它扩写成连续考试隐喻"
+    literal_or_sourced: true
+    transfer_test: "原话不能脱离说话人迁移"
+    deletion_test: "删除会损失受访者态度"
+    expected: "allow"
+    repair_target: "保留引号、归因与必要事实限定"

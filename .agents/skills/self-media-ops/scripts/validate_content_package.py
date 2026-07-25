@@ -45,6 +45,10 @@ ALLOWED_STATES = {
 }
 BOOLEAN_VALUES = {"true", "false"}
 COPYEDIT_STATES = {"pass", "needs_fix"}
+AI_PATTERN_DIAGNOSTIC_TITLES = {
+    "ai-pattern diagnostic",
+    "ai 痕迹诊断",
+}
 SHA256_PATTERN = re.compile(r"^[0-9a-f]{64}$")
 ISO_DATE_PATTERN = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 IMAGE_SUFFIXES = {".avif", ".gif", ".jpeg", ".jpg", ".png", ".svg", ".webp"}
@@ -1457,6 +1461,136 @@ def copyedit_body_sha256(draft: str) -> str:
     return hashlib.sha256(body.encode("utf-8")).hexdigest()
 
 
+def extract_ai_pattern_diagnostic(review: str) -> str | None:
+    """Return the diagnostic section through its next peer or ancestor heading."""
+
+    lines = review.splitlines()
+    tokens = MARKDOWN_PARSER.parse(review)
+    for index, token in enumerate(tokens):
+        if token.type != "heading_open" or index + 1 >= len(tokens):
+            continue
+        title_token = tokens[index + 1]
+        if title_token.type != "inline":
+            continue
+        title = " ".join(title_token.content.casefold().split())
+        if title not in AI_PATTERN_DIAGNOSTIC_TITLES:
+            continue
+
+        level = int(token.tag[1:])
+        start_line = token.map[1] if token.map else 0
+        end_line = len(lines)
+        for later in tokens[index + 2 :]:
+            if later.type != "heading_open":
+                continue
+            later_level = int(later.tag[1:])
+            if later_level <= level and later.map:
+                end_line = later.map[0]
+                break
+        return "\n".join(lines[start_line:end_line])
+    return None
+
+
+def split_markdown_table_row(line: str) -> list[str]:
+    """Split one simple Markdown table row into normalized, unescaped cells."""
+
+    stripped = line.strip().replace("｜", "|")
+    if "|" not in stripped:
+        return []
+    if stripped.startswith("|"):
+        stripped = stripped[1:]
+    if stripped.endswith("|"):
+        stripped = stripped[:-1]
+    return [cell.strip().replace(r"\|", "|") for cell in stripped.split("|")]
+
+
+def is_markdown_table_separator(cells: list[str]) -> bool:
+    return bool(cells) and all(
+        re.fullmatch(r":?-{3,}:?", cell.replace(" ", "")) is not None
+        for cell in cells
+    )
+
+
+def normalize_review_cell(cell: str) -> str:
+    return re.sub(r"[*`]", "", cell).strip().casefold()
+
+
+def open_major_ai_pattern_items(section: str) -> list[tuple[str, str]]:
+    """Return open blocker/major HUMAN-AI rows from diagnostic Markdown tables."""
+
+    lines = section.splitlines()
+    open_items: list[tuple[str, str]] = []
+    for line_index, line in enumerate(lines[:-1]):
+        header_aliases = {
+            "id": "id",
+            "severity": "severity",
+            "级别": "severity",
+            "严重度": "severity",
+            "status": "status",
+            "状态": "status",
+        }
+        headers = [
+            header_aliases.get(normalize_review_cell(cell), "")
+            for cell in split_markdown_table_row(line)
+        ]
+        if not {"id", "severity", "status"}.issubset(headers):
+            continue
+        separator = split_markdown_table_row(lines[line_index + 1])
+        if len(separator) != len(headers) or not is_markdown_table_separator(separator):
+            continue
+
+        column = {header: index for index, header in enumerate(headers)}
+        for row_line in lines[line_index + 2 :]:
+            cells = split_markdown_table_row(row_line)
+            if not cells:
+                break
+            if is_markdown_table_separator(cells):
+                continue
+            if len(cells) < len(headers):
+                cells.extend([""] * (len(headers) - len(cells)))
+            item_id = normalize_review_cell(cells[column["id"]]).upper()
+            severity = normalize_review_cell(cells[column["severity"]])
+            item_status = normalize_review_cell(cells[column["status"]])
+            if (
+                item_id.startswith("HUMAN-AI-")
+                and severity in {"blocker", "major"}
+                and item_status == "open"
+            ):
+                open_items.append((item_id, severity))
+    return open_items
+
+
+def validate_ai_pattern_review(review: str) -> list[str]:
+    """Validate the structured, detect-only AI-pattern review record."""
+
+    section = extract_ai_pattern_diagnostic(review)
+    if section is None:
+        return [
+            "review.md missing required AI-pattern diagnostic section for WeChat"
+        ]
+
+    status_match = re.search(
+        r"(?im)^[ \t]*[-*+][ \t]+(?:\*\*)?(?:status|状态)(?:\*\*)?[ \t]*[:：]"
+        r"(?:\*\*)?[ \t]*([^\r\n]+?)[ \t]*$",
+        section,
+    )
+    issues: list[str] = []
+    if status_match is None:
+        issues.append("review.md AI-pattern diagnostic is missing Status")
+    else:
+        diagnostic_status = normalize_review_cell(status_match.group(1))
+        if diagnostic_status != "pass":
+            issues.append(
+                "review.md AI-pattern diagnostic Status must be pass, "
+                f"got: {diagnostic_status or '<empty>'}"
+            )
+
+    for item_id, severity in open_major_ai_pattern_items(section):
+        issues.append(
+            f"review.md AI-pattern diagnostic has open {severity} item: {item_id}"
+        )
+    return issues
+
+
 def normalize_markdown_target(target: str) -> str:
     """Return the destination portion of a Markdown link or image target."""
 
@@ -1662,6 +1796,7 @@ def validate(package: Path) -> tuple[list[str], list[str], int]:
 
     draft_path = package / "draft.md"
     copyedit_path = package / "copyedit.md"
+    review_path = package / "review.md"
     manifest_path = package / "asset-manifest.yml"
     if not draft_path.is_file() or not manifest_path.is_file():
         return errors, warnings, 0
@@ -1764,6 +1899,15 @@ def validate(package: Path) -> tuple[list[str], list[str], int]:
             errors.append(f"{status} status requires copyedit_checked: true")
     if status == "published" and not metadata.get("published_url", ""):
         errors.append("published status requires published_url")
+
+    if platform == "wechat" and review_path.is_file():
+        ai_pattern_issues = validate_ai_pattern_review(
+            review_path.read_text(encoding="utf-8")
+        )
+        if status in {"ready", "published"}:
+            errors.extend(ai_pattern_issues)
+        else:
+            warnings.extend(ai_pattern_issues)
 
     if WINDOWS_ABSOLUTE_PATTERN.search(draft):
         errors.append("draft.md contains an absolute Windows path")

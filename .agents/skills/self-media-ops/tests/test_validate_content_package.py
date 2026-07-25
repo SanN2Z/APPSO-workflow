@@ -105,7 +105,15 @@ published_url: ""
             "- https://example.com — 访问日期：2026-07-21\n",
             encoding="utf-8",
         )
-        (package / "review.md").write_text("# Review\n", encoding="utf-8")
+        (package / "review.md").write_text(
+            "# Review\n\n"
+            "## AI-pattern diagnostic\n\n"
+            "- Skill: avoid-ai-writing test fixture\n"
+            "- Mode: detect\n"
+            "- Status: pass\n"
+            "- Finding: none found\n",
+            encoding="utf-8",
+        )
         (package / "publish-record.md").write_text("# Publish record\n", encoding="utf-8")
         copyedit_status = "pass" if checked == "true" else "needs_fix"
         (package / "copyedit.md").write_text(
@@ -463,6 +471,172 @@ assets:
                 errors, warnings, _ = VALIDATOR.validate(package)
                 self.assertEqual([], errors)
                 self.assertEqual([], warnings)
+
+    def test_wechat_release_states_require_ai_pattern_diagnostic(self) -> None:
+        for status in ("ready", "published"):
+            with self.subTest(status=status), tempfile.TemporaryDirectory() as temp_dir:
+                package = self.make_package(
+                    Path(temp_dir),
+                    "version: 2\nassets: []\n",
+                    status=status,
+                    markdown_image=False,
+                )
+                if status == "published":
+                    draft_path = package / "draft.md"
+                    draft_path.write_text(
+                        draft_path.read_text(encoding="utf-8").replace(
+                            'published_url: ""',
+                            'published_url: "https://example.com/published"',
+                        ),
+                        encoding="utf-8",
+                    )
+                (package / "review.md").write_text("# Review\n", encoding="utf-8")
+                errors, warnings, _ = VALIDATOR.validate(package)
+            self.assertTrue(
+                any("missing required AI-pattern diagnostic" in item for item in errors),
+                errors,
+            )
+            self.assertFalse(
+                any("missing required AI-pattern diagnostic" in item for item in warnings)
+            )
+
+    def test_wechat_release_requires_passing_ai_pattern_status(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            package = self.make_package(
+                Path(temp_dir),
+                "version: 2\nassets: []\n",
+                markdown_image=False,
+            )
+            (package / "review.md").write_text(
+                "# Review\n\n"
+                "## AI-pattern diagnostic\n\n"
+                "- Mode: detect\n"
+                "- Status: needs_fix\n",
+                encoding="utf-8",
+            )
+            errors, _, _ = VALIDATOR.validate(package)
+        self.assertTrue(
+            any("Status must be pass, got: needs_fix" in item for item in errors),
+            errors,
+        )
+
+    def test_wechat_release_rejects_open_major_ai_pattern_items(self) -> None:
+        for title, status_field, severity_header in (
+            ("AI-pattern diagnostic", "Status: pass", "Severity"),
+            ("AI 痕迹诊断", "状态：pass", "级别"),
+            ("AI 痕迹诊断", "Status：pass", "严重度"),
+            ("AI 痕迹诊断", "**Status：** pass", "严重度"),
+        ):
+            for severity in ("blocker", "major"):
+                with (
+                    self.subTest(
+                        title=title,
+                        status_field=status_field,
+                        severity_header=severity_header,
+                        severity=severity,
+                    ),
+                    tempfile.TemporaryDirectory() as temp_dir,
+                ):
+                    package = self.make_package(
+                        Path(temp_dir),
+                        "version: 2\nassets: []\n",
+                        markdown_image=False,
+                    )
+                    (package / "review.md").write_text(
+                        "# Review\n\n"
+                        f"## {title}\n\n"
+                        "- Mode: detect\n"
+                        f"- {status_field}\n\n"
+                        f"| ID | {severity_header} | Evidence | 状态 |\n"
+                        "|---|---|---|---|\n"
+                        f"| HUMAN-AI-001 | {severity} | Exact pattern | open |\n",
+                        encoding="utf-8",
+                    )
+                    errors, _, _ = VALIDATOR.validate(package)
+                self.assertTrue(
+                    any(
+                        f"has open {severity} item: HUMAN-AI-001" in item
+                        for item in errors
+                    ),
+                    errors,
+                )
+
+    def test_ai_pattern_table_accepts_fullwidth_pipe_layout(self) -> None:
+        review = (
+            "# Review\n\n"
+            "## AI 痕迹诊断\n\n"
+            "- 状态：pass\n\n"
+            "｜ ID ｜ 严重度 ｜ 状态 ｜\n"
+            "｜---｜---｜---｜\n"
+            "｜ HUMAN-AI-001 ｜ major ｜ open ｜\n"
+        )
+        self.assertEqual(
+            [
+                "review.md AI-pattern diagnostic has open major item: "
+                "HUMAN-AI-001"
+            ],
+            VALIDATOR.validate_ai_pattern_review(review),
+        )
+
+    def test_wechat_release_allows_open_minor_ai_pattern_item(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            package = self.make_package(
+                Path(temp_dir),
+                "version: 2\nassets: []\n",
+                markdown_image=False,
+            )
+            (package / "review.md").write_text(
+                "# Review\n\n"
+                "## AI-pattern diagnostic\n\n"
+                "- Mode: detect\n"
+                "- Status: pass\n\n"
+                "| ID | Severity | Evidence | Status |\n"
+                "|---|---|---|---|\n"
+                "| HUMAN-AI-001 | minor | Local rhythm | open |\n",
+                encoding="utf-8",
+            )
+            errors, warnings, _ = VALIDATOR.validate(package)
+        self.assertEqual([], errors)
+        self.assertEqual([], warnings)
+
+    def test_wechat_non_release_states_warn_for_missing_diagnostic(self) -> None:
+        for status in ("draft", "editorial_review"):
+            with self.subTest(status=status), tempfile.TemporaryDirectory() as temp_dir:
+                package = self.make_package(
+                    Path(temp_dir),
+                    "version: 2\nassets: []\n",
+                    status=status,
+                    markdown_image=False,
+                )
+                (package / "review.md").write_text("# Review\n", encoding="utf-8")
+                errors, warnings, _ = VALIDATOR.validate(package)
+            self.assertEqual([], errors)
+            self.assertTrue(
+                any(
+                    "missing required AI-pattern diagnostic" in item
+                    for item in warnings
+                ),
+                warnings,
+            )
+
+    def test_x_release_does_not_require_wechat_ai_pattern_diagnostic(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            package = self.make_package(
+                Path(temp_dir),
+                "version: 2\nassets: []\n",
+                markdown_image=False,
+            )
+            draft_path = package / "draft.md"
+            draft_path.write_text(
+                draft_path.read_text(encoding="utf-8").replace(
+                    "platform: wechat", "platform: x"
+                ),
+                encoding="utf-8",
+            )
+            (package / "review.md").write_text("# Review\n", encoding="utf-8")
+            errors, warnings, _ = VALIDATOR.validate(package)
+        self.assertEqual([], errors)
+        self.assertEqual([], warnings)
 
     def test_v2_ready_adapter_registry_can_rotate_governed_prompt(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:

@@ -65,7 +65,21 @@ Flag fake emotional reactions, forced slang, unexplained memes, canned agreement
 
 An individual colloquial phrase may be deliberate. The defect is regular, low-information placement: for example, every section receives one slang verb or reveal phrase even though deleting it changes no fact, judgment, or reader consequence.
 
-Also flag stock Chinese colloquial frames and nonliteral metaphors that manufacture emphasis without carrying information, such as 「先别急着……」「喊革命」「……到账」「这笔账……」 or a repeated exam / war / finance metaphor chain. Apply a transfer test: if the whole phrase could move unchanged to another AI product article and deleting it loses no fact or judgment, remove it. If it has a real job, rewrite it with a concrete actor, action, condition, cost, or result. Preserve sourced quotations and literal uses such as an actual bill, payment arrival, historical revolution, or real examination.
+#### `WECHAT-HUMAN-002`: stock colloquial frames and nonliteral metaphor chains
+
+This is an information-role test, not a banned-word list. Apply it to stock Chinese colloquial frames and nonliteral metaphors such as 「先别急着……」「喊革命」「……到账」「这笔账……」「这份账单终于寄给普通人」 or a repeated exam / war / finance metaphor chain:
+
+1. **Literal or sourced check**: Is the phrase a verified literal fact, a necessary term, or a sourced quotation? If yes, preserve it and its context.
+2. **Transfer test**: Could the whole phrase move unchanged to another AI product article? If yes, treat it as a candidate defect.
+3. **Deletion test**: What exact fact, judgment, condition, or reader consequence disappears when the phrase is deleted? If the answer is「none」, delete it.
+4. **Concrete rewrite**: If deletion would lose real information, name the actor, action, condition, cost, or result directly instead of keeping the ornamental frame.
+5. **Chain scan**: When several metaphors from the same field repeatedly carry transitions, rewrite the paragraph or section structure rather than patching one phrase at a time.
+
+Flag a recurring chain or a phrase that hides the article's key judgment as `major`. An isolated local phrase is normally `minor` unless it distorts meaning or evidence. Preserve literal uses such as「本次 API 调用账单增加 12%」、a real payment arrival, a historical revolution, a real examination, or a sourced quotation.
+
+For every `WECHAT-HUMAN-002` finding, `review.md` must record the exact phrase, the literal / sourced result, what the deletion test showed, and the concrete repair. A keyword hit without this context is not a defect.
+
+Use [wechat-ai-pattern-regression.yml](wechat-ai-pattern-regression.yml) when this rule or its adapter changes and during the scheduled rule review. It is a manual semantic fixture, not a regex suite: the reviewer must reproduce the expected flag / allow decision and rationale, then record the result in the SOP change ledger.
 
 ### 6. Speculative gap filling
 

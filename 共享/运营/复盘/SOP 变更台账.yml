@@ -452,3 +452,34 @@ changes:
     promoted_rules:
       - "REPO-COMPANY-TOOL-001 (project_configuration)"
     next_review_on: "2026-08-23"
+
+  - id: "SOP-CHANGE-20260724-001"
+    date: "2026-07-24"
+    change: "复核 Claude 稿典型 AI 表达反馈的沉淀链，并强化 WECHAT-HUMAN-002 的执行闭环：补齐五步语义检查、单次非字面『账单』正例、字面与来源反例、APPSO 入口、内容包审校模板和 ready / published 校验门；本轮不建立关键词黑名单，也不把既有 E2 规则误升为 E3"
+    source_cases:
+      - "claude-cowork-record-a-skill:CLAUDE-FB-001"
+      - "spain-opta-world-cup-prediction:OPTA-FB-017"
+      - "user-feedback:2026-07-24-ai-expression-sop-discoverability"
+    affected_sources:
+      - ".agents/skills/self-media-ops/SKILL.md"
+      - ".agents/skills/self-media-ops/references/wechat-ai-pattern-pass.md"
+      - ".agents/skills/self-media-ops/references/wechat-ai-pattern-regression.yml"
+      - ".agents/skills/self-media-ops/scripts/validate_content_package.py"
+      - ".agents/skills/self-media-ops/tests/test_validate_content_package.py"
+      - "APPSO-数字资产/03-SOP/APPSO 内容生产 SOP.md"
+      - "APPSO-数字资产/00-治理/变更记录.md"
+      - "共享/模板/微信公众号内容包/review.md"
+      - "共享/运营/复盘/反馈模式台账.yml"
+      - "上下文/当前重点.md"
+    classification: "scoped_rule_execution_hardening"
+    validation:
+      - "原始反馈已忠实保存在 CLAUDE-FB-001，审校记录保留命中原句与修复；OPTA-FB-017 提供第二个独立内容包证据"
+      - "规则仍为信息角色测试：先核字面事实与来源，再做整句可迁移、删除、具体化和同域隐喻链检查"
+      - "手工语义回归含 9 例：4 个应命中案例与 5 个应放行案例，覆盖单次非字面『账单』、真实 API 账单、付款到账、历史革命、真实成本分配和来源原话"
+      - "validator 只解析 review.md 的结构化诊断，不扫描正文关键词；微信公众号 ready / published 缺失诊断、非 pass 或遗留 open blocker / major HUMAN-AI 时阻断，draft / editorial_review 仅警告，X 不受影响"
+      - "校验器 58 项单元测试通过，兼容中英文诊断标题、状态字段、严重度字段、全角冒号和全角表格竖线"
+      - "用户对话中最初 4 张局部截图的临时路径已不可访问，因此没有伪造原图副本或哈希；文字反馈、内容包审校证据和独立案例仍可追溯"
+      - "历史稿未批量改写；再次编辑或交付时才按新门禁复查"
+    promoted_rules:
+      - "WECHAT-HUMAN-002 (existing E2 provisional; execution strengthened, not promoted to E3)"
+    next_review_on: "2026-08-22"

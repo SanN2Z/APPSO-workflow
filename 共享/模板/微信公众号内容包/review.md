@@ -41,6 +41,14 @@
 - Ignored as hard gates：English word lists / stylometric thresholds / punctuation quotas / detector score
 - Status：pass | needs_fix | blocked
 
+### `WECHAT-HUMAN-002` 语义检查
+
+不把「革命」「到账」「账单」「考试」设为禁词。候选句必须记录字面／来源判断、整句可迁移测试、删除测试和具体修复；没有候选时写 `none found`。
+
+| 候选原文 | 字面事实／来源原话 | 可迁移测试 | 删除后损失 | 具体修复或放行理由 |
+|---|---|---|---|---|
+| none found | — | — | — | — |
+
 ## 待处理
 
 | ID | 严重度 | 责任人 | 问题证据 | 通过条件 | 状态 |
