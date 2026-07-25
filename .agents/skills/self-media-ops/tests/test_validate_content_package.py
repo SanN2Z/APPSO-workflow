@@ -36,6 +36,65 @@ sys.modules[PREFLIGHT_SPEC.name] = PREFLIGHT
 PREFLIGHT_SPEC.loader.exec_module(PREFLIGHT)
 
 
+class ProgressivePackageRequirementTests(unittest.TestCase):
+    def make_package(self, root: Path, status: str) -> Path:
+        package = root / "package"
+        package.mkdir()
+        draft = f"""---
+title: "Lean package"
+platform: wechat
+status: {status}
+created: 2026-07-25
+updated: 2026-07-25
+as_of: 2026-07-25
+fact_checked: false
+rights_checked: false
+copyedit_checked: false
+copyedit_body_sha256: ""
+published_url: ""
+---
+# Lean package
+"""
+        (package / "draft.md").write_text(draft, encoding="utf-8")
+        return package
+
+    def add_sources(self, package: Path) -> None:
+        (package / "sources.md").write_text(
+            "- https://example.com — 访问日期：2026-07-25\n",
+            encoding="utf-8",
+        )
+
+    def test_idea_only_requires_draft(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            package = self.make_package(Path(temp_dir), "idea")
+            errors, warnings, image_count = VALIDATOR.validate(package)
+            self.assertEqual(errors, [])
+            self.assertEqual(warnings, [])
+            self.assertEqual(image_count, 0)
+
+    def test_draft_requires_sources(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            package = self.make_package(Path(temp_dir), "draft")
+            errors, _, _ = VALIDATOR.validate(package)
+            self.assertIn("missing required file for draft: sources.md", errors)
+
+    def test_draft_does_not_require_release_files(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            package = self.make_package(Path(temp_dir), "draft")
+            self.add_sources(package)
+            errors, warnings, _ = VALIDATOR.validate(package)
+            self.assertEqual(errors, [])
+            self.assertEqual(warnings, [])
+
+    def test_ready_requires_release_records(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            package = self.make_package(Path(temp_dir), "ready")
+            self.add_sources(package)
+            errors, _, _ = VALIDATOR.validate(package)
+            for name in ("review.md", "copyedit.md", "asset-manifest.yml"):
+                self.assertIn(f"missing required file for ready: {name}", errors)
+
+
 class ContentPackageAssetManifestTests(unittest.TestCase):
     APPSO_PROMPT_SHA256 = (
         "6ba5e092a4f8d6fb2bd33602424ba4792715aa59f2bf5f916b90d8bb3f0bbd0a"
@@ -1900,7 +1959,7 @@ AI 对就业的早期影响可能先表现为岗位不再被创造。
                 package,
                 "status: discussing\n"
                 'voice_mode: ""\n'
-                "rounds_completed: 0\n"
+                "decision_points_completed: 0\n"
                 "user_confirmed: false\n"
                 'confirmed_on: ""\n'
                 'reason: ""\n',
@@ -1928,7 +1987,27 @@ AI 对就业的早期影响可能先表现为岗位不再被创造。
                 package,
                 "status: locked\n"
                 "voice_mode: company\n"
-                "rounds_completed: 4\n"
+                "decision_points_completed: 4\n"
+                "user_confirmed: true\n"
+                'confirmed_on: "2026-07-25"\n'
+                'reason: ""\n',
+                self.valid_locked_body(),
+            )
+            issues = VALIDATOR.validate_judgment_workshop(
+                package,
+                {"judgment_workshop": VALIDATOR.JUDGMENT_WORKSHOP_POINTER},
+                "draft",
+            )
+        self.assertEqual([], issues)
+
+    def test_legacy_rounds_completed_remains_supported(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            package = Path(temp_dir)
+            self.write_workshop(
+                package,
+                "status: locked\n"
+                "voice_mode: company\n"
+                "rounds_completed: 3\n"
                 "user_confirmed: true\n"
                 'confirmed_on: "2026-07-25"\n'
                 'reason: ""\n',
@@ -1948,7 +2027,7 @@ AI 对就业的早期影响可能先表现为岗位不再被创造。
                 package,
                 "status: locked\n"
                 "voice_mode: brand\n"
-                "rounds_completed: 2\n"
+                "decision_points_completed: 2\n"
                 "user_confirmed: false\n"
                 'confirmed_on: "25/07/2026"\n'
                 'reason: ""\n',
@@ -1961,7 +2040,7 @@ AI 对就业的早期影响可能先表现为岗位不再被创造。
             )
         joined = "\n".join(issues)
         self.assertIn("voice_mode", joined)
-        self.assertIn("rounds_completed", joined)
+        self.assertIn("decision_points_completed", joined)
         self.assertIn("user_confirmed", joined)
         self.assertIn("confirmed_on", joined)
         self.assertIn("主判断", joined)
@@ -1999,7 +2078,7 @@ AI 对就业的早期影响可能先表现为岗位不再被创造。
                 package,
                 "status: locked\n"
                 "voice_mode: personal\n"
-                "rounds_completed: 3\n"
+                "decision_points_completed: 3\n"
                 "user_confirmed: true\n"
                 'confirmed_on: "2026-07-25"\n'
                 'reason: ""\n',
@@ -2021,7 +2100,7 @@ AI 对就业的早期影响可能先表现为岗位不再被创造。
                 package,
                 "status: not_required\n"
                 'voice_mode: ""\n'
-                "rounds_completed: 0\n"
+                "decision_points_completed: 0\n"
                 "user_confirmed: false\n"
                 'confirmed_on: ""\n'
                 'reason: ""\n',

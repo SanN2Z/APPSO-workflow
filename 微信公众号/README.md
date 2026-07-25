@@ -1,6 +1,6 @@
 # 微信公众号子项目
 
-公众号文章按「一个选题一个内容包」管理。项目采用六角色写作团队：主编、证据编辑、特稿主笔、语法终校、视觉版权编辑和独立终审；运行规则见 `../.agents/skills/self-media-ops/references/wechat-team.md`。
+公众号文章按「一个选题一个内容包」管理。默认由一个执行者维护唯一 `draft.md`，到 `editorial_review` 再增加一次独立冷读；事实、版权或发布风险较高时才加载对应专家视角。可选协作方式见 `../.agents/skills/self-media-ops/references/wechat-team.md`。
 
 ## 目录
 
@@ -22,27 +22,27 @@
 
 ```text
 内容/YYYY/MM/slug/
-├─ brief.md
 ├─ draft.md
-├─ sources.md
-├─ copyedit.md
-├─ review.md
-├─ asset-manifest.yml
-├─ publish.yml
-├─ assets/
-├─ research/
-├─ tools/
-├─ dist/                   # 自动生成，本地预览和上传输入
-└─ publish-record.md
+├─ sources.md              # research 起增加
+├─ brief.md                # 新长稿或结构重写
+├─ review.md               # editorial_review 起增加
+├─ copyedit.md             # ready 前增加
+├─ asset-manifest.yml      # 首张图进入时增加
+├─ publish.yml             # 预览或交付时增加
+├─ publish-record.md       # 外部交接或发布时增加
+├─ assets/、research/      # 按需
+└─ dist/                   # 自动生成，Git 忽略
 ```
 
-`draft.md` 保存当前可编辑正文，`sources.md` 记录证据，`copyedit.md` 记录最终正文的逐句语法签字和哈希，`asset-manifest.yml` 记录图片权利和来源，`publish-record.md` 只写真实发布结果。
+想法阶段只需要 `draft.md`。文件随状态增加；进入 `ready` 时再补齐事实、审校、终校、权利和平台门所需记录。详细规则见 [content-package.md](../.agents/skills/self-media-ops/references/content-package.md)。
 
-不按 `draft/ready/published` 移动目录。结构性反馈放入内容包 `research/` 并同步 `review.md`；跨文章可复用的规律再提炼到 `知识库/`。
+不按 `draft/ready/published` 移动目录。结构性反馈保留在内容包；跨文章可复用的规律通过复盘晋升门进入 SOP。
 
 ## 本机预览与草稿箱
 
-排版、图片上传和微信草稿 API 复用开源 [Wenyan CLI](https://github.com/caol64/wenyan-cli)，项目固定为 `@wenyan-md/cli@2.0.11`；本地适配层不重复实现渲染器和微信客户端。配置把品牌 `project_adapter`、交付方式 `delivery_mode` 与视觉主题 `layout_profile` 分开；APPSO、Hunt Good 与个人公众号不得互相猜测或继承。交付模式、命令和安全边界见 [wechat-publishing.md](../.agents/skills/self-media-ops/references/wechat-publishing.md)，主题能力与精确样式见 [themes/README.md](themes/README.md)。
+排版、图片上传和微信草稿 API 复用开源 [Wenyan CLI](https://github.com/caol64/wenyan-cli)，项目固定为 `@wenyan-md/cli@2.0.11`；本地适配层不重复实现渲染器和微信客户端。
+
+用户只需选择 `company_browser`、`manual_editor` 或 `sealed_draft`。工具内部继续保留品牌、交付方式和视觉主题字段做严格校验。命令与失败处理见 [wechat-publishing.md](../.agents/skills/self-media-ops/references/wechat-publishing.md)，主题能力见 [themes/README.md](themes/README.md)。
 
 当前固定版本会把正文图片作为永久图片素材上传并缓存重复素材；自定义摘要暂不随 API 提交，需在公众号后台检查微信自动生成的摘要。`draft --execute` 只接受显式 `.env` 作为凭证真源并显示非敏感账号指纹；上传和建草稿不是原子事务，执行期失败后必须先检查目标账号后台和素材库，再决定是否重试。其余已知限制记录在发布参考文档中。
 

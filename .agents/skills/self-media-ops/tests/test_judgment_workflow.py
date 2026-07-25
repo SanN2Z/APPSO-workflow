@@ -65,7 +65,7 @@ class JudgmentWorkflowContractTests(unittest.TestCase):
         ).read_text(encoding="utf-8")
         for required in (
             "3–5 个候选判断",
-            "3–5 轮真实讨论",
+            "3–5 个真实决策点",
             "一个普通读者可以复述的主判断",
             "2–4 个支撑判断",
             "`personal`",
@@ -75,7 +75,7 @@ class JudgmentWorkflowContractTests(unittest.TestCase):
         for required in (
             "status: discussing",
             'voice_mode: ""',
-            "rounds_completed: 0",
+            "decision_points_completed: 0",
             "user_confirmed: false",
             "## 共同处境",
             "## 主判断",

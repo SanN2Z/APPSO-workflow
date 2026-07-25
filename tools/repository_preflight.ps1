@@ -32,6 +32,7 @@ try {
         '^\.playwright-mcp/',
         '^\.tmp/',
         '^\.tmp-[^/]+/',
+        '^tmp[^/]*/',
         '^APPSO-\u6570\u5b57\u8d44\u4ea7/01-\u680f\u76ee\u4e0e\u54c1\u724c/\u54c1\u724c\u89c6\u89c9/\u539f\u59cb\u8d44\u6599/',
         '^APPSO-\u6570\u5b57\u8d44\u4ea7/01-\u680f\u76ee\u4e0e\u54c1\u724c/\u54c1\u724c\u89c6\u89c9/\u751f\u56fe-Prompt/',
         '^APPSO-\u6570\u5b57\u8d44\u4ea7/90-\u53d7\u9650\u8d44\u6599/(?!README\.md$)'
@@ -52,7 +53,7 @@ try {
     }
 
     $secretPattern = 'sk-[A-Za-z0-9_-]{20,}|ghp_[A-Za-z0-9]{30,}|github_pat_[A-Za-z0-9_]{30,}|AKIA[0-9A-Z]{16}|Bearer\s+[A-Za-z0-9._~+/-]{24,}|-----BEGIN (RSA |EC |OPENSSH )?PRIVATE KEY-----'
-    $secretMatches = @(rg -n --hidden --glob '!.git/**' --glob '!*.png' --glob '!*.jpg' --glob '!*.jpeg' --glob '!*.gif' --glob '!*.mp4' --glob '!*.pdf' $secretPattern . 2>$null)
+    $secretMatches = @(rg -n --hidden --glob '!.git/**' --glob '!tmp*' --glob '!*.png' --glob '!*.jpg' --glob '!*.jpeg' --glob '!*.gif' --glob '!*.mp4' --glob '!*.pdf' $secretPattern . 2>$null)
     $rgExitCode = $LASTEXITCODE
     if ($rgExitCode -gt 1) {
         throw 'Secret scan failed to execute.'

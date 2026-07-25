@@ -40,4 +40,4 @@
 - `知识库/反馈库/2026-07-10-实习老师反馈.md`：上一篇文章暴露的系统性问题与修复标准。
 - `知识库/反馈库/2026-07-21-Opta稿复盘.md`：世界杯 Opta 稿从初稿到终稿的版本 diff、32 条用户反馈映射与回归问题。
 - `../APPSO-数字资产/03-SOP/时效热点 × AIGC 解释稿 SOP.md`：写「当天热点 × AIGC 方法解释」稿时加载，覆盖时效准入、预测口径、完整轨迹、视觉视频和发布审校；`知识库/SOP/` 只保留兼容入口。
-- 详细团队和发布门见 `../.agents/skills/self-media-ops/references/wechat-team.md`。
+- 最终审校使用 `../.agents/skills/self-media-ops/references/wechat-editorial-gates.md`；只有显式并行或高风险任务才加载 `wechat-team.md`。

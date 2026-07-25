@@ -570,3 +570,30 @@ changes:
       - "PROJECT-WECHAT-JUDGMENT-001 (project_configuration; effectiveness unverified)"
       - "PROJECT-CLUMSY-WRITING-001 (project_configuration; effectiveness unverified)"
     next_review_on: "2026-08-25"
+
+  - id: "SOP-CHANGE-20260725-004"
+    date: "2026-07-25"
+    change: "把默认内容生产路径收敛为一个共享核心流程和按需 adapter；保留事实、引语、版权、隐私、状态、终校、图片预检、发布 dry-run 与 Git 可恢复性等高 ROI 硬门，删除重复真源、默认多角色评审和过早建全套内容包"
+    source_cases:
+      - "user-feedback:2026-07-25-default-path-bloat"
+      - "user-clarification:2026-07-25-keep-high-roi-engineering-controls"
+    affected_sources:
+      - "AGENTS.md"
+      - "README.md"
+      - "共享/运营/SOP/内容工作流.md"
+      - ".agents/skills/self-media-ops/"
+      - ".agents/skills/content-retrospective/"
+      - "APPSO-数字资产/03-SOP/APPSO 内容生产 SOP.md"
+      - "微信公众号/"
+      - "共享/模板/微信公众号内容包/"
+      - "tools/repository_preflight.ps1"
+    classification: "project_workflow_simplification"
+    validation:
+      - "12 份主要入口与流程文档由 1453 行减至 943 行，减少 510 行，约 35%"
+      - "普通任务默认由单执行者完成；专项角色、复盘台账、生图、排版和发布模块按触发条件加载"
+      - "内容包改为随状态渐进补齐；ready 仍强制 sources、review、copyedit 和 asset manifest，published 另需 publish record"
+      - "判断共创改为 3–5 个真实决策点，一轮可以解决多个决定；旧 rounds_completed 字段继续兼容"
+      - "仓库预检继续拦截根级 tmp* 临时目录，但密钥扫描不再因不可读临时目录中断"
+      - "项目 Skill 校验、单元测试、真实内容包校验与仓库预检结果记录在本次 Git 提交"
+    promoted_rules: []
+    next_review_on: "2026-08-25"

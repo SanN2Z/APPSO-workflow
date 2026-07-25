@@ -1,76 +1,54 @@
-# WeChat editorial gates
+# WeChat final gates
 
-Apply every fixed gate, then add criteria derived from the current brief and explicit feedback. Record evidence in `review.md`; a single generic "quality passed" checkbox is insufficient.
+This is the single WeChat final checklist. Use it at `editorial_review` and before `ready`, not during every sentence edit.
 
-## Gate 1: reader and promise
+## 1. Reader and article promise
 
-- Identify the reader and the knowledge gap the article must bridge.
-- Name the article type and verify that its structure matches that job; a quick news item, product test, method guide, and opinion piece must not share a generic outline by default.
-- Express one reader-facing promise and one primary hook.
-- For an applicable analytical long-form article, confirm that `research/judgment-workshop.md` is locked after 3–5 real user rounds with one ordinary-person situation, one main judgment, 2–4 supporting judgments, a declared personal/company mode, and explicit user confirmation.
-- State what supports the main judgment and where it may be saying too much.
+- The article has one reader, one question, and one primary hook.
+- Title, opening, evidence, and ending answer the same promise.
+- An applicable analytical long-form article has a locked judgment record with the ordinary-person situation, main judgment, supporting judgments, evidence limits, mode, rejected directions, and user confirmation.
 
-## Gate 2: title and opening
+## 2. Argument and voice
 
-- The title creates one main curiosity; it does not stack a person, quote, product name, jargon, and second conclusion.
-- A non-specialist can paraphrase the promise in about five seconds.
-- The opening delivers the same promise quickly and does not require knowing an unfamiliar person or acronym.
+- Readers receive the minimum background before analysis.
+- Sections advance by a real dependency or a shared comparison scale, not by source order.
+- Important jargon is translated at first use.
+- The ordinary-person situation remains active through the evidence and ending.
+- The human-voice and detect-only Chinese AI-pattern passes have no open blocker or major defect.
+- The ending adds a supported consequence without launching a second topic or method list.
 
-## Gate 3: minimum background
+## 3. Facts and sources
 
-- Before analysis, give readers the smallest fact set needed to follow the argument.
-- For product launches, cover what launched, user/access scope, price or threshold, and workflow/entry changes.
-- Keep the fact card compact and separate vendor claims from independent conclusions.
-
-## Gate 4: argument closure
-
-- Introduce the organizing framework in prose within the first quarter of the article.
-- Use identical dimension names in prose, headings, and graphics.
-- Map each major section to `judgment -> evidence -> limitation -> reader consequence`.
-- Keep the ordinary-person situation active across the opening, evidence, and ending; do not add it as a generic final paragraph.
-- Do not let one example ambiguously prove several dimensions without explaining the link.
-- Address at least one serious counterexample, alternative explanation, or scope limit.
-
-## Gate 5: accessible voice
-
-- Translate important jargon at first use.
-- Break two consecutive high-density paragraphs with a scene, analogy, or author judgment.
-- The opening, middle, and ending sound like the same narrator.
-- Humor serves the argument and preserves the original meaning of quotes and memes.
-- A cold reader can answer: what happened, what the author thinks, and why it matters to them.
-- The writer self-pass and independent cold-read pass in `wechat-human-voice-pass.md` both pass; a generic "AI flavor removed" claim does not count.
-- The Chinese-adapted diagnostic in `wechat-ai-pattern-pass.md` was run in `detect` mode, its scope and exclusions were recorded, and no blocking or major `HUMAN-AI-*` defect remains open. English word lists, stylometric thresholds, and detector scores are not Chinese quality gates.
-- The sentence-level gate in `wechat-copyedit-pass.md` passes on the exact final body; cold-read comprehension does not waive grammar defects.
-
-## Gate 6: ending
-
-- The last two or three paragraphs answer the title and recover the central framework.
-- The final sentence is the article's judgment, not a generic CTA, slogan, or joke.
-- The ending introduces no unsupported claim and does more than repeat the opening.
-
-## Gate 7: facts and sources
-
-- Recheck time-sensitive facts at `as_of`.
-- Verify names, roles, quotes, dates, prices, rankings, policies, and product names.
-- Give every source an access date and supported wording.
+- Reopen time-sensitive sources at `as_of`.
+- Verify names, roles, quotes, dates, prices, rankings, policies, product names, and comparison settings.
+- Record an access date and supported wording for each source.
 - Separate fact, vendor self-report, third-party result, inference, and commentary.
-- For enterprise or sponsored material, include at least one independent source, one real limitation, and one inapplicable scenario; otherwise record a blocker.
+- Enterprise or sponsored material includes an independent source, a real limitation, and an inapplicable scenario.
 
-## Gate 8: visuals and rights
+## 4. Visuals and rights
 
-- Every body image exists inside the package and is registered.
-- Graphics are readable at phone width; essential logic is also in prose.
+- Every used image exists inside the package and is registered.
 - Captions identify source and comparison limits.
-- Used assets have a truthful, platform-compatible rights status.
+- Phone-width graphics remain readable; essential logic also appears in prose.
+- Rights status is truthful and allows the target platform.
 
-## Gate 9: state and validation
+Skip this gate only when the article has no images and the manifest truthfully records an empty asset list before `ready`.
 
-- `fact_checked`, `rights_checked`, and `copyedit_checked` are booleans and reflect completed checks.
-- Structural rewrites or changed factual claims invalidate the relevant previous pass. Any Markdown body edit invalidates the copyedit pass.
-- `copyedit.md`, `copyedit_body_sha256`, and the validator must agree on the exact final body hash.
+## 5. Exact-body copyedit
+
+- Check grammar, reference, comparison, clause hierarchy, punctuation, terminology, captions, and final notes.
+- `copyedit.md`, draft frontmatter, and the validator agree on the exact body SHA-256.
+- Any body edit invalidates the pass and triggers a new full copyedit.
+
+## 6. State and delivery
+
+- `fact_checked`, `rights_checked`, and `copyedit_checked` reflect completed work.
 - The validator reports zero errors; warnings are resolved or documented.
-- `ready` has no blocker, unresolved major defect, open blocking/major `HUMAN-AI-*` defect, open `COPY-*` defect, or stale copyedit hash. `published` still requires a real link or explicit user confirmation.
+- `ready` has no blocker, unresolved major, open blocking/major `HUMAN-AI-*`, open `COPY-*`, stale hash, unresolved rights, or temporary path.
+- Preview and handoff checks run only for the selected delivery route.
+- Browser overwrite or API draft creation has current-task authorization.
+- `published` still requires a real link or explicit user confirmation.
 
-## Task-specific rubric
+## Task-specific checks
 
-Add 3-8 observable checks from the brief, current topic, user feedback, and channel goal. Each check needs a pass condition; avoid vague criteria such as "more viral" or "sounds better".
+Add only the observable checks that could change this article's release decision. Do not force a generic 3–8-item quota or use vague labels such as「更有网感」。

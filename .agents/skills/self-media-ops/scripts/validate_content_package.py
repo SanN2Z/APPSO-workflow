@@ -23,15 +23,40 @@ sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 
-REQUIRED_FILES = (
+PACKAGE_FILES = (
     "brief.md",
     "draft.md",
     "sources.md",
     "copyedit.md",
     "review.md",
     "asset-manifest.yml",
+    "publish.yml",
     "publish-record.md",
+    "retrospective.md",
 )
+STATE_REQUIRED_FILES = {
+    "idea": ("draft.md",),
+    "research": ("draft.md", "sources.md"),
+    "draft": ("draft.md", "sources.md"),
+    "fact_checked": ("draft.md", "sources.md"),
+    "editorial_review": ("draft.md", "sources.md", "review.md"),
+    "ready": (
+        "draft.md",
+        "sources.md",
+        "review.md",
+        "copyedit.md",
+        "asset-manifest.yml",
+    ),
+    "published": (
+        "draft.md",
+        "sources.md",
+        "review.md",
+        "copyedit.md",
+        "asset-manifest.yml",
+        "publish-record.md",
+    ),
+    "archived": ("draft.md",),
+}
 ALLOWED_PLATFORMS = {"wechat", "x"}
 ALLOWED_STATES = {
     "idea",
@@ -1604,11 +1629,15 @@ def validate_judgment_workshop(
                 f"got: {voice_mode or '<empty>'}"
             )
 
-        rounds_completed = workshop_metadata.get("rounds_completed", "")
-        if re.fullmatch(r"[3-5]", rounds_completed) is None:
+        decision_points_completed = workshop_metadata.get(
+            "decision_points_completed",
+            workshop_metadata.get("rounds_completed", ""),
+        )
+        if re.fullmatch(r"[3-5]", decision_points_completed) is None:
             issues.append(
-                "locked judgment workshop rounds_completed must be an integer "
-                f"from 3 to 5; got: {rounds_completed or '<empty>'}"
+                "locked judgment workshop decision_points_completed must be an "
+                "integer from 3 to 5; got: "
+                f"{decision_points_completed or '<empty>'}"
             )
 
         if workshop_metadata.get("user_confirmed", "").lower() != "true":
@@ -1972,33 +2001,42 @@ def validate(package: Path) -> tuple[list[str], list[str], int]:
     if not package.is_dir():
         return [f"package does not exist or is not a directory: {package}"], warnings, 0
 
-    for name in REQUIRED_FILES:
-        if not (package / name).is_file():
-            errors.append(f"missing required file: {name}")
-
     draft_path = package / "draft.md"
     copyedit_path = package / "copyedit.md"
     review_path = package / "review.md"
     manifest_path = package / "asset-manifest.yml"
-    if not draft_path.is_file() or not manifest_path.is_file():
-        return errors, warnings, 0
+    if not draft_path.is_file():
+        return ["missing required file for package: draft.md"], warnings, 0
 
     draft = draft_path.read_text(encoding="utf-8")
-    manifest = manifest_path.read_text(encoding="utf-8")
-    manifest_version, manifest_assets, manifest_parse_issues = parse_asset_manifest(manifest)
-    errors.extend(manifest_parse_issues)
-    if manifest_version > SUPPORTED_MANIFEST_VERSION:
-        errors.append(
-            f"unsupported asset-manifest.yml version: {manifest_version}; "
-            f"maximum supported version is {SUPPORTED_MANIFEST_VERSION}"
-        )
-
     draft_body = ""
     try:
         metadata, draft_body = split_frontmatter(draft, "draft.md")
     except ValueError as exc:
         errors.append(str(exc))
         metadata = {}
+
+    status = metadata.get("status", "")
+    required_files = STATE_REQUIRED_FILES.get(status, ("draft.md",))
+    for name in required_files:
+        if not (package / name).is_file():
+            errors.append(f"missing required file for {status or 'unknown'}: {name}")
+
+    manifest_version = 0
+    manifest_assets: list[dict[str, object]] = []
+    if manifest_path.is_file():
+        manifest = manifest_path.read_text(encoding="utf-8")
+        (
+            manifest_version,
+            manifest_assets,
+            manifest_parse_issues,
+        ) = parse_asset_manifest(manifest)
+        errors.extend(manifest_parse_issues)
+        if manifest_version > SUPPORTED_MANIFEST_VERSION:
+            errors.append(
+                f"unsupported asset-manifest.yml version: {manifest_version}; "
+                f"maximum supported version is {SUPPORTED_MANIFEST_VERSION}"
+            )
 
     try:
         actual_copyedit_hash = copyedit_body_sha256(draft)
@@ -2031,7 +2069,6 @@ def validate(package: Path) -> tuple[list[str], list[str], int]:
             errors.append(f"missing frontmatter field: {key}")
 
     platform = metadata.get("platform", "")
-    status = metadata.get("status", "")
     publish_project_adapter, publish_adapter_issue = read_publish_project_adapter(
         package
     )
@@ -2185,7 +2222,7 @@ def validate(package: Path) -> tuple[list[str], list[str], int]:
         if "访问日期" not in sources and "access date" not in normalized_sources:
             errors.append("sources.md must record an access date for each source")
 
-    scan_paths = [package / name for name in REQUIRED_FILES if (package / name).is_file()]
+    scan_paths = [package / name for name in PACKAGE_FILES if (package / name).is_file()]
     for path in scan_paths:
         text = path.read_text(encoding="utf-8")
         for pattern in SECRET_PATTERNS:

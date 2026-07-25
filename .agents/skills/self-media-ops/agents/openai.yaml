@@ -1,4 +1,4 @@
 interface:
   display_name: "自媒体运营"
-  short_description: "面向 X 与微信公众号的调研、写作、语法终校、审校和内容包管理"
-  default_prompt: "Use $self-media-ops to turn this topic into a fact-checked, copyedited, platform-ready content package."
+  short_description: "为 X 与公众号选择最短安全流程，按需加载长稿、生图、审校与交付模块"
+  default_prompt: "Use $self-media-ops to finish this content task through the shortest safe path and load only the modules it actually needs."

@@ -1,7 +1,7 @@
 ---
 status: discussing
 voice_mode: ""
-rounds_completed: 0
+decision_points_completed: 0
 user_confirmed: false
 confirmed_on: ""
 reason: ""
@@ -11,7 +11,7 @@ reason: ""
 
 真源：仓库根路径 `.agents/skills/self-media-ops/references/wechat-judgment-workshop.md`
 
-只记录每轮产生的决定，不复制整段聊天。
+只记录已经确认的决定，不复制整段聊天。一轮对话可以完成多个决策点。
 
 ## 共同处境
 
@@ -25,29 +25,29 @@ reason: ""
 | J2 |  |  |  |  |  |
 | J3 |  |  |  |  |  |
 
-## 讨论记录（3–5 轮）
+## 决策记录（3–5 个决策点）
 
-### 第 1 轮：共同处境
-
-- 用户决定：
-- 放弃：
-
-### 第 2 轮：主判断
+### 决策点 1：共同处境
 
 - 用户决定：
 - 放弃：
 
-### 第 3 轮：事实与是否说过头
+### 决策点 2：主判断
+
+- 用户决定：
+- 放弃：
+
+### 决策点 3：事实与是否说过头
 
 - 用户决定：
 - 待核项：
 
-### 第 4 轮：案例与写作模式
+### 决策点 4：案例与写作模式
 
 - 用户决定：
 - 模式：personal / company
 
-### 第 5 轮：开头与结尾
+### 决策点 5：开头与结尾
 
 - 用户决定：
 - 可省略原因：

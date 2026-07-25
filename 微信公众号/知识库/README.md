@@ -6,4 +6,4 @@
 - `参考文风/`：对参考样本的结构、节奏和风险分析，只学习方法，不模仿独特表达。
 - `SOP/`：经具体稿件验证后沉淀的可复用工作流与发布门禁。
 
-单篇文章如何落实这些标准，记录在对应内容包的 `brief.md`、`research/` 和 `review.md`。写作团队的运行规则位于 `../../.agents/skills/self-media-ops/references/wechat-team.md`。
+单篇文章如何落实这些标准，记录在对应内容包。默认使用单执行者流程；最终审校见 `../../.agents/skills/self-media-ops/references/wechat-editorial-gates.md`，显式并行或高风险任务才加载 `wechat-team.md`。
