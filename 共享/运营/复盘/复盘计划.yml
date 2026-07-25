@@ -1,5 +1,5 @@
 schema_version: 1
-updated_on: "2026-07-22"
+updated_on: "2026-07-25"
 timezone: "Asia/Tokyo"
 
 triggers:
@@ -21,6 +21,9 @@ triggers:
   insight_checkpoint:
     action: "先关闭到期洞察实验，再更新支持、反对与中性证据；不得自动扩大命题或直接升级 SOP"
     schedule: "每周五，并以洞察台账中的 next_review_on 为准"
+  public_media_reference_refresh:
+    action: "复核公开科技媒体的官方入口、robots 与版权边界；低频更新元数据目录，抽样复查结构 adapter，不保存正文或把样本自动升级为 SOP"
+    schedule: "每月 1 日；站点规则或授权状态变化时立即复核"
 
 promotion:
   default_min_independent_cases: 2

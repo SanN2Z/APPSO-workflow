@@ -1,8 +1,8 @@
 # APPSO 内容生产 SOP
 
-版本：2.0
+版本：2.1
 
-更新日期：2026 年 7 月 24 日
+更新日期：2026 年 7 月 25 日
 
 资料属性：internal
 
@@ -214,6 +214,20 @@
 
 通过条件：`review.md` 记录 AI-pattern diagnostic 为 `pass`，每个命中项都写明字面／引用判断、删除测试与具体修复，且没有 open 的 blocker 或 major `HUMAN-AI-*` 缺陷。只看到关键词、没有语境判断，不能算命中。
 
+### 中文科技稿表达优先审校 adapter
+
+规则 ID：`PROJECT-APPSO-EXPR-001`。候选表达、动作等级、放行条件和修复方向以 [`wechat-expression-library.yml`](<../../.agents/skills/self-media-ops/references/wechat-expression-library.yml>) 为真源；本节不复制 20 组短语。
+
+执行顺序：
+
+1. 按表达库中已确认的 `priority` 与 `action`，先审 `P0 / default_avoid`，再审 `P1 / semantic_review`。20 组标签与短语只在表达库维护，本 SOP 不建立第二份明细。
+2. `default_avoid` 默认删掉只承担元话语、空权威、预制结论或夸张程度的部分，或直接写事实、比较、条件与后果；`semantic_review` 逐项完成字面／来源、信息任务、可迁移与邻近重复检查。
+3. 「更深层的问题在于」「更重要的问题在于」「真正的问题在于」只有在前后确实改变分析单位、时间尺度或责任主体时保留；否则直接写后一句，不用「更深」「更重要」「真正」替判断抬轿。
+4. 「研究表明」「这意味着」「闭环」「落地」等表达若承担必要信息任务，必须补出可核来源、推断范围、参与者、输入、输出或验收结果，不能只换一个近义词。
+5. 来源原话、字面事实、真实步骤、法规条件、必要定义和全文核心逻辑区分按反例放行；放行理由应能用一句话复述。
+
+通过条件：审校按 `P0 / default_avoid → P1 / semantic_review` 完成；每个实际修改或放行都有语义理由；没有把候选库改造成正文关键词扫描、机械计数或同义词替换器。`review.md` 的实际缺陷继续使用 `HUMAN-AI-*`，并在证据栏标注对应 `WX-EXPR-*`。
+
 ### 冷静分析型长文的叙事与节奏 adapter
 
 规则 ID：`PROJECT-APPSO-VOICE-001`。
@@ -253,6 +267,7 @@
 - [ ] 没有流水账式时间线和机械分段。
 - [ ] 结尾提供新信息，没有重复开头。
 - [ ] 已运行 AI-pattern diagnostic，`review.md` 状态为 `pass`，且没有 open 的 blocker 或 major `HUMAN-AI-*`；`WECHAT-HUMAN-002` 候选已完成字面／引用、可迁移、删除和具体化检查。
+- [ ] 已按 `PROJECT-APPSO-EXPR-001` 先审 `P0 / default_avoid`、再审 `P1 / semantic_review`；每个 `WX-EXPR-*` 命中或放行都有语义理由，没有使用关键词黑名单或机械计数。
 - [ ] 若属于 APPSO 冷静分析型长文，已按 `PROJECT-APPSO-VOICE-001` 检查问题链、报告脚手架、短句任务、候选口语落点、框架词簇、强对比与结尾分叉；短资讯和教程反例没有被强迫套用。
 
 ### 视觉与权利

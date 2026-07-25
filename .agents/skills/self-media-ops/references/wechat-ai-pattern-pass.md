@@ -85,6 +85,12 @@ Use [wechat-ai-pattern-regression.yml](wechat-ai-pattern-regression.yml) when th
 
 Flag precise motives, causes, product mechanisms, safety guarantees, or future outcomes that are not supported by sources. A limitation should say what remains unknown in reader-facing language; it should not narrate the research process or turn missing evidence into a product accusation.
 
+## Expression candidate library
+
+Use [`wechat-expression-library.yml`](wechat-expression-library.yml) as a shared candidate directory for Chinese technology-writing review. It records 20 recurring groups with two suggested actions: `default_avoid` and `semantic_review`.
+
+The portable diagnostic does not impose a priority order or inherit APPSO's project policy. A project adapter may explicitly choose `P0 / default_avoid → P1 / semantic_review`; without such an adapter, use relevant entries only as candidate prompts and apply the normal semantic tests. This library does not create 20 new banned-word rules. A phrase becomes a defect only after the literal / sourced, information-role, transfer, and neighboring-repeat tests establish a reader-facing problem. A sourced quotation, literal fact, real procedure, necessary definition, or genuine logical distinction must be allowed. Record the entry ID and the semantic reason for any confirmed finding; a raw keyword hit is not evidence.
+
 ## Do not use these as Chinese pass/fail rules
 
 - English word-replacement tiers or English-specific vocabulary bans;

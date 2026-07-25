@@ -1,0 +1,133 @@
+schema_version: 1
+updated_on: "2026-07-25"
+next_review_on: "2026-08-01"
+classification: "public-derived"
+purpose: "公开科技媒体编辑研究；不做模型训练，不保存文章正文或原始 HTML"
+
+sources:
+  - id: "ifanr"
+    name: "爱范儿／APPSO 公开样本"
+    host: "www.ifanr.com"
+    official_entries:
+      - "https://www.ifanr.com/feed"
+      - "https://www.ifanr.com/sitemap.xml"
+    robots_url: "https://www.ifanr.com/robots.txt"
+    rights_reference:
+      - "https://www.ifanr.com/robots.txt"
+    robots_checked_on: "2026-07-25"
+    status: "reference_only"
+    boundary:
+      - "Content-Signal 明示 search=yes、ai-train=no、use=reference"
+      - "robots 明确拒绝 GPTBot、ClaudeBot、Google-Extended、CCBot 与 Bytespider 等 AI 爬虫"
+      - "不用于模型训练或微调"
+      - "自动流程只读取官方 RSS 的标题、URL、日期与作者／栏目元数据；APPSO 正文结构沿用人工公开样本研究"
+      - "避开 robots 明示禁止的 API、搜索、后台和 trap 路径"
+    discovery: "每 60 分钟至多一次条件请求官方 RSS；APPSO 稿型沿用既有 25 篇人工索引"
+    feed_poll_interval_seconds: 3600
+    page_collection: "disabled"
+
+  - id: "jiqizhixin"
+    name: "机器之心"
+    host: "www.jiqizhixin.com"
+    official_entries:
+      - "https://www.jiqizhixin.com/industry"
+      - "https://www.jiqizhixin.com/articles/"
+      - "https://www.jiqizhixin.com/shared/sitemap.xml.gz"
+    robots_url: "https://www.jiqizhixin.com/robots.txt"
+    rights_reference:
+      - "https://www.jiqizhixin.com/copyright"
+    robots_checked_on: "2026-07-25"
+    status: "catalog_only"
+    boundary:
+      - "避开 /cable"
+      - "/rss 当前跳转到数据服务，不视为公开 RSS"
+      - "MCP 或数据服务要求登录、付费或单独条款时，先完成授权再使用"
+      - "首批只从公开栏目页人工选择 URL，不抓 PRO 内容"
+      - "公开文章响应不含正文；v1 不执行 JavaScript、不调用隐藏 API，只保存列表元数据"
+    discovery: "每 2—4 小时低频查看公开产业栏目；压缩 sitemap 每日最多一次"
+    min_delay_seconds: 10
+    page_collection: "disabled"
+
+  - id: "sspai"
+    name: "少数派"
+    host: "sspai.com"
+    official_entries:
+      - "https://sspai.com/feed"
+    robots_url: "https://sspai.com/robots.txt"
+    rights_reference:
+      - "https://sspai.com/page/agreement"
+      - "https://sspai.com/post/25165"
+    robots_checked_on: "2026-07-25"
+    status: "catalog_only"
+    boundary:
+      - "避开 /a/、/s/、/d/、/search/、/tag/、/app/ 和 /link"
+      - "不抓会员或需要登录的正文"
+      - "用户协议仅提供有限个人用途访问；公司自动流程只保存 RSS 元数据，不做正文结构抓取"
+      - "忽略 RSS 自带介绍，不把它存为摘要"
+    discovery: "每 60 分钟至多一次条件请求官方 RSS"
+    feed_poll_interval_seconds: 3600
+    page_collection: "disabled"
+
+  - id: "qbitai"
+    name: "量子位"
+    host: "www.qbitai.com"
+    official_entries:
+      - "https://www.qbitai.com/"
+      - "https://www.qbitai.com/feed"
+      - "https://www.qbitai.com/2026/07"
+    robots_url: "https://www.qbitai.com/robots.txt"
+    rights_reference:
+      - "https://www.qbitai.com/"
+    robots_checked_on: "2026-07-25"
+    status: "pilot"
+    boundary:
+      - "避开 /wp-admin/"
+      - "优先人工选择明确标注作者与来源的公开文章"
+      - "商业稿与编辑稿分层，归属不明时不进入正例"
+      - "robots 声明的 wp-sitemap.xml 本轮返回 404，不做高频重试"
+      - "文章页声明版权所有、未经授权不得转载及使用；结构统计不构成内容授权"
+    discovery: "每 60 分钟至多一次条件请求官方 RSS；月度归档每日人工补漏"
+    feed_poll_interval_seconds: 3600
+    min_delay_seconds: 10
+    page_collection: "explicit_allowlist_only"
+
+  - id: "36kr"
+    name: "36Kr"
+    host: "www.36kr.com"
+    official_entries:
+      - "https://www.36kr.com/feed"
+      - "https://www.36kr.com/sitemap.xml"
+      - "https://www.36kr.com/information/technology/"
+      - "https://www.36kr.com/information/AI/"
+    robots_url: "https://www.36kr.com/robots.txt"
+    rights_reference:
+      - "https://www.36kr.com/p/1721857998849"
+    robots_checked_on: "2026-07-25"
+    status: "catalog_only"
+    boundary:
+      - "避开 robots 明示禁止的登录、API、搜索、详情和用户路径"
+      - "区分 36Kr 自有稿、入驻媒体、同步稿和商业内容"
+      - "RSS description 可能包含大量正文，自动流程必须忽略"
+      - "原创转载需要另行申请；来源归属未分清前只保存 RSS 元数据，不纳入文风聚合"
+    discovery: "每 60 分钟至多一次条件请求官方 RSS；sitemap 每日最多一次"
+    feed_poll_interval_seconds: 3600
+    page_collection: "disabled"
+
+  - id: "xinzhiyuan"
+    name: "新智元"
+    host: "aiera.com.cn"
+    official_entries:
+      - "https://aiera.com.cn/"
+      - "https://aiera.com.cn/wp-sitemap.xml"
+    robots_url: "https://aiera.com.cn/robots.txt"
+    rights_reference:
+      - "https://aiera.com.cn/"
+    robots_checked_on: "2026-07-25"
+    status: "hold"
+    boundary:
+      - "本轮 robots 与 /feed 均返回 500，按保守策略停止自动正文采集"
+      - "sitemap 只提供 URL 与 lastmod，不提供标题；最新 post-3 子 sitemap 本轮也返回 500"
+      - "标题只能由官方首页或文章页人工核验，不得伪装成 sitemap 字段"
+      - "不得用转载页、搜索缓存或陈旧分类页替代官方授权边界"
+    discovery: "官方首页人工查看；sitemap 恢复后每日低频核对 URL 与 lastmod；正文自动采集禁用"
+    page_collection: "disabled"

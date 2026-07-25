@@ -1,0 +1,18 @@
+schema_version: 1
+run_id: "qbitai-pilot-20260725-001"
+started_on: "2026-07-25"
+status: "blocked_before_http"
+mode: "collect_execute"
+policy_sha256: "cafbafd925375489e92407e0de30e33bac120359bde39e6ee0fd3e6dcd6311ff"
+url_count: 3
+host: "www.qbitai.com"
+failure:
+  code: "ssrf_non_global_dns"
+  observed_address: "198.18.0.74"
+  message: "当前运行环境把目标域名解析到 RFC 2544 基准测试保留地址；抓取器按非公网地址门禁拒绝继续"
+effects:
+  article_requests_sent: 0
+  output_written: false
+  raw_html_stored: false
+  article_text_stored: false
+decision: "不降低 SSRF 门禁，不启用环境代理绕过；保留元数据目录，等待可解析到真实公网地址的受控环境重跑"

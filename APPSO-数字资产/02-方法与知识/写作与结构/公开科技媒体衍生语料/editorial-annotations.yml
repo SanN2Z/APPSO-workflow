@@ -1,0 +1,40 @@
+schema_version: 1
+updated_on: "2026-07-25"
+classification: "public-derived"
+status: "pilot"
+rules:
+  - "只写转述标签，不复制原段落、独特比喻或结尾原句"
+  - "商业属性、同步转载或作者归属不明时标为 hold，不进入风格正例"
+  - "至少 10 篇同媒体同稿型样本后才形成候选观察"
+
+annotations:
+  - sample_group: "appsso-public-25"
+    source: "../APPSO 近 25 篇样本分析.md"
+    outlet: "APPSO／爱范儿公开样本"
+    sample_count: 25
+    status: "existing_manual_analysis"
+    article_types:
+      - "早报／周报"
+      - "突发与热点解释"
+      - "趋势、论文、访谈和观点稿"
+      - "产品体验与消费决策"
+      - "职业与招聘"
+    derived_observations:
+      - "开头优先建立具体场景、反常事实或直接判断，背景随后补"
+      - "较好的深度稿用一个读者问题统领官方资料、实测、网友反应和论文等不同证据"
+      - "参数与技术说明之后会回到用户的成本、等待、追责或选择"
+      - "结尾沿同一问题增加一层后果，不另开第二套方法论"
+    exclusions:
+      - "不把标题动词、口头禅、比喻或收束句当作可复制模板"
+      - "商业内容和授权同步稿不能代表统一编辑声音"
+
+  - sample_group: "cross-media-pilot-20260725"
+    source: "pilot-urls.txt"
+    outlet: "量子位"
+    sample_count: 3
+    status: "awaiting_structural_collection_and_manual_annotation"
+    article_types: []
+    derived_observations: []
+    exclusions:
+      - "当前数量只够验证入口和数据结构，不形成媒体级判断"
+      - "机器之心页面正文需要客户端加载，v1 不调用隐藏 API 或执行 JavaScript，只保留公开列表元数据"

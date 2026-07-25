@@ -179,3 +179,14 @@ assets:
     appso_title_sha256: "C047A3E80CEA40D3174E847ADB8FD20D2E75386E6B2B01374EFE6C81CD722314"
     ifanr_title_sha256: "EE9E488FF73B56802FF24C7BA918092D7FF76F2CF562D6C5922C50438E887ABA"
     notes: "用户于 2026-07-23 明确授权将源码与内嵌品牌素材保存到当前私有仓库；规范副本位于 tools/company，根目录原始交付副本继续忽略。浏览器 Profile、Cookie、登录态、chrome.storage.local 导出、缓存和日志永不提交。当前体验包未附带 127.0.0.1:43127 增强服务，也未附 LICENSE 或 NOTICE"
+
+  - id: "appsso-016"
+    title: "公开科技媒体衍生语料"
+    path: "02-方法与知识/写作与结构/公开科技媒体衍生语料/"
+    source: "APPSO／爱范儿既有 25 篇公开样本研究，以及 2026-07-25 复核的公开媒体官方入口"
+    obtained_on: "2026-07-25"
+    classification: "public-derived"
+    rights_status: "project_analysis"
+    allowed_use: "编辑参考、结构统计、人工模式标注与项目 Skill 回归；不得用于模型训练、模仿独特作者表达或复制第三方正文"
+    contains_credentials: false
+    notes: "仓库只保存公开 URL、允许的元数据、结构统计、人工转述标签和运行审计；正文、原始 HTML、摘要、引文、词频、n-gram、付费内容和登录态不得入库。爱范儿 robots 当前明示 ai-train=no、use=reference"

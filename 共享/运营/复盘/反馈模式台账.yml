@@ -1,5 +1,5 @@
 schema_version: 1
-updated_on: "2026-07-23"
+updated_on: "2026-07-25"
 
 # 原始反馈留在内容包或受限反馈库；这里只保存脱敏后的跨案例模式。
 patterns:
@@ -242,3 +242,38 @@ patterns:
     introduced_on: "2026-07-23"
     regression_check: "每次导入或升级公司工具时核对远端可见性、凭据与运行态扫描、版本目录、文件树哈希和 git diff；另用公司终稿或 Chrome Profile 作为反例，确认仍被拒绝"
     next_review_on: "2026-08-23"
+
+  - id: "PROJECT-APPSO-EXPR-001"
+    pattern: "中文科技稿的 AI 味不只来自单个隐喻，还来自成组的元话语、空泛权威、预制结论、自动升华和高显著框架；若把它们做成禁词表，又会误伤字面事实、真实步骤与必要推断"
+    evidence_level: "project_configuration"
+    source_cases: ["EXPR-FB-20260725-001", "claude-cowork-record-a-skill:CLAUDE-FB-001", "amazon-agi-ai-hiring-signals:FB-007—009"]
+    disposition: "project_adapter"
+    rule_source: "APPSO-数字资产/03-SOP/APPSO 内容生产 SOP.md#中文科技稿表达优先审校-adapter"
+    candidate_source: ".agents/skills/self-media-ops/references/wechat-expression-library.yml"
+    trigger: "APPSO 中文科技解释稿、观点稿或产品稿进入 AI-pattern diagnostic"
+    action: "先审 10 组 P0 / default_avoid，再审 10 组 P1 / semantic_review；每项完成字面／来源、信息任务、可迁移和邻近重复检查，删除空框架或改写为具体事实、关系、条件与后果"
+    pass_condition: "每个实际修改与放行都有可复述的语义理由；来源原话、字面事实、真实步骤、必要定义和核心逻辑区分得到放行；review.md 记录对应 WX-EXPR ID"
+    failure_signal: "按关键词或次数自动判退；把一种套话机械换成另一种；用『更深／更重要／真正』宣告层级变化，却说不出分析单位、时间尺度或责任主体发生了什么变化"
+    scope: "APPSO 中文科技稿；其他项目可复用候选库，但必须自行声明 adapter，不能自动继承 APPSO 优先级"
+    owner: "feature_writer_and_release_auditor"
+    classification: "internal"
+    introduced_on: "2026-07-25"
+    regression_check: "库中保持 20 个唯一 ID，P0 / default_avoid 与 P1 / semantic_review 各 10 组且每组有 mechanism / repair / allow；用真实账单、来源原话、教程步骤、必要术语消歧作为放行反例"
+    next_review_on: "2026-08-25"
+
+  - id: "PROJECT-PUBLIC-MEDIA-REFERENCE-001"
+    pattern: "直接把科技媒体全文抓进仓库或模型训练集会带来版权、站点声明、作者模仿和样本混杂风险；只看少量手工文章又难以重复验证结构观察"
+    evidence_level: "project_configuration"
+    source_cases: ["user-request:2026-07-25-tech-media-corpus", "appsso-public-25"]
+    disposition: "project_adapter"
+    rule_source: "APPSO-数字资产/02-方法与知识/写作与结构/公开科技媒体衍生语料/README.md"
+    trigger: "为项目写作 Skill 增加 APPSO、机器之心或其他公开科技媒体参考样本"
+    action: "先复核官方入口、robots 和内容使用声明，再低频处理显式 URL；正文只在内存形成结构统计，仓库只存元数据、派生统计、人工转述标签与运行审计；按媒体、稿型、作者和商业属性分层"
+    pass_condition: "无正文、原始 HTML、摘要、引文、独特表达、付费内容或登录态入库；robots 拒绝或不可达时保守停止；每条聚合结论可追溯到公开 URL 和适用稿型"
+    failure_signal: "递归爬站、绕过登录／付费／robots、把全文送去训练或长期缓存、混合转载与自有稿、把公开样本归纳写成媒体官方 SOP"
+    scope: "本项目公开媒体编辑研究；不包含获得单独授权的数据产品或公司受限终稿"
+    owner: "managing_editor_and_repository_maintainer"
+    classification: "public-derived"
+    introduced_on: "2026-07-25"
+    regression_check: "抓取器默认 dry-run、无 ignore-robots／force 开关、输出字段严格白名单；包含 articleBody 的合成 fixture 不得在 records、receipt、stdout 或 stderr 泄漏"
+    next_review_on: "2026-08-25"

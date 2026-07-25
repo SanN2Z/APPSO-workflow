@@ -1,5 +1,5 @@
 schema_version: 1
-updated_on: "2026-07-23"
+updated_on: "2026-07-25"
 
 changes:
   - id: "SOP-CHANGE-20260721-001"
@@ -483,3 +483,49 @@ changes:
     promoted_rules:
       - "WECHAT-HUMAN-002 (existing E2 provisional; execution strengthened, not promoted to E3)"
     next_review_on: "2026-08-22"
+
+  - id: "SOP-CHANGE-20260725-001"
+    date: "2026-07-25"
+    change: "按用户确认的优先级建立 20 组中文科技稿表达候选库与 APPSO 审校 adapter，并建立只保存元数据、结构统计和人工转述标签的公开科技媒体衍生语料入口；明确编辑 Skill 校准不等于模型训练"
+    source_cases:
+      - "EXPR-FB-20260725-001"
+      - "user-request:2026-07-25-tech-media-corpus"
+      - "claude-cowork-record-a-skill:CLAUDE-FB-001"
+      - "amazon-agi-ai-hiring-signals:FB-007—009"
+      - "appsso-public-25"
+    affected_sources:
+      - ".agents/skills/self-media-ops/SKILL.md"
+      - ".agents/skills/self-media-ops/references/wechat-expression-library.yml"
+      - ".agents/skills/self-media-ops/references/wechat-ai-pattern-pass.md"
+      - ".agents/skills/self-media-ops/tests/test_expression_library.py"
+      - "APPSO-数字资产/03-SOP/APPSO 内容生产 SOP.md"
+      - "APPSO-数字资产/02-方法与知识/写作与结构/APPSO 文风蒸馏.md"
+      - "APPSO-数字资产/02-方法与知识/写作与结构/公开科技媒体衍生语料/"
+      - "APPSO-数字资产/00-治理/资产台账.yml"
+      - "APPSO-数字资产/00-治理/变更记录.md"
+      - "APPSO-数字资产/README.md"
+      - "tools/derived_corpus/"
+      - "共享/模板/微信公众号内容包/review.md"
+      - "共享/运营/复盘/反馈模式台账.yml"
+      - "共享/运营/复盘/复盘计划.yml"
+      - "微信公众号/CONTEXT.md"
+      - "微信公众号/知识库/信息源/APPSO-信息源逆向.md"
+      - "微信公众号/知识库/参考文风/APPSO-文风蒸馏.md"
+      - "微信公众号/知识库/参考文风/APPSO-近25篇样本分析.md"
+      - "微信公众号/知识库/反馈库/2026-07-25-中文科技稿表达优先级.md"
+      - "上下文/当前重点.md"
+    classification: "project_adapter_and_research_governance"
+    validation:
+      - "表达库固定为 P0 / default_avoid 10 组、P1 / semantic_review 10 组；每组同时记录机制、修复方向与放行边界"
+      - "AI-pattern diagnostic 只把表达库作为候选生成器；关键词命中与出现次数不能单独构成缺陷"
+      - "『更深层／更重要／真正的问题在于』只有在分析单位、时间尺度或责任主体确实变化时放行"
+      - "APPSO 文风中的结尾『升一层』已限定为沿同一标题承诺增加证据支持的后果，不强迫长期升华"
+      - "爱范儿 robots 于 2026-07-25 明示 ai-train=no、use=reference；因此语料流程明确禁止模型训练、正文与原始 HTML 入库"
+      - "机器之心、少数派、量子位、36Kr 与新智元分别登记公开入口、robots 复核结果、采集状态和保守边界"
+      - "首批结构统计 URL 仅作为管线验收，不在样本不足时发布媒体级风格结论"
+      - "量子位 3 个 URL 的 plan 通过；collect 因 DNS 返回 198.18.0.74 非公网保留地址被 SSRF 门禁阻断，未发送文章请求、未生成 records.jsonl，安全门保持不变"
+      - "微信公众号知识库的 3 份逐字重复 APPSO 方法文件已改成兼容入口，正文真源统一回到 APPSO 数字资产"
+    promoted_rules:
+      - "PROJECT-APPSO-EXPR-001 (project_configuration)"
+      - "PROJECT-PUBLIC-MEDIA-REFERENCE-001 (project_configuration)"
+    next_review_on: "2026-08-25"

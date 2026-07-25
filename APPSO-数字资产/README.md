@@ -1,6 +1,6 @@
 # APPSO 数字资产
 
-更新日期：2026 年 7 月 23 日
+更新日期：2026 年 7 月 25 日
 
 这里统一保存实习期间学到的 APPSO 栏目方法、选题规则、写作经验、视觉规范、反馈复盘和可执行 SOP。
 
@@ -8,6 +8,8 @@
 
 - [Hunt Good 周报保姆级指南](<01-栏目与品牌/Hunt-Good/Hunt Good 周报保姆级指南.md>)
 - [APPSO 内容生产 SOP](<03-SOP/APPSO 内容生产 SOP.md>)
+- [中文科技稿表达观察库](<../.agents/skills/self-media-ops/references/wechat-expression-library.yml>)
+- [公开科技媒体衍生语料](<02-方法与知识/写作与结构/公开科技媒体衍生语料/README.md>)
 - [公司飞书到公众号浏览器排版 SOP](<03-SOP/公司飞书到公众号浏览器排版 SOP.md>)
 - [爱范儿一键排版扩展（私有工具）](<../tools/company/ifanr-feishu-wechat-layout/README.md>)
 - [APPSO 公众号发布配置模板](<04-模板/APPSO 公众号发布配置.yml>)

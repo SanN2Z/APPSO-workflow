@@ -1,0 +1,14 @@
+version: 1
+user_agent: "TechMediaDerivedCorpusBot/0.1 (private editorial research; no content storage)"
+min_delay_seconds: 10
+timeout_seconds: 20
+max_pages_per_run: 10
+domains:
+  - host: "www.qbitai.com"
+    scheme: "https"
+    port: 443
+    allowed_path_prefixes:
+      - "/2026/07/"
+    article_container:
+      tag: "div"
+      class: "article"
