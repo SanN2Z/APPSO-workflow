@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "skills": {
+    "qu-ai-wei": {
+      "source": "LifelongLazyLearner/qu-ai-wei",
+      "sourceType": "github",
+      "skillPath": "SKILL.md",
+      "computedHash": "e276922a41e680ff4cef351cc1fea33feac697fafe0b23176f214ba731ebc541"
+    }
+  }
+}

@@ -1,0 +1,125 @@
+schema_version: 1
+id: INSIGHT-003
+title: 红库能否减少表达返工又不制造新套话
+classification: internal
+status: framed
+evidence_level: E0
+owner: strategy_editor
+created_on: '2026-08-03'
+updated_on: '2026-08-03'
+next_review_on: '2026-08-25'
+claim:
+  statement: 在已通过事实 gate 的微信公众号中文科技稿中，与只使用黑库禁用相比，按内容需要选用红库中的表达动作，可能减少主理人要求重写的表达句，同时不增加跨稿重复模板、虚构体验或事实阻断项。
+  scope: 本仓库微信公众号中文科技解释稿、观点稿与产品稿；不外推到其他平台、作者身份判断或通用汉语规律。
+  mechanism: 黑库只提供负向边界；红库把主理人偏好的具体表达拆成带触发条件的动作，并要求当前事实支持主体、对象、数字、顺序或摩擦。若作者据此更早把抽象评价改成可见动作、结果与代价，主理人可能减少表达层重写；零配额、禁止照抄和反模板回归用于阻止正向参照固化为新口头禅。
+  exclusions:
+  - 不声称热词、口语或短句天然更像人。
+  - 不把红项数量、词频或命中率用于作者身份、代写与诚信判断。
+  - 不允许红库补造第一人称、测试、失败、时间、数字、情绪和现场。
+  - 不替代事实、来源、权利、隐私、语法、语用必要性和发布授权硬门。
+  - 不自动外推到 APPSO、X、其他平台或通用汉语规律。
+falsifiability:
+  prediction: 在后续 3 篇符合范围的公众号稿中，冻结相同事实与黑库后，主理人配对冷读应至少 2 次以中等以上信心偏好使用可用红项的分支；偏好理由必须落在具体、清楚、自然或返工更少，并可指向原句。红项分支不得增加跨稿重复模板、虚构体验和事实／引语／权利／隐私／语法阻断项。
+  failure_condition: 3 篇中不足 2 次偏好红项分支、偏好信心低、理由只剩抽象语气印象、任一红项分支出现新增虚构体验或重大硬门阻断，或同一表达骨架跨稿重复成口头禅，均不支持当前实现；应收窄或退役相应红项，不把结果归咎于作者未达到命中数量。
+  alternative_explanations:
+  - 红项分支同时获得了更多编辑时间或更完整事实。
+  - 配对稿件的句子顺序泄露了分支身份。
+  - 主理人知道实验目的后产生期望偏差。
+  - 题材本身有更强现场、失败或数字，天然更容易写具体。
+  - 改善来自黑库、语用检查或事实补充，而不是红库。
+evidence:
+  supporting: []
+  contradicting: []
+  neutral:
+  - relation: neutral
+    ref: 微信公众号/内容/2026/07/qwenwork-hands-on/retrospective.md#fb-034
+    case_id: qwenwork-hands-on:FB-034
+    note: 用户明确要求建立红黑语料库，决定项目配置与主要 loss，不证明红库已经减少返工。
+  - relation: neutral
+    ref: 共享/运营/复盘/2026-08-03-中文人话与网感语料广搜及红黑库.md
+    note: 中文社区、编辑规范、GitHub 与学界资料支持把正向参照设计为语境动作并限制热词配额；外部资料不提供本项目效果证据。
+  unknowns:
+  - 主理人能否在不知道分支身份时稳定偏好红项分支。
+  - 18 类动作是否过多，维护成本是否高于减少的返工。
+  - 「圈内活词有对象」是否比其他红项更容易过时或跨稿重复。
+  - 红库是否只对产品实测稿有效，对纯观点和解释稿没有增量。
+experiments:
+- id: EXP-001
+  title: 三篇适用稿的黑库基线与红黑库配对冷读
+  status: planned
+  question: 在事实、故事合同、黑库和硬门相同的情况下，使用当前事实支持的红项能否提高主理人偏好，同时不制造新模板或虚构体验？
+  baseline:
+    description: 只执行现行 24 组黑库、语用必要性、人话与事实硬门；不向写作者展示红项。
+    frozen_ref: .agents/skills/self-media-ops/references/wechat-expression-library.yml#project_adapters-wechat_analytical
+    missing_data_rule: 缺少原始配对稿、分支映射、用户原话或实际返工记录时保留 null，不从聊天时长、Agent token 或印象推算。
+  intervention:
+    description: 使用相同事实、故事合同、黑库和硬门；写作者额外查看红库，只采用当前材料真实支持的表达动作，可记录零项，不复制例句。
+    artifact_ref: .agents/skills/self-media-ops/references/wechat-red-black-corpus.yml
+    version_ref: WECHAT-RED-BLACK-CORPUS-001
+  controls:
+  - 每个案例冻结同一事实包、来源、故事合同、篇幅、作者角色、模型家族和停止条件。
+  - 两个分支都执行相同 24 组黑库、语用、事实、权利、隐私和语法硬门。
+  - 主理人先读匿名配对正文或目标段落，再看分支说明；原始偏好、信心和引用句不改写。
+  - 红项分支可以零命中；不得为了实验制造场景、第一人称、失败、数字、热词或短句。
+  metrics:
+    primary:
+      id: owner-blind-pairwise-preference
+      definition: 主理人在不知道分支身份时，对红项分支、黑库基线或平局的选择；记录信心、原话与支持判断的具体句子。
+      direction: intervention_preferred
+      success_threshold: 3 篇中至少 2 篇选择红项分支，信心不低于中，且理由可指向具体表达而非分支标签。
+      baseline: null
+      result: null
+    secondary:
+    - id: owner-expression-rewrites
+      definition: 首次冷读后，主理人要求删除或重写的表达句数量；事实修正和结构重写分开记录。
+      direction: lower
+      success_threshold: 红项分支不高于基线；缺少逐句反馈时保留 null。
+      baseline: null
+      result: null
+    - id: repeated-red-stencils
+      definition: 红项示例、固定表面句式或同一活词在不同稿件中无必要重复的数量。
+      direction: lower
+      success_threshold: 红项分支为 0。
+      baseline: null
+      result: null
+    - id: total-human-minutes
+      definition: 红库选择、配对冷读、返工和资产维护的实测人工分钟数。
+      direction: lower
+      success_threshold: 红项分支不得显著增加总人工时间；没有开始到结束记录时保留 null。
+      baseline: null
+      result: null
+    guardrails:
+    - id: release-blockers
+      condition: 事实、引语、版权、隐私、发布和语法阻断项不得增加。
+    - id: no-fabricated-experience
+      condition: 第一人称、现场、测试、失败、数字、时间和情绪必须可追溯；新增一处即停止该案例。
+    - id: no-red-quota
+      condition: 不得设最低红项数，不因零命中判定干预失败。
+    - id: black-gate-integrity
+      condition: 红项不得抵消任何未处理的黑库命中或语用缺陷。
+  evidence_refs:
+  - .agents/skills/self-media-ops/references/wechat-red-black-corpus.yml
+  - .agents/skills/self-media-ops/references/wechat-red-corpus-regression.yml
+  decision: pending
+  end_condition: 完成 3 篇符合范围的前瞻配对冷读，或任一质量护栏触发后结束；一个案例不提升证据等级。
+assetization:
+  status: prototype
+  type: corpus_and_workflow_adapter
+  target: 在严格黑库之外提供可追溯、可反模板的正向表达动作。
+  authoritative_refs:
+  - .agents/skills/self-media-ops/references/wechat-red-black-corpus.yml
+  - .agents/skills/self-media-ops/references/wechat-red-corpus-regression.yml
+  - 共享/运营/SOP/内容工作流.md#project-wechat-red-corpus-001公众号红库用户反馈驱动的正向项目配置
+  regression_check: 结构测试确认黑库指针与 24 组真源一致、红项固定 18 项且最低命中数为 0、来源只存索引与转述；人工回归保持 10 条 encourage 和 6 条 reject_as_stencil。
+  transfer_test: null
+  retirement_condition: 主理人明确厌恶；3 篇中不足 2 次偏好；跨稿出现固定表面句式；任一红项诱发虚构体验或新增硬门阻断；维护成本高于减少的返工。
+  portable_core: 先确认内容任务，再选择有事实支持的正向表达动作；零配额、禁照抄、禁虚构、使用后复扫负向门。
+  adapter_boundary: 18 类动作、微信公众号范围、主理人喜好、中文社区来源、文件路径和 2026 年 8 月的新鲜度。
+next_action: 在下一篇符合范围的公众号稿开工前冻结黑库基线、匿名分支映射、主理人偏好口径和实际人工计时；当前不启动实验，不把 QwenWork 旧稿追溯改造成效果证据。
+decision_log:
+- date: '2026-08-03'
+  decision: framed
+  rationale: 用户明确要求建立红黑语料库；已把红库实现为 18 类带内容触发与反模板边界的表达动作，并预先冻结 3 篇配对验证的主指标、阈值和护栏。当前只有配置动机与资产，没有效果数据，保持 E0。
+  evidence_refs:
+  - 微信公众号/内容/2026/07/qwenwork-hands-on/retrospective.md#fb-034
+  - .agents/skills/self-media-ops/references/wechat-red-black-corpus.yml

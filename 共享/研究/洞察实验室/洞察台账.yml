@@ -1,15 +1,32 @@
 schema_version: 1
-updated_on: "2026-07-22"
-timezone: "Asia/Tokyo"
+updated_on: '2026-08-03'
+timezone: Asia/Tokyo
 wip_limit: 1
-
 insights:
-  - id: "INSIGHT-001"
-    title: "反馈闭环资产化是否形成可观察的工作流复利"
-    record: "insights/INSIGHT-001-feedback-loop-compounding/insight.yml"
-    status: "framed"
-    evidence_level: "E0"
-    classification: "internal"
-    owner: "strategy_editor"
-    updated_on: "2026-07-22"
-    next_review_on: "2026-07-24"
+- id: INSIGHT-001
+  title: 反馈资产只有分层后才会形成工作流复利吗
+  record: insights/INSIGHT-001-feedback-loop-compounding/insight.yml
+  status: framed
+  evidence_level: E1
+  classification: internal
+  owner: strategy_editor
+  updated_on: '2026-08-02'
+  next_review_on: '2026-08-09'
+- id: INSIGHT-002
+  title: 并行多稿盲选能否提高首稿上限
+  record: insights/INSIGHT-002-parallel-best-of-n-selection/insight.yml
+  status: refined
+  evidence_level: E1
+  classification: internal
+  owner: strategy_editor
+  updated_on: '2026-08-03'
+  next_review_on: '2026-08-16'
+- id: INSIGHT-003
+  title: 红库能否减少表达返工又不制造新套话
+  record: insights/INSIGHT-003-red-corpus-without-new-stencils/insight.yml
+  status: framed
+  evidence_level: E0
+  classification: internal
+  owner: strategy_editor
+  updated_on: '2026-08-03'
+  next_review_on: '2026-08-25'

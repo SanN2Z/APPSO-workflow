@@ -1,18 +1,18 @@
 schema_version: 1
 id: "INSIGHT-001"
-title: "反馈闭环资产化是否形成可观察的工作流复利"
+title: "反馈资产只有分层后才会形成工作流复利吗"
 classification: "internal"
 status: "framed"
-evidence_level: "E0"
+evidence_level: "E1"
 owner: "strategy_editor"
 created_on: "2026-07-22"
-updated_on: "2026-07-22"
-next_review_on: "2026-07-24"
+updated_on: "2026-08-02"
+next_review_on: "2026-08-09"
 
 claim:
-  statement: "在同一操作者、同类公众号 AI 解释稿和相同质量门下，把现实反馈转成可执行且可复用的工作流资产，可能比只提升单次 Prompt 或工具熟练度更稳定地减少同机制返工，并提高跨 Session 迁移性。"
+  statement: "在同一份乱序冻结材料、同一模型和相同硬门下，现行三层内容工作流若在成稿前增加一张不超过 800 字的文章编译器——明确材料取舍、建立连续问题链并做删节／换序检查——应比直接从材料与判断进入成稿更容易产出段落互相依赖、同时不过度制造意义的公众号 AI 解释稿。"
   scope: "本仓库内的微信公众号 AI 解释稿生产；先测试生产机制，不外推到个人职业发展、企业竞争力或所有 AI 工作。"
-  mechanism: "反馈被保存为带触发条件、动作、通过标准、失败信号和回归检查的资产后，下一轮可以在交付前阻断已知问题；独立 Session 也能复用该资产，而不依赖原对话记忆。"
+  mechanism: "现行三层流程解决了价值判断、编辑取舍和硬门混跑的问题，却没有显式要求作者先丢掉无用材料。压缩版编译器先问每张材料是否真的改变读者理解，再要求上一问的答案逼出下一问，最后用删节和换序暴露资料卡片。若这三个动作有效，即使材料顺序被打乱、题目缺少天然强场景，正文也应形成必要顺序，而不是复述来源或补造宏大主题。"
   exclusions:
     - "不声称抽象能力本身必然带来更高职业上限。"
     - "不把一次公众号改进视为长期因果证明。"
@@ -20,18 +20,29 @@ claim:
     - "不读取或引用未由用户明确纳入范围的科研项目。"
 
 falsifiability:
-  prediction: "在冻结的同类任务和质量门下，使用洞察落地卡的实验分支，其每 1000 个中文字符中「主要判断缺少证据、边界或读者后果」的问题数应至少比对照分支低 50%，且总人工时间、修改轮次和硬门问题不恶化。"
-  failure_condition: "连续两个独立配对案例未达到主指标，或任一案例增加事实、引语、版权、隐私、发布、语法硬门问题；若维护新资产的实测时间连续两轮高于避免的返工时间，也否定当前资产化方式。"
+  prediction: "在冻结题目、读者、乱序材料、模型和硬门后，两名相互独立的匿名评审都应以中等以上信心选择文章编译器分支，理由必须落在必要顺序、材料取舍或具体公共价值，而非单纯语气偏好；重大事实阻断项不得多于对照稿，编译计划不得超过 800 个中文字符。"
+  failure_condition: "评审分裂、任一评审判平、两人都选择对照、胜出理由只剩语言偏好、编译计划超过 800 个中文字符，或干预出现更多重大事实越界，均不支持当前压缩实现；一个案例无论正负都不得外推为长期效果。"
   alternative_explanations:
     - "实验文章本身更简单。"
     - "操作者因重复任务自然熟练，而非资产产生作用。"
     - "模型或运行时更新提高了输出质量。"
-    - "实验分支只是投入了更多前置规划时间。"
+    - "实验分支只是投入了更多研究或前置规划时间。"
     - "审稿人知道分支身份后产生期望偏差。"
+    - "同一题材天然适合电梯、针和证明流水线等场景，第二个题材未必能复现。"
+    - "写作者即使不使用编译器，也可能从明确的读者问题中自然恢复同一条问题链。"
 
 evidence:
   supporting: []
-  contradicting: []
+  contradicting:
+    - relation: "contradicts"
+      ref: "微信公众号/内容/2026/08/deepseek-harness-internal-test/retrospective.md#fb-006"
+      case_id: "deepseek-harness-internal-test:FB-003—006"
+      note: "旧项目已经把钩子、叙事、人话和判断共创资产化，但同一稿多轮返工后，用户仍判断文章没有营养，并点出事实边界被写成无人关心的章节。该案例反对「资产化本身就会改善质量」的宽命题；因模型、轮次与操作不受控，只计 E1，不作因果证明。"
+    - relation: "contradicts"
+      ref: "微信公众号/内容/2026/08/deepseek-harness-internal-test/research/experiments/zero-context-02/result.md"
+      case_id: "deepseek-harness-internal-test:zero-context-02"
+      prospective: true
+      note: "在乱序、弱场景材料的前瞻配对实验中，两名独立盲审均以中等信心选择纯 v4.0 对照稿；揭盲后 A 为文章编译器 0.2，B 为对照。两稿重大事实阻断项均为 0，干预取舍略优且计划低于 800 字，但必要阅读顺序更弱。该结果反对当前显式问题链实现，不外推到所有规划方法。"
   neutral:
     - relation: "neutral"
       ref: "微信公众号/内容/2026/07/ai-agents-real-world-loss/brief.md"
@@ -48,74 +59,160 @@ evidence:
     - relation: "neutral"
       ref: "共享/研究/洞察实验室/insights/INSIGHT-001-feedback-loop-compounding/review.md#skill-forward-test"
       note: "隔离 Session 能从 Skill 把一个过宽命题缩成 E0 实验，说明入口可迁移；它不支持 INSIGHT-001 的效果预测。"
+    - relation: "neutral"
+      ref: "微信公众号/内容/2026/08/ai-next-wang-conjecture/research/experiments/zero-context-01/result.md"
+      case_id: "ai-next-wang-conjecture:zero-context-01"
+      prospective: true
+      note: "首个前瞻零上下文配对实验中，对照稿与文章编译器稿盲审均为 10 / 10，实验稿同分盲选胜出但没有达到预先冻结的 +2 阈值，重大事实阻断项均为 0。结果不支持推广，也不构成无效证明；量表封顶和来源顺序泄露需要先修正。"
   unknowns:
     - "历史内容包缺少统一记录的人工分钟数，不能事后猜测效率基线。"
-    - "尚无隔离 Session 对同一洞察卡的前瞻迁移结果。"
-    - "现有 SOP 变更是否减少下一轮同机制返工，仍需按可比机会记录。"
+    - "把「主题问题链」改成「解释所需的前置因果」是否会产生不同结果；当前没有可冻结的新机制。"
+    - "压缩版编译器的真实人类操作时间是否低于它避免的返工时间。"
 
 experiments:
   - id: "EXP-001"
-    title: "下一篇同类公众号解释稿的洞察卡配对实验"
-    status: "planned"
-    question: "写作前强制补齐证据、边界、反证和读者后果，能否减少宏观跳跃，同时不增加总成本或质量风险？"
+    title: "现行工作流与文章编译层的零上下文配对实验"
+    status: "evaluated"
+    question: "在现行三层工作流上增加素材角色卡、问题阶梯、场景包和章节依赖检查，能否比现行工作流单独运行更稳定地把同一批材料编译成由问题推进的文章？"
     baseline:
-      description: "使用实验开始时冻结的现有 self-media-ops、内容工作流和同一份 brief、sources、素材与质量门，不加载洞察落地卡。"
-      frozen_ref: null
-      missing_data_rule: "没有实测人工时间时保留 null，不用聊天时间或 Git 时间推算。"
+      description: "使用 2026-08-02 的内容工作流 v4.0、平台规则与冻结材料包，自行规划后直接成稿；不读取本内容包旧稿、参考文章、实验编译器或另一分支。"
+      frozen_ref: "微信公众号/内容/2026/08/ai-next-wang-conjecture/research/experiments/zero-context-01/protocol.md#冻结输入"
+      missing_data_rule: "没有可信的人类实测分钟数时固定保留 null，不用聊天时间、Agent 墙钟时间或 Git 时间推算。"
     intervention:
-      description: "在同一输入的隔离 Session 中，写作前填写核心判断、类型、支持证据、反对证据、作用机制、读者后果、改口条件和目标资产；审校时逐项检查。"
-      artifact_ref: ".agents/skills/insight-to-asset/SKILL.md"
-      version_ref: null
+      description: "使用与对照相同的内容工作流 v4.0、平台规则与冻结材料包，但写稿前必须完成素材角色卡、5—7 级问题阶梯、4—6 个场景包、竞争解释和删节／换序检查，再从该计划成稿。"
+      artifact_ref: "微信公众号/内容/2026/08/ai-next-wang-conjecture/research/experiments/zero-context-01/compiler-instructions.md"
+      version_ref: "0.1"
     controls:
-      - "使用同一 brief、sources、素材、模型、运行时、操作者角色和停止标准。"
-      - "两个分支使用隔离 Session，执行顺序随机。"
-      - "冷读审稿人不知道哪个分支使用了洞察卡。"
-      - "两分支都不直接发布，只把通过全部门禁的版本继续交付。"
+      - "两分支使用同一题目、读者、冻结材料包、模型、运行时、正式工作流、平台规则、建议长度和停止标准。"
+      - "两分支使用 fork_turns:none 的隔离 Session，不能读取聊天、旧稿、参考文章、另一分支或额外网页。"
+      - "分支映射由预先记录的 SHA-256 奇偶规则确定；盲审不得读取映射、提示词或实验规划。"
+      - "两分支只生成首稿和内部事实映射，不发布、不排版、不生图、不以 AI 检测器为目标。"
     metrics:
       primary:
-        id: "unsupported-judgment-defects-per-1000-zh-chars"
-        definition: "盲审确认的主要判断缺少证据、适用边界或读者后果的问题数 ÷ 正文中文字符数 × 1000。"
-        direction: "lower"
-        success_threshold: "实验分支至少比对照分支低 50%。"
-        baseline: null
-        result: null
+        id: "structural-value-score"
+        definition: "匿名盲审按开场冲突 1、问题推进 2、章节依赖 2、材料转向 2、科普清晰度 1、公共价值 1、文字有效性 1，共计 10 分；锚点与顺序冻结在 judge-protocol.md。"
+        direction: "higher"
+        success_threshold: "文章编译器分支至少比现行工作流分支高 2 分，且文章编译器分支达到 8 / 10；盲审信心不低于中。"
+        baseline: 10
+        result:
+          intervention: 10
+          delta: 0
       secondary:
+        - id: "blind-preference"
+          definition: "评审在不知道分组身份时对 A、B 或平局的最终选择及信心。"
+          direction: "intervention_preferred"
+          success_threshold: "盲选文章编译器分支，信心不低于中。"
+          baseline: "A"
+          result: "B；中等信心"
+        - id: "removable-core-sections"
+          definition: "盲审删节／换序测试中，可删除或互换而不破坏论证的核心章节数量。"
+          direction: "lower"
+          success_threshold: "文章编译器分支少于现行工作流分支。"
+          baseline: 0
+          result: 0
         - id: "total-human-minutes"
-          definition: "规划、填卡、审校、返工和资产维护的全部实测人工分钟数。"
+          definition: "规划、审校、返工和资产维护的全部实测人类分钟数；本轮未建立可信计时。"
           direction: "lower"
-          success_threshold: "实验分支不高于对照分支；复制到第二独立案例时再检验是否下降 20%。"
-          baseline: null
-          result: null
-        - id: "revision-rounds"
-          definition: "从首稿到同一审校状态所需的实质修改轮次。"
-          direction: "lower"
-          success_threshold: "实验分支不高于对照分支。"
+          success_threshold: "本轮固定为 null，不参与成败；第二个前瞻案例如测试效率，必须从开始计时。"
           baseline: null
           result: null
       guardrails:
-        - id: "release-blockers"
-          condition: "事实、引语、版权、隐私、发布和 copyedit 阻断项不得多于对照分支。"
-        - id: "blind-read-quality"
-          condition: "盲审对清晰度、可信度和唯一内容承诺的结论不得变差。"
-    evidence_refs: []
-    decision: "pending"
-    end_condition: "两个分支使用冻结输入完成并达到同一审校状态，盲审结果和全部实测成本已经登记；若 2026-08-31 前没有合适内容包，则复核并重新排期，不把未运行写成阴性结果。"
+        - id: "major-fact-blockers"
+          condition: "实验分支的重大事实错误、来源越界、把立场论文写成定论或使用冻结禁用项的数量不得多于对照分支。"
+        - id: "scope-integrity"
+          condition: "不得把单案例结果写成 AI 永远不会发明、文章编译器普遍有效或正式 SOP 已被验证。"
+    evidence_refs:
+      - "微信公众号/内容/2026/08/ai-next-wang-conjecture/research/experiments/zero-context-01/blind-review.md"
+      - "微信公众号/内容/2026/08/ai-next-wang-conjecture/research/experiments/zero-context-01/result.md"
+    decision: "neutral"
+    end_condition: "A、B 两个隔离分支按冻结输入生成首稿，第三个隔离 Session 按冻结量表完成匿名评审，映射揭盲后把原始分、事实护栏与 supports／neutral／contradicts 决定写回；本轮最多形成 E1，至少再做一个独立内容包才讨论提升证据等级。"
+  - id: "EXP-002"
+    title: "乱序弱场景材料与压缩文章编译器的零上下文配对实验"
+    status: "evaluated"
+    question: "当来源顺序被确定性打乱、题材缺少天然强场景时，压缩到取舍、问题链和删节／换序三个动作的文章编译器，能否比现行 v4.0 更稳定地产生必要阅读顺序，并避免用背景或宏大判断填充？"
+    baseline:
+      description: "使用 2026-08-02 的内容工作流 v4.0 摘要和同一份乱序冻结材料，自行规划后直接成稿；不读取本内容包旧稿、参考文章、实验编译器、映射或另一分支。"
+      frozen_ref: "微信公众号/内容/2026/08/deepseek-harness-internal-test/research/experiments/zero-context-02/protocol.md#冻结输入"
+      missing_data_rule: "本轮没有人类写作者，人工分钟固定为 null；不用 Agent 墙钟时间、聊天时长或 Git 时间替代。"
+    intervention:
+      description: "使用与对照相同的 v4.0 摘要和乱序冻结材料，但成稿前必须完成材料取舍、3—5 级问题链和删节／换序检查；计划不超过 800 个中文字符。"
+      artifact_ref: "微信公众号/内容/2026/08/deepseek-harness-internal-test/research/experiments/zero-context-02/compiler-instructions.md"
+      version_ref: "0.2"
+    controls:
+      - "两分支使用同一题目、读者、乱序材料包、模型家族、运行时、正式工作流摘要、建议长度、事实护栏和停止标准。"
+      - "材料卡顺序由 protocol.md 预先声明的 SHA-256 排序规则生成，不按时间、重要性或预计文章顺序排列。"
+      - "两分支使用 fork_turns:none 的隔离 Session，不能读取聊天、旧稿、brief、sources、review、retrospective、选题卡、另一分支或额外网页。"
+      - "分支映射由预先记录的 SHA-256 奇偶规则确定；两名盲审不得读取映射、提示词、编译计划或彼此的评审。"
+      - "两分支只生成首稿和内部事实映射，不发布、不排版、不生图、不以 AI 检测器为目标。"
+    metrics:
+      primary:
+        id: "blind-pairwise-preference"
+        definition: "两名独立匿名评审各自在 A、B、平局中强制选择，依据必要顺序、材料取舍、具体公共价值与是否制造未经支持的意义；不使用容易封顶的整数总分。"
+        direction: "intervention_unanimously_preferred"
+        success_threshold: "两名评审都选择文章编译器分支，信心均不低于中；胜出理由至少落在必要顺序、材料取舍或具体公共价值中的一项。"
+        baseline: "control branch"
+        result:
+          mapping: "A=intervention；B=control"
+          judge_1: "B；中等信心"
+          judge_2: "B；中等信心"
+          unanimous_preference: "control"
+      secondary:
+        - id: "removable-paragraphs"
+          definition: "评审认为可以删除而不改变核心理解的正文段落数量，按候选稿分别原样记录，不合并为总分。"
+          direction: "lower"
+          success_threshold: "文章编译器分支不高于对照，并由评审指出具体段落。"
+          baseline: null
+          result: "两名评审均认为 A 的材料取舍略优；同时都在 A、B 各指出 1 段可删的项目进度背景。"
+        - id: "recall-separation"
+          definition: "评审读后能否分别复述 2 个事实、1 个作者推断和 1 个未知项，用来观察文章是否把四者混在一起。"
+          direction: "clearer"
+          success_threshold: "文章编译器分支至少不弱于对照；缺失项原样保留，不事后补全。"
+          baseline: null
+          result: "两名评审都能从 A、B 分别复述 2 个事实、1 个作者推断和 1 个未知项；无可区分增量。"
+        - id: "compiler-plan-size"
+          definition: "干预分支编译计划的中文字符数，只衡量记录负担，不代替真实人工时间。"
+          direction: "lower"
+          success_threshold: "不超过 800 个中文字符。"
+          baseline: null
+          result: 488
+        - id: "total-human-minutes"
+          definition: "规划、审校、返工和资产维护的全部实测人类分钟数；本轮无可比人类写作者。"
+          direction: "lower"
+          success_threshold: "预先固定为 null，不参与成败。"
+          baseline: null
+          result: null
+      guardrails:
+        - id: "major-fact-blockers"
+          condition: "干预分支的重大事实错误、把厂商自报写成独立结论、把未发布写成已发布、来源越界或把推测动机写成事实的数量不得多于对照。"
+        - id: "scope-integrity"
+          condition: "不得把一次招募写成 DeepSeek 已确定的产品战略、开放计划或行业转折，也不得把单案例写成文章编译器普遍有效。"
+        - id: "plan-burden"
+          condition: "干预计划不得超过 800 个中文字符；超限即不支持当前压缩实现。"
+    evidence_refs:
+      - "微信公众号/内容/2026/08/deepseek-harness-internal-test/research/experiments/zero-context-02/protocol.md"
+      - "微信公众号/内容/2026/08/deepseek-harness-internal-test/research/experiments/zero-context-02/mapping.yml"
+      - "微信公众号/内容/2026/08/deepseek-harness-internal-test/research/experiments/zero-context-02/blind-review-1.md"
+      - "微信公众号/内容/2026/08/deepseek-harness-internal-test/research/experiments/zero-context-02/blind-review-2.md"
+      - "微信公众号/内容/2026/08/deepseek-harness-internal-test/research/experiments/zero-context-02/result.md"
+    decision: "contradicts"
+    end_condition: "A、B 两个隔离分支按乱序冻结输入生成首稿，两名相互独立的零上下文评审分别完成匿名强制比较；揭盲后原样记录选择、信心、事实护栏、计划长度与 supports／neutral／contradicts 决定。本轮最多形成 E1，不直接修改正式 SOP。"
 
 assetization:
   status: "prototype"
   type: "skill_and_workflow"
-  target: "形成可由独立 Session 使用的洞察卡、实验合同和到期审计入口；若机制通过，再决定是否成为公众号观点稿局部门禁。"
+  target: "形成可由独立 Session 执行的三层内容流程、价值门、实验合同和到期审计入口；若机制通过，再决定是否提升证据等级。"
   authoritative_refs:
     - ".agents/skills/insight-to-asset/SKILL.md"
     - ".agents/skills/insight-to-asset/references/insight-contract.md"
     - "共享/研究/洞察实验室/README.md"
+    - "共享/运营/SOP/内容工作流.md"
   regression_check: "CLI 校验严格结构、台账一致性、路径边界、WIP 和到期语义；隔离 Session 检查范围、反证与护栏是否能从 Skill 恢复。"
   transfer_test: "2026-07-22 隔离 Session 只读取 Skill，面对「AI 摘要更快，所以所有团队都应完全自动化周报」时，主动缩窄到内部影子实验，保持 E0 / framed，写出 4 周期阈值、反证、维护成本、事实／隐私／外部发送护栏，并拒绝自动发送；通过。"
   retirement_condition: "连续两轮维护成本高于避免的返工，或规则持续误报并降低内容质量。"
   portable_core: "命题合同、反证、证据关系、实验门、资产合同和状态机。"
   adapter_boundary: "品牌、平台、内容状态、目录、指标口径、审核角色、权限和保密等级。"
 
-next_action: "为下一篇符合范围的公众号 AI 解释稿冻结 brief、sources、运行时、质量门和分支顺序；未冻结前保持 framed，不进入 running。"
+next_action: "不推广文章编译器 0.2，也不立即扩写成 0.3；先与用户直接比较 A、B，确认「先建立解释前提，再逼出人物／门槛」是否是值得另立实验的候选机制。正式内容工作流 v4.0 保持不变。"
 
 decision_log:
   - date: "2026-07-22"
@@ -123,3 +220,34 @@ decision_log:
     rationale: "用户希望把抽象洞察落地；当前只能建立可验证机制和首轮实验，现有案例不足以支持职业或组织层面的远期结论。"
     evidence_refs:
       - "微信公众号/内容/2026/07/ai-agents-real-world-loss/retrospective.md#DLV-002"
+  - date: "2026-08-02"
+    decision: "refined"
+    rationale: "DeepSeek Harness 稿表明，资产化的判断工坊、钩子、叙事、人话与事实边界可能共同生成结构完整但没有营养的文章；用户明确要求改为自由判断、编辑取舍、硬门检查三层。当前只获得 E1 反例，尚未验证新流程有效。"
+    evidence_refs:
+      - "微信公众号/内容/2026/08/deepseek-harness-internal-test/retrospective.md#fb-006"
+      - "共享/运营/SOP/内容工作流.md#三层主流程"
+  - date: "2026-08-02"
+    decision: "test_ready"
+    rationale: "用户授权对《AI 提不出下一个「王的猜想」》做零上下文对照实验；题目、受众、事实材料、模型条件、分支映射、禁读范围、主指标、成功阈值、事实护栏和结束条件已在写作前冻结。实验只比较现行 v4.0 与 v4.0 加文章编译器，不再用已淘汰的 v3.1 作基线。"
+    evidence_refs:
+      - "微信公众号/内容/2026/08/ai-next-wang-conjecture/research/experiments/zero-context-01/protocol.md"
+      - "微信公众号/内容/2026/08/ai-next-wang-conjecture/research/experiments/zero-context-01/mapping.yml"
+  - date: "2026-08-02"
+    decision: "neutral"
+    rationale: "A、B 匿名盲审均为 10 / 10；评审同分盲选文章编译器稿，信心为中，但实验稿没有达到预先冻结的 +2 分增量阈值。两稿重大事实阻断项均为 0。由于量表封顶、冻结材料顺序接近成稿论证顺序，且编译计划记录负担明显，本轮不推广也不否定干预，洞察回到 framed。"
+    evidence_refs:
+      - "微信公众号/内容/2026/08/ai-next-wang-conjecture/research/experiments/zero-context-01/blind-review.md"
+      - "微信公众号/内容/2026/08/ai-next-wang-conjecture/research/experiments/zero-context-01/result.md"
+  - date: "2026-08-02"
+    decision: "test_ready"
+    rationale: "EXP-001 暴露量表封顶、材料顺序泄露和编译计划过重后，第二轮改用缺少天然强场景的 DeepSeek Harness 内测题；12 张材料卡已按 SHA-256 乱序，干预压缩为取舍、问题链和删节／换序三步，主指标改为两名独立盲审的一致配对偏好。阈值、护栏、计划上限和结束条件均在成稿前冻结。"
+    evidence_refs:
+      - "微信公众号/内容/2026/08/deepseek-harness-internal-test/research/experiments/zero-context-02/protocol.md"
+      - "微信公众号/内容/2026/08/deepseek-harness-internal-test/research/experiments/zero-context-02/mapping.yml"
+  - date: "2026-08-02"
+    decision: "contradicts"
+    rationale: "两名独立盲审均以中等信心选择 B；揭盲后 B 为纯 v4.0 对照，A 为文章编译器 0.2。A 的取舍略优、计划仅 488 个非空白字符且两稿事实护栏相同，但 A 在前半已回答主问题，后半项目进度成为可删支线；B 先建立 Harness 故障层，再由测试问题逼出同行门槛，必要顺序更强。当前实现不推广，洞察回到 framed。"
+    evidence_refs:
+      - "微信公众号/内容/2026/08/deepseek-harness-internal-test/research/experiments/zero-context-02/blind-review-1.md"
+      - "微信公众号/内容/2026/08/deepseek-harness-internal-test/research/experiments/zero-context-02/blind-review-2.md"
+      - "微信公众号/内容/2026/08/deepseek-harness-internal-test/research/experiments/zero-context-02/result.md"

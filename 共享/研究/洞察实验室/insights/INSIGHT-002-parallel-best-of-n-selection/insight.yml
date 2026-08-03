@@ -1,0 +1,198 @@
+schema_version: 1
+id: "INSIGHT-002"
+title: "并行多稿盲选能否提高首稿上限"
+classification: "internal"
+status: "refined"
+evidence_level: "E1"
+owner: "strategy_editor"
+created_on: "2026-08-02"
+updated_on: "2026-08-03"
+next_review_on: "2026-08-16"
+
+claim:
+  statement: "对已经通过价值门，且标题、核心判断与章节转折已形成共享故事合同的公众号分析稿，同时调用 3—5 个隔离写作 Agent 生成完整候选，再由未参与生成的评审 Agent 匿名选择一篇或全部退回，可能比单稿直接进入编辑更容易得到结构与公共价值都合格的正文。"
+  scope: "本仓库微信公众号新分析稿与结构性重写；题目存在多种真实叙事执行路线时，先由用户确认标题、唯一核心判断、四格叙事链、叙事发动机与最强对手，再默认并行生成 3 篇候选；不把评选层用于替代选题和问题定义。"
+  mechanism: "共享故事合同先用四格叙事链锁定章节依赖和最强对手，避免候选在并列资料块上集体优化；隔离并行再扩大叙事执行路线的采样空间；候选冻结前只守事实边界并避免复用现成骨架；生成与评选角色分离，匿名评审分别判断事实、论证／叙事链和可引用的跨题表演句；none 出口避免为了完成任务保留相对最好但仍不可用的稿件；完整节奏与语用诊断只在胜出稿运行一次。"
+  exclusions:
+    - "不适用于普通改字、事实快讯、状态通知、纯翻译、固定数据表和资料索引。"
+    - "不声称候选越多越好；同骨架换词不算多稿。"
+    - "不声称盲选可以补足材料价值，也不保证通过 AI 检测器。"
+    - "不把关键词命中、检测器分数或笼统的『更像人』当作语用证据；必须引用具体句子并解释测试。"
+    - "不允许把落选稿拼接成一篇，也不改变事实、权利、隐私与发布授权硬门。"
+
+falsifiability:
+  prediction: "在下一个独立选题中，用户先确认同一份标题、核心判断、四格叙事链、叙事发动机与最强对手；随后 Best-of-3 选出的非基线候选应被 2 名后验盲评同时优先于预先指定的单稿基线，且用户冷读后不再要求更换核心判断或整体叙事结构。重大事实阻断项不得增加，文本仍须在 T0 后 40 分钟内交付。"
+  failure_condition: "共享故事合同或四格叙事链未在生成前冻结、候选越出事实边界或没有推进机制差异、评选只能按语言顺滑度或笼统人味区分、评审不能引用跨题表演句或说明叙事链断点、所有候选共有重大表演句或链条断裂却仍硬选、所有候选被判 none、后验盲评分裂或选择基线、用户仍要求更换核心判断或整体结构、胜出稿出现更多重大事实阻断项，或普通快线无预先例外却超过 40 分钟，均不支持本轮实现；一个案例最多形成 E1。"
+  alternative_explanations:
+    - "胜出稿只是随机采样更幸运，并非评选机制稳定有效。"
+    - "评审与写作者来自同一模型家族，偏好高度相关。"
+    - "自动评审可能偏好结构完整、修辞显著的模型文风，并把语用不自然误判成完成度。"
+    - "题材本身更容易，不能归因于多稿流程。"
+    - "总计算量提高而非并行或盲选本身带来改善。"
+    - "用户看到候选对比后更容易表达偏好，改善来自反馈而非自动评选。"
+    - "round-02 的改善可能来自写前共创、技术密度下降或胜出稿人话修复，而非 Best-of-3。"
+
+evidence:
+  supporting: []
+  contradicting:
+    - relation: "contradicts"
+      ref: "微信公众号/内容/2026/08/deepseek-harness-internal-test/retrospective.md#fb-013"
+      case_id: "deepseek-harness-internal-test:round-01"
+      prospective: true
+      note: "预注册主指标、候选多样性、事实护栏与 40 分钟 SLA 均通过，但用户首次冷读认为自动胜出稿技术味过重、像 Harness 科普稿，并要求重做核心思想与整体叙事；直接触发失败条件。"
+  neutral:
+
+    - relation: "neutral"
+      ref: "微信公众号/内容/2026/08/deepseek-harness-internal-test/retrospective.md#fb-012"
+      note: "用户明确提出每次生成 3—5 篇并评选，并补充要求多个 Agent 并行完成。该反馈支持建立项目配置与实验，不证明机制有效。"
+    - relation: "neutral"
+      ref: "微信公众号/内容/2026/08/deepseek-harness-internal-test/research/experiments/zero-context-02/result.md"
+      case_id: "deepseek-harness-internal-test:zero-context-02"
+      note: "两名盲审能一致识别 B 的相对结构优势，但用户仍判断现有效果不好；这支持加入 none 出口与生成／评选分离，不支持 Best-of-N 已提高绝对质量。"
+    - relation: "neutral"
+      ref: "微信公众号/内容/2026/08/deepseek-harness-internal-test/research/candidates/round-02/selection.md#user-cold-read"
+      case_id: "deepseek-harness-internal-test:round-02"
+      note: "用户评价当前流程产出「比之前的好多了」，且未再次要求整体结构重写；但本轮同时改变写前共创、故事合同、候选生成、评选和胜出稿修复，不能单独决定 Best-of-3 的因果预测。"
+    - relation: "neutral"
+      ref: "微信公众号/内容/2026/08/deepseek-harness-internal-test/retrospective.md#fb-017"
+      note: "用户明确把写前大纲与逻辑讨论设为后续公众号分析稿的项目默认；这决定下一轮实验前置条件，不是 Best-of-3 的效果证据。"
+    - relation: "neutral"
+      ref: "微信公众号/内容/2026/07/qwenwork-hands-on/retrospective.md#fb-031"
+      case_id: "qwenwork-hands-on:FB-031"
+      note: "用户指出结构、语法和转场都成立的句子仍可能缺少语用必要性，并给出 3 条判退与 1 条有条件放行反例。这要求前瞻性修改候选和评选 rubric，不追溯改写 EXP-001 结果，也不证明新检查有效。"
+  unknowns:
+    - "并行候选能否产生真正不同的核心判断，而不是同一模型的同质变体。"
+    - "两名自动评审的选择是否能预测用户冷读偏好。"
+    - "3 候选相比 5 候选的边际收益与计算成本。"
+    - "一次并行候选轮次能否减少后续人工结构返工。"
+    - "四格叙事链能否让候选在共享判断下仍形成真正不同、但不互相冲突的执行路线。"
+    - "8／22／28／38／40 分钟的分段预算能否在真实广搜任务中稳定执行。"
+
+experiments:
+  - id: "EXP-001"
+    title: "单稿基线与并行 Best-of-3 胜出稿的前瞻对照"
+    status: "evaluated"
+    question: "在同一份冻结材料、模型家族与硬门下，并行生成 3 篇独立候选并匿名选稿，能否让胜出稿优于预先指定的单稿基线？"
+    baseline:
+      description: "在候选生成前用确定性规则指定其中一支为单稿基线；该分支只使用同一冻结输入与平台规则，不读取其他候选或评选协议。"
+      frozen_ref: "微信公众号/内容/2026/08/deepseek-harness-internal-test/research/candidates/round-01/frozen-input.md#预注册"
+      missing_data_rule: "目标内容包、分支 seed、冻结来源、开始时间或用户冷读结果缺失时保留 null，不从聊天时长、Agent 总 token 或 Git 时间推算。"
+    intervention:
+      description: "T0 后 8 分钟内冻结输入；同时启动 3 个隔离写作 Agent，各写 1 篇完整候选并在第 22 分钟前冻结；随后由 2 个新评审 Agent 并行选择候选或 none，第 28 分钟前冻结选择，分歧时运行 1 次独立决选；只核胜出稿并在第 40 分钟前交付，不拼稿。"
+      artifact_ref: "共享/运营/SOP/内容工作流.md#core-selection-001并行多稿盲选实验性"
+      version_ref: "5.0"
+    controls:
+      - "三名写作者使用同一读者问题、来源材料、事实边界、平台规则、目标篇幅、模型家族与运行配置。"
+      - "写作者使用隔离 Session 并行运行，只写一个候选，不能读取其他候选、共享提纲或参与评选。"
+      - "候选正文先冻结哈希；两名选择者看匿名正文后再看事实映射，彼此看不到选择。"
+      - "选稿完成后，再由 2 名未参与生成和选稿的后验评审比较胜出稿与预先指定的基线；两者顺序随机。"
+      - "不发布、不排版、不接入 AI 检测器；只在胜出后对该稿执行完整硬门。"
+      - "T0、候选冻结、选稿冻结和文本交付时间使用同一墙钟记录；不以 Agent 总 token、总计算时间或 Git 时间代替。"
+    metrics:
+      primary:
+        id: "selected-vs-baseline-blind-preference"
+        definition: "每个内容案例由 2 名后验盲评分别在胜出稿、预先指定基线或平局中选择；记录分子为选择胜出稿且信心不低于中的评审数，分母固定为 2。"
+        direction: "higher"
+        success_threshold: "2 / 2 名后验盲评选择非基线胜出稿，信心均不低于中，理由落在公共价值、必要顺序或材料取舍，而不是语言偏好。"
+        baseline: "Candidate A；冻结文件 SHA-256 09c21c10ca8574660d80f1b79b5021d4e4c4220682f6ab448171e27ca37eabb4。"
+        result: "2 / 2 名后验盲评选择非基线 Candidate B，信心均为中；理由落在两只钟、组合故障链、必要顺序和材料取舍。"
+      secondary:
+        - id: "first-pass-structural-rewrite"
+          definition: "用户首次冷读胜出稿后，是否要求更换核心判断或整体叙事结构；局部措辞、标题和事实修正不计。"
+          direction: "lower"
+          success_threshold: "false；原话和判定理由写入目标内容包 retrospective。"
+          baseline: null
+          result: "true；用户认为胜出稿技术味过重、像 Harness 科普稿，并要求先重做核心思想、标题和小标题。"
+        - id: "parallel-generation-waves"
+          definition: "从同时启动第一批候选到全部候选冻结所需的并发波次数；不把总 Agent 计算量写成节省。"
+          direction: "lower"
+          success_threshold: "默认 3 候选在 1 个并发波次完成；4—5 候选使用当前容量允许的最少波次。"
+          baseline: null
+          result: "1 个并发波次；3 篇候选于 T0 + 6.2 分钟冻结。"
+        - id: "text-draft-wall-clock-minutes"
+          definition: "从题目与交付目标足以开工且启动检索的 T0，到经过匿名选稿和胜出稿必要事实复核、可供用户冷读的文本交付 T1 的实际墙钟分钟数；不含图片、排版、上传与发布。"
+          direction: "lower"
+          success_threshold: "T1 − T0 ≤ 40；早于 30 分钟完成无需等待。第 8 分钟价值门失败时以降级或停写结束，不补空稿。"
+          baseline: null
+          result: "14.7 分钟；T0 19:40:03，T1 19:54:45，SLA pass。"
+        - id: "candidate-diversity"
+          definition: "进入评选前，能否为每对候选指出核心判断或因果／叙事发动机上的具体差异。"
+          direction: "higher"
+          success_threshold: "3 / 3 候选均存在至少 1 项非词面差异；否则整轮标记 same_skeleton，不进入评选。"
+          baseline: null
+          result: "3 / 3：A 为失败史／项目展示，B 为运行时钟／组合故障，C 为同行故障探针；评选前已记录非词面差异。"
+        - id: "total-human-minutes"
+          definition: "人工阅读、选择、反馈和结构返工的实测分钟数。"
+          direction: "lower"
+          success_threshold: "无法可靠计时时保留 null，不参与首轮成败。"
+          baseline: null
+          result: null
+      guardrails:
+        - id: "major-fact-blockers"
+          condition: "胜出稿的重大事实、引语、身份、来源或推断越界不得多于预先指定的单稿基线。"
+        - id: "none-option-integrity"
+          condition: "选择者必须能够选择一篇都不要；none 出现时不得为了交稿改成相对赢家。"
+        - id: "no-synthesis"
+          condition: "选稿阶段不得拼接候选；胜出稿进入 draft.md 前后哈希必须记录。"
+        - id: "scope-integrity"
+          condition: "不能把一次胜出写成多 Agent 普遍优于单 Agent，也不能把并行墙钟时间写成总成本下降。"
+        - id: "time-gate-integrity"
+          condition: "不得为满足 40 分钟而跳过时效事实、数字、身份或引语核查；需转慢线时应在第 8 分钟前缩窄、降级或说明。"
+    evidence_refs:
+      - "共享/运营/SOP/内容工作流.md#core-selection-001并行多稿盲选实验性"
+      - "共享/模板/微信公众号内容包/research/candidate-round-frozen-input.md"
+      - "共享/模板/微信公众号内容包/research/candidate-selection.md"
+      - "微信公众号/内容/2026/08/deepseek-harness-internal-test/research/candidates/round-01/selection.md"
+      - "微信公众号/内容/2026/08/deepseek-harness-internal-test/retrospective.md#fb-013"
+    decision: "contradicts"
+    end_condition: "下一篇符合范围的新分析稿完成冻结输入、3 篇并行候选、匿名选稿、40 分钟墙钟记录、2 名后验盲评和用户首次冷读反馈后结束；按 supports／neutral／contradicts 记录，不在看到结果后改变阈值。"
+
+assetization:
+  status: "prototype"
+  type: "workflow_and_templates"
+  target: "形成可复用的并行候选生成、匿名评选、none 退回与胜出稿交接机制。"
+  authoritative_refs:
+    - "共享/运营/SOP/内容工作流.md"
+    - ".agents/skills/self-media-ops/SKILL.md"
+    - ".agents/skills/self-media-ops/references/wechat-team.md"
+    - ".agents/skills/self-media-ops/references/wechat-ai-pattern-pass.md"
+    - "共享/模板/微信公众号内容包/research/candidate-round-frozen-input.md"
+    - "共享/模板/微信公众号内容包/research/candidate-selection.md"
+  regression_check: "冻结输入必须含四格叙事链与叙事发动机；至少 3 个隔离写作 Agent 并行出稿且各自只记录事实边界与骨架差异自查；2 个新评审并行区分事实、论证／叙事链和跨题表演句；共有重大表演句或链条断裂时 none 可用；无拼稿；只有胜出稿接受一次完整节奏／语用诊断；同时记录 T0、冻结时间、并发波次和不超过 40 分钟的文本交付结果。"
+  transfer_test: null
+  retirement_condition: "连续 2 个独立内容包仍需更换核心判断或整体结构，候选反复 same_skeleton，叙事链没有形成真实依赖，或评审只按表面流畅度／笼统人味选择时，暂停并退役该层。"
+  portable_core: "冻结共同输入、隔离并行生成、匿名独立评选、none 出口、无拼稿与结果记录。"
+  adapter_boundary: "平台、候选数量、并发容量、文件路径、模型、用户反馈口径与发布硬门。"
+
+next_action: "在另一个独立选题中，先冻结用户确认的四格叙事链、叙事发动机、最强对手与相同事实包，再预注册单稿基线与 Best-of-3；候选只执行事实边界与骨架差异自查，评审统一记录叙事链断点与跨题表演句，胜出稿使用相同的一次完整诊断，以隔离评选层增量。round-02、FB-031 与本次 SOP 重构都只作为机制修订信号，不追溯改写 EXP-001。"
+
+decision_log:
+  - date: "2026-08-03"
+    decision: "refined"
+    rationale: "三篇成稿与候选对照显示，旧故事合同只给并列内容块，候选级语用与词表扫描又重复后置诊断、增加仪式成本；本次前瞻性改为四格叙事链和最强对手，候选只查事实边界与骨架差异，完整节奏／语用诊断收敛到胜出稿一次。该变更不改写 EXP-001 的 contradicts，也不构成 Best-of-3 效果证据。"
+    evidence_refs:
+      - "共享/运营/复盘/2026-08-03-SOP叙事架构重构施工方案.md"
+      - "共享/运营/SOP/内容工作流.md#CORE-CHAIN-001"
+  - date: "2026-08-03"
+    decision: "refined"
+    rationale: "用户指出候选评选排除所有『更像人』理由会连带排除可引用、可解释的语用证据；结构、事实和转场成立仍不足以排除文章表演句。因此前瞻性加入候选轻量自检、匿名评审具体句证和共有重大缺陷时的 none 出口。该变更只修订 rubric，不改写 EXP-001 的 contradicts，也不形成新效果证据。"
+    evidence_refs:
+      - "微信公众号/内容/2026/07/qwenwork-hands-on/retrospective.md#fb-031"
+      - ".agents/skills/self-media-ops/references/wechat-pragmatic-regression.yml"
+  - date: "2026-08-02"
+    decision: "refined"
+    rationale: "EXP-001 的自动盲评与速度指标通过，但用户首次冷读要求更换核心思想和整体叙事，按预注册直接判 contradicts。round-02 在用户先确认故事合同后获得明确正向评价，但同时改变多个环节，只能作为混杂的中性信号。因此把命题收窄为「共享故事合同之后的执行路线评选」，证据升为 E1，等待独立迁移测试。"
+    evidence_refs:
+      - "微信公众号/内容/2026/08/deepseek-harness-internal-test/retrospective.md#fb-013"
+      - "微信公众号/内容/2026/08/deepseek-harness-internal-test/research/candidates/round-02/selection.md#user-cold-read"
+  - date: "2026-08-02"
+    decision: "running"
+    rationale: "用户明确要求立即实操一篇；DeepSeek Harness 内容包已冻结 Best-of-3、Candidate A 基线、T0 和 40 分钟截止点，开始前尚未看到候选或选择结果。"
+    evidence_refs:
+      - "微信公众号/内容/2026/08/deepseek-harness-internal-test/research/candidates/round-01/frozen-input.md"
+  - date: "2026-08-02"
+    decision: "framed"
+    rationale: "用户指出现有稿件效果仍差，明确要求每次生成 3—5 篇并评选、多个 Agent 并行完成，并进一步要求单篇文本出稿压缩到 30—40 分钟以内。当前只有机制动机，没有前瞻效果证据，因此以 E0 实验性项目配置建档并增加 40 分钟硬时钟。"
+    evidence_refs:
+      - "微信公众号/内容/2026/08/deepseek-harness-internal-test/retrospective.md#fb-012"
+      - "微信公众号/内容/2026/08/deepseek-harness-internal-test/research/experiments/zero-context-02/result.md"
