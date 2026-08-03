@@ -14,6 +14,7 @@ import base64
 import binascii
 import hashlib
 import html
+import importlib.metadata
 import io
 import json
 import mimetypes
@@ -73,9 +74,74 @@ MAX_INLINE_IMAGE_REFERENCES = 200
 MAX_HANDOFF_OCCURRENCE_FRAMES = 10_000
 MAX_HANDOFF_TOTAL_DECODED_FRAME_PIXELS = 800_000_000
 MAX_HANDOFF_OCCURRENCE_DECODED_FRAME_PIXELS = 1_200_000_000
+MAX_COMPANY_BUILD_BYTES = 2 * 1024 * 1024
+MAX_COMPANY_HTML_BYTES = 96 * 1024 * 1024
+PINNED_WENYAN_VERSION = "2.0.11"
+WECHAT_ADAPTER_ID = "wenyan-wechat-draft-v1"
+WECHAT_ADAPTER_SCHEMA_VERSION = 1
+COMPANY_BUILD_SCHEMA_VERSION = 1
+SUPPORTED_COMPANY_BUILD_TOOL_VERSIONS = {"0.2.0"}
+COMPANY_PROFILE_PATH = (
+    WORKSPACE_ROOT / "tools" / "company_content_sync" / "profile.json"
+)
+COMPANY_BUILD_RELATIVE_PATH = Path("dist") / "content-sync" / "build.json"
+COMPANY_HTML_RELATIVE_PATH = Path("dist") / "content-sync" / "article.html"
+WENYAN_PACKAGE_JSON = WECHAT_ROOT / "package.json"
+WENYAN_PACKAGE_LOCK = WECHAT_ROOT / "package-lock.json"
+WENYAN_INSTALLED_PACKAGE_JSON = (
+    WECHAT_ROOT / "node_modules" / "@wenyan-md" / "cli" / "package.json"
+)
 
 FRONTMATTER_RE = re.compile(r"\A---\s*\r?\n(.*?)\r?\n---\s*\r?\n(.*)\Z", re.S)
 ISO_DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
+COMPANY_DATA_IMAGE_RE = re.compile(
+    r"\Adata:image/(?P<kind>gif|png|jpeg|webp);base64,"
+    r"(?P<payload>[A-Za-z0-9+/]*={0,2})\Z"
+)
+COMPANY_BUILD_FIELDS = {
+    "schema_version",
+    "tool_version",
+    "created_at",
+    "package",
+    "title",
+    "draft_sha256",
+    "profile_id",
+    "profile_sha256",
+    "format_profile_sha256",
+    "adapter_sha256",
+    "bridge_sha256",
+    "format_contract_sha256",
+    "renderer_sha256",
+    "title_image_sha256",
+    "style_version",
+    "html_path",
+    "html_sha256",
+    "payload_sha256",
+    "fixture_sha256",
+    "sealed_build_sha256",
+    "block_count",
+    "article_image_bytes",
+    "image_count",
+    "gallery_count",
+    "text_fidelity",
+    "image_fidelity",
+    "warning_counts",
+    "warning_codes",
+    "local_format_qualified",
+    "company_format_qualified",
+    "qualification_blockers",
+    "external_writes_performed",
+}
+LOCAL_QUALIFICATION_CONFIRMATIONS = (
+    "layout_style_confirmed",
+    "metadata_confirmed",
+    "save_confirmed",
+    "reopen_confirmed",
+    "no_truncation_confirmed",
+    "images_resolved_confirmed",
+    "no_style_bypass_confirmed",
+)
 RELEASE_IMAGE_FORMATS = {
     ".gif": "GIF",
     ".jpeg": "JPEG",
@@ -448,6 +514,36 @@ class PreparedImageGraph:
     projected_copy_payload_bytes: int
     source_sha256: str
     rendered_fragment: str
+
+
+class SealedCompanyImageParser(HTMLParser):
+    """Collect the exact ordered image graph from locked company HTML."""
+
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=True)
+        self.sources: list[str] = []
+        self.problems: list[str] = []
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        if tag.casefold() != "img":
+            return
+        src_values = [
+            value
+            for name, value in attrs
+            if name.casefold() == "src" and value is not None
+        ]
+        if len(src_values) != 1:
+            self.problems.append(
+                f"sealed company image must have exactly one src; found {len(src_values)}"
+            )
+            return
+        if any(name.casefold() == "srcset" for name, _value in attrs):
+            self.problems.append("sealed company image must not use srcset")
+            return
+        self.sources.append(src_values[0])
+
+    def handle_startendtag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        self.handle_starttag(tag, attrs)
 
 
 class ImageSourceParser(HTMLParser):
@@ -1269,6 +1365,72 @@ def combined_hash(items: dict[str, str]) -> str:
     return hashlib.sha256(payload).hexdigest()
 
 
+def canonical_json_bytes(value: Any) -> bytes:
+    return json.dumps(
+        value,
+        ensure_ascii=False,
+        sort_keys=True,
+        separators=(",", ":"),
+    ).encode("utf-8")
+
+
+def unique_json_object(payload: bytes, label: str) -> dict[str, Any]:
+    def reject_duplicate_keys(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
+        result: dict[str, Any] = {}
+        for key, value in pairs:
+            if key in result:
+                raise WorkflowError(f"{label} contains duplicate key: {key}")
+            result[key] = value
+        return result
+
+    try:
+        value = json.loads(
+            payload.decode("utf-8"), object_pairs_hook=reject_duplicate_keys
+        )
+    except UnicodeDecodeError as exc:
+        raise WorkflowError(f"{label} must be UTF-8") from exc
+    except json.JSONDecodeError as exc:
+        raise WorkflowError(f"{label} is not valid JSON") from exc
+    if not isinstance(value, dict):
+        raise WorkflowError(f"{label} root must be an object")
+    return value
+
+
+def required_sha256(value: Any, label: str) -> str:
+    if not isinstance(value, str) or not SHA256_RE.fullmatch(value):
+        raise WorkflowError(f"{label} must be a lowercase SHA-256")
+    return value
+
+
+def bounded_json_object(
+    path: Path, label: str, max_bytes: int
+) -> tuple[dict[str, Any], bytes]:
+    payload = stable_file_bytes(path, max_bytes=max_bytes)
+    return unique_json_object(payload, label), payload
+
+
+def resolved_package_artifact(package: Path, relative: Path, label: str) -> Path:
+    """Resolve one package artifact without allowing linked or escaping components."""
+
+    root = package.resolve()
+    candidate = root / relative
+    current = candidate
+    while current != root:
+        try:
+            current.relative_to(root)
+        except ValueError as exc:
+            raise WorkflowError(f"{label} escapes the content package") from exc
+        if is_link_or_junction(current):
+            raise WorkflowError(f"{label} must not use a symlink or junction")
+        current = current.parent
+    resolved = candidate.resolve()
+    try:
+        resolved.relative_to(root)
+    except ValueError as exc:
+        raise WorkflowError(f"{label} escapes the content package") from exc
+    return resolved
+
+
 def decode_image_target(target: str) -> str:
     clean = html.unescape(target.strip())
     if clean.startswith("<") and clean.endswith(">"):
@@ -1733,6 +1895,116 @@ def wechat_credential_metadata(env_path: Path) -> tuple[str, str]:
         values["WECHAT_APP_ID"].encode("utf-8")
     ).hexdigest()[:12]
     return account_fingerprint, hashlib.sha256(payload).hexdigest()
+
+
+def capability_report() -> dict[str, Any]:
+    """Inspect local preflight capability without content, credentials, or network."""
+
+    started = datetime.now(timezone.utc)
+    local_blockers: list[str] = []
+    wenyan_blockers: list[str] = []
+    publisher_sha256: str | None = None
+    package_json_sha256: str | None = None
+    package_lock_sha256: str | None = None
+    installed_cli_sha256: str | None = None
+    installed_version: str | None = None
+    lock_integrity: str | None = None
+    try:
+        publisher_sha256 = file_sha256(Path(__file__).resolve())
+    except (OSError, WorkflowError) as exc:
+        local_blockers.append(f"publisher integrity check failed: {exc}")
+    try:
+        package_data, package_payload = bounded_json_object(
+            WENYAN_PACKAGE_JSON, "WeChat package.json", 512 * 1024
+        )
+        package_json_sha256 = hashlib.sha256(package_payload).hexdigest()
+        dependencies = package_data.get("dependencies")
+        if (
+            not isinstance(dependencies, dict)
+            or dependencies.get("@wenyan-md/cli") != PINNED_WENYAN_VERSION
+        ):
+            wenyan_blockers.append(
+                f"package.json must pin @wenyan-md/cli {PINNED_WENYAN_VERSION}"
+            )
+    except (OSError, WorkflowError) as exc:
+        wenyan_blockers.append(f"package.json check failed: {exc}")
+    try:
+        lock_data, lock_payload = bounded_json_object(
+            WENYAN_PACKAGE_LOCK, "WeChat package-lock.json", 8 * 1024 * 1024
+        )
+        package_lock_sha256 = hashlib.sha256(lock_payload).hexdigest()
+        packages = lock_data.get("packages")
+        locked_cli = (
+            packages.get("node_modules/@wenyan-md/cli")
+            if isinstance(packages, dict)
+            else None
+        )
+        if (
+            not isinstance(locked_cli, dict)
+            or locked_cli.get("version") != PINNED_WENYAN_VERSION
+        ):
+            wenyan_blockers.append(
+                f"package-lock.json must lock @wenyan-md/cli {PINNED_WENYAN_VERSION}"
+            )
+        else:
+            lock_integrity_value = locked_cli.get("integrity")
+            if not isinstance(lock_integrity_value, str) or not lock_integrity_value:
+                wenyan_blockers.append(
+                    "package-lock.json has no Wenyan integrity value"
+                )
+            else:
+                lock_integrity = lock_integrity_value
+    except (OSError, WorkflowError) as exc:
+        wenyan_blockers.append(f"package-lock.json check failed: {exc}")
+    try:
+        installed_data, installed_payload = bounded_json_object(
+            WENYAN_INSTALLED_PACKAGE_JSON,
+            "installed Wenyan package.json",
+            512 * 1024,
+        )
+        installed_cli_sha256 = hashlib.sha256(installed_payload).hexdigest()
+        installed_version_value = installed_data.get("version")
+        if isinstance(installed_version_value, str):
+            installed_version = installed_version_value
+        if installed_version != PINNED_WENYAN_VERSION:
+            wenyan_blockers.append(
+                f"installed Wenyan version must be {PINNED_WENYAN_VERSION}"
+            )
+        if not WENYAN_CMD.is_file() or is_link_or_junction(WENYAN_CMD):
+            wenyan_blockers.append("pinned Wenyan command is missing or is a link")
+    except (OSError, WorkflowError) as exc:
+        wenyan_blockers.append(f"installed Wenyan check failed: {exc}")
+    elapsed_ms = round((datetime.now(timezone.utc) - started).total_seconds() * 1000, 2)
+    return {
+        "schema_version": WECHAT_ADAPTER_SCHEMA_VERSION,
+        "adapter_id": WECHAT_ADAPTER_ID,
+        "ok": not local_blockers,
+        "publisher_sha256": publisher_sha256,
+        "wenyan": {
+            "required_version": PINNED_WENYAN_VERSION,
+            "installed_version": installed_version,
+            "available": not wenyan_blockers,
+            "installed_package_metadata_sha256": installed_cli_sha256,
+            "package_json_sha256": package_json_sha256,
+            "package_lock_sha256": package_lock_sha256,
+            "lock_integrity": lock_integrity,
+            "blockers": wenyan_blockers,
+        },
+        "capabilities": {
+            "capability_probe": True,
+            "local_integrity_preflight": not local_blockers,
+            "sealed_html_dry_run": not local_blockers,
+            "sealed_html_execute": False,
+            "trusted_production_qualification": False,
+            "wechat_create_draft": False,
+        },
+        "credentials_read": False,
+        "wenyan_invoked": False,
+        "network_accessed": False,
+        "external_writes_performed": False,
+        "blockers": local_blockers,
+        "elapsed_ms": elapsed_ms,
+    }
 
 
 def run_wenyan_render(
@@ -3292,6 +3564,702 @@ def verify_handoff_artifact(build: PreviewBuild) -> None:
         raise WorkflowError("editor handoff document does not embed its copy payload")
 
 
+def load_current_company_format_state() -> dict[str, Any]:
+    """Check local format and round-trip records; this is not trusted attestation."""
+
+    profile, profile_raw = bounded_json_object(
+        COMPANY_PROFILE_PATH, "company format profile", 512 * 1024
+    )
+    if profile.get("schema_version") != 2:
+        raise WorkflowError("company format profile schema is unsupported")
+    source_files = profile.get("source_files")
+    brand_assets = profile.get("brand_assets")
+    if not isinstance(source_files, list) or not isinstance(brand_assets, list):
+        raise WorkflowError("company format profile source lists are invalid")
+
+    def unique_index(
+        items: list[Any], key: str, label: str
+    ) -> dict[str, dict[str, Any]]:
+        result: dict[str, dict[str, Any]] = {}
+        for item in items:
+            if not isinstance(item, dict):
+                raise WorkflowError(f"company profile {label} entry is invalid")
+            identifier = item.get(key)
+            if not isinstance(identifier, str) or not identifier:
+                raise WorkflowError(f"company profile {label} identifier is invalid")
+            if identifier in result:
+                raise WorkflowError(
+                    f"company profile {label} is duplicated: {identifier}"
+                )
+            result[identifier] = item
+        return result
+
+    source_by_role = unique_index(source_files, "role", "source role")
+    brand_by_id = unique_index(brand_assets, "id", "brand asset")
+    for role in ("markdown_adapter", "renderer_bridge", "renderer_and_semantics"):
+        if role not in source_by_role:
+            raise WorkflowError(f"company profile source role is missing: {role}")
+    if "appso_title" not in brand_by_id:
+        raise WorkflowError("company profile AppSo title asset is missing")
+
+    dependency_lock = profile.get("runtime_dependencies")
+    if not isinstance(dependency_lock, dict) or not dependency_lock:
+        raise WorkflowError("company profile dependency lock is invalid")
+    actual_dependencies: dict[str, str] = {}
+    for name, expected in dependency_lock.items():
+        if not isinstance(name, str) or not isinstance(expected, str):
+            raise WorkflowError("company profile dependency lock is invalid")
+        try:
+            actual = importlib.metadata.version(name)
+        except importlib.metadata.PackageNotFoundError as exc:
+            raise WorkflowError(
+                f"company format dependency is missing: {name}"
+            ) from exc
+        if actual != expected:
+            raise WorkflowError(
+                f"company format dependency mismatch: {name} expected {expected}, found {actual}"
+            )
+        actual_dependencies[name] = actual
+
+    verified: list[dict[str, str]] = []
+    for identifier, item in [*source_by_role.items(), *brand_by_id.items()]:
+        relative = item.get("path")
+        if not isinstance(relative, str) or not relative:
+            raise WorkflowError(f"company profile path is invalid: {identifier}")
+        path = (WORKSPACE_ROOT / relative).resolve()
+        try:
+            path.relative_to(WORKSPACE_ROOT.resolve())
+        except ValueError as exc:
+            raise WorkflowError(
+                f"company profile path escapes the workspace: {relative}"
+            ) from exc
+        expected_hash = required_sha256(
+            item.get("sha256"), f"company profile source {identifier} hash"
+        )
+        payload = stable_file_bytes(path, max_bytes=MAX_COMPANY_HTML_BYTES)
+        actual_hash = hashlib.sha256(payload).hexdigest()
+        if actual_hash != expected_hash:
+            raise WorkflowError(f"company format source hash mismatch: {relative}")
+        verified.append({"path": relative, "sha256": actual_hash})
+
+    format_profile_material = {
+        key: profile.get(key)
+        for key in (
+            "schema_version",
+            "profile_id",
+            "format_source",
+            "markdown_contract",
+            "style_assertions",
+            "runtime_dependencies",
+            "source_files",
+            "brand_assets",
+        )
+    }
+    format_profile_sha256 = hashlib.sha256(
+        canonical_json_bytes(format_profile_material)
+    ).hexdigest()
+    hashes_by_path = {item["path"]: item["sha256"] for item in verified}
+
+    def entry_hash(item: dict[str, Any]) -> str:
+        return hashes_by_path[str(item["path"])]
+
+    adapter_sha256 = entry_hash(source_by_role["markdown_adapter"])
+    bridge_sha256 = entry_hash(source_by_role["renderer_bridge"])
+    renderer_sha256 = entry_hash(source_by_role["renderer_and_semantics"])
+    title_image_sha256 = entry_hash(brand_by_id["appso_title"])
+    contract_material = {
+        "format_profile_sha256": format_profile_sha256,
+        "adapter_sha256": adapter_sha256,
+        "bridge_sha256": bridge_sha256,
+        "verified_files": verified,
+        "runtime_dependencies": actual_dependencies,
+    }
+    format_contract_sha256 = hashlib.sha256(
+        canonical_json_bytes(contract_material)
+    ).hexdigest()
+
+    qualification = profile.get("qualification")
+    if not isinstance(qualification, dict):
+        raise WorkflowError("company format qualification is invalid")
+    for flag in (
+        "local_fixture_qualified",
+        "wechat_roundtrip_qualified",
+        "production_qualified",
+    ):
+        if qualification.get(flag) is not True:
+            raise WorkflowError("local company format round-trip record is incomplete")
+    scope = qualification.get("scope")
+    evidence = qualification.get("evidence")
+    if not isinstance(scope, dict) or not isinstance(evidence, dict):
+        raise WorkflowError("company format qualification binding is invalid")
+    account_fingerprint = required_sha256(
+        scope.get("wechat_account_fingerprint"),
+        "locally recorded WeChat account fingerprint",
+    )
+    expected_scope = {
+        "profile_id": profile.get("profile_id"),
+        "format_contract_sha256": format_contract_sha256,
+        "renderer_sha256": renderer_sha256,
+        "delivery_mode": "sealed_draft",
+        "layout_profile": "appsso-article-v1",
+        "wechat_account_fingerprint": account_fingerprint,
+    }
+    if scope != expected_scope:
+        raise WorkflowError("local company format record scope does not match")
+    record_id = evidence.get("record_id")
+    qualified_at = evidence.get("qualified_at")
+    if not isinstance(record_id, str) or not record_id:
+        raise WorkflowError("company format qualification record ID is missing")
+    try:
+        qualified_time = datetime.fromisoformat(
+            str(qualified_at).replace("Z", "+00:00")
+        )
+        if qualified_time.tzinfo is None:
+            raise ValueError
+    except (TypeError, ValueError) as exc:
+        raise WorkflowError(
+            "company format qualification timestamp is invalid"
+        ) from exc
+    receipt_relative = evidence.get("receipt_path")
+    if not isinstance(receipt_relative, str) or not receipt_relative:
+        raise WorkflowError("local company format record path is missing")
+    receipt_path = (WORKSPACE_ROOT / receipt_relative).resolve()
+    try:
+        receipt_path.relative_to(WORKSPACE_ROOT.resolve())
+    except ValueError as exc:
+        raise WorkflowError(
+            "local company format record escapes the workspace"
+        ) from exc
+    receipt, receipt_raw = bounded_json_object(
+        receipt_path, "local company format record", 2 * 1024 * 1024
+    )
+    receipt_sha256 = hashlib.sha256(receipt_raw).hexdigest()
+    if receipt_sha256 != required_sha256(
+        evidence.get("receipt_sha256"), "local company format record hash"
+    ):
+        raise WorkflowError("local company format record hash mismatch")
+    expected_receipt = {
+        **expected_scope,
+        **{field: True for field in LOCAL_QUALIFICATION_CONFIRMATIONS},
+        "record_id": record_id,
+        "qualified_at": qualified_at,
+    }
+    if receipt != expected_receipt:
+        raise WorkflowError("local company format record does not match")
+    return {
+        "profile_id": profile.get("profile_id"),
+        "profile_sha256": hashlib.sha256(profile_raw).hexdigest(),
+        "format_profile_sha256": format_profile_sha256,
+        "format_contract_sha256": format_contract_sha256,
+        "adapter_sha256": adapter_sha256,
+        "bridge_sha256": bridge_sha256,
+        "renderer_sha256": renderer_sha256,
+        "title_image_sha256": title_image_sha256,
+        "style_version": profile.get("format_source", {}).get("style_version"),
+        "wechat_account_fingerprint": account_fingerprint,
+        "local_qualification_record_sha256": receipt_sha256,
+    }
+
+
+def sealed_company_materials(
+    html_text: str,
+    build: dict[str, Any],
+    package: Path,
+    manifest: dict[str, Any],
+) -> tuple[list[dict[str, Any]], dict[str, dict[str, Any]], dict[Path, str]]:
+    safety_rewriter = ImageRewriteHtmlParser(
+        lambda _source: "assets/sealed-company-image-placeholder.png"
+    )
+    safety_rewriter.feed(html_text)
+    safety_rewriter.close()
+    ensure_passive_preview_html(safety_rewriter.rendered())
+    parser = SealedCompanyImageParser()
+    parser.feed(html_text)
+    parser.close()
+    if parser.problems:
+        raise WorkflowError("; ".join(parser.problems))
+    if not parser.sources:
+        raise WorkflowError("sealed company HTML has no images")
+    if len(parser.sources) > MAX_INLINE_IMAGE_REFERENCES:
+        raise WorkflowError("sealed company HTML has too many image references")
+
+    mime_suffix = {
+        "gif": ".gif",
+        "png": ".png",
+        "jpeg": ".jpg",
+        "webp": ".webp",
+    }
+    decoded: list[tuple[str, bytes, dict[str, int | str]]] = []
+    total_bytes = 0
+    total_frames = 0
+    total_decoded_pixels = 0
+    for index, source in enumerate(parser.sources, start=1):
+        match = COMPANY_DATA_IMAGE_RE.fullmatch(source)
+        if match is None:
+            raise WorkflowError(
+                f"sealed company image {index} is not a canonical embedded data image"
+            )
+        encoded = match.group("payload")
+        try:
+            payload = base64.b64decode(encoded, validate=True)
+        except (binascii.Error, ValueError) as exc:
+            raise WorkflowError(
+                f"sealed company image {index} has invalid Base64"
+            ) from exc
+        if not payload or base64.b64encode(payload).decode("ascii") != encoded:
+            raise WorkflowError(f"sealed company image {index} is not canonical Base64")
+        if len(payload) > MAX_HANDOFF_IMAGE_BYTES:
+            raise WorkflowError(
+                f"sealed company image {index} exceeds the byte ceiling"
+            )
+        total_bytes += len(payload)
+        if total_bytes > MAX_HANDOFF_TOTAL_ASSET_BYTES:
+            raise WorkflowError("sealed company images exceed the total byte ceiling")
+        kind = match.group("kind")
+        metadata = image_payload_metadata(
+            Path(f"sealed-company-{index}{mime_suffix[kind]}"), payload
+        )
+        total_frames += int(metadata["frame_count"])
+        total_decoded_pixels += int(metadata["decoded_frame_pixels"])
+        if total_frames > MAX_HANDOFF_TOTAL_FRAMES:
+            raise WorkflowError("sealed company images exceed the frame ceiling")
+        if total_decoded_pixels > MAX_HANDOFF_TOTAL_DECODED_FRAME_PIXELS:
+            raise WorkflowError(
+                "sealed company images exceed the decoded-pixel ceiling"
+            )
+        decoded.append((f"image/{kind}", payload, metadata))
+
+    if build.get("image_count") != len(decoded):
+        raise WorkflowError("sealed company image count does not match build receipt")
+    title_hash = hashlib.sha256(decoded[0][1]).hexdigest()
+    if title_hash != build.get("title_image_sha256"):
+        raise WorkflowError("first sealed company image is not the locked title image")
+    article_bytes = sum(len(payload) for _mime, payload, _metadata in decoded[1:])
+    if build.get("article_image_bytes") != article_bytes:
+        raise WorkflowError(
+            "sealed company article image bytes do not match build receipt"
+        )
+
+    assets = manifest.get("assets")
+    if not isinstance(assets, list):
+        raise WorkflowError("asset-manifest.yml assets must be a list")
+    entries_by_path: dict[str, dict[str, Any]] = {}
+    tracked_hashes: dict[Path, str] = {}
+    eligible_by_hash: dict[str, list[str]] = {}
+    for item in assets:
+        if not isinstance(item, dict):
+            raise WorkflowError("asset-manifest.yml contains an invalid asset entry")
+        normalized = canonical_package_relative_path(
+            str(item.get("file") or ""), "manifest asset", require_assets=True
+        )
+        if normalized in entries_by_path:
+            raise WorkflowError(f"asset manifest path is duplicated: {normalized}")
+        entries_by_path[normalized] = item
+        if item.get("used_in_draft") is not True:
+            continue
+        rights = str(item.get("rights_status") or "")
+        platforms = item.get("allowed_platforms")
+        if rights not in RELEASE_RIGHTS_STATUSES:
+            raise WorkflowError(
+                f"body asset rights are not release-cleared: {normalized}"
+            )
+        if not isinstance(platforms, list) or "wechat" not in platforms:
+            raise WorkflowError(f"body asset is not allowed on WeChat: {normalized}")
+        path = (package / normalized).resolve()
+        try:
+            path.relative_to(package.resolve())
+        except ValueError as exc:
+            raise WorkflowError(f"body asset escapes package: {normalized}") from exc
+        payload = stable_file_bytes(path, max_bytes=MAX_HANDOFF_IMAGE_BYTES)
+        problem = image_file_problem(path)
+        if problem is not None:
+            raise WorkflowError(
+                f"body asset is not a valid image: {normalized}: {problem}"
+            )
+        digest = hashlib.sha256(payload).hexdigest()
+        tracked_hashes[path] = digest
+        eligible_by_hash.setdefault(digest, []).append(normalized)
+
+    content_hashes = {
+        hashlib.sha256(payload).hexdigest() for _mime, payload, _metadata in decoded[1:]
+    }
+    if set(eligible_by_hash) != content_hashes:
+        raise WorkflowError(
+            "sealed company image graph does not exactly match rights-cleared draft assets"
+        )
+    for digest, paths in eligible_by_hash.items():
+        if len(paths) != 1:
+            raise WorkflowError(
+                f"sealed company material maps to multiple manifest paths: {digest}"
+            )
+
+    materials: list[dict[str, Any]] = []
+    for index, (mime, payload, metadata) in enumerate(decoded):
+        digest = hashlib.sha256(payload).hexdigest()
+        material: dict[str, Any] = {
+            "index": index,
+            "role": "locked_title_image" if index == 0 else "body_image",
+            "mime": mime,
+            "bytes": len(payload),
+            "sha256": digest,
+            **metadata,
+        }
+        if index > 0:
+            material["source_path"] = eligible_by_hash[digest][0]
+        materials.append(material)
+    return materials, entries_by_path, tracked_hashes
+
+
+def sealed_draft_dry_run_report(
+    package_value: str | Path, build_value: str | Path
+) -> dict[str, Any]:
+    """Run a local integrity preflight without trusted production attestation."""
+
+    started = datetime.now(timezone.utc)
+    capability = capability_report()
+    if not capability["capabilities"]["local_integrity_preflight"]:
+        raise WorkflowError(
+            "local integrity preflight is blocked: "
+            + "; ".join(capability["blockers"])
+        )
+    package = Path(package_value).resolve()
+    if not package.is_dir() or is_link_or_junction(package):
+        raise WorkflowError("company content package must be a regular directory")
+    canonical_build = resolved_package_artifact(
+        package,
+        COMPANY_BUILD_RELATIVE_PATH,
+        "company content-sync build receipt",
+    )
+    build_path = Path(build_value).resolve()
+    if build_path != canonical_build:
+        raise WorkflowError(
+            "--build must select the package's canonical dist/content-sync/build.json"
+        )
+    build, build_raw = bounded_json_object(
+        build_path, "company content-sync build receipt", MAX_COMPANY_BUILD_BYTES
+    )
+    actual_fields = set(build)
+    if actual_fields != COMPANY_BUILD_FIELDS:
+        missing = sorted(COMPANY_BUILD_FIELDS - actual_fields)
+        unknown = sorted(actual_fields - COMPANY_BUILD_FIELDS)
+        raise WorkflowError(
+            "company build receipt schema mismatch; "
+            f"missing={missing or 'none'}, unknown={unknown or 'none'}"
+        )
+    if build.get("schema_version") != COMPANY_BUILD_SCHEMA_VERSION:
+        raise WorkflowError("company build receipt schema version is unsupported")
+    if build.get("tool_version") not in SUPPORTED_COMPANY_BUILD_TOOL_VERSIONS:
+        raise WorkflowError("company build tool version is unsupported")
+    try:
+        created_at = datetime.fromisoformat(
+            str(build.get("created_at")).replace("Z", "+00:00")
+        )
+        if created_at.tzinfo is None:
+            raise ValueError
+    except (TypeError, ValueError) as exc:
+        raise WorkflowError("company build timestamp is invalid") from exc
+    build_package = build.get("package")
+    if not isinstance(build_package, str) or Path(build_package).resolve() != package:
+        raise WorkflowError("company build receipt is bound to another package")
+    if build.get("html_path") != COMPANY_HTML_RELATIVE_PATH.as_posix():
+        raise WorkflowError("company build HTML path is not canonical")
+    if build.get("external_writes_performed") is not False:
+        raise WorkflowError("company build receipt has an external-effect marker")
+    if build.get("local_format_qualified") is not True:
+        raise WorkflowError("company build is not locally format-qualified")
+    if build.get("company_format_qualified") is not True:
+        raise WorkflowError(
+            "company build has no complete local round-trip record"
+        )
+    if build.get("warning_codes") != []:
+        raise WorkflowError("company build contains format or media warnings")
+    if build.get("qualification_blockers") != []:
+        raise WorkflowError("company build contains qualification blockers")
+    if build.get("warning_counts") != {"gif": 0, "media": 0, "content": 0}:
+        raise WorkflowError("company build warning counts are not clean")
+    for field in (
+        "block_count",
+        "article_image_bytes",
+        "image_count",
+        "gallery_count",
+    ):
+        value = build.get(field)
+        if not isinstance(value, int) or isinstance(value, bool) or value < 0:
+            raise WorkflowError(f"company build {field} is invalid")
+    for field in (
+        "draft_sha256",
+        "profile_sha256",
+        "format_profile_sha256",
+        "adapter_sha256",
+        "bridge_sha256",
+        "format_contract_sha256",
+        "renderer_sha256",
+        "title_image_sha256",
+        "html_sha256",
+        "payload_sha256",
+        "fixture_sha256",
+        "sealed_build_sha256",
+    ):
+        required_sha256(build.get(field), f"company build {field}")
+
+    format_state = load_current_company_format_state()
+    format_bindings = {
+        "profile_id": "profile_id",
+        "profile_sha256": "profile_sha256",
+        "format_profile_sha256": "format_profile_sha256",
+        "adapter_sha256": "adapter_sha256",
+        "bridge_sha256": "bridge_sha256",
+        "format_contract_sha256": "format_contract_sha256",
+        "renderer_sha256": "renderer_sha256",
+        "title_image_sha256": "title_image_sha256",
+        "style_version": "style_version",
+    }
+    for build_field, state_field in format_bindings.items():
+        if build.get(build_field) != format_state.get(state_field):
+            raise WorkflowError(
+                f"company build no longer matches the locked format: {build_field}"
+            )
+
+    html_path = resolved_package_artifact(
+        package, COMPANY_HTML_RELATIVE_PATH, "sealed company HTML"
+    )
+    html_raw = stable_file_bytes(html_path, max_bytes=MAX_COMPANY_HTML_BYTES)
+    try:
+        html_text = html_raw.decode("utf-8")
+    except UnicodeDecodeError as exc:
+        raise WorkflowError("sealed company HTML must be UTF-8") from exc
+    if not html_text:
+        raise WorkflowError("sealed company HTML is empty")
+    html_sha256 = hashlib.sha256(html_raw).hexdigest()
+    if html_sha256 != build.get("html_sha256"):
+        raise WorkflowError("sealed company HTML hash does not match build receipt")
+
+    seal_material = {
+        "draft_sha256": build["draft_sha256"],
+        "format_profile_sha256": build["format_profile_sha256"],
+        "adapter_sha256": build["adapter_sha256"],
+        "bridge_sha256": build["bridge_sha256"],
+        "renderer_sha256": build["renderer_sha256"],
+        "format_contract_sha256": build["format_contract_sha256"],
+        "style_version": build["style_version"],
+        "html_sha256": html_sha256,
+        "title_image_sha256": build["title_image_sha256"],
+        "local_format_qualified": True,
+        "warning_codes": [],
+    }
+    expected_local_build_sha256 = hashlib.sha256(
+        canonical_json_bytes(seal_material)
+    ).hexdigest()
+    if build.get("sealed_build_sha256") != expected_local_build_sha256:
+        raise WorkflowError("company sealed build hash is invalid")
+
+    text_fidelity = build.get("text_fidelity")
+    if (
+        not isinstance(text_fidelity, dict)
+        or text_fidelity.get("confirmed") is not True
+        or text_fidelity.get("sourceCharCount")
+        != text_fidelity.get("renderedCharCount")
+        or text_fidelity.get("sourceHash") != text_fidelity.get("renderedHash")
+    ):
+        raise WorkflowError("company build text fidelity is not confirmed")
+    image_fidelity = build.get("image_fidelity")
+    expected_body_images = int(build["image_count"]) - 1
+    if (
+        expected_body_images < 0
+        or not isinstance(image_fidelity, dict)
+        or image_fidelity.get("confirmed") is not True
+        or image_fidelity.get("sourceImageCount") != expected_body_images
+        or image_fidelity.get("renderedImageCount") != expected_body_images
+        or image_fidelity.get("accountedImageCount") != expected_body_images
+        or image_fidelity.get("placeholderCount") != 0
+    ):
+        raise WorkflowError("company build image fidelity is not confirmed")
+
+    draft_path = package / "draft.md"
+    publish_path = package / "publish.yml"
+    manifest_path = package / "asset-manifest.yml"
+    draft_raw = stable_file_bytes(draft_path, max_bytes=8 * 1024 * 1024)
+    publish_raw = stable_file_bytes(publish_path, max_bytes=512 * 1024)
+    manifest_raw = stable_file_bytes(manifest_path, max_bytes=2 * 1024 * 1024)
+    draft_sha256 = hashlib.sha256(draft_raw).hexdigest()
+    if draft_sha256 != build.get("draft_sha256"):
+        raise WorkflowError("draft.md changed after the company build")
+    metadata, _body = load_draft(package)
+    config = load_publish_config(package, metadata)
+    adapter = get_project_adapter(config)
+    mode = get_delivery_mode(config, require_explicit=True)
+    profile = get_layout_profile(config)
+    if adapter is None or adapter.adapter_id != "appsso":
+        raise WorkflowError("sealed company draft requires project_adapter appsso")
+    if mode is None or mode.mode_id != "sealed_draft":
+        raise WorkflowError("sealed company draft requires delivery_mode sealed_draft")
+    if profile.profile_id != "appsso-article-v1":
+        raise WorkflowError(
+            "sealed company draft requires layout_profile appsso-article-v1"
+        )
+    if config.header_image or config.footer_image:
+        raise WorkflowError(
+            "sealed company HTML cannot inject a second header or footer component"
+        )
+    blockers = publication_blockers(package, metadata, config)
+    allowed_company_header_blocker = (
+        "layout_profile appsso-article-v1 requires a rights-cleared header_image"
+    )
+    blockers = [item for item in blockers if item != allowed_company_header_blocker]
+    if blockers:
+        raise WorkflowError(
+            "sealed company draft publication gates failed: " + "; ".join(blockers)
+        )
+    if config.title != build.get("title"):
+        raise WorkflowError("publish title does not match the sealed company build")
+
+    manifest = parse_yaml_mapping(manifest_raw.decode("utf-8"), "asset-manifest.yml")
+    materials, entries_by_path, tracked_asset_hashes = sealed_company_materials(
+        html_text, build, package, manifest
+    )
+    cover_relative = canonical_package_relative_path(
+        config.cover, "cover", require_assets=True
+    )
+    cover_entry = entries_by_path.get(cover_relative)
+    if cover_entry is None:
+        raise WorkflowError("cover is missing from asset-manifest.yml")
+    if str(cover_entry.get("rights_status") or "") not in RELEASE_RIGHTS_STATUSES:
+        raise WorkflowError("cover rights are not release-cleared")
+    cover_platforms = cover_entry.get("allowed_platforms")
+    if not isinstance(cover_platforms, list) or "wechat" not in cover_platforms:
+        raise WorkflowError("cover is not allowed on WeChat")
+    if (
+        str(cover_entry.get("use") or "") != "wechat_cover"
+        and cover_entry.get("used_as_cover") is not True
+    ):
+        raise WorkflowError("cover is not explicitly bound as the WeChat cover")
+    cover_path = (package / cover_relative).resolve()
+    cover_raw = stable_file_bytes(cover_path, max_bytes=MAX_HANDOFF_IMAGE_BYTES)
+    cover_problem = image_file_problem(cover_path)
+    if cover_problem is not None:
+        raise WorkflowError(f"cover is not a valid image: {cover_problem}")
+    cover_sha256 = hashlib.sha256(cover_raw).hexdigest()
+    tracked_asset_hashes[cover_path] = cover_sha256
+
+    build_receipt_sha256 = hashlib.sha256(build_raw).hexdigest()
+    publish_sha256 = hashlib.sha256(publish_raw).hexdigest()
+    manifest_sha256 = hashlib.sha256(manifest_raw).hexdigest()
+    materials_sha256 = hashlib.sha256(canonical_json_bytes(materials)).hexdigest()
+    scope_semantics = {
+        "schema_version": WECHAT_ADAPTER_SCHEMA_VERSION,
+        "scope_kind": "local_integrity_preflight",
+        "proposed_future_operation": "create_exactly_one_wechat_draft",
+        "proposed_effect_ceiling": {
+            "draft_add_count": 1,
+            "publish": False,
+            "mass_send": False,
+        },
+        "adapter_id": WECHAT_ADAPTER_ID,
+        "publisher_sha256": capability["publisher_sha256"],
+        "package": str(package),
+        "wechat_account_fingerprint": format_state["wechat_account_fingerprint"],
+        "local_qualification_record_sha256": format_state[
+            "local_qualification_record_sha256"
+        ],
+        "profile_id": build["profile_id"],
+        "format_contract_sha256": build["format_contract_sha256"],
+        "local_build_sha256": expected_local_build_sha256,
+        "build_receipt_sha256": build_receipt_sha256,
+        "html_sha256": html_sha256,
+        "draft_sha256": draft_sha256,
+        "publish_sha256": publish_sha256,
+        "asset_manifest_sha256": manifest_sha256,
+        "title": config.title,
+        "cover": {
+            "path": cover_relative,
+            "bytes": len(cover_raw),
+            "sha256": cover_sha256,
+        },
+        "materials_sha256": materials_sha256,
+        "materials": materials,
+    }
+    operation_id = (
+        "wechat-local-preflight-"
+        + hashlib.sha256(canonical_json_bytes(scope_semantics)).hexdigest()
+    )
+    integrity_scope = {**scope_semantics, "operation_id": operation_id}
+    integrity_scope_sha256 = hashlib.sha256(
+        canonical_json_bytes(integrity_scope)
+    ).hexdigest()
+
+    tracked_inputs = {
+        build_path: build_receipt_sha256,
+        html_path: html_sha256,
+        draft_path: draft_sha256,
+        publish_path: publish_sha256,
+        manifest_path: manifest_sha256,
+        **tracked_asset_hashes,
+    }
+    for path, expected_hash in tracked_inputs.items():
+        if file_sha256(path) != expected_hash:
+            raise WorkflowError(f"sealed draft input changed during dry-run: {path}")
+    if file_sha256(Path(__file__).resolve()) != capability["publisher_sha256"]:
+        raise WorkflowError("WeChat adapter changed during dry-run")
+
+    elapsed_ms = round((datetime.now(timezone.utc) - started).total_seconds() * 1000, 2)
+    return {
+        "schema_version": WECHAT_ADAPTER_SCHEMA_VERSION,
+        "adapter_id": WECHAT_ADAPTER_ID,
+        "ok": True,
+        "preflight_kind": "local_integrity_only",
+        "operation_id": operation_id,
+        "integrity_scope_sha256": integrity_scope_sha256,
+        "local_build_sha256": expected_local_build_sha256,
+        "build_receipt_sha256": build_receipt_sha256,
+        "html_sha256": html_sha256,
+        "format_contract_sha256": build["format_contract_sha256"],
+        "draft_sha256": draft_sha256,
+        "publish_sha256": publish_sha256,
+        "asset_manifest_sha256": manifest_sha256,
+        "materials_sha256": materials_sha256,
+        "materials": materials,
+        "cover": integrity_scope["cover"],
+        "integrity_scope": integrity_scope,
+        "trusted_production_qualification": False,
+        "authorization_ready": False,
+        "credentials_read": False,
+        "wenyan_invoked": False,
+        "network_accessed": False,
+        "external_writes_performed": False,
+        "execute_available": False,
+        "elapsed_ms": elapsed_ms,
+    }
+
+
+def command_capability(args: argparse.Namespace) -> int:
+    report = capability_report()
+    if args.json:
+        print(json.dumps(report, ensure_ascii=False, indent=2))
+    else:
+        status = "available" if report["ok"] else "blocked"
+        print(f"[capability] {status}; adapter={WECHAT_ADAPTER_ID}")
+        for blocker in report["blockers"]:
+            print(f"- {blocker}")
+    return 0 if report["ok"] else 1
+
+
+def command_sealed_draft_dry_run(args: argparse.Namespace) -> int:
+    report = sealed_draft_dry_run_report(args.package, args.build)
+    if args.json:
+        print(json.dumps(report, ensure_ascii=False, indent=2))
+    else:
+        print(
+            "[local integrity preflight] "
+            f"operation_id={report['operation_id']}; "
+            f"integrity_scope_sha256={report['integrity_scope_sha256']}"
+        )
+        print(
+            "[not authorization] no trusted production qualification; "
+            "credentials, Wenyan, and network were not used"
+        )
+    return 0
+
+
 def command_preview(args: argparse.Namespace) -> int:
     build = build_preview(args.package)
     if args.open:
@@ -3426,21 +4394,51 @@ def make_parser() -> argparse.ArgumentParser:
         description="Preview, hand off, or create one sealed WeChat draft from a content package."
     )
     subparsers = parser.add_subparsers(dest="command", required=True)
-    preview = subparsers.add_parser("preview", help="render a local phone-width preview")
+    capability = subparsers.add_parser(
+        "capability",
+        help="inspect the local adapter without content, credentials, or network",
+    )
+    capability.add_argument("--json", action="store_true", help="emit structured JSON")
+    capability.set_defaults(func=command_capability)
+    sealed_dry_run = subparsers.add_parser(
+        "sealed-draft-dry-run",
+        help="run local integrity checks on a company build without authorization",
+    )
+    sealed_dry_run.add_argument("package", help="path to the company content package")
+    sealed_dry_run.add_argument(
+        "--build",
+        required=True,
+        help="canonical dist/content-sync/build.json for the package",
+    )
+    sealed_dry_run.add_argument(
+        "--json", action="store_true", help="emit structured JSON"
+    )
+    sealed_dry_run.set_defaults(func=command_sealed_draft_dry_run)
+    preview = subparsers.add_parser(
+        "preview", help="render a local phone-width preview"
+    )
     preview.add_argument("package", help="path to a WeChat content package")
-    preview.add_argument("--open", action="store_true", help="open preview in the default browser")
+    preview.add_argument(
+        "--open", action="store_true", help="open preview in the default browser"
+    )
     preview.set_defaults(func=command_preview)
     handoff = subparsers.add_parser(
         "handoff", help="build an editable, no-network WeChat editor handoff"
     )
     handoff.add_argument("package", help="path to a WeChat content package")
     handoff.add_argument(
-        "--open", action="store_true", help="open the editor handoff in the default browser"
+        "--open",
+        action="store_true",
+        help="open the editor handoff in the default browser",
     )
     handoff.set_defaults(func=command_handoff)
-    draft = subparsers.add_parser("draft", help="dry-run by default; --execute creates one draft")
+    draft = subparsers.add_parser(
+        "draft", help="dry-run by default; --execute creates one draft"
+    )
     draft.add_argument("package", help="path to a WeChat content package")
-    draft.add_argument("--execute", action="store_true", help="create one WeChat draft through Wenyan")
+    draft.add_argument(
+        "--execute", action="store_true", help="create one WeChat draft through Wenyan"
+    )
     draft.add_argument("--env", help="path to a local credential .env file")
     draft.set_defaults(func=command_draft)
     return parser

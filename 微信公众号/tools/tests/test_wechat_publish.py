@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import base64
 import io
 import importlib.util
 import hashlib
@@ -203,6 +204,122 @@ theme: "default"
             validator_report="",
             snapshot=snapshot,
         )
+
+    def make_company_sealed_fixture(
+        self, root: Path, name: str = "company-package"
+    ) -> tuple[Path, Path, dict[str, str]]:
+        package = self.make_package(root, name)
+        self.register_body_image(package)
+        publish_path = package / "publish.yml"
+        publish_path.write_text(
+            publish_path.read_text(encoding="utf-8").replace(
+                'project_adapter: "generic"',
+                'project_adapter: "appsso"',
+            )
+            + 'layout_profile: "appsso-article-v1"\n',
+            encoding="utf-8",
+        )
+        title_path = package / "assets" / "locked-title.gif"
+        self.write_test_image(title_path)
+        title_payload = title_path.read_bytes()
+        body_payload = (package / "assets" / "body.png").read_bytes()
+
+        def data_uri(mime: str, payload: bytes) -> str:
+            return f"data:{mime};base64," + base64.b64encode(payload).decode("ascii")
+
+        html_payload = (
+            '<section><img src="'
+            + data_uri("image/gif", title_payload)
+            + '" alt="title"><p>Body.</p><img src="'
+            + data_uri("image/png", body_payload)
+            + '" alt="body"></section>'
+        ).encode("utf-8")
+        state = {
+            "profile_id": "company-appso-wechat-v1.10.0",
+            "profile_sha256": "1" * 64,
+            "format_profile_sha256": "2" * 64,
+            "format_contract_sha256": "3" * 64,
+            "adapter_sha256": "4" * 64,
+            "bridge_sha256": "5" * 64,
+            "renderer_sha256": "6" * 64,
+            "title_image_sha256": hashlib.sha256(title_payload).hexdigest(),
+            "style_version": "ifanr-wechat-compatible-v6-browser",
+            "wechat_account_fingerprint": "7" * 64,
+            "local_qualification_record_sha256": "8" * 64,
+        }
+        draft_sha256 = hashlib.sha256((package / "draft.md").read_bytes()).hexdigest()
+        html_sha256 = hashlib.sha256(html_payload).hexdigest()
+        seal_material = {
+            "draft_sha256": draft_sha256,
+            "format_profile_sha256": state["format_profile_sha256"],
+            "adapter_sha256": state["adapter_sha256"],
+            "bridge_sha256": state["bridge_sha256"],
+            "renderer_sha256": state["renderer_sha256"],
+            "format_contract_sha256": state["format_contract_sha256"],
+            "style_version": state["style_version"],
+            "html_sha256": html_sha256,
+            "title_image_sha256": state["title_image_sha256"],
+            "local_format_qualified": True,
+            "warning_codes": [],
+        }
+        build = {
+            "schema_version": 1,
+            "tool_version": "0.2.0",
+            "created_at": "2026-07-27T00:00:00+00:00",
+            "package": str(package.resolve()),
+            "title": "API title",
+            "draft_sha256": draft_sha256,
+            "profile_id": state["profile_id"],
+            "profile_sha256": state["profile_sha256"],
+            "format_profile_sha256": state["format_profile_sha256"],
+            "adapter_sha256": state["adapter_sha256"],
+            "bridge_sha256": state["bridge_sha256"],
+            "format_contract_sha256": state["format_contract_sha256"],
+            "renderer_sha256": state["renderer_sha256"],
+            "title_image_sha256": state["title_image_sha256"],
+            "style_version": state["style_version"],
+            "html_path": "dist/content-sync/article.html",
+            "html_sha256": html_sha256,
+            "payload_sha256": "9" * 64,
+            "fixture_sha256": "a" * 64,
+            "sealed_build_sha256": hashlib.sha256(
+                MODULE.canonical_json_bytes(seal_material)
+            ).hexdigest(),
+            "block_count": 2,
+            "article_image_bytes": len(body_payload),
+            "image_count": 2,
+            "gallery_count": 0,
+            "text_fidelity": {
+                "confirmed": True,
+                "sourceCharCount": 5,
+                "renderedCharCount": 5,
+                "sourceHash": "body",
+                "renderedHash": "body",
+            },
+            "image_fidelity": {
+                "confirmed": True,
+                "sourceImageCount": 1,
+                "renderedImageCount": 1,
+                "placeholderCount": 0,
+                "accountedImageCount": 1,
+            },
+            "warning_counts": {"gif": 0, "media": 0, "content": 0},
+            "warning_codes": [],
+            "local_format_qualified": True,
+            "company_format_qualified": True,
+            "qualification_blockers": [],
+            "external_writes_performed": False,
+        }
+        output = package / "dist" / "content-sync"
+        output.mkdir(parents=True)
+        html_path = output / "article.html"
+        build_path = output / "build.json"
+        html_path.write_bytes(html_payload)
+        build_path.write_text(
+            json.dumps(build, ensure_ascii=False, indent=2) + "\n",
+            encoding="utf-8",
+        )
+        return package, build_path, state
 
     def test_prepare_source_uses_api_title_and_package_relative_images(self) -> None:
         with tempfile.TemporaryDirectory() as temp:
@@ -2076,6 +2193,180 @@ theme: "default"
         self.assertNotIn("padding: 0px 16px", header_style)
         self.assertIn("padding: 0px 16px", image_paragraph_style)
         self.assertEqual([], blockers)
+
+    def test_capability_is_local_and_does_not_read_credentials(self) -> None:
+        with (
+            mock.patch.object(MODULE.subprocess, "run") as subprocess_run,
+            mock.patch.object(
+                MODULE, "wechat_credential_metadata"
+            ) as credential_metadata,
+        ):
+            report = MODULE.capability_report()
+
+        self.assertTrue(report["ok"])
+        self.assertTrue(report["capabilities"]["local_integrity_preflight"])
+        self.assertTrue(report["capabilities"]["sealed_html_dry_run"])
+        self.assertFalse(
+            report["capabilities"]["trusted_production_qualification"]
+        )
+        self.assertFalse(report["capabilities"]["wechat_create_draft"])
+        self.assertTrue(report["wenyan"]["available"])
+        self.assertFalse(report["credentials_read"])
+        self.assertFalse(report["network_accessed"])
+        subprocess_run.assert_not_called()
+        credential_metadata.assert_not_called()
+
+    def test_local_preflight_capability_does_not_require_wenyan_install(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            missing = Path(temp) / "missing.json"
+            with (
+                mock.patch.object(MODULE, "WENYAN_PACKAGE_JSON", missing),
+                mock.patch.object(MODULE, "WENYAN_PACKAGE_LOCK", missing),
+                mock.patch.object(MODULE, "WENYAN_INSTALLED_PACKAGE_JSON", missing),
+                mock.patch.object(MODULE, "WENYAN_CMD", Path(temp) / "missing.cmd"),
+            ):
+                report = MODULE.capability_report()
+
+        self.assertTrue(report["ok"])
+        self.assertTrue(report["capabilities"]["local_integrity_preflight"])
+        self.assertFalse(report["wenyan"]["available"])
+        self.assertTrue(report["wenyan"]["blockers"])
+        self.assertEqual([], report["blockers"])
+
+    def test_local_preflight_hash_and_package_path_contracts_are_strict(self) -> None:
+        digest = "a" * 64
+        self.assertEqual(digest, MODULE.required_sha256(digest, "digest"))
+        for invalid in ("A" * 64, 1, None):
+            with self.subTest(invalid=invalid), self.assertRaisesRegex(
+                MODULE.WorkflowError, "lowercase SHA-256"
+            ):
+                MODULE.required_sha256(invalid, "digest")
+
+        with tempfile.TemporaryDirectory() as temp:
+            package = Path(temp) / "package"
+            artifact = package / "dist" / "content-sync" / "build.json"
+            artifact.parent.mkdir(parents=True)
+            artifact.write_text("{}", encoding="utf-8")
+            self.assertEqual(
+                artifact.resolve(),
+                MODULE.resolved_package_artifact(
+                    package, Path("dist/content-sync/build.json"), "artifact"
+                ),
+            )
+            with self.assertRaisesRegex(MODULE.WorkflowError, "escapes"):
+                MODULE.resolved_package_artifact(
+                    package, Path("../outside.json"), "artifact"
+                )
+            with (
+                mock.patch.object(
+                    MODULE,
+                    "is_link_or_junction",
+                    side_effect=lambda path: path.name == "content-sync",
+                ),
+                self.assertRaisesRegex(MODULE.WorkflowError, "symlink or junction"),
+            ):
+                MODULE.resolved_package_artifact(
+                    package, Path("dist/content-sync/build.json"), "artifact"
+                )
+
+    def test_current_unqualified_company_profile_blocks_sealed_dry_run(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            package, build_path, _state = self.make_company_sealed_fixture(Path(temp))
+            with self.assertRaisesRegex(
+                MODULE.WorkflowError, "local company format round-trip record is incomplete"
+            ):
+                MODULE.sealed_draft_dry_run_report(package, build_path)
+
+    def test_sealed_dry_run_is_deterministic_and_has_no_external_path(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            package, build_path, state = self.make_company_sealed_fixture(Path(temp))
+            with (
+                mock.patch.object(
+                    MODULE, "load_current_company_format_state", return_value=state
+                ),
+                mock.patch.object(MODULE.subprocess, "run") as subprocess_run,
+                mock.patch.object(
+                    MODULE, "wechat_credential_metadata"
+                ) as credential_metadata,
+            ):
+                first = MODULE.sealed_draft_dry_run_report(package, build_path)
+                second = MODULE.sealed_draft_dry_run_report(package, build_path)
+
+        self.assertEqual(first["operation_id"], second["operation_id"])
+        self.assertEqual(
+            first["integrity_scope_sha256"],
+            second["integrity_scope_sha256"],
+        )
+        self.assertEqual(
+            hashlib.sha256(
+                MODULE.canonical_json_bytes(first["integrity_scope"])
+            ).hexdigest(),
+            first["integrity_scope_sha256"],
+        )
+        for field in (
+            "local_build_sha256",
+            "build_receipt_sha256",
+            "html_sha256",
+            "format_contract_sha256",
+            "materials_sha256",
+        ):
+            self.assertRegex(first[field], r"^[0-9a-f]{64}$")
+        self.assertFalse(first["execute_available"])
+        self.assertEqual("local_integrity_only", first["preflight_kind"])
+        self.assertFalse(first["trusted_production_qualification"])
+        self.assertFalse(first["authorization_ready"])
+        self.assertFalse(first["credentials_read"])
+        self.assertFalse(first["network_accessed"])
+        subprocess_run.assert_not_called()
+        credential_metadata.assert_not_called()
+
+    def test_sealed_dry_run_rejects_html_and_material_changes(self) -> None:
+        for mutation in ("html", "material"):
+            with self.subTest(mutation=mutation), tempfile.TemporaryDirectory() as temp:
+                package, build_path, state = self.make_company_sealed_fixture(
+                    Path(temp), f"company-{mutation}"
+                )
+                if mutation == "html":
+                    html_path = package / "dist" / "content-sync" / "article.html"
+                    html_path.write_bytes(html_path.read_bytes() + b" ")
+                    expected = "HTML hash does not match"
+                else:
+                    with Image.new("RGB", (4, 3), color=(1, 2, 3)) as image:
+                        image.save(package / "assets" / "body.png", format="PNG")
+                    expected = "image graph does not exactly match"
+                with (
+                    mock.patch.object(
+                        MODULE,
+                        "load_current_company_format_state",
+                        return_value=state,
+                    ),
+                    self.assertRaisesRegex(MODULE.WorkflowError, expected),
+                ):
+                    MODULE.sealed_draft_dry_run_report(package, build_path)
+
+    def test_new_commands_preserve_old_parser_routes(self) -> None:
+        parser = MODULE.make_parser()
+        self.assertIs(
+            parser.parse_args(["preview", "package"]).func,
+            MODULE.command_preview,
+        )
+        self.assertIs(
+            parser.parse_args(["handoff", "package"]).func,
+            MODULE.command_handoff,
+        )
+        self.assertIs(
+            parser.parse_args(["draft", "package"]).func,
+            MODULE.command_draft,
+        )
+        self.assertIs(
+            parser.parse_args(["capability", "--json"]).func,
+            MODULE.command_capability,
+        )
+        sealed = parser.parse_args(
+            ["sealed-draft-dry-run", "package", "--build", "build.json", "--json"]
+        )
+        self.assertIs(sealed.func, MODULE.command_sealed_draft_dry_run)
+        self.assertFalse(hasattr(sealed, "execute"))
 
 
 if __name__ == "__main__":

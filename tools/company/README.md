@@ -7,6 +7,7 @@
 | 工具 | 当前版本 | 用途 | 分级 |
 |---|---:|---|---|
 | [爱范儿一键排版扩展](<ifanr-feishu-wechat-layout/README.md>) | `1.10.0` | 公司飞书定稿到微信公众号草稿的浏览器排版 | `restricted` / `private-repository-only` |
+| [公司内容同步 Agent 入口](<../company_content_sync/README.md>) | `0.2.0` | 本地内容包、飞书协作、固定版式与微信草稿之间的轻量编排 | `internal` |
 
 ## 入库门
 

@@ -13,6 +13,12 @@ The project-owned adapter at `微信公众号/tools/wechat_publish.py` only:
 - produces a phone-width local preview;
 - keeps the default draft command as a no-network dry-run.
 
+## 默认预览交付
+
+APPSO／公司稿的 Agent 默认预览交付面是飞书在线文档，统一走 `$company-content-sync`：先用锁定 Profile 生成并校验本地 HTML，再把正文与登记图片通过官方飞书 Remote MCP 新建为在线文档，读回校验后返回文档链接。本地 HTML 继续作为精确公众号样式凭据，但不再默认打开给用户代替在线交付。
+
+飞书文档用于在线协作和结构预览，不承诺像素级复刻公众号 CSS。连接器、UAT、目标目录或当前写入授权缺失时必须 fail loud；不得声称已经上传，也不得静默执行 `preview --open`。只有用户明确接受临时本地回退时，才打开本机预览。个人稿与非公司路线仍可直接使用下文的本机预览。
+
 ## One-time setup
 
 From the repository root:
@@ -135,7 +141,7 @@ footer_valid_until: "2026-08-31"
 
 Run all commands below from the repository root.
 
-Local preview; no network or external write:
+Local diagnostic preview or explicitly accepted fallback; no network or external write:
 
 ```powershell
 python 微信公众号/tools/wechat_publish.py preview <content-package> --open

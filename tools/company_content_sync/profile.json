@@ -1,0 +1,117 @@
+{
+  "schema_version": 2,
+  "profile_id": "company-appso-wechat-v1.10.0",
+  "classification": "restricted",
+  "format_source": {
+    "extension_version": "1.10.0",
+    "style_version": "ifanr-wechat-compatible-v6-browser",
+    "recorded_source_tree_sha256": "50e9de945becbcae5eaa1a068a4e3cee63eb5ccaf3f983e40150877c07068862"
+  },
+  "runtime_dependencies": {
+    "markdown-it-py": "4.0.0",
+    "mdurl": "0.1.2"
+  },
+  "markdown_contract": {
+    "document_title": "draft.md frontmatter title; an identical leading H1 is removed from the body",
+    "heading_1": "unsupported in body",
+    "heading_2": "company heading level 1",
+    "heading_3": "company heading level 2; requires at least one heading_2",
+    "heading_4_plus": "unsupported",
+    "adjacent_images": "two or more become a horizontal gallery",
+    "title_image": "always inject the AppSo title image before body content"
+  },
+  "style_assertions": {
+    "heading_1": {
+      "font_size_px": 22,
+      "color": "#FD4606",
+      "line_height": 1.5
+    },
+    "heading_2": {
+      "font_size_px": 18,
+      "color": "#FD4606",
+      "line_height": 1.5
+    },
+    "body": {
+      "font_size_px": 15,
+      "horizontal_margin_px": 16,
+      "line_height": 1.8
+    },
+    "quote": {
+      "font_size_px": 15,
+      "color": "#888888",
+      "left_border_px": 3
+    }
+  },
+  "source_files": [
+    {
+      "role": "renderer_and_semantics",
+      "path": "tools/company/ifanr-feishu-wechat-layout/v1.10.0/extension/feishu-page-reader.js",
+      "sha256": "1f746134c4670b353b481d243a3c62b0e7df4cfcfb3f8c1353a6a56e30be0c61"
+    },
+    {
+      "role": "wechat_sanitizer_and_style_validation",
+      "path": "tools/company/ifanr-feishu-wechat-layout/v1.10.0/extension/editor-adapter.js",
+      "sha256": "73c033a50d4b5434942d19afedfb606b0502db0a85ef1421ff1e5a080195361b"
+    },
+    {
+      "role": "image_policy",
+      "path": "tools/company/ifanr-feishu-wechat-layout/v1.10.0/extension/static-image-compression.js",
+      "sha256": "46b2a987e40dc9eccbcf84b430824fb6554edbaa09bd321e2bea7496b24588a2"
+    },
+    {
+      "role": "brand_policy",
+      "path": "tools/company/ifanr-feishu-wechat-layout/v1.10.0/extension/title-image-brand.js",
+      "sha256": "fdb216ca5364c1d7371d54899ef342775b12940a514d7eecccbc0f692361c0b8"
+    },
+    {
+      "role": "extension_manifest",
+      "path": "tools/company/ifanr-feishu-wechat-layout/v1.10.0/extension/manifest.json",
+      "sha256": "aa4e61e879fde34ddb09383f51ab0b99db373beacb89eec456d4cfaf4f635396"
+    },
+    {
+      "role": "markdown_adapter",
+      "path": "tools/company_content_sync/locked_format_adapter.py",
+      "sha256": "c25b91d6842baafd257eb3caddf6029931b9356891873d7ec57a17d210820474"
+    },
+    {
+      "role": "renderer_bridge",
+      "path": "tools/company_content_sync/render_with_extension.js",
+      "sha256": "e9bee55c70531f4f868e9c3bf8021de69ed8b6081207a8997852de69d1a51e51"
+    }
+  ],
+  "brand_assets": [
+    {
+      "id": "appso_title",
+      "path": "tools/company/ifanr-feishu-wechat-layout/v1.10.0/extension/assets/appso-title.gif",
+      "sha256": "c047a3e80cea40d3174e847adb8fd20d2e75386e6b2b01374efe6c81cd722314"
+    },
+    {
+      "id": "ifanr_title",
+      "path": "tools/company/ifanr-feishu-wechat-layout/v1.10.0/extension/assets/ifanr-title.gif",
+      "sha256": "ee9e488ff73b56802ff24c7ba918092d7ff76f2cf562d6c5922c50438e887aba"
+    }
+  ],
+  "qualification": {
+    "local_fixture_qualified": true,
+    "wechat_roundtrip_qualified": false,
+    "production_qualified": false,
+    "scope": {
+      "profile_id": "company-appso-wechat-v1.10.0",
+      "format_contract_sha256": "81d1f7c4298be16c0e97f2f1fd05a6fc65c083a6287990e2299cddf078adf40c",
+      "renderer_sha256": "1f746134c4670b353b481d243a3c62b0e7df4cfcfb3f8c1353a6a56e30be0c61",
+      "delivery_mode": "sealed_draft",
+      "layout_profile": "appsso-article-v1",
+      "wechat_account_fingerprint": null
+    },
+    "evidence": {
+      "record_id": null,
+      "receipt_path": null,
+      "receipt_sha256": null,
+      "qualified_at": null
+    }
+  },
+  "performance_budget_ms": {
+    "status": 1000,
+    "local_build_normal_article": 3000
+  }
+}
