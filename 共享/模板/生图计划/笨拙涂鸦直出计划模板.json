@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "template_only": true,
+  "updated": "2026-07-25",
+  "project_adapter": "generic",
+  "profile_registry": "共享/运营/SOP/笨拙涂鸦风格档案.json",
+  "image_budget": {
+    "default_total_body_images_min": 6,
+    "default_total_body_images_max": 10,
+    "counting_rule": "Count official images, screenshots, charts, and clumsy doodles together; do not create one image per paragraph."
+  },
+  "style_policy": {
+    "profile": "clumsy-doodle-v1",
+    "scope": "task",
+    "new_image_strategy": "direct",
+    "allow_final_text_to_image": true
+  },
+  "tasks": [
+    {
+      "id": "doodle-01",
+      "visual_type": "general_editorial",
+      "purpose": "填写这张图在正文中承担的唯一判断。",
+      "reference_strategy": "none",
+      "final_stage": {
+        "mode": "text_to_image",
+        "prompt_ref": "clumsy-doodle-v1",
+        "prompt_sha256": "e4160da75ebd48f1e8625b61eb840195a66c833dd8373ac61155159826cc2a65",
+        "input_assets": [],
+        "output": "assets/doodle-01.png",
+        "receipt": "research/image-generation-runs/doodle-01-final-preflight.json",
+        "present_to_user": true,
+        "preserve": [
+          "本图只画：填写一个主体关系和一个段落判断。"
+        ],
+        "output_constraints": [
+          "Horizontal 16:9 body illustration; one main idea only; largest possible flat color blocks",
+          "Pure white background with no texture, shadow, gradient, or decorative environment",
+          "No readable words, letters, numbers, labels, captions, or interface text inside the image",
+          "Hard pixelated mouse-drawn edges, deliberately low-resolution appearance, and mobile-readable silhouettes"
+        ],
+        "avoid": [
+          "Polished editorial illustration, clean vector art, smooth curves, anti-aliased linework, pencil, crayon, watercolor, paper grain, collage, realistic lighting, 3D, photorealism, cinematic composition, cute professional cartoon style, or balanced graphic design",
+          "Logos, trademarks, watermarks, readable text, garbled text, fake interfaces, real-person likenesses, or verified-looking news scenes",
+          "Unsupported causal claims or visual relations not established by the article"
+        ]
+      }
+    }
+  ]
+}

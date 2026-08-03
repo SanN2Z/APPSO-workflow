@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "profiles": {
+    "clumsy-doodle-v1": {
+      "classification": "internal",
+      "prompt_source": "共享/模板/生图Prompt/笨拙涂鸦-v1.md",
+      "prompt_heading": "## 受控风格 Prompt",
+      "prompt_sha256": "e4160da75ebd48f1e8625b61eb840195a66c833dd8373ac61155159826cc2a65",
+      "prompt_characters": 307,
+      "requires_reference": false,
+      "allowed_final_modes": [
+        "text_to_image"
+      ],
+      "new_image_strategy": "direct",
+      "forbidden_positive_terms": [
+        "polished editorial",
+        "clean vector",
+        "smooth curves",
+        "anti-aliased linework",
+        "cinematic composition",
+        "professional cartoon",
+        "高质量科技媒体",
+        "精致插画",
+        "干净矢量",
+        "平滑曲线",
+        "电影感",
+        "职业卡通"
+      ],
+      "forbidden_avoid_terms": [
+        "clumsy",
+        "awkward",
+        "pixelated",
+        "low-resolution",
+        "white background",
+        "flat color blocks",
+        "mouse-drawn",
+        "笨拙",
+        "别扭",
+        "像素",
+        "低清",
+        "白底",
+        "大色块",
+        "鼠标画"
+      ]
+    }
+  }
+}

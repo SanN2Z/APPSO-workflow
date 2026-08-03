@@ -4,7 +4,7 @@
 
 | Level | Evidence | Default treatment |
 |---|---|---|
-| E0 | One preference, wording choice, or unverified interpretation | Keep in the case |
+| E0 | One preference, wording choice, or unverified interpretation | Keep in the case by default; if the owner explicitly makes it binding, record a scoped project configuration without claiming general validity |
 | E1 | One clear failure with a plausible mechanism | Add to watch list |
 | E2 | Two independent cases with the same mechanism, or one case reproduced across contexts | Promote to a scoped rule |
 | E3 | Rule prevents recurrence and passes a counterexample or regression check | Treat as stable SOP |
@@ -17,7 +17,7 @@ Promote a lesson only when all applicable checks pass:
 
 - The source feedback is faithfully recorded and traceable.
 - The root mechanism is more specific than「写得不好」or「不够自然」。
-- Evidence comes from independent cases, unless the severity exception applies.
+- Evidence comes from independent cases, unless the severity exception applies or the change is explicitly labeled as an owner-binding project configuration rather than a portable claim.
 - The rule names where it applies and where it does not.
 - The rule does not expose restricted copy, people, analytics, or company-only decisions.
 - The rule can be executed by another operator without seeing the original case.
@@ -51,6 +51,7 @@ The SOP prose may be more readable, but these fields must remain recoverable fro
 
 - Copying the editor's final sentence into a generic template.
 - Turning one person's stylistic preference into a universal ban.
+- Treating an owner-binding project preference as if it required academic proof before the current project can act on it.
 - Writing a rule that says only「注意」「优化」「更有网感」or「加强审核」。
 - Duplicating a root rule in every platform document.
 - Promoting a metric change without confirming attribution and measurement consistency.
@@ -75,6 +76,7 @@ Split the workflow into two layers:
 - directory paths and frontmatter fields;
 - content types, roles, and approval owners;
 - source tiers and visual rules;
+- owner-approved voice preferences and project-only expression bans;
 - repository visibility and classification labels;
 - publishing tools and commands.
 

@@ -1,0 +1,325 @@
+schema_version: 1
+corpus_id: "WECHAT-RED-BLACK-CORPUS-001"
+updated_on: "2026-08-03"
+classification: "internal_public-derived"
+scope: "微信公众号中文科技解释稿、观点稿与产品稿的作者正文"
+mode: "black_ban_plus_contextual_red_moves"
+
+policy:
+  purpose: "黑库阻止项目已否定的文章腔；红库鼓励由真实事实、动作、摩擦和判断自然长出的表达。红项是表达动作，不是可复制口头禅。"
+  black_behavior: "严格执行 wechat-expression-library.yml 的 wechat_analytical adapter；24 组命中须删除、具体改写或记录窄豁免。"
+  red_behavior: "遇到相应内容任务时优先选用红项；一篇稿可以使用零项或多项，不设最低数量、章节配额和固定分布。"
+  selection_order:
+    - "先确认事实、来源和真实经历；红库不能补造材料。"
+    - "再说清这句话要完成的任务：呈现动作、限定判断、暴露卡点、交代代价或推进问题。"
+    - "从红项中选择最贴近任务的表达动作，用当前稿件自己的主体、对象、数字和结果重写。"
+    - "最后复扫黑库，并执行删除、跨题移植、朗读和相邻重复测试。"
+  pass_condition: "红项承担可复述的信息任务，例句中的主体、对象、时间、数字和结果都来自当前稿件；删除会损失事实、判断、关系或读者后果。"
+  rights_boundary: "只保存来源 URL、项目索引、人工转述的观察和本项目原创例句；不保存第三方正文、评论全文、原始 HTML 或可替代原作的长引语。"
+  authorship_boundary: "红黑命中只服务项目文风，不判断作者是否使用 AI，也不评价代写或诚信。"
+  forbidden_implementation:
+    - "把红项改成每篇必用词、每节固定动作或量化配额"
+    - "原样复制第三方句子、社区评论或本库示例来冒充当前稿件的经历"
+    - "虚构第一人称测试、失败、时间、数字、情绪和现场细节"
+    - "为了显得有网感而密集加入热梗、错字、碎句、表情符号或阴阳怪气"
+    - "把黑库词式机械替换成红库中的另一句套话"
+    - "用红项数量、词频或命中率推断文本作者身份"
+
+black:
+  rule_id: "PROJECT-WECHAT-AI-LEXICON-001"
+  source: "wechat-expression-library.yml"
+  adapter: "wechat_analytical"
+  entry_ids: ["WX-EXPR-001", "WX-EXPR-002", "WX-EXPR-003", "WX-EXPR-004", "WX-EXPR-005", "WX-EXPR-006", "WX-EXPR-007", "WX-EXPR-008", "WX-EXPR-009", "WX-EXPR-010", "WX-EXPR-011", "WX-EXPR-012", "WX-EXPR-013", "WX-EXPR-014", "WX-EXPR-015", "WX-EXPR-016", "WX-EXPR-017", "WX-EXPR-018", "WX-EXPR-019", "WX-EXPR-020", "WX-EXPR-021", "WX-EXPR-022", "WX-EXPR-023", "WX-EXPR-024"]
+  behavior: "作者正文默认不得保留；只按现有 adapter 的来源、官方文字、字面事实、精度消歧和真实依赖步骤窄豁免。"
+
+red:
+  rule_id: "PROJECT-WECHAT-RED-CORPUS-001"
+  evidence_status: "owner_binding_e0_effectiveness_unverified"
+  encouragement: "当稿件确有对应事实或表达任务时优先使用；鼓励的是动作，不是例句表面词汇。"
+  minimum_required_per_article: 0
+  entries:
+    - id: "WX-RED-001"
+      label: "动作先于评价"
+      communication_job: "先让读者看见谁做了什么，再交代作者判断。"
+      use_when: "正文准备使用抽象评价、能力判断或产品结论，但材料中已有可见动作。"
+      derived_examples:
+        - "我把 20 行销售数据拖进表格，页面先补出了 18 行。"
+        - "点击「生成」后，浏览器新开了一个页面。"
+      anti_stencil: "不要给每个段落都补一个动作；动作必须改变读者对结果、过程或限制的理解。"
+      failure_signal: "删掉动作仍不影响任何事实，或动作来自想象而非记录。"
+      source_ids: ["SRC-PROJECT-VOICE", "SRC-SSPAI-STYLE", "SRC-WOSHIPM-HUMAN"]
+
+    - id: "WX-RED-002"
+      label: "具体对象接住抽象名词"
+      communication_job: "把平台、生态、能力、交付等抽象词落到读者能辨认的文件、入口、字段和系统。"
+      use_when: "句子包含抽象业务名词，且材料能回答具体指什么。"
+      derived_examples:
+        - "这里要接的是 1688 商品数据和钉钉里的审批记录。"
+        - "它交付了一个 HTML 页面、两张图和一份来源表。"
+      anti_stencil: "列对象不是堆名词；只写会影响任务结果的对象。"
+      failure_signal: "对象仍是「平台能力」「生态资源」等上位词，或清单与后文无关。"
+      source_ids: ["SRC-PROJECT-VOICE", "SRC-GITHUB-RUANYF", "SRC-SSPAI-STYLE"]
+
+    - id: "WX-RED-003"
+      label: "时间、地点和任务入场"
+      communication_job: "用真实工作时点和待完成任务建立压力，不靠虚构宏大背景。"
+      use_when: "时间、地点或截止点确实影响测试、选择或读者后果。"
+      derived_examples:
+        - "下午 3 点要开选题会，我先把 6 份材料放进同一个文件夹。"
+        - "周一早上，工作群里已经堆了 37 条未读消息。"
+      anti_stencil: "普通事实稿不必强加「某天早上」；没有证据的办公现场不能补写。"
+      failure_signal: "场景换成任何产品都成立，或时间地点对后文没有作用。"
+      source_ids: ["SRC-WOSHIPM-HUMAN", "SRC-SSPAI-IDEA", "SRC-PROJECT-VOICE"]
+
+    - id: "WX-RED-004"
+      label: "实测顺序如实保留"
+      communication_job: "让成功、失败、重试和人工介入保持真实先后，读者能复现过程。"
+      use_when: "文章基于实测、操作记录或连续事件。"
+      derived_examples:
+        - "第一次停在登录页；第二次授权后，表格才开始写入。"
+        - "我先试了微信派活，再回电脑端看执行记录。"
+      anti_stencil: "不要把无关点击写成流水账，只保留改变结果或边界的步骤。"
+      failure_signal: "省略失败后让能力显得更强，或补写并未发生的重试。"
+      source_ids: ["SRC-PROJECT-QWEN", "SRC-SSPAI-STYLE", "SRC-V2EX-DOCS"]
+
+    - id: "WX-RED-005"
+      label: "结果和缺口并排"
+      communication_job: "同一处同时写可用部分和未完成部分，避免先吹满再另起免责声明。"
+      use_when: "一次测试既有交付，也有明确缺口。"
+      derived_examples:
+        - "网页能打开，来源列还是空的。"
+        - "表格生成了 20 行，其中 2 行需要人工补值。"
+      anti_stencil: "并排不是刻意做对称句；两部分必须来自同一次结果并共享尺度。"
+      failure_signal: "缺口被模糊成「仍有提升空间」，或为了节奏制造并不存在的反差。"
+      source_ids: ["SRC-PROJECT-QWEN", "SRC-V2EX-AI-TONE", "SRC-SSPAI-STYLE"]
+
+    - id: "WX-RED-006"
+      label: "有限第一人称承担判断"
+      communication_job: "标明哪一部分来自作者测试、选择或解释，避免全知口吻。"
+      use_when: "作者确实执行了动作、作出取舍或只能对当前样本负责。"
+      derived_examples:
+        - "我更在意它能不能把文件交出来。"
+        - "这次我只测到单人账号，团队权限还不能下结论。"
+      anti_stencil: "第一人称只承担真实责任，不用于虚构情绪、亲密感或个人故事。"
+      failure_signal: "删掉「我」后内容完全不变，或作者没有做过所称测试。"
+      source_ids: ["SRC-PROJECT-VOICE", "SRC-SSPAI-IDEA", "SRC-SSPAI-STYLE"]
+
+    - id: "WX-RED-007"
+      label: "可核数字代替程度词"
+      communication_job: "用同尺度数字说明快、慢、多、少和遗漏，不用夸张形容词。"
+      use_when: "有可靠计时、数量、比例、价格或版本差异。"
+      derived_examples:
+        - "同一份任务少复制了 20 行，计时少了 4 分 12 秒。"
+        - "6 个来源里，它漏了 1 个发布日期。"
+      anti_stencil: "数字必须可追溯；无关的大数和假精确会成为另一种包装。"
+      failure_signal: "数字没有比较基准、来源或读者意义。"
+      source_ids: ["SRC-PROJECT-VOICE", "SRC-SSPAI-STYLE", "SRC-GITHUB-RUANYF"]
+
+    - id: "WX-RED-008"
+      label: "失败与卡点直写"
+      communication_job: "直接写停在哪里、找不到什么、等待多久，让限制可复核。"
+      use_when: "测试记录中有失败、权限限制、缺项或中断。"
+      derived_examples:
+        - "我在设置里找了两遍，没看到 1688 入口。"
+        - "任务跑到第 11 分钟时停在权限确认页。"
+      anti_stencil: "不制造小失败来表演真实，也不把个人账号限制外推为产品结论。"
+      failure_signal: "失败没有操作记录，或被写成戏剧化翻车但不说明位置。"
+      source_ids: ["SRC-PROJECT-QWEN", "SRC-V2EX-OFFICE", "SRC-PROJECT-VOICE"]
+
+    - id: "WX-RED-009"
+      label: "未知项写到边界"
+      communication_job: "说明当前知道什么、还缺哪条证据，避免免责声明式自保。"
+      use_when: "账号、版本、样本或来源不足以支持更宽结论。"
+      derived_examples:
+        - "当前账号没有这个入口；付费版是否开放，官方文档没有写。"
+        - "这个结果只说明本轮跑通，不能代替长期稳定性测试。"
+      anti_stencil: "未知项应紧邻受限结论，不单独扩成一章研究过程。"
+      failure_signal: "限定语堆叠到读者无法复述作者判断，或用未知暗示未经证实的问题。"
+      source_ids: ["SRC-PROJECT-QWEN", "SRC-SSPAI-STYLE", "SRC-V2EX-DOCS"]
+
+    - id: "WX-RED-010"
+      label: "问题由证据逼出"
+      communication_job: "让下一问来自上一项具体结果，而非作者舞台提示。"
+      use_when: "上一段已改变局面，并留下一个真实未解问题。"
+      derived_examples:
+        - "一个文件能交付。三个系统同时改动时，谁来确认最后版本？"
+        - "它能写完页面。下一次更新数据，页面会不会跟着变？"
+      anti_stencil: "不要每节都用反问收尾；答案已知或后文不回答时改成陈述。"
+      failure_signal: "问题能原样搬到任何 AI 产品稿，或只用于吊读者胃口。"
+      source_ids: ["SRC-PROJECT-QWEN", "SRC-SSPAI-IDEA", "SRC-V2EX-DOCS"]
+
+    - id: "WX-RED-011"
+      label: "读者代价落到动作"
+      communication_job: "把效率、成本和协作影响写成读者还要做的事或被打断的步骤。"
+      use_when: "产品结果会改变复制、核对、等待、授权、发送或返工。"
+      derived_examples:
+        - "最后仍要回 Excel 补退货率，再把文件发到群里。"
+        - "权限没开时，省下的只是排版，数据搬运还在。"
+      anti_stencil: "不要泛称「普通人」「职场人」；写当前读者确实会遇到的动作。"
+      failure_signal: "代价只剩「效率下降」「体验受损」等抽象标签。"
+      source_ids: ["SRC-PROJECT-VOICE", "SRC-WOSHIPM-HUMAN", "SRC-V2EX-OFFICE"]
+
+    - id: "WX-RED-012"
+      label: "异议和修正直给"
+      communication_job: "不先表演公平或制造稻草人，直接指出材料与结论之间的缺口。"
+      use_when: "作者需要质疑宣传、修正先前预期或限制一个判断。"
+      derived_examples:
+        - "这份演示看着完整，来源没有跟上。"
+        - "宣传页说能接企业数据；我这个账号暂时没看到入口。"
+      anti_stencil: "批评必须指向可核对象，不借毒舌、阴阳怪气或绝对化制造人味。"
+      failure_signal: "异议只剩态度，没有对应页面、数据、原话或测试结果。"
+      source_ids: ["SRC-V2EX-AI-TONE", "SRC-V2EX-DOCS", "SRC-PROJECT-QWEN"]
+
+    - id: "WX-RED-013"
+      label: "普通动词压过业务黑话"
+      communication_job: "优先使用读者能看见的搬、删、补、摊开、挪动和发送，减少名词化。"
+      use_when: "业务术语可以准确还原为参与者的实际动作。"
+      derived_examples:
+        - "把三张表摊开，先删重复项，再补一列来源。"
+        - "它把图片放进页面，我又挪了两次位置。"
+      anti_stencil: "口语动词不是装饰；如果术语更准确或属于官方界面文字，应保留术语并解释。"
+      failure_signal: "每段固定塞入一个俚语动词，或口语化损失专业精度。"
+      source_ids: ["SRC-PROJECT-VOICE", "SRC-SSPAI-ARCHIVE", "SRC-GITHUB-RUANYF"]
+
+    - id: "WX-RED-014"
+      label: "场景自己长出笑点"
+      communication_job: "让真实结果中的错位承担幽默，同时推进判断。"
+      use_when: "记录里确有反常、笨拙或预期落差，且不损害事实和当事人原意。"
+      derived_examples:
+        - "我让它压缩会议纪要，它先起了一个比会议还长的标题。"
+        - "页面做出来了，按钮全挤在右下角。"
+      anti_stencil: "笑点落地后继续叙事，不解释两遍，也不每节安排一句吐槽。"
+      failure_signal: "删除笑点不损失任何观察，或为了幽默夸大、改写真实结果。"
+      source_ids: ["SRC-V2EX-COMMUNITY", "SRC-PROJECT-VOICE", "SRC-WOSHIPM-HUMAN"]
+
+    - id: "WX-RED-015"
+      label: "短句承担真实转折"
+      communication_job: "用短句标记中断、决定、纠正或后果，让节奏服从事件。"
+      use_when: "前文已经提供足够上下文，短句会改变阅读方向。"
+      derived_examples:
+        - "然后它停了。"
+        - "这一步仍要人点确认。"
+      anti_stencil: "不按句长配额切碎正文；单独成段的短句必须改变事实、判断或后果。"
+      failure_signal: "短句只是「就这样」「很真实」等气氛填充，或连续多节位置相同。"
+      source_ids: ["SRC-PROJECT-VOICE", "SRC-V2EX-AI-TONE", "SRC-GITHUB-RUANYF"]
+
+    - id: "WX-RED-016"
+      label: "作者反应有来由"
+      communication_job: "把作者的惊讶、犹豫或下一步动作绑在一个可见触发点上。"
+      use_when: "反应真实发生，并影响了检查、重试、取舍或结论。"
+      derived_examples:
+        - "看到空着的来源列，我先回去查了原文件。"
+        - "按钮消失后，我重新录了一遍屏。"
+      anti_stencil: "不写假惊讶、假感动和罐装共情；反应不能替代证据。"
+      failure_signal: "作者只宣布「我震惊了」「我被打动了」，没有触发点或后续动作。"
+      source_ids: ["SRC-WOSHIPM-HUMAN", "SRC-PROJECT-QWEN", "SRC-PROJECT-VOICE"]
+
+    - id: "WX-RED-017"
+      label: "问题模型贯穿后文"
+      communication_job: "用一个朴素问题持续筛选证据，使修辞在后文仍有工作。"
+      use_when: "文章有可反复检验的交付、权限、来源、更新或责任问题。"
+      derived_examples:
+        - "最后一步没人确认，这份文件就还不能发。"
+        - "后面的测试都回到同一件事：文件交给同事后，能不能直接接着改。"
+      anti_stencil: "不是先造一句金句再强行回扣；模型必须实际决定材料取舍和章节顺序。"
+      failure_signal: "问题只在开头出现一次，后文换成另一个判断也不受影响。"
+      source_ids: ["SRC-PROJECT-QWEN", "SRC-SSPAI-IDEA", "SRC-WOSHIPM-HUMAN"]
+
+    - id: "WX-RED-018"
+      label: "圈内活词有对象"
+      communication_job: "在共同语境中用「卡住」「跑一遍」「翻车」等活词压缩真实状态。"
+      use_when: "目标读者熟悉该说法，且紧邻句子已经给出具体对象、位置或结果。"
+      derived_examples:
+        - "这次确实翻车了：退货率一列全空。"
+        - "脚本再跑一遍，空行还在。"
+      anti_stencil: "年度热梗和平台黑话只进入观察池，不自动进入正文；一个活词够用就停。"
+      failure_signal: "词语需要解释、已经过时、连续复用，或删掉后没有信息损失。"
+      source_ids: ["SRC-V2EX-COMMUNITY", "SRC-CCNU-NETWORDS", "SRC-ACL-LSICC"]
+
+source_catalog:
+  - id: "SRC-PROJECT-VOICE"
+    kind: "project_configuration"
+    ref: "上下文/作者声音.md"
+    observed_for: "动作感、真实摩擦、作者反应、读者成本与笑点纪律。"
+    rights_use: "内部项目规则；可直接用于本项目。"
+  - id: "SRC-PROJECT-QWEN"
+    kind: "project_feedback"
+    ref: "微信公众号/内容/2026/07/qwenwork-hands-on/retrospective.md#FB-031—034"
+    observed_for: "语用必要性、用户喜好主 loss、黑库全禁和红库正向需求。"
+    rights_use: "内部反馈索引；不复制受限原件。"
+  - id: "SRC-V2EX-AI-TONE"
+    kind: "community"
+    url: "https://www.v2ex.com/t/1227075"
+    observed_for: "用户指出无前提的否定对比会替读者虚构一个 A；也有人反对只做近义词替换。"
+    rights_use: "只保存 URL 与人工转述，不入库评论原文。"
+  - id: "SRC-V2EX-COMMUNITY"
+    kind: "community"
+    url: "https://www.v2ex.com/t/1202017"
+    observed_for: "社区用具体反例和场景笑点识别聊天机器人残留、罐装赞美与格式化节奏。"
+    rights_use: "只保存 URL 与人工转述，不入库评论原文。"
+  - id: "SRC-V2EX-DOCS"
+    kind: "community"
+    url: "https://www.v2ex.com/t/832014"
+    observed_for: "功能性写作优先意图、简洁、消歧、来源与真实读者试读。"
+    rights_use: "只保存 URL 与人工转述，不入库评论原文。"
+  - id: "SRC-V2EX-OFFICE"
+    kind: "community"
+    url: "https://www.v2ex.com/t/1213591"
+    observed_for: "技术文档最终给人使用；工具输出仍需围绕具体评审和分享任务重写。"
+    rights_use: "只保存 URL 与人工转述，不入库评论原文。"
+  - id: "SRC-SSPAI-STYLE"
+    kind: "editorial_guide"
+    url: "https://manual.sspai.com/rules/style/"
+    observed_for: "表达须有实际信息作用；流行语、隐喻和对比必须服从上下文；事实与来源优先。"
+    rights_use: "只保存 URL 与人工转述；不复制受版权保护正文。"
+  - id: "SRC-SSPAI-IDEA"
+    kind: "editorial_guide"
+    url: "https://manual.sspai.com/guide/idea/"
+    observed_for: "科技内容连接日常工作生活，文章反映作者真实观点、发现和经验。"
+    rights_use: "只保存 URL 与人工转述；不复制受版权保护正文。"
+  - id: "SRC-SSPAI-ARCHIVE"
+    kind: "editorial_guide"
+    url: "https://sspai.com/post/37815"
+    observed_for: "主动语态、具体细节、少形容词和通读检查；该页已标为历史文档，仅作观察。"
+    rights_use: "只保存 URL 与人工转述；不复制受版权保护正文。"
+  - id: "SRC-WOSHIPM-HUMAN"
+    kind: "creator_essay"
+    url: "https://www.woshipm.com/copy/1496125.html/comment-page-1"
+    observed_for: "人话的着眼点是具体的人、生活小事、小情绪与小细节，不等于表面口语化。"
+    rights_use: "只保存 URL 与人工转述；不复制文案案例。"
+  - id: "SRC-GITHUB-RUANYF"
+    kind: "github_style_guide"
+    url: "https://github.com/ruanyf/document-style-guide"
+    observed_for: "肯定句、主动语态、明确指代、常用表达和单段单任务。"
+    rights_use: "仓库声明 public domain；本库仍只保存链接与转述。"
+  - id: "SRC-GITHUB-COPY"
+    kind: "github_style_guide"
+    url: "https://github.com/sparanoid/chinese-copywriting-guidelines"
+    observed_for: "中文互联网排版的稳定共识；其幽默示例也说明网感依赖共同语境而非格式噪声。"
+    rights_use: "只保存 URL 与人工转述；不复制长段示例。"
+  - id: "SRC-CCNU-NETWORDS"
+    kind: "official_language_monitoring"
+    url: "https://nlp.ccnu.edu.cn/"
+    observed_for: "网络流行语来自特定年份、平台与大规模语料快照，应设新鲜度和受众边界。"
+    rights_use: "只保存 URL、发布方法与人工转述；不把榜单当必用词表。"
+  - id: "SRC-ACL-LSICC"
+    kind: "academic"
+    url: "https://arxiv.org/abs/1811.10167"
+    observed_for: "非正式中文在词汇和句法上与正式语料有显著差异，且社区来源内部风格多样。"
+    rights_use: "只保存论文元数据与人工转述。"
+  - id: "SRC-ACL-STYLE"
+    kind: "academic"
+    url: "https://aclanthology.org/2021.ccl-1.26/"
+    observed_for: "中文风格迁移须同时保留内容并改变表达，不能只替换几个高频词。"
+    rights_use: "只保存论文元数据与人工转述。"
+  - id: "SRC-ACL-AI-VOCAB"
+    kind: "academic"
+    url: "https://aclanthology.org/2025.bea-1.71/"
+    observed_for: "固定 AI 词汇表跨模型与写作场景泛化有限，支持把本库限定为项目编辑器而非检测器。"
+    rights_use: "只保存论文元数据与人工转述。"
+
+freshness:
+  review_on: "2026-08-25"
+  live_word_policy: "圈内活词每次按目标读者、平台与日期重审；年度热词只作观察，不自动进入红项。"
+  retirement_signal: "主理人明确厌恶；真实冷读显示生硬或过时；同一红项跨稿重复成模板；维护成本高于减少的返工。"
+  effectiveness_claim: "当前只证明语料资产已建立，不证明红库已减少返工；验证口径见 INSIGHT-003。"

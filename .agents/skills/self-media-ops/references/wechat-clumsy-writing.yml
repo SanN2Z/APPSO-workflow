@@ -5,6 +5,7 @@ prompt_sha256: "119cffa303ce3a88a16bf7c8fbc5459c04d65f888751f04ba022d51d6f7268f3
 status: "pilot"
 classification: "internal"
 effectiveness_status: "unverified_hypothesis"
+default_invocation: false
 introduced_on: "2026-07-25"
 review_after_eligible_longform_cycles: 3
 next_review_on: "2026-08-25"
@@ -18,8 +19,9 @@ source:
 purpose: "减少 AI 稿件的过度完成感，同时保留事实、判断、逻辑、语法和可读性"
 
 apply_after:
-  - "核心判断共创记录已经 locked"
-  - "普通人的共同处境已经确认"
+  - "CORE-VALUE-001 已通过"
+  - "已经存在可独立审阅的实质初稿"
+  - "用户明确要求测试此方法"
   - "personal 或 company 写作模式已经明确"
 
 writing_prompt:

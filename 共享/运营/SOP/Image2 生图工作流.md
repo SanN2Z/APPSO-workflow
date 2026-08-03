@@ -1,8 +1,8 @@
 # Image2 生图工作流
 
-版本：1.2
+版本：1.3
 
-更新日期：2026 年 7 月 22 日
+更新日期：2026 年 7 月 25 日
 
 资料属性：internal
 
@@ -49,7 +49,7 @@
 
 ## 路由与调用前硬门
 
-需要 AI 新图、重绘或编辑的内容包，先创建 `research/image-generation-plan.json`。计划声明 `project_adapter`、每项 `visual_type`、风格档案引用、参考策略、输出约束和文件路径，不复制 `local-only` Prompt 原文。通用新图从 `共享/模板/生图计划/通用直出计划模板.json` 创建，通用参考图编辑从 `共享/模板/生图计划/通用参考图编辑计划模板.json` 创建；APPSO 任务使用自己的 adapter 模板。计划的 `project_adapter` 必须与 `publish.yml` 的独立声明一致；`appsso-article-v1` 仍作为额外反查，不能作为 Hunt Good 等其他 APPSO 稿型的唯一品牌证据。
+需要 AI 新图、重绘或编辑的内容包，先创建 `research/image-generation-plan.json`。计划声明 `project_adapter`、每项 `visual_type`、风格档案引用、参考策略、输出约束和文件路径，不复制 `local-only` Prompt 原文。通用新图从 `共享/模板/生图计划/通用直出计划模板.json` 创建，明确选择「笨拙涂鸦」时从 `共享/模板/生图计划/笨拙涂鸦直出计划模板.json` 创建，通用参考图编辑从 `共享/模板/生图计划/通用参考图编辑计划模板.json` 创建；APPSO 任务使用自己的 adapter 模板。计划的 `project_adapter` 必须与 `publish.yml` 的独立声明一致；`appsso-article-v1` 仍作为额外反查，不能作为 Hunt Good 等其他 APPSO 稿型的唯一品牌证据。
 
 路由优先级从高到低为：
 
@@ -100,9 +100,17 @@ Codex CLI 的人工入口可以用自然语言或 `$imagegen`，参考图可通�
 ## 受控风格 Prompt
 
 - 通用 profile 真源为 `共享/运营/SOP/生图风格档案.json`；品牌固定 profile 由对应项目 adapter 的独立 registry 提供。核心层不复制品牌 Prompt 路径、哈希或视觉特征。
+- 笨拙涂鸦使用独立 registry `共享/运营/SOP/笨拙涂鸦风格档案.json`，避免新增 profile 改变通用 registry 哈希并让历史生图回执整体失效。
 - profile 选中受控 Prompt 时，预检从 registry 读取真源路径、标题、字符数、哈希、允许模式和冲突词，并校验本地原文；调用时逐字使用，不润色、不翻译、不做同义改写。
 - 比例、用途、裁切安全区、精确文字和禁用元素作为独立的 `Output constraints` / `Preserve` / `Avoid` 追加，不改写风格基底。
 - `local-only` Prompt 原文不进入 Git、计划或 receipt；项目映射与可观察验收标准只写在项目 adapter。
+
+### 笨拙涂鸦 profile
+
+- 用户或视觉 brief 明确选择「笨拙涂鸦」时，使用 `clumsy-doodle-v1` 和[《笨拙涂鸦 Prompt 模板》](<../../模板/生图Prompt/笨拙涂鸦-v1.md>)；每项任务只在 `Preserve` 填写「本图只画：一个主体关系 + 一个段落判断」，不得重写风格基底。
+- 常规公众号长稿的正文图片总量默认 6–10 张，官方资料图、截图、图表和笨拙涂鸦合计计算。先覆盖关键转折、核心机制、作者经验和结尾判断，不按段落平均配图；已有官方图时相应减少涂鸦。
+- 该 profile 只用于明确选中的正文解释图，不自动覆盖品牌 adapter、官方资料图、数据图表、真实界面截图或封面要求。品牌任务需要使用它时，按单项显式用户覆盖记录，不扩散到其他任务。
+- 生成后先做原尺寸与手机宽度检查；失败时只修一个主要问题。选中版本后必须在同一交付单元同步 `draft.md`、`asset-manifest.yml` 和最新预览，只生成文件不算交付。
 
 ## 质量迭代
 

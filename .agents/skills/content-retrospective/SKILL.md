@@ -1,6 +1,6 @@
 ---
 name: content-retrospective
-description: Capture substantive content feedback, delivery or publication outcomes, version diffs, audience evidence, and production failures; keep one-off changes in the case and promote only repeatable mechanisms into the narrowest SOP. Use after material feedback, delivery, publication, scheduled weekly or monthly review, or an explicit workflow-migration request.
+description: Capture substantive content feedback, delivery or publication outcomes, version diffs, audience evidence, and production failures; keep ordinary one-off changes in the case, allow an explicit owner preference to configure a narrowly scoped project adapter, and promote only repeatable mechanisms into portable SOPs. Use after material feedback, delivery, publication, scheduled weekly or monthly review, or an explicit workflow-migration request.
 ---
 
 # Content Retrospective
@@ -17,7 +17,7 @@ Record evidence without turning every edit into a new rule.
 | Monthly review | SOP duplication, conflicts, stale rules, or migration candidates need review | Schedule, ledgers, affected SOPs, and [promotion rules](references/promotion-rules.md) |
 | Migration review | Export a reusable workflow | Core flow, adapters, evidence links, and [promotion rules](references/promotion-rules.md) |
 
-Typos, punctuation fixes, and isolated wording choices can stay in the existing case history; they do not require a full retrospective or central ledger update.
+Typos, punctuation fixes, and isolated wording choices can stay in the existing case history. If the project owner explicitly adopts one as a binding brand or platform preference, record it as `project_configuration` in the narrowest adapter; do not present it as portable evidence.
 
 ## Capture the feedback
 
@@ -50,7 +50,8 @@ Separate failures in the brief, evidence, structure, prose, visuals, copyedit, h
 
 Read [promotion-rules.md](references/promotion-rules.md) only when considering an SOP change or migration.
 
-- One preference or one-off wording: keep in the case.
+- One preference or one-off wording: keep in the case by default.
+- One explicit owner preference: it may immediately configure a scoped project adapter as E0 / project configuration; it does not become a universal SOP claim.
 - One plausible failure: watch.
 - Two independent cases with the same mechanism: consider a scoped rule.
 - Facts, rights, privacy, credentials, publication, or irreversible actions may use the severe single-case exception.
