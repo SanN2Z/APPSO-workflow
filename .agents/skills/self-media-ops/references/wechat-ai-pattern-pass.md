@@ -1,130 +1,122 @@
-# WeChat AI-pattern diagnostic
+# WeChat 句法节奏与 AI-pattern 诊断
 
-Use this as a supplemental diagnostic for Chinese WeChat copy. It catches recurring machine-shaped writing patterns and internal workflow leakage that ordinary grammar review may miss. It does not replace fact-checking, the human-voice pass, the independent cold read, or the exact-version copyedit gate.
+本文件是胜出稿进入 `editorial_review` 后的一次完整诊断细则。表达层主检查是核心流程中的 `PROJECT-WECHAT-RHYTHM-001`，并与 `PROJECT-WECHAT-PRAGMATIC-001`、`PROJECT-WECHAT-CONCRETE-001` 分工：RHYTHM 管句法节奏骨架，PRAGMATIC 管高显著句有没有真实说话必要，CONCRETE 管编辑是否删具体、留抽象。候选写手与匿名评审不运行本文件。
 
-## Position in the workflow
+本诊断不替代事实核验、独立冷读、叙事链逐拍对照、具体性 diff 或精确正文终校。
 
-Run the gates in this order:
+## 工作流位置
 
-1. The feature writer completes Pass A in [wechat-human-voice-pass.md](wechat-human-voice-pass.md).
-2. The release auditor runs this diagnostic on the draft and reports defects without rewriting it.
-3. The feature writer repairs confirmed defects; factual changes return to the evidence editor.
-4. The release auditor re-runs this diagnostic and completes the independent cold read.
-5. Only then does the copy editor run [wechat-copyedit-pass.md](wechat-copyedit-pass.md) and lock the exact body hash.
+1. Feature writer 完成 [wechat-human-voice-pass.md](wechat-human-voice-pass.md) 的 Pass A，包括压缩方向自查。
+2. Release auditor 对胜出稿运行一轮完整诊断：六类节奏指纹、语用必要性高显著句抽查、内部工作流泄漏与推测性填空。
+3. Feature writer 修复确认缺陷；涉及事实或语义边界的修改退回 evidence editor。
+4. Release auditor 只复核已记录的修复点，不重跑整轮诊断；随后按 human-voice 细则完成独立冷读、叙事链逐拍对照与具体性 diff。
+5. 结构与表达修复完成后、copyedit 前，只运行一次文末的项目词表附录扫描。
 
-Any edit after copyedit invalidates the copyedit pass. This diagnostic therefore belongs before copyedit, not after it.
+任何 copyedit 后的正文修改都会使正文哈希失效。
 
-## Required skill and mode
+## 工具与边界
 
-Load the globally installed `~/.codex/skills/avoid-ai-writing/SKILL.md` when it is available.
+全局 `avoid-ai-writing` skill 可用时，以 `detect` / `blog` 模式作为补充观察；不可用时直接执行本文件并记录。它不得自动改写正文，也不得用模型分数代替原句、上下文和删除测试。
 
-- Mode: `detect`
-- Context: `blog`
-- Voice reference: `上下文/作者声音.md`, the current brief, and the article itself
-- Scope: title, deck, headings, body, quotes, captions, and final notes
-- Output: numbered `HUMAN-AI-*` defects in `review.md`
+- 范围：标题、摘要、小标题、正文、引语、图注和文末注释。
+- 主编号：节奏缺陷使用 `HUMAN-RHY-*`；内部泄漏与推测性填空使用 `HUMAN-AI-*`。
+- 责任：auditor 报告证据，writer 修复，auditor 只复核修复点。
 
-Do not use `rewrite` or `edit` mode as an automatic pipeline step. The feature writer decides how to repair each confirmed defect while preserving sourced meaning and the author's actual position. If the global skill is unavailable, run the project checklist below and record that the external skill was not loaded.
+## 六类句法节奏指纹
 
-## Apply these rule groups to Chinese copy
+命中不自动等于缺陷。每一处都先引用完整原句和相邻上下文，再做删除测试：删除或直接改写后，如果损失的只是文章腔，而不是事实、判断、关系或后果，才成立为缺陷。
 
-### 1. Internal workflow and model leakage
+### `RHY-TRIAD`｜三连排比或三项并列
 
-Flag text that belongs in research or review notes rather than the public article, including:
+包括三个问句、三个分句、三个名词项或连续三次同构起句。单篇出现 3 处及以上时发出整体预警，但仍须逐处做删除测试。真实分类、完整步骤或三个不可合并的证据可以保留。
 
-- “本轮核到”“当前公开材料尚未回答”“根据 `sources.md`”“在 brief 里锁定”；
-- tool, prompt, model, search, file-path, defect-ID, hash, or review-process language;
-- raw citation tokens, tracking parameters, placeholders, TODOs, or instructions to the writer;
-- claims framed around what the writing system did instead of what readers need to know.
+### `RHY-SEMICOLON`｜分号对仗
 
-Clear internal leakage is a `blocker` because it breaks publication readiness.
+包括 `A；B；C` 的整齐三段式与 `A；B` 的镜像对偶。若分号只是把句子排成整齐节拍，改成普通陈述；若它准确表达同尺度比较、并列条件或程序步骤，可以保留并记录信息任务。
 
-### 2. Empty authority and inflated significance
+### `RHY-UPLIFT`｜段末抽象升华
 
-Flag vague attribution such as “有研究表明”“业内普遍认为” when the authority is neither named nor supported. Also flag unsupported declarations that an event “标志着”“重新定义了”“开启了新时代”. Cross-tag factual support problems as `FACT-*`; this pass diagnoses the writing symptom but does not clear the evidence.
+段落或小节以一句格言式概括收尾，却没有新增对象、证据或后果。相同抽象归纳全文第二次出现即违规；优先删除重复归纳，保留前面的具体事实或场景。
 
-### 3. Template structure with low information gain
+### `RHY-FLIP`｜对称翻转
 
-Flag sections that remain equally valid after paragraph shuffling, repeat the same claim in new wording, or use headings and transitions to simulate progress. Common symptoms include:
+检查「不是 A 而是 B」及其变体，包括「像 A，不太像 B」「正因为 A，反而 B」「A 来得及，B 来不及」「与其说 A，不如说 B」。真实术语消歧、互斥分类或精度关键排除可以保留；只为制造观点感的对称句应改成正面陈述。
 
-- formulaic scene-setting that delays the actual event;
-- repeated “不是 A，而是 B” or three-part cadence without a real distinction;
-- “下面来看”“值得注意的是”“这意味着”等 meta narration where the relation should be stated directly;
-- clusters of framing labels such as 「严格来说」「奇怪的是」「有意思的是」「说白了」 in adjacent paragraphs or sections, when they repeatedly announce interpretation instead of adding one;
-- self-labeling such as “最关键的一点是” without evidence that earns the emphasis;
-- generic future-looking endings that could close any AI article.
-- an ending that completes the title promise and then starts a new advice framework, checklist, or thesis that the brief did not promise.
+### `RHY-DISCLAIMER`｜独立免责段
 
-### 4. Uniform rhythm and over-organization
+检查「当然，这仍然是我的判断」「其他解释也成立」一类限定是否单独成段，或机械地出现在每节倒数第二段。限定必须压进它约束的陈述句，如「在当前账号下」或「仅就本次生成结果而言」；不能用独立段落反复表演谨慎。
 
-Flag identical paragraph lengths, repeated section shapes, every paragraph ending in a mini-conclusion, excessive bullets, or prose forced into symmetrical clauses. Also flag standalone short sentences and colloquial verbs that appear at regular intervals but carry no turn, judgment, action, or consequence. Repair for meaning and reading rhythm, not merely for sentence-length variation.
+### `RHY-IMPORTANCE`｜重要性空转宣告
 
-### 5. Manufactured personality
+检查「这直接关系到」「值得注意的是」「更实在／更关键」等只宣布重要性、不新增对象或证据的句子。能直接写主体、动作、尺度、条件或结果时，删除宣告并写事实关系。
 
-Flag fake emotional reactions, forced slang, unexplained memes, canned agreement, or invented labels that are not used by the source or helpful to the reader. Do not “humanize” copy by injecting casual language at random.
+## 单处判定步骤
 
-An individual colloquial phrase may be deliberate. The defect is regular, low-information placement: for example, every section receives one slang verb or reveal phrase even though deleting it changes no fact, judgment, or reader consequence.
+每个候选指纹按同一顺序记录：
 
-#### `WECHAT-HUMAN-002`: stock colloquial frames and nonliteral metaphor chains
+1. 引用完整原句及前后各一句，标明段落位置。
+2. 标记一个主类别；兼有其他类别时写在备注，不重复建缺陷。
+3. 写删除测试：删掉后究竟损失事实、判断、关系、后果，还是只损失文章腔。
+4. 使用下面的 `WECHAT-HUMAN-002` 信息角色测试复核真实任务。
+5. 按「删除 → 改成有具体对象的陈述 → 确有真实表达任务才保留」处理。
+6. 保留时记录任务、具体指向和不可替代的信息损失；修复后只复核本项。
 
-This is an information-role test, not a banned-word list. Apply it to stock Chinese colloquial frames and nonliteral metaphors such as 「先别急着……」「喊革命」「……到账」「这笔账……」「这份账单终于寄给普通人」 or a repeated exam / war / finance metaphor chain:
-
-1. **Literal or sourced check**: Is the phrase a verified literal fact, a necessary term, or a sourced quotation? If yes, preserve it and its context.
-2. **Transfer test**: Could the whole phrase move unchanged to another AI product article? If yes, treat it as a candidate defect.
-3. **Deletion test**: What exact fact, judgment, condition, or reader consequence disappears when the phrase is deleted? If the answer is「none」, delete it.
-4. **Concrete rewrite**: If deletion would lose real information, name the actor, action, condition, cost, or result directly instead of keeping the ornamental frame.
-5. **Chain scan**: When several metaphors from the same field repeatedly carry transitions, rewrite the paragraph or section structure rather than patching one phrase at a time.
-
-Flag a recurring chain or a phrase that hides the article's key judgment as `major`. An isolated local phrase is normally `minor` unless it distorts meaning or evidence. Preserve literal uses such as「本次 API 调用账单增加 12%」、a real payment arrival, a historical revolution, a real examination, or a sourced quotation.
-
-For every `WECHAT-HUMAN-002` finding, `review.md` must record the exact phrase, the literal / sourced result, what the deletion test showed, and the concrete repair. A keyword hit without this context is not a defect.
-
-Use [wechat-ai-pattern-regression.yml](wechat-ai-pattern-regression.yml) when this rule or its adapter changes and during the scheduled rule review. It is a manual semantic fixture, not a regex suite: the reviewer must reproduce the expected flag / allow decision and rationale, then record the result in the SOP change ledger.
-
-### 6. Speculative gap filling
-
-Flag precise motives, causes, product mechanisms, safety guarantees, or future outcomes that are not supported by sources. A limitation should say what remains unknown in reader-facing language; it should not narrate the research process or turn missing evidence into a product accusation.
-
-## Expression candidate library
-
-Use [`wechat-expression-library.yml`](wechat-expression-library.yml) as a shared candidate directory for Chinese technology-writing review. It records 20 recurring groups with two suggested actions: `default_avoid` and `semantic_review`.
-
-The portable diagnostic does not impose a priority order or inherit APPSO's project policy. A project adapter may explicitly choose `P0 / default_avoid → P1 / semantic_review`; without such an adapter, use relevant entries only as candidate prompts and apply the normal semantic tests. This library does not create 20 new banned-word rules. A phrase becomes a defect only after the literal / sourced, information-role, transfer, and neighboring-repeat tests establish a reader-facing problem. A sourced quotation, literal fact, real procedure, necessary definition, or genuine logical distinction must be allowed. Record the entry ID and the semantic reason for any confirmed finding; a raw keyword hit is not evidence.
-
-## Do not use these as Chinese pass/fail rules
-
-- English word-replacement tiers or English-specific vocabulary bans;
-- type-token-ratio, lexical-diversity, sentence-length, or punctuation thresholds;
-- English em-dash limits or a ban on Chinese curly quotation marks;
-- a generic AI-detector score, probability, or “sounds AI” verdict;
-- forced first-person anecdotes, slang, typos, or sentence fragments added only to appear human.
-- universal quotas for short sentences, colloquial phrases, transition words, or rhetorical contrasts. A project adapter may define an editorial range, but it cannot replace the information-role test or its stated counterexamples.
-
-These may be observations when they reveal a concrete reader problem, but none is a gate by itself.
-
-## Severity and pass condition
-
-- `blocker`: internal workflow leakage, raw instruction/citation artifacts, unresolved placeholders, or invented facts.
-- `major`: a recurring pattern that obscures the article's claim, evidence, boundary, or narrator.
-- `minor`: a local phrase or rhythm issue that does not distort meaning.
-
-The pass is `needs_fix` while any `blocker` or `major` `HUMAN-AI-*` defect remains open. Minor style calls are resolved by the managing editor against `上下文/作者声音.md`; the skill does not overrule deliberate brand voice.
-
-## Record in `review.md`
+记录格式：
 
 ```markdown
-## AI-pattern diagnostic
-
-- Skill: avoid-ai-writing 3.15.0
-- Mode: detect
-- Scope: title / deck / headings / body / captions / notes
-- Applied: workflow leakage; empty authority; template structure; rhythm; manufactured personality; speculative gaps
-- Ignored as hard gates: English word lists; stylometric thresholds; punctuation quotas; detector score
-- Status: pass | needs_fix | blocked
-
-| ID | Severity | Evidence | Reader harm | Repair owner | Pass condition | Status |
+| ID | 原句与位置 | 指纹类别 | 删除测试 | 信息任务与指向 | 处理 | 状态 |
 |---|---|---|---|---|---|---|
-| HUMAN-AI-001 | major | Exact phrase or pattern | Concrete effect | Feature writer | Observable repair | open |
+| HUMAN-RHY-001 | 原句；L42 | RHY-FLIP | 只损失文章腔 | 无 | 删除 | fixed |
 ```
 
-Record a real finding or `none found`; never treat an unchecked box or a detector score as evidence of a pass.
+## `WECHAT-HUMAN-002`｜五步信息角色测试
+
+这是 RHYTHM 命中后的复核工具，不是禁词表：
+
+1. **字面或来源检查**：是否为已核字面事实、必要术语或来源引语；是则保留其上下文。
+2. **迁移测试**：整句能否原封不动移到另一篇科技稿；能则是候选缺陷。
+3. **删除测试**：删除后哪项具体事实、判断、条件或读者后果消失；答案为 none 时删除。
+4. **具体改写**：确有信息损失时，直接写主体、动作、条件、成本或结果。
+5. **链式扫描**：同一隐喻场连续承担多个转场时，重写段落或章节关系，不逐词打补丁。
+
+`PROJECT-WECHAT-PRAGMATIC-001` 的完整合同只在核心流程定义。本轮对高显著句抽查时引用原句并记录具体任务、指向、跨题迁移、修辞自标、删除损失与朗读结果；不复制规则全文。
+
+## 内部工作流泄漏（blocker）
+
+以下内容属于研究或审校记录，不得进入公开正文：
+
+- 「本轮核到」「根据 sources.md」「brief 里锁定」等内部过程语言；
+- tool、prompt、model、搜索、路径、缺陷 ID、哈希或审校流程；
+- 原始引用 token、跟踪参数、占位符、TODO 或给写手的指令；
+- 围绕写作系统做了什么来组织主张，而不是说明读者需要知道什么。
+
+明确泄漏一律记为 `HUMAN-AI-*` blocker。
+
+## 推测性填空
+
+检查来源未支持的精确动机、原因、产品机制、安全保证或未来结果。限制应以读者可见的未知边界表述，不得叙述内部检索过程，也不得把证据缺口写成产品指控。事实支持问题同时交叉登记为 `FACT-*`。
+
+## 终校附录：项目表达禁用词表
+
+结构与表达修复完成后、逐句 copyedit 前，按 `PROJECT-WECHAT-AI-LEXICON-001` 只加载一次 [wechat-expression-library.yml](wechat-expression-library.yml) 的 `wechat_analytical` adapter。这里不复述词条，也不在候选、匿名评审或修复点复核阶段重复扫描。
+
+命中只允许三种处理：删除；改成主体、动作、尺度、条件和结果明确的正面陈述；记录窄豁免。豁免须写 entry ID、完整句、上下文、豁免类型、不可替代的信息任务和批准人。命中不得用于推断 AI 使用、代写或诚信问题。adapter 变化时运行 [wechat-expression-ban-regression.yml](wechat-expression-ban-regression.yml)。
+
+## 不得作为通过或否决规则
+
+- 英文词汇替换层级或英文专属禁词；
+- type-token ratio、词汇多样性、句长或标点阈值；
+- 英文破折号限制或中文弯引号禁令；
+- AI 检测器分数、概率或笼统的「像 AI」结论；
+- 为显得像人而强加第一人称、俚语、错字、碎句；
+- 短句、口语、连接词、反转句的通用配额。
+
+这些观察只有在暴露具体读者问题时才可登记，不能单独成为 gate。
+
+## 严重度与通过条件
+
+- `blocker`：内部流程泄漏、原始指令／引用残留、占位符或虚构事实。
+- `major`：重复节奏掩盖主张、证据、边界或叙事关系；具体性方向反转。
+- `minor`：不扭曲语义的局部节奏问题。
+
+只要 blocker、major `HUMAN-RHY-*` / `HUMAN-AI-*` 或未经处理的终校词表命中仍开放，诊断状态就是 `needs_fix`。记录真实缺陷或 `none found`；未勾选清单或检测器分数都不能证明通过。

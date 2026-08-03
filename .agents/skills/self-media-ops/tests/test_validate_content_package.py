@@ -586,13 +586,19 @@ assets:
             ("AI 痕迹诊断", "Status：pass", "严重度"),
             ("AI 痕迹诊断", "**Status：** pass", "严重度"),
         ):
-            for severity in ("blocker", "major"):
+            for severity, item_id in (
+                ("blocker", "HUMAN-AI-001"),
+                ("major", "HUMAN-AI-001"),
+                ("blocker", "HUMAN-RHY-001"),
+                ("major", "HUMAN-RHY-001"),
+            ):
                 with (
                     self.subTest(
                         title=title,
                         status_field=status_field,
                         severity_header=severity_header,
                         severity=severity,
+                        item_id=item_id,
                     ),
                     tempfile.TemporaryDirectory() as temp_dir,
                 ):
@@ -608,13 +614,13 @@ assets:
                         f"- {status_field}\n\n"
                         f"| ID | {severity_header} | Evidence | 状态 |\n"
                         "|---|---|---|---|\n"
-                        f"| HUMAN-AI-001 | {severity} | Exact pattern | open |\n",
+                        f"| {item_id} | {severity} | Exact pattern | open |\n",
                         encoding="utf-8",
                     )
                     errors, _, _ = VALIDATOR.validate(package)
                 self.assertTrue(
                     any(
-                        f"has open {severity} item: HUMAN-AI-001" in item
+                        f"has open {severity} item: {item_id}" in item
                         for item in errors
                     ),
                     errors,
@@ -2111,6 +2117,139 @@ AI 对就业的早期影响可能先表现为岗位不再被创造。
                 "draft",
             )
         self.assertTrue(any("non-empty reason" in item for item in issues))
+
+    def test_current_locked_workshop_requires_chain_opponent_and_schema(self) -> None:
+        current_body = self.valid_locked_body() + """
+
+## 开场与叙事路径
+
+- 叙事发动机：问题升级
+
+| 本节新增的事实或动作 | 它让局面发生了什么变化 | 它留下了什么未解决的问题 | 下一节为什么必须回答这个问题 |
+|---|---|---|---|
+| 招聘数量下降 | 裁员不再是唯一信号 | 岗位为什么没有被补回 | 下一节必须检查补员决策 |
+
+## 最强对手
+
+- 对手是什么：招聘下降也可能来自宏观周期。
+- 证据：同期非 AI 岗位也在下降。
+- 在第几拍正面接它：第 2 拍。
+- 若无法建立对手，降级为什么稿型：
+"""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            package = Path(temp_dir)
+            self.write_workshop(
+                package,
+                "status: locked\n"
+                "voice_mode: company\n"
+                "decision_points_completed: 4\n"
+                "user_confirmed: true\n"
+                'confirmed_on: "2026-08-03"\n'
+                "story_contract_version: 1\n"
+                "pragmatic_rule_id: PROJECT-WECHAT-PRAGMATIC-001\n"
+                "expression_calibrated: true\n"
+                'reason: ""\n',
+                current_body,
+            )
+            issues = VALIDATOR.validate_judgment_workshop(
+                package,
+                {"judgment_workshop": VALIDATOR.JUDGMENT_WORKSHOP_POINTER},
+                "draft",
+            )
+        self.assertEqual([], issues)
+
+    def test_current_workshop_rejects_field_drift_and_incomplete_chain(self) -> None:
+        body = self.valid_locked_body() + """
+
+## 开场与叙事路径
+
+- 叙事发动机：问题升级 / 实验验证
+
+| 本节新增的事实或动作 | 它让局面发生了什么变化 | 它留下了什么未解决的问题 | 下一节为什么必须回答这个问题 |
+|---|---|---|---|
+| 只有第一格 |  |  |  |
+
+## 最强对手
+
+- 对手是什么：
+- 若无法建立对手，降级为什么稿型：
+"""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            package = Path(temp_dir)
+            self.write_workshop(
+                package,
+                "status: locked\n"
+                "voice_mode: personal\n"
+                "decision_points_completed: 4\n"
+                "user_confirmed: true\n"
+                'confirmed_on: "2026-08-03"\n'
+                "pragmatic_rule_id: PROJECT-WECHAT-PRAGMATIC-001\n"
+                'reason: ""\n',
+                body,
+            )
+            issues = VALIDATOR.validate_judgment_workshop(
+                package,
+                {"judgment_workshop": VALIDATOR.JUDGMENT_WORKSHOP_POINTER},
+                "draft",
+            )
+        joined = "\n".join(issues)
+        self.assertIn("story_contract_version", joined)
+        self.assertIn("expression_calibrated", joined)
+        self.assertIn("selected narrative engine", joined)
+        self.assertIn("all four cells", joined)
+        self.assertIn("strongest opponent", joined)
+
+
+class CandidateFrozenInputValidationTests(unittest.TestCase):
+    def write_frozen(self, package: Path, text: str) -> None:
+        path = package / "research" / "candidates" / "round-01" / "frozen-input.md"
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(text, encoding="utf-8")
+
+    def test_current_frozen_input_passes_with_engine_and_complete_chain(self) -> None:
+        frozen = """# 并行候选轮次
+
+---
+chain_rule_id: CORE-CHAIN-001
+narrative_engine: 问题升级
+candidate_fact_boundary_check_required: true
+candidate_skeleton_difference_check_required: true
+---
+
+## 锁定叙事链表
+
+| 本节新增的事实或动作 | 它让局面发生了什么变化 | 它留下了什么未解决的问题 | 下一节为什么必须回答这个问题 |
+|---|---|---|---|
+| 出现一个失败样本 | 原有判断变弱 | 失败来自模型还是工具 | 下一节必须拆分两个变量 |
+"""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            package = Path(temp_dir)
+            self.write_frozen(package, frozen)
+            issues = VALIDATOR.validate_candidate_frozen_inputs(package)
+        self.assertEqual([], issues)
+
+    def test_current_frozen_input_rejects_missing_engine_and_chain_cells(self) -> None:
+        frozen = """# 并行候选轮次
+
+---
+chain_rule_id: CORE-CHAIN-001
+narrative_engine: ''
+candidate_fact_boundary_check_required: true
+candidate_skeleton_difference_check_required: false
+---
+
+| 本节新增的事实或动作 | 它让局面发生了什么变化 | 它留下了什么未解决的问题 | 下一节为什么必须回答这个问题 |
+|---|---|---|---|
+| 只有事实 |  |  |  |
+"""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            package = Path(temp_dir)
+            self.write_frozen(package, frozen)
+            issues = VALIDATOR.validate_candidate_frozen_inputs(package)
+        joined = "\n".join(issues)
+        self.assertIn("selected narrative_engine", joined)
+        self.assertIn("candidate_skeleton_difference_check_required", joined)
+        self.assertIn("all four cells", joined)
 
 
 if __name__ == "__main__":

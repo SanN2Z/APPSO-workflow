@@ -80,12 +80,42 @@ JUDGMENT_WORKSHOP_GATED_STATES = {
     "published",
 }
 JUDGMENT_WORKSHOP_VOICE_MODES = {"personal", "company"}
+JUDGMENT_WORKSHOP_CURRENT_FIELDS = (
+    "status",
+    "voice_mode",
+    "decision_points_completed",
+    "user_confirmed",
+    "confirmed_on",
+    "story_contract_version",
+    "pragmatic_rule_id",
+    "expression_calibrated",
+    "reason",
+)
+JUDGMENT_WORKSHOP_CURRENT_MARKERS = {
+    "pragmatic_rule_id",
+    "expression_calibrated",
+}
 JUDGMENT_WORKSHOP_LOCKED_SECTIONS = (
     "共同处境",
     "主判断",
     "支撑判断",
     "放弃的方向",
     "读者带走什么",
+)
+JUDGMENT_WORKSHOP_CURRENT_LOCKED_SECTIONS = (
+    "开场与叙事路径",
+    "最强对手",
+)
+NARRATIVE_ENGINES = {
+    "谜团揭示",
+    "人物追求",
+    "问题升级",
+    "实验验证",
+    "对照决策",
+}
+NARRATIVE_CHAIN_HEADER = (
+    "| 本节新增的事实或动作 | 它让局面发生了什么变化 | "
+    "它留下了什么未解决的问题 | 下一节为什么必须回答这个问题 |"
 )
 JUDGMENT_WORKSHOP_PLACEHOLDERS = {
     "待讨论",
@@ -1578,12 +1608,76 @@ def nonempty_markdown_sections(
     return results
 
 
+def markdown_list_value(markdown: str, label: str) -> str:
+    '''Return the value after a `- label：` line.'''
+
+    match = re.search(
+        rf'^[ \t]*-[ \t]*{re.escape(label)}[：:][ \t]*(.*?)[ \t]*$',
+        markdown,
+        flags=re.MULTILINE,
+    )
+    return match.group(1).strip() if match else ''
+
+
+def yaml_like_scalar(markdown: str, key: str) -> str:
+    '''Read a simple YAML-style scalar even when metadata follows a heading.'''
+
+    match = re.search(
+        rf'^{re.escape(key)}:\s*(.*?)\s*$',
+        markdown,
+        flags=re.MULTILINE,
+    )
+    if not match:
+        return ''
+    return match.group(1).strip().strip(chr(39) + chr(34))
+
+
+def narrative_chain_rows(markdown: str) -> list[list[str]]:
+    '''Return data rows under the canonical four-cell narrative-chain header.'''
+
+    lines = markdown.splitlines()
+    try:
+        header_index = next(
+            index
+            for index, line in enumerate(lines)
+            if line.strip() == NARRATIVE_CHAIN_HEADER
+        )
+    except StopIteration:
+        return []
+
+    rows: list[list[str]] = []
+    for line in lines[header_index + 2 :]:
+        stripped = line.strip()
+        if not stripped.startswith('|'):
+            break
+        cells = [cell.strip() for cell in stripped.strip('|').split('|')]
+        rows.append(cells)
+    return rows
+
+
+def validate_narrative_chain(markdown: str, source: str) -> list[str]:
+    '''Require at least one complete row in the canonical narrative-chain table.'''
+
+    if NARRATIVE_CHAIN_HEADER not in markdown:
+        return [f'{source} is missing the canonical four-cell narrative-chain table']
+    rows = narrative_chain_rows(markdown)
+    if not rows:
+        return [f'{source} narrative-chain table has no data rows']
+    issues: list[str] = []
+    for index, row in enumerate(rows, start=1):
+        if len(row) != 4 or any(not cell for cell in row):
+            issues.append(
+                f'{source} narrative-chain row {index} must fill all four cells'
+            )
+    return issues
+
+
 def validate_judgment_workshop(
     package: Path,
     draft_metadata: dict[str, str],
     draft_status: str,
 ) -> list[str]:
-    """Validate the opt-in judgment workshop record referenced by draft.md."""
+    """Validate the judgment workshop record referenced by draft.md."""
 
     if draft_metadata.get("judgment_workshop") != JUDGMENT_WORKSHOP_POINTER:
         return []
@@ -1605,6 +1699,32 @@ def validate_judgment_workshop(
         return [f"could not parse {JUDGMENT_WORKSHOP_POINTER}: {exc}"]
 
     issues: list[str] = []
+    current_contract = bool(
+        JUDGMENT_WORKSHOP_CURRENT_MARKERS.intersection(workshop_metadata)
+    )
+    if current_contract:
+        for field in JUDGMENT_WORKSHOP_CURRENT_FIELDS:
+            if field not in workshop_metadata:
+                issues.append(
+                    f"current judgment workshop is missing frontmatter field: {field}"
+                )
+        if workshop_metadata.get("story_contract_version") != "1":
+            issues.append("current judgment workshop story_contract_version must be 1")
+        if (
+            workshop_metadata.get("pragmatic_rule_id")
+            != "PROJECT-WECHAT-PRAGMATIC-001"
+        ):
+            issues.append(
+                "current judgment workshop pragmatic_rule_id must be "
+                "PROJECT-WECHAT-PRAGMATIC-001"
+            )
+        if (
+            workshop_metadata.get("expression_calibrated", "").lower()
+            not in BOOLEAN_VALUES
+        ):
+            issues.append(
+                "current judgment workshop expression_calibrated must be true or false"
+            )
     workshop_status = workshop_metadata.get("status", "")
     if workshop_status not in JUDGMENT_WORKSHOP_STATUSES:
         issues.append(
@@ -1661,6 +1781,41 @@ def validate_judgment_workshop(
                     f"{title}"
                 )
 
+    if current_contract and workshop_status == 'locked':
+        current_sections = nonempty_markdown_sections(
+            workshop_body,
+            JUDGMENT_WORKSHOP_CURRENT_LOCKED_SECTIONS,
+        )
+        for title in JUDGMENT_WORKSHOP_CURRENT_LOCKED_SECTIONS:
+            if not current_sections[title]:
+                issues.append(
+                    f'current locked judgment workshop section is missing or empty: {title}'
+                )
+
+        narrative_engine = markdown_list_value(workshop_body, '叙事发动机')
+        if narrative_engine not in NARRATIVE_ENGINES:
+            issues.append(
+                'current locked judgment workshop requires one selected narrative engine'
+            )
+        issues.extend(
+            validate_narrative_chain(workshop_body, JUDGMENT_WORKSHOP_POINTER)
+        )
+
+        opponent = markdown_list_value(workshop_body, '对手是什么')
+        downgrade = markdown_list_value(
+            workshop_body,
+            '若无法建立对手，降级为什么稿型',
+        )
+        if not opponent and not downgrade:
+            issues.append(
+                'current locked judgment workshop requires a strongest opponent '
+                'or an explicit downgrade'
+            )
+        if workshop_metadata.get('expression_calibrated', '').lower() != 'true':
+            issues.append(
+                'current locked judgment workshop requires expression_calibrated: true'
+            )
+
     if (
         workshop_status == "not_required"
         and not workshop_metadata.get("reason", "").strip()
@@ -1668,6 +1823,48 @@ def validate_judgment_workshop(
         issues.append(
             "not_required judgment workshop requires a non-empty reason"
         )
+
+    return issues
+
+
+def validate_candidate_frozen_inputs(package: Path) -> list[str]:
+    '''Validate current-contract candidate inputs while preserving legacy rounds.'''
+
+    candidate_root = package / 'research' / 'candidates'
+    if not candidate_root.is_dir():
+        return []
+
+    issues: list[str] = []
+    current_markers = (
+        'chain_rule_id:',
+        'candidate_fact_boundary_check_required:',
+        'candidate_skeleton_difference_check_required:',
+    )
+    for frozen_path in sorted(candidate_root.glob('round-*/frozen-input.md')):
+        try:
+            frozen = frozen_path.read_text(encoding='utf-8')
+        except (OSError, UnicodeError) as exc:
+            issues.append(f'could not read {frozen_path}: {exc}')
+            continue
+        if not any(marker in frozen for marker in current_markers):
+            continue
+
+        source = frozen_path.relative_to(package).as_posix()
+        if yaml_like_scalar(frozen, 'chain_rule_id') != 'CORE-CHAIN-001':
+            issues.append(f'{source} chain_rule_id must be CORE-CHAIN-001')
+
+        narrative_engine = yaml_like_scalar(frozen, 'narrative_engine')
+        if narrative_engine not in NARRATIVE_ENGINES:
+            issues.append(f'{source} requires one selected narrative_engine')
+
+        for field in (
+            'candidate_fact_boundary_check_required',
+            'candidate_skeleton_difference_check_required',
+        ):
+            if yaml_like_scalar(frozen, field).lower() != 'true':
+                issues.append(f'{source} {field} must be true')
+
+        issues.extend(validate_narrative_chain(frozen, source))
 
     return issues
 
@@ -1762,7 +1959,7 @@ def open_major_ai_pattern_items(section: str) -> list[tuple[str, str]]:
             severity = normalize_review_cell(cells[column["severity"]])
             item_status = normalize_review_cell(cells[column["status"]])
             if (
-                item_id.startswith("HUMAN-AI-")
+                item_id.startswith(("HUMAN-AI-", "HUMAN-RHY-"))
                 and severity in {"blocker", "major"}
                 and item_status == "open"
             ):
@@ -2077,6 +2274,7 @@ def validate(package: Path) -> tuple[list[str], list[str], int]:
     if status and status not in ALLOWED_STATES:
         errors.append(f"unsupported status: {status}")
     errors.extend(validate_judgment_workshop(package, metadata, status))
+    errors.extend(validate_candidate_frozen_inputs(package))
     for key in ("fact_checked", "rights_checked", "copyedit_checked"):
         value = metadata.get(key, "").lower()
         if value not in BOOLEAN_VALUES:

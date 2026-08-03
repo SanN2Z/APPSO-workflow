@@ -11,7 +11,7 @@ Protect sentence-level Chinese quality on the exact final body. Catch grammar, s
 
 ## Procedure
 
-1. Confirm the AI-pattern diagnostic and cold-read repair rounds are complete. Do not start the final body-hash gate while a blocking or major `HUMAN-AI-*` defect remains open.
+1. Confirm the AI-pattern diagnostic and cold-read repair rounds are complete. Do not start the final body-hash gate while a blocking or major `HUMAN-RHY-*` / `HUMAN-AI-*` defect remains open.
 2. Read only the exact `draft.md` title and body first, including headings, bullets, captions, quotes, and notes.
 3. Run [wechat-copyedit-pass.md](wechat-copyedit-pass.md) sentence by sentence and aloud.
 4. Open `sources.md` only when a document name, product label, quotation, or referent is unclear.

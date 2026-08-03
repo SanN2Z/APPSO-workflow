@@ -19,11 +19,13 @@ Turn the topic into one reader promise and an evidence-shaped argument. Coordina
 3. Reduce the title direction to one primary hook. Move secondary hooks into the opening or body.
 4. Separate the minimum background facts from the article's claim.
 5. Express the central claim as a causal chain, not a slogan.
-6. Map every major section to `judgment -> evidence -> limitation -> reader consequence`.
-7. State the strongest counterexample or boundary. For enterprise or sponsored material, require an independent source, a real limitation, and an inapplicable scenario.
-8. Define what the ending must newly establish after returning to the opening.
-9. Generate task-specific release criteria from the user/editor feedback.
-10. Keep `copyedit_checked: false` until the copy editor passes the exact final body. Before `ready`, verify that `copyedit.md`, draft frontmatter, and the validator report the same body hash.
+6. Before headings, write a one-sentence story line, the reader's question chain, and a `CORE-CHAIN-001` table. Every section fills four cells: the new fact or action; the situation change; the unresolved question; why the next section must answer it. If the fourth cell cannot be filled, merge or reorder the sections, or declare a parallel comparison with one shared scale. Select one of the five narrative engines.
+7. For any planned high-salience transition, abstract judgment, metaphor, or ending, state the exact communication job, referent, and direct non-rhetorical version. Reject「needs tension / a golden line / uplift」as a job; do not prewrite ornamental sentences for candidates.
+8. Treat explicit owner dislike as binding WeChat expression loss. Record the project-scoped preference and repair the affected winner without demanding a second case, academic proof, or a complete mechanism; run the complete `PROJECT-WECHAT-AI-LEXICON-001` adapter only once before copyedit.
+9. State the strongest opponent: the best alternative explanation, hardest contrary evidence, or case most likely to overturn the main judgment. Name the narrative beat that answers it; if none exists, downgrade the article or return to research. For enterprise or sponsored material, require an independent source, a real limitation, and an inapplicable scenario.
+10. Define what the ending must newly establish after returning to the opening.
+11. Generate task-specific release criteria from the user/editor feedback.
+12. Keep `copyedit_checked: false` until the copy editor passes the exact final body. Before `ready`, verify that `copyedit.md`, draft frontmatter, and the validator report the same body hash.
 
 For a new product article, require an early plain-language fact card: what launched, who can use it, price or access threshold, and entry/workflow changes. Keep values in the fact sheet, not in this role prompt.
 

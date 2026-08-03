@@ -8,7 +8,8 @@ Create files when the work reaches the stage that needs them. A new idea does no
 |---|---|
 | Any package | `draft.md` |
 | `research` or later | `sources.md` |
-| New analytical long-form or structural rewrite | `brief.md`, `research/judgment-workshop.md` |
+| New WeChat analytical long-form or structural rewrite | `brief.md` and, when `PROJECT-WECHAT-JUDGMENT-001` applies, `research/judgment-workshop.md` |
+| Parallel candidate round | `research/candidates/round-XX/frozen-input.md`, 3—5 anonymous `candidate-*.md` files, and `selection.md` |
 | First image or visual task | `asset-manifest.yml`, `assets/` and optional `research/source-assets/` |
 | `editorial_review` or later | `review.md` |
 | `ready` or later | `copyedit.md`; complete `asset-manifest.yml` even when the list is empty |
@@ -19,6 +20,7 @@ Create files when the work reaches the stage that needs them. A new idea does no
 Optional:
 
 - `research/`: internal notes and unused source assets.
+- `research/candidates/`: frozen multi-draft rounds. Losing candidates remain internal research artifacts and never enter publishing manifests.
 - `research/image-generation-plan.json` and `research/image-generation-runs/`: required only for AI-image work.
 - `tools/`: deterministic package-local transforms.
 - `dist/`: disposable, generated, and Git-ignored.
@@ -39,7 +41,6 @@ fact_checked: false
 rights_checked: false
 copyedit_checked: false
 copyedit_body_sha256: ""
-judgment_workshop: "research/judgment-workshop.md"
 published_url: ""
 ---
 ```
@@ -60,7 +61,7 @@ Rules:
 
 ## Judgment workshop record
 
-New WeChat analytical long-form packages and structural rewrites declare `judgment_workshop: "research/judgment-workshop.md"` in draft frontmatter and copy the repository template into that path.
+The trigger and exemptions are defined only by [`PROJECT-WECHAT-JUDGMENT-001`](../../../../共享/运营/SOP/内容工作流.md#project-wechat-judgment-001公众号写前共创门试运行项目配置). When the rule applies, declare `judgment_workshop: "research/judgment-workshop.md"` in draft frontmatter and copy the repository template into that path.
 
 The workshop uses YAML frontmatter:
 
@@ -71,13 +72,30 @@ voice_mode: ""
 decision_points_completed: 0
 user_confirmed: false
 confirmed_on: ""
+story_contract_version: 1
+pragmatic_rule_id: PROJECT-WECHAT-PRAGMATIC-001
+expression_calibrated: false
 reason: ""
 ---
 ```
 
-Allowed states are `discussing`, `locked`, and `not_required`. An applicable package cannot enter `draft` or a later state while the workshop is `discussing`. `locked` requires 3–5 real decision points resolved with the user, `personal` or `company` voice mode, explicit user confirmation, and non-empty sections for the ordinary-person situation, main judgment, 2–4 supporting judgments, rejected directions, and reader takeaway. Several decisions may be resolved in one user response; do not create ceremonial turns. `not_required` needs a concrete reason such as a pure factual brief or an unchanged fast edit.
+Allowed states are `discussing`, `locked`, and `not_required`. A package that enters the workshop cannot enter `draft` or a later state while the workshop is `discussing`. `locked` requires 3–5 real decision points resolved with the user, `personal` or `company` voice mode, explicit user confirmation, a complete four-cell narrative chain, a narrative engine, a non-empty strongest opponent or an explicit downgrade, and non-empty sections for the ordinary-person situation, main judgment, 2–4 supporting judgments, rejected directions, and reader takeaway. Several decisions may be resolved in one user response; do not create ceremonial turns. `not_required` needs a concrete reason.
 
-Historical packages without the frontmatter pointer remain readable. When a historical article receives a structural rewrite, add the pointer and workshop instead of inferring an old discussion record.
+Historical packages with or without the frontmatter pointer remain readable. New and materially restructured packages follow the current rule and template.
+
+## Parallel candidate round
+
+New WeChat analytical drafts and structural rewrites that pass the value gate use `CORE-SELECTION-001`.
+
+Each `round-XX` directory contains:
+
+- `frozen-input.md`: one reader question, source references, allowed and forbidden claims, target length, shared hard boundaries, stop condition, the locked four-cell narrative chain copied from the workshop, and the selected narrative engine;
+- `candidate-a.md` through `candidate-c.md` by default, extending to d/e only for real judgment branches; every candidate is one complete body plus an HTML-comment fact map;
+- `selection.md`: candidate hashes, isolation statement, two raw anonymous choices, optional final choice, none decisions, fact blockers, winner rationale, and the exact candidate promoted to `draft.md`.
+
+Launch the candidate writers concurrently. They may read only the frozen input and required platform profile, not another candidate, prior round, experimental mapping, or review. Before freeze, a writer checks only that the draft stays within the fact boundary and does not reuse a ready-made skeleton outside the frozen input. Launch 2 fresh selectors concurrently only after every candidate hash is frozen. Selectors may choose none and cannot merge text. Copy the frozen winner to `draft.md`; any later edit begins normal editorial history and must not be described as the blind-selected body.
+
+`frozen-input.md` records T0 and the minute-22, minute-28, and minute-40 deadlines. `selection.md` records candidate freeze time, selection freeze time, text handoff time, wall-clock minutes, generation and selection wave counts, SLA status, and any slow-lane reason. The ordinary text lane is 0—8 minutes research and value judgment, 8—22 parallel generation, 22—28 parallel selection, 28—38 winner-only verification, and 38—40 handoff. Image, layout, upload, and publication time are not silently included.
 
 ## Copyedit record
 
