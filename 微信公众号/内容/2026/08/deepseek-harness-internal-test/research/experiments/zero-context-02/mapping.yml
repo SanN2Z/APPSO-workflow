@@ -1,0 +1,31 @@
+schema_version: 1
+experiment_id: "INSIGHT-001/EXP-002"
+frozen_on: "2026-08-02"
+
+branch_assignment:
+  method: "SHA-256(seed) 首字节奇偶；偶数时 A=control，奇数时 A=intervention"
+  seed: "zero-context-02|2026-08-02|deepseek-harness"
+  first_byte_decimal: 39
+  a: "intervention"
+  b: "control"
+
+fragment_order:
+  method: "分别计算 SHA-256('zero-context-02|Fxx')，按十六进制摘要升序"
+  ids:
+    - "F09"
+    - "F04"
+    - "F08"
+    - "F06"
+    - "F01"
+    - "F07"
+    - "F05"
+    - "F12"
+    - "F11"
+    - "F02"
+    - "F03"
+    - "F10"
+
+blinding:
+  writers_may_read_mapping: false
+  judges_may_read_mapping: false
+  reveal_after: "two blind reviews are frozen"

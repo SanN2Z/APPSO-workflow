@@ -1,0 +1,141 @@
+version: 2
+updated: "2026-07-27"
+assets:
+  - file: "assets/x-jensen-open-weights.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "840x1080"
+    source_type: "social_screenshot"
+    source: "https://x.com/jensenhuang/status/2080643682408321103"
+    creator_or_rightsholder: "Jensen Huang 及 X 界面"
+    obtained_on: "2026-07-26"
+    modifications: "从 X 官方帖子嵌入页以 760 × 720 视口、1.5 倍像素密度直接截取；仅裁去右侧空白边距，保留头像、姓名、账号、原文、公开信预览、日期与互动信息；未改动原帖文字"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "用户在当前任务中明确要求截取 X 配图，用于本篇署名新闻评论；不构成 X 界面或帖子内容的通用转载许可"
+    allowed_platforms: ["wechat"]
+    attribution: "Jensen Huang 分享开放权重公开信的首条 X 帖；图源：Jensen Huang / X"
+
+  - file: "assets/x-sam-altman-open-weights.png"
+    used_in_draft: false
+    used_as_cover: false
+    dimensions: "840x1160"
+    source_type: "social_screenshot"
+    source: "https://x.com/sama/status/2080683363174945065"
+    creator_or_rightsholder: "Sam Altman、Jensen Huang 及 X 界面"
+    obtained_on: "2026-07-26"
+    modifications: "从 X 官方帖子嵌入页以 760 × 900 视口、1.5 倍像素密度直接截取；仅裁去右侧和底部空白，保留主帖、引用帖、日期与互动信息；未改动原帖文字"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "用户在当前任务中明确要求截取 X 配图，用于本篇署名新闻评论；不构成 X 界面或帖子内容的通用转载许可"
+    allowed_platforms: ["wechat"]
+    attribution: "Sam Altman 对开放权重公开信的公开支持；图源：Sam Altman / X"
+
+  - file: "assets/x-mike-isaac-openai-added.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "840x945"
+    source_type: "social_screenshot"
+    source: "https://x.com/MikeIsaac/status/2080798081466138781"
+    creator_or_rightsholder: "Mike Isaac、截图中可见品牌权利人及 X 界面"
+    obtained_on: "2026-07-26"
+    modifications: "从 X 官方帖子嵌入页以 760 × 700 视口、1.5 倍像素密度直接截取；仅裁去右侧和底部空白，保留账号、原文、名单截图、日期与互动信息；未改动原帖文字"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "用户在当前任务中明确要求截取 X 配图，用于本篇署名新闻评论；该图只作为记者公开观察的时间线证据，不构成原图或 X 界面的通用转载许可"
+    allowed_platforms: ["wechat"]
+    attribution: "Mike Isaac 记录 OpenAI 被加入签署名单；图源：Mike Isaac / X"
+
+  - file: "assets/x-julian-cuda-open-source.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "840x1230"
+    source_type: "social_screenshot"
+    source: "https://x.com/Mononofu/status/2080937562739531837"
+    creator_or_rightsholder: "Julian Schrittwieser、Jensen Huang 及 X 界面"
+    obtained_on: "2026-07-27"
+    modifications: "从 X 官方帖子嵌入页以 560 × 820 视口、1.5 倍像素密度直接截取；通过视口高度去掉底部空白，保留 Julian Schrittwieser 的姓名、账号、原文和引用的黄仁勋帖子；未改动原帖文字"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "用户在当前任务中明确要求加入 Julian Schrittwieser 在 X 开麦的配图，用于本篇署名新闻评论；不构成 X 界面或帖子内容的通用转载许可"
+    allowed_platforms: ["wechat"]
+    attribution: "Julian Schrittwieser 转发黄仁勋首帖并反问 CUDA 与 GPU 驱动何时开放；图源：Julian Schrittwieser / X"
+
+  - file: "assets/openai-gpt-oss-official.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "1500x780"
+    source_type: "official_material"
+    source: "https://openai.com/index/introducing-gpt-oss/"
+    creator_or_rightsholder: "OpenAI"
+    obtained_on: "2026-07-26"
+    modifications: "从 OpenAI 官方 gpt-oss 发布页以无头浏览器直接截取；裁去 Cookie 提示和下方未使用内容，未改动页面标题、说明文字或品牌元素"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "用户在当前任务中明确要求加入 OpenAI 官方配图，用于解释 OpenAI 已有开放权重立场；不构成官方页面素材的通用商业转载许可"
+    allowed_platforms: ["wechat"]
+    attribution: "OpenAI gpt-oss 官方发布页；图源：OpenAI"
+
+  - file: "assets/doodle-01-api-vs-local.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "1672x941"
+    source_type: "ai_generated"
+    source: "Codex built-in image_gen; task doodle-01-api-vs-local"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-07-26"
+    modifications: "No post-generation edits; visually reviewed at original generation size"
+    rights_status: "project_owned"
+    allowed_platforms: ["wechat"]
+    attribution: "AI 生成"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "text_to_image"
+    prompt_ref: "clumsy-doodle-v1"
+    prompt_sha256: "e4160da75ebd48f1e8625b61eb840195a66c833dd8373ac61155159826cc2a65"
+    invocation_prompt_sha256: "ff6b6c0c48ff78e179584dac5767b6b99eba0f3a2749d40cb014abeff5cd142b"
+    generation_constraints: "16:9 纯白底；墙外黑盒按次收取硬币并吐出纸条，对面把方形小机器搬进自己房间；大色块、硬像素鼠标边；无文字、Logo、真实人物或新闻现场"
+    input_assets: []
+    generated_on: "2026-07-26"
+    preflight_receipt: "research/image-generation-runs/doodle-01-api-vs-local-final-preflight.json"
+
+  - file: "assets/doodle-02-distillation-gate.png"
+    used_in_draft: false
+    used_as_cover: false
+    dimensions: "1672x941"
+    source_type: "ai_generated"
+    source: "Codex built-in image_gen; task doodle-02-distillation-gate"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-07-26"
+    modifications: "Selected second text-to-image iteration after ensuring the legitimate receiver had no mask; no post-generation pixel edits"
+    rights_status: "project_owned"
+    allowed_platforms: ["wechat"]
+    attribution: "AI 生成"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "text_to_image"
+    prompt_ref: "clumsy-doodle-v1"
+    prompt_sha256: "e4160da75ebd48f1e8625b61eb840195a66c833dd8373ac61155159826cc2a65"
+    invocation_prompt_sha256: "f9e8bc227cc6771fdf3d40c7e210846f527ac247f59d796cde67c53e72c320f5"
+    generation_constraints: "16:9 纯白底；蓝色大机器经敞开闸门给无面罩黄色小机器正常供给，3 个红色蒙面角色用细管偷接；无文字、国旗、Logo、真实人物或裁判场景"
+    input_assets: []
+    generated_on: "2026-07-26"
+    preflight_receipt: "research/image-generation-runs/doodle-02-distillation-gate-final-preflight.json"
+
+  - file: "assets/doodle-03-contract-stamp.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "1672x941"
+    source_type: "ai_generated"
+    source: "Codex built-in image_gen; task doodle-03-contract-stamp"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-07-26"
+    modifications: "No post-generation edits; visually reviewed at original generation size"
+    rights_status: "project_owned"
+    allowed_platforms: ["wechat"]
+    attribution: "AI 生成"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "text_to_image"
+    prompt_ref: "clumsy-doodle-v1"
+    prompt_sha256: "e4160da75ebd48f1e8625b61eb840195a66c833dd8373ac61155159826cc2a65"
+    invocation_prompt_sha256: "c462629a876d03eae42d054c10bb4f3d54f51bcf7dca57c72f2c1fe916297298"
+    generation_constraints: "16:9 纯白底；公司手用铅笔画歪虚线，另一只手拿未落下的红色印章悬在上方，小模型停在线前；无文字、徽记、国旗、Logo 或已生效法律意象"
+    input_assets: []
+    generated_on: "2026-07-26"
+    preflight_receipt: "research/image-generation-runs/doodle-03-contract-stamp-final-preflight.json"

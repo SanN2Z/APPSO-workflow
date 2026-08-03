@@ -1,6 +1,7 @@
 # AI 一手信息源雷达
 
 - 建档日期：2026-07-10
+- 最近复核：2026-07-26
 - 目标：比中文媒体转载更早发现大模型、Physical AI、机器人、世界模型、AI 基础设施、产品、价格、额度、论文、开源和监管变化。
 - 原则：发现可以靠聚合，落稿必须回到原始材料；入口本身也可能迁移，每季度复核一次。
 
@@ -136,6 +137,171 @@ policy / VLA：直接输出机器人动作
 | 创业与融资 | Bloomberg、Reuters、Financial Times、The Information、Crunchbase | 公司新闻稿、投资方公告、SEC / 交易所文件；独家消息保留媒体归属 |
 | 深科技与工程 | [IEEE Spectrum](https://spectrum.ieee.org/) · Ars Technica | 论文、技术报告、标准、专利和公司原始材料 |
 
+## 分钟级发现层
+
+这一层只用于发现近 4–12 小时的新信号，不直接承担事实证明。优先使用带明确时分和机器可读时间戳的入口；页面显示「今天更新」但没有对应条目发布时间时，不进入小时级窗口。
+
+| 类别 | 分钟级入口 | 用法与限制 |
+|---|---|---|
+| 全球科技议程 | [Techmeme River](https://www.techmeme.com/river) · [Hacker News newest](https://news.ycombinator.com/newest) · [HN Algolia 按时间搜索](https://hn.algolia.com/api/v1/search_by_date?tags=story) | 记录首次进入聚合站的时间，只作为发现线索；回到公司公告、代码、文件或当事人原帖核实 |
+| 通讯社与突发报道 | [Reuters AI](https://www.reuters.com/technology/artificial-intelligence/) · [AP Technology](https://apnews.com/hub/technology) | 适合发现事故、人事、融资、诉讼和监管变化；独家消息保留媒体归属，并继续找当事方回应或第二来源 |
+| 官方更新订阅 | [OpenAI News RSS](https://openai.com/news/rss.xml) · [GitHub Changelog RSS](https://github.blog/changelog/feed/) · [Google Workspace RSS](https://workspaceupdates.googleblog.com/feeds/posts/default) · [AWS What's New RSS](https://aws.amazon.com/about-aws/whats-new/recent/feed/) | 使用条目自身的发布时间；Feed 的整体刷新时间不能冒充单条公告时间 |
+| 模型与代码变化 | [GitHub Releases API](https://docs.github.com/en/rest/releases/releases) · [Hugging Face 最新模型 API](https://huggingface.co/api/models?sort=lastModified&direction=-1&limit=50) · [Hugging Face 最新数据集 API](https://huggingface.co/api/datasets?sort=lastModified&direction=-1&limit=50) | `lastModified`、commit 和 tag 只能证明仓库发生变化；README 小改、量化上传和镜像同步不等于新模型正式发布 |
+| 公司与监管文件 | [SEC Current Filings](https://www.sec.gov/cgi-bin/browse-edgar?action=getcurrent) · [欧盟 Press Corner](https://ec.europa.eu/commission/presscorner/home/en) · [美国白宫 Briefing Room](https://www.whitehouse.gov/briefing-room/) | 以文件接受时间、公告发布时间和实际生效时间分别记录；搜索引擎收录时间不算事件时间 |
+| 新闻稿补漏 | [PR Newswire AI](https://www.prnewswire.com/news-releases/latest-news-topics/artificial-intelligence-list/) · [Business Wire AI](https://www.businesswire.com/newsroom/industry/technology/artificial-intelligence) · [GlobeNewswire](https://www.globenewswire.com/) | 时间通常精确，但商业宣传密度高，统一列为 P3；融资、合作和产品能力必须回到公司、投资方、交易所或技术材料 |
+| 官方与负责人原帖 | 公司官方账号、研究负责人、产品负责人、开源项目维护者的原帖 | 保存原帖 URL、账号身份和发布时间；转帖、截图和媒体引用不能代替原帖，删除或编辑过的帖子需注明 |
+
+## 社区与工程信号层
+
+社区入口负责提出问题、暴露异常和发现作品，不负责替事实背书。帖子分数、评论数、Star、下载量和 Trending 都是注意力信号，不是能力、质量、市场采用或真实性证明。
+
+| 入口 | 最适合发现 | 证据边界 | 建议频率 |
+|---|---|---|---|
+| [HN Newest](https://news.ycombinator.com/newest) · [HN Best](https://news.ycombinator.com/best) | 尚未上首页的发布、冷门工程博客，以及过去 48 小时的高票议题 | 都是 P3；`Best` 只反映 HN 用户偏好，`Newest` 的垃圾与重复更多 | Newest 每日 3–4 次；Best 每日 1 次 |
+| [Show HN](https://news.ycombinator.com/show) | 可运行 Demo、开源工具、独立开发产品和新交互 | Demo 存在不等于安全、稳定、有真实用户或效果成立；沿链接回到作者仓库和版本记录 | 每日 1 次 |
+| [Ask HN](https://news.ycombinator.com/ask) | 开发者痛点、采购顾虑、真实用法和还没有好答案的问题 | 发帖者身份和经历通常未核实；只能形成问题池，不能外推问题规模 | 每日 1 次 |
+| [Launch HNs](https://news.ycombinator.com/launches) | YC 公司正式亮相、创始人答疑、早期定位与价格 | 创始人回答可证明其公开说法，不证明市场需求；同时存在营销与 YC 样本偏差 | 每日 1 次 |
+| [HN Algolia](https://hn.algolia.com/) · [API 文档](https://hn.algolia.com/api) · [按时间故事流](https://hn.algolia.com/api/v1/search_by_date?tags=story) | 按公司、模型、作者和域名搜索；追踪 `story`、`comment`、`show_hn`、`ask_hn` | 可能有索引延迟；搜索结果仍只是 HN 内容，不能升级帖子主张 | 关键词每日；发布期 15–30 分钟 |
+| [官方 HN API](https://github.com/HackerNews/API) | 拉取 `newstories`、`beststories`、`showstories`、`askstories` 和条目变更 | 帖子 ID、时间和分数可视为平台元数据；帖子内容仍是 P3 | 自动化 10–30 分钟 |
+| [Lobsters Active](https://lobste.rs/) · [Newest](https://lobste.rs/newest) · [AI 标签](https://lobste.rs/t/ai) | 系统、编程语言、安全、性能，以及较少炒作的工程讨论 | 邀请制小社区，精度较高但覆盖窄；标签依赖投稿者，不代表 AI 全景 | Active / Newest 每日；AI 每周 2 次 |
+| [GitHub Trending](https://github.com/trending) · [Releases API](https://docs.github.com/en/rest/releases/releases) | 突然升温的 Agent、CLI、推理工具，以及白名单仓库的新版本 | Trending 是 P3；只有确认归属的官方仓库 release 才能证明维护者发布了该版本，仍不等于已经部署 | Trending 每日；核心仓库 15–60 分钟 |
+| [HF Trending Models](https://huggingface.co/models?sort=trending) · [Recently Updated](https://huggingface.co/models?sort=modified) | 热门模型、权重抢跑、模型卡变化、量化与镜像同步 | Trending 不证明模型新、好或官方；`Updated` 可能只是 README、小文件或镜像变化，只对白名单组织追踪 | Trending 每日；官方组织 30–60 分钟 |
+| [HF Daily Papers](https://huggingface.co/papers) · [Trending Spaces](https://huggingface.co/spaces?sort=trending) | 当日论文、代码关联、新应用和交互 Demo | 都是 P3 发现层；论文回原文，Space 还要核对实际后端、模型身份和可复现性 | Papers 工作日每日；Spaces 每周 2 次 |
+| [r/MachineLearning New](https://www.reddit.com/r/MachineLearning/new/) · [r/LocalLLaMA New](https://www.reddit.com/r/LocalLLaMA/new/) | 论文复现、失败结果、开源抢跑、量化、VRAM / 速度实测和推理 Bug | 截图与单次跑分不能单独采用；保留硬件、版本、命令、样本和复现记录 | 每日 1–2 次 |
+| [r/ClaudeAI New](https://www.reddit.com/r/ClaudeAI/new/) · [r/OpenAI New](https://www.reddit.com/r/OpenAI/new/) | 灰度上线、入口消失、限额变化、区域差异和性能事故先兆 | 可能是 A/B 测试、账号或地区差异；多名用户报告也只触发查状态页、更新日志与自测 | 平时每日；发布或事故期每 1–2 小时 |
+
+每条社区线索固定记录：原帖 URL、作者与自报身份、首次发现时间、所链接的原始材料、是否可复现、独立报告数、官方回应和当前证据级别。多个账号转发同一截图、同一帖子或同一匿名说法，只算一个来源。
+
+不进入核心雷达：通用 AI 工具目录、全球 Hugging Face `Recently Updated` 裸流、GitHub 全站「最近更新」、`r/singularity` 和没有方法信息的榜单截图。它们可以补漏，但噪音密度不值得常驻。
+
+## X 核心账号雷达
+
+- 本轮核验日期：2026-07-26。人物职务和利益关系属于易变信息，引用前重开个人页或机构页。
+- 账号没有固定证据等级，单条内容按它实际提供的材料定级：本人宣布自己的动作可作为 P0 的「当事人说法」；转述别人、无日志实测和流量总结仍是 P3；记者独家属于 P2，并保留媒体归属。
+- 不把粉丝数、蓝 V、被大 V 转发或历史上猜中过当作真实性证明。
+- ★ 表示建议放入日常核心流；其余账号在对应公司、技术或事件进入议程时再重点查看。
+
+### 实验室、公司负责人和研究者
+
+| 人物与账号 | 身份核验 | 最适合看 | 固定限制 |
+|---|---|---|---|
+| Demis Hassabis [@demishassabis](https://x.com/demishassabis) | [Google DeepMind 联合创始人兼 CEO](https://deepmind.google/about/) | Gemini、AlphaFold、科学智能和实验室动向 | 公司一手源；只能证明 DeepMind 发布或主张了什么，不能独立证明能力 |
+| Fei-Fei Li [@drfeifei](https://x.com/drfeifei) | [World Labs 联合创始人兼 CEO](https://www.worldlabs.ai/about) | 空间智能、世界模型、机器人和学术人才 | 创业公司 CEO；演示继续追论文、方法和真实部署条件 |
+| ★ Andrej Karpathy [@karpathy](https://x.com/karpathy) | [个人页](https://karpathy.ai/) · [本人公布的当前去向](https://x.com/karpathy/status/2056753169888334312) | 预训练、编码智能、模型直觉和教育型拆解 | 当前与 Anthropic 存在雇佣利益关系；个人体验和预览不能当横向评测 |
+| Ilya Sutskever [@ilyasut](https://x.com/ilyasut) | [SSI 官方页](https://ssi.inc/) | SSI 战略、研究方向和人才流动 | 发言少且高度战略化；愿景和招聘不等于已有研究结果 |
+| ★ Jack Clark [@jackclarkSF](https://x.com/jackclarkSF) | [Anthropic Institute 官方身份](https://www.anthropic.com/news/the-anthropic-institute) | AI 政策、安全、产业影响和 Import AI | Anthropic 联合创始人；涉及 Anthropic 时不是独立分析源 |
+| Jeff Dean [@JeffDean](https://x.com/JeffDean) | [Google Research 官方档案](https://research.google/people/jeff/) | Google 研究、Gemini、训练系统、芯片和基础设施 | Google 一手源；转发论文不代表结果已被独立复现 |
+| ★ Jim Fan [@DrJimFan](https://x.com/DrJimFan) | [NVIDIA GEAR Lab](https://research.nvidia.com/labs/gear/) | Physical AI、机器人、世界模型和仿真 | NVIDIA 利益相关；强制区分仿真与实机、遥操作与自主完成 |
+| ★ Clément Delangue [@ClementDelangue](https://x.com/ClementDelangue) | [Hugging Face 联合创始人兼 CEO](https://huggingface.co/blog/nvidia-training-cluster) | 开源模型、数据集、Hub、行业合作和政策 | 平台与投资利益明显；下载量和趋势榜不能直接等同模型质量 |
+| François Chollet [@fchollet](https://x.com/fchollet) | [ARC Prize 官方团队页](https://arcprize.org/about) | 推理、AGI 定义、基准设计和能力批评 | 同时创建并推广 ARC 生态；单项基准不能外推为通用智能 |
+| Daya Guo [@Guodaya](https://x.com/Guodaya) | [个人研究主页](https://guoday.github.io/) | DeepSeek 推理模型、训练方法和论文线索 | DeepSeek 研究者；自己的论文与公司方向是一手说法，跨模型优劣仍需独立评测 |
+
+### 独立技术分析、实测和知识型博主
+
+| 人物与账号 | 身份核验 | 最适合看 | 固定限制 |
+|---|---|---|---|
+| ★ Simon Willison [@simonw](https://x.com/simonw) | [个人 About 与披露](https://simonwillison.net/about/) | 新模型 / API 实测、提示注入、安全和工具调用 | 接受赞助、厂商预览与免费额度；单一设置实测要保留日志、模型版本和日期 |
+| ★ Nathan Lambert [@natolambert](https://x.com/natolambert) | [Interconnects About 与披露](https://www.interconnects.ai/about) | 开源模型、后训练、RLHF 和模型发布评论 | 有付费订阅和顾问关系；旧履历可能滞后，涉及客户时视为利益相关 |
+| ★ Hamel Husain [@HamelHusain](https://x.com/HamelHusain) | [个人页](https://hamel.dev/) | 产品评测、错误分析、编码 Agent 和可复现实验方法 | 从事评测咨询与付费课程；客户案例不能直接泛化 |
+| Chip Huyen [@chipro](https://x.com/chipro) | [个人官网](https://huyenchip.com/) | 生产级 AI 系统、推理基础设施和 Agent 系统设计 | 作者和创业者身份；综合判断中的新闻事实继续回原始来源 |
+| ★ Dylan Patel [@dylan522p](https://x.com/dylan522p) | [SemiAnalysis 创始人、CEO 和首席分析师](https://semianalysis.com/dylan-patel/) | 芯片、数据中心、供应链、训练成本和产业传闻 | 付费研究与咨询；匿名供应链消息保留归因，并找第二来源或公司文件 |
+| Max Woolf [@minimaxir](https://x.com/minimaxir) | [个人官网](https://minimaxir.com/) | 图像模型、编码 Agent 和长时间真实使用测试 | 存在雇佣与 Patreon 利益；单用户、单硬件和单提示不能视为通用结论 |
+| swyx [@swyx](https://x.com/swyx) | [Latent Space About](https://www.latent.space/about) | AI 工程生态、访谈、开发者趋势和选题线索 | 与会议、媒体、创业和投资生态关系密集；嘉宾表述与产品宣传分开核验 |
+| Ethan Mollick [@emollick](https://x.com/emollick) | [Wharton 官方档案](https://mgmt.wharton.upenn.edu/profile/emollick/) | AI 在工作、教育和组织中的实验与实际用法 | 有图书、演讲和顾问利益；小样本任务不能外推整个就业市场 |
+
+### 开源、工程和评测
+
+| 人物与账号 | 身份核验 | 最适合看 | 固定限制 |
+|---|---|---|---|
+| ★ Georgi Gerganov [@ggerganov](https://x.com/ggerganov) | [GGML / llama.cpp 团队说明](https://huggingface.co/blog/ggml-joins-hf) · [GitHub](https://github.com/ggerganov) | 本地推理、GGUF、量化和 CPU / GPU 性能 | Hugging Face 员工兼项目维护者；项目公告是一手源，跨方案比较需独立基准 |
+| ★ Jeremy Howard [@jeremyphoward](https://x.com/jeremyphoward) | [Answer.AI 创始说明](https://www.answer.ai/posts/2023-12-12-launch.html) | 实用开源 AI、模型训练、教育和本地运行 | Answer.AI 有投资与商业目标；教学演示不等于生产规模 |
+| ★ Armin Ronacher [@mitsuhiko](https://x.com/mitsuhiko) | [个人官网](https://ronacher.eu/) | 编码 Agent、工具协议、开发体验、安全和工作流 | 当前创业项目利益相关；个人工作流体验不能直接当通用 benchmark |
+| Tri Dao [@tri_dao](https://x.com/tri_dao) | [Princeton 官方档案](https://www.cs.princeton.edu/people/profile/td8762) | FlashAttention、Mamba、训练和推理系统 | 同时担任 Together AI 首席科学家；结果依赖硬件、序列长度和实现条件 |
+| Sebastian Raschka [@rasbt](https://x.com/rasbt) | [个人 About](https://sebastianraschka.com/about/) | 从零构建 LLM、推理方法和清晰代码解释 | 有图书与教育产品；教学规模实验不能直接外推前沿模型 |
+| Shreya Shankar [@sh_reya](https://x.com/sh_reya) | [个人官网](https://shreyashankar.com/) | LLM 评测、DocETL、数据管线和人机协同评估 | 任职时间等易变身份重新核查；课程和工具有自身推广利益 |
+| ★ Sasha Rush [@srush_nlp](https://x.com/srush_nlp) | [个人主页](https://srush.github.io/) | 编码模型、后训练、长时程任务和模型研究 | 当前与 Cursor 存在雇佣关系；厂商结果需要第三方复现 |
+| ★ Luca Soldaini [@soldni](https://x.com/soldni) | [个人官网](https://soldaini.net/) | 开放训练数据、OLMo、MAI-Thinking 和数据治理 | 当前与 Microsoft 存在雇佣关系；现任身份与此前 Ai2 工作分开写 |
+
+### 流量与知识发现
+
+这一组负责告诉编辑「大家正在看什么」和「哪些原始材料值得点开」，不是事实终点。
+
+| 账号 | 身份核验 | 最适合看 | 固定限制 |
+|---|---|---|---|
+| Techmeme [@Techmeme](https://x.com/Techmeme) | [聚合与编辑方法](https://www.techmeme.com/about) | 当天科技议程、首发报道和多方评论 | 只作导航；引用回原报道或官方材料 |
+| Elvis Saravia [@omarsar0](https://x.com/omarsar0) | [个人介绍](https://elvissaravia.com/about/) · [论文周报仓库](https://github.com/dair-ai/ML-Papers-of-the-Week) | 论文、开源项目和教程 | 回到论文、代码和模型卡，并核对版本与评审状态 |
+| Alex Volkov [@altryne](https://x.com/altryne) | [ThursdAI About](https://thursdai.news/about) | 每周模型、开源项目和开发者访谈扫盘 | 嘉宾表述按厂商或当事人自述记录，继续找录音、转录、仓库和发布说明 |
+| Gergely Orosz [@GergelyOrosz](https://x.com/GergelyOrosz) | [The Pragmatic Engineer About](https://blog.pragmaticengineer.com/about/) | AI 编程工具、公司采用、裁员和研发组织变化 | 匿名员工线索保留「据其报道」，再查备忘录、招聘页、文件或第二媒体 |
+| Rowan Cheung [@rowancheung](https://x.com/rowancheung) | [The Rundown AI 作者页](https://www.therundown.ai/authors/4e458ac6-5b2d-4899-bb53-f7c818244c6d) | 高速传播的 AI 产品、演示和人物动态 | 只作流量预警；不引用线程总结，必须打开原链接并复现实测 |
+
+### 中文转译与工具发现
+
+| 账号 | 最适合看 | 固定限制 |
+|---|---|---|
+| 宝玉 [@dotey](https://x.com/dotey) | 英文长文、访谈、产品用法的中文转译与补充语境 | 转译不是原始引语；人物原话回原帖、视频或逐字稿逐句核对 |
+| 歸藏 [@op7418](https://x.com/op7418) | AI 图像、视频、设计和工具上线 | 属 P3 产品发现；版本、价格、可用地区和案例回官方材料并自行复测 |
+| 向阳乔木 [@vista8](https://x.com/vista8) | AI 工具、工作流和中文圈传播信号 | 区分亲测、转述和推广；联盟链接、赞助或赠送资格登记利益关系 |
+| ZHO [@ZHO_ZHO_ZHO](https://x.com/ZHO_ZHO_ZHO) | 图像 / 视频生成工作流、提示与案例 | 案例只证明特定版本和设置能得到该结果，不证明稳定性与普遍效果 |
+
+### 产品逆向与功能预告
+
+| 账号 | 身份或方法核验 | 最适合看 | 固定限制 |
+|---|---|---|---|
+| Tibor Blaho [@btibor91](https://x.com/btibor91) | [TechCrunch 对其历史命中与 Operator 线索的说明](https://techcrunch.com/2025/01/20/openais-agent-tool-may-be-nearing-release/) | ChatGPT、Claude 的 bundle、APK、功能门控和价格线索 | 字符串或 flag 只能写「代码中出现痕迹」，不能写「即将发布」 |
+| TestingCatalog [@testingcatalog](https://x.com/testingcatalog) | [方法与纠错说明](https://www.testingcatalog.com/about/) | ChatGPT、Gemini、Claude、Grok、Perplexity 和 Copilot 的 A/B 测试 | 保留其 Confirmed / Testing / Rumor 状态；只认 `testingcatalog.com` 官方站 |
+| AssembleDebug [@AssembleDebug](https://x.com/AssembleDebug) | [Android Authority 作者页](https://www.androidauthority.com/author/AssembleDebug/) | Gemini、Google App、Android 和 Pixel | 记录 APK 版本、构建号和代码位置；隐藏功能可能永不发布 |
+| Alessandro Paluzzi [@alex193a](https://x.com/alex193a) | [2026 年 Meta Pocket 线索的后续核实案例](https://techcrunch.com/2026/07/02/meta-quietly-launches-vibe-coded-gaming-app-pocket/) | Meta、Instagram、Threads、WhatsApp 和 AI 界面原型 | 区分内部原型、有限测试、商店上线和正式发布 |
+| Aaron Perris [@aaronp613](https://x.com/aaronp613) | [MacRumors 作者页](https://www.macrumors.com/author/aaron-perris/) | Apple、iOS、Siri、AI 硬件、固件和设备标识 | 设备 ID、资源名和字符串不能推出最终名称、规格或发布时间 |
+| WABetaInfo [@WABetaInfo](https://x.com/WABetaInfo) | [身份与方法说明](https://wabetainfo.com/about/) | WhatsApp、Meta AI 和消息产品 Beta 功能 | 保留版本及「开发中／部分测试／逐步推送」原状态 |
+
+### 具编辑标准的记者与独家源
+
+记者的 X 账号负责报警，署名报道才是可引用的 P2。匿名信源报道永远保留媒体和记者归属。
+
+| 记者与账号 | 身份核验 | 最适合看 | 固定限制 |
+|---|---|---|---|
+| Deepa Seetharaman [@dseetharaman](https://x.com/dseetharaman) | [职业背景](https://nationalpress.org/speaker/deepa-seetharaman/) | OpenAI、AI 公司内部事故、战略和监管诉讼 | 写「Reuters 援引消息人士报道」，并查公司回应、法院文件或第二来源 |
+| Kenrick Cai [@kenrickcai](https://x.com/kenrickcai) | [当前作者资料](https://muckrack.com/kenrick-cai) | Alphabet、Google DeepMind、云业务和 AI 投资 | 路线图、发布日期和产品规格等待 Google 官方材料确认 |
+| Krystal Hu [@readkrystalhu](https://x.com/readkrystalhu) | X 简介与 Reuters 署名报道 | 融资、交易、VC 及中美 AI 公司动态 | 融资目标、估值和实际到账分开；另查监管文件、投资方和公司回应 |
+| Alex Heath [@alexeheath](https://x.com/alexeheath) | [Sources 方法与履历](https://sources.news/about) | OpenAI、Meta、管理层、内部备忘录和组织变化 | 匿名独家始终保留归属；采访内容属于受访者自述 |
+| Amir Efrati [@amir](https://x.com/amir) | [The Information 作者页](https://www.theinformation.com/u/amirefrati) · [编辑团队](https://www.theinformation.com/about) | OpenAI、Google、自动驾驶和公司内部消息 | 不依据付费墙外的二手摘要扩写；匿名信源需要第二来源或官方材料 |
+| Mark Gurman [@markgurman](https://x.com/markgurman) | [Bloomberg 官方作者页](https://www.bloomberg.com/authors/AS7Hj1mBMGM/mark-gurman) | Apple 路线图、Siri、AI 硬件、供应链和高管变动 | 严格区分「讨论」「开发中」「测试中」「计划发布」和「已发布」 |
+| Rachel Metz [@rachelmetz](https://x.com/rachelmetz) | [Bloomberg 官方作者页](https://www.bloomberg.com/authors/AWOWHOIGgDM/rachel-metz) | 模型公司、产品发布、AI 商业和政策 | 独家细节保留 Bloomberg 归属；能力和日期回厂商文档、论文及实测 |
+| Casey Newton [@CaseyNewton](https://x.com/CaseyNewton) | [Platformer About](https://www.platformer.news/about) | Meta、X、内容治理、AI 平台政策和组织消息 | 分开登记独家事实、采访自述与作者分析；涉及 Anthropic 时查看其利益披露 |
+
+### 「小道消息」验真门
+
+不存在能够保证真实性的爆料账号。可以保证的只有核验路径、归因方式和在证据不足时不升级措辞。
+
+| 状态 | 最低条件 | 可以怎么写 | 不可以怎么写 |
+|---|---|---|---|
+| 已确认 | 官方公告、文档、商店正式版本、监管 / 交易所 / 法院文件或当事人明确确认 | 按 P0 材料准确描述，并保留发布时间、范围和限制 | 不能把官方自报能力写成独立验证 |
+| 可复现迹象 | 公开客户端或网页构建、明确版本、代码 / 资源位置、可访问测试入口或其他可复查工件 | 「在版本 X 的代码 / 测试入口中出现……」 | 不能推出最终名称、发布时间、价格、全量范围或一定会上线 |
+| 具名独家 | 有编辑标准的媒体署名报道，清楚使用「据知情人士」「文件显示」等来源措辞，并尽量包含公司回应 | 「据 Reuters / Bloomberg / The Information 等报道……」 | 不能去掉媒体归属改写成「公司已经……」；同一独家的转述不算第二来源 |
+| 未验证传闻 | 匿名截图、群聊转述、无原链流量帖、无法复现的「朋友说」或单个匿名账号 | 只进内部观察队列，继续找公开工件、当事人或记者报道 | 不进入标题、摘要、正文事实卡和「最新」窗口 |
+
+每条非官方线索至少记录：`claim_text`、原帖 URL、账号身份、首次发布时间、发现时间、应用与构建版本、地区与账号条件、复现路径、公开工件 URL、独立来源数、官方回应、利益关系、当前状态和最后复核时间。
+
+固定判定规则：
+
+1. 多个账号转发同一截图、同一匿名爆料或同一媒体独家，只算一个来源；引用链不等于独立确认。
+2. 逆向内容必须保存版本、构建号、地区、账号和复现路径；字符串、资源和 feature flag 只证明开发痕迹存在。
+3. 记者独家必须保留媒体与记者归属；只有官方文件或第二个互不依赖的可靠来源出现，才升级为已证实事实。
+4. 截图必须能回到原帖或可复查工件；只有截图、没有原链时，不承担事实证明。
+5. 赞助、免费额度、预览资格、雇佣、咨询、课程、图书、投资、自有 benchmark 和联盟链接都属于利益关系。
+6. 账号删错不改、反复把猜测写成事实、伪造截图或长期不给原链时，从核心池降为隔离观察；单条新内容只有附可复现工件时才重新进入核验队列。
+
+### X 列表与扫描顺序
+
+建议建立 4 个互不混合的列表，并使用按时间排序，不依赖「For You」：
+
+1. `01-当事人与官方`：实验室负责人、研究者和官方账号；
+2. `02-技术与实测`：知识型博主、开源维护者和评测账号；
+3. `03-流量与议程`：聚合、中文转译和流量博主；
+4. `04-逆向与独家`：产品逆向者和具编辑标准的记者。
+
+日扫先看 `01` 和 `04`，再用 `02` 判断技术含义，最后用 `03` 判断传播热度。发现同一消息时，沿引用链回到最早的原帖、工件或署名报道，不以转发量最高的帖子作为源头。
+
 ## 论文与开源雷达
 
 | 来源 | 定位 | 用法 |
@@ -187,14 +353,23 @@ policy / VLA：直接输出机器人动作
 
 ## 监测节奏
 
+### 近 6 小时扫描
+
+1. 先固定当前北京时间和 6 小时窗口起点。
+2. 先扫 RSS、API、Techmeme River、通讯社和官方原帖，再扫普通网页搜索。
+3. 每条线索同时记录 `source_created_at`、`official_announced_at` 和 `rediscovered_at`；只有前两项能够进入小时级窗口。
+4. 找到媒体独家时，立即寻找公司回应、监管文件、代码、模型卡或当事人原帖；暂时没有时保留媒体归属，不改写成已核官方事实。
+5. 只有日期、没有时分的官方页面，只能列为「今天发布」；新闻稿平台、仓库 `lastModified` 和聚合站时间不能替代真正发布时间。
+6. 没有同时满足「窗口内首次出现、一手材料可回源、读者后果具体」的候选时，明确报告暂无，不用旧新闻凑数。
+
 ### 每日快扫，15–20 分钟
 
-1. 头部实验室 Newsroom 与产品更新日志；
-2. API 价格、额度、模型列表、退役和状态页；
-3. GitHub/Hugging Face 新 release；
-4. Physical AI、机器人公司、世界模型和自动驾驶的一手入口；
-5. Techmeme、Hacker News、官方账号、核心研究者和产品负责人的原帖；
-6. APPSO、主流媒体与社区只做漏斗入口。
+1. 先扫分钟级发现层的 RSS、API、Techmeme River、通讯社和官方原帖；
+2. 再看头部实验室 Newsroom 与产品更新日志；
+3. 核对 API 价格、额度、模型列表、退役和状态页；
+4. 检查 GitHub / Hugging Face 新 release、tag、模型卡和许可证；
+5. 检查 Physical AI、机器人公司、世界模型和自动驾驶的一手入口；
+6. APPSO、主流媒体、新闻稿平台与社区只做漏斗入口。
 
 ### 每周深扫，60–90 分钟
 

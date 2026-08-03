@@ -1,0 +1,20 @@
+schema_version: 1
+experiment_id: "INSIGHT-001/EXP-002"
+frozen_on: "2026-08-02"
+counting_rule: "UTF-8 正文在 FACT MAP 标记前的全部字符；non_whitespace_chars 删除所有 Unicode 空白，不删除 Markdown 标记。"
+
+artifacts:
+  - file: "compiler-plan-a.md"
+    sha256: "c1653706c4e6960f46e6ecf4d413dfca231e903742fa59a26f99b57385c2cbc7"
+    chars: 564
+    non_whitespace_chars: 488
+  - file: "candidate-a.md"
+    sha256: "090122443bef5acbb6f55cfceb8d1e77ec68792642d35107a043f84e110f61a3"
+    body_chars: 1513
+    body_non_whitespace_chars: 1393
+  - file: "candidate-b.md"
+    sha256: "ed763b0e61347d0031bdd39d22a1160412f6d0dfc953367e481aac25038e3c67"
+    body_chars: 1512
+    body_non_whitespace_chars: 1391
+
+mutation_policy: "两名盲审冻结前不得修改候选稿与编译计划；任何变化都必须重新计算摘要并重启盲审。"

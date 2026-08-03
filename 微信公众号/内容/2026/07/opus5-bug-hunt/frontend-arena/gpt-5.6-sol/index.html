@@ -1,0 +1,791 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>旋转多边形物理沙盘</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --text: #e9f1f5;
+      --muted: #8d9ca6;
+      --accent: #64d5e3;
+      --panel: rgba(10, 17, 25, 0.84);
+      --line: rgba(166, 211, 230, 0.13);
+    }
+    * { box-sizing: border-box; }
+    html, body { min-width: 940px; min-height: 100%; margin: 0; }
+    body {
+      display: grid;
+      place-items: center;
+      padding: 36px 20px;
+      overflow: auto;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 50% 18%, rgba(31, 66, 78, 0.22), transparent 34%),
+        linear-gradient(145deg, #080d13 0%, #05080d 62%);
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        "Microsoft YaHei", sans-serif;
+    }
+    .app { width: 900px; }
+    .heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      margin: 0 2px 16px;
+    }
+    h1 {
+      margin: 0;
+      font-size: 22px;
+      font-weight: 620;
+      letter-spacing: 0.04em;
+    }
+    .subtitle {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      letter-spacing: 0.02em;
+    }
+    .engine-tag {
+      padding-bottom: 2px;
+      color: #73838e;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    .stage {
+      position: relative;
+      width: 900px;
+      height: 600px;
+      overflow: hidden;
+      border: 1px solid rgba(172, 219, 238, 0.12);
+      border-radius: 22px;
+      background: #071018;
+      box-shadow: 0 36px 90px rgba(0, 0, 0, 0.46), inset 0 1px 0 rgba(255, 255, 255, 0.035);
+    }
+    canvas {
+      display: block;
+      width: 900px;
+      height: 600px;
+      cursor: crosshair;
+      touch-action: none;
+    }
+    .panel {
+      position: absolute;
+      z-index: 2;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--panel);
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.24);
+      backdrop-filter: blur(14px);
+    }
+    .controls { top: 18px; left: 18px; width: 254px; padding: 15px 16px 16px; }
+    .control { display: block; }
+    .control + .control { margin-top: 14px; }
+    .control-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 9px;
+    }
+    .control-label { color: #b8c5cc; font-size: 12px; letter-spacing: 0.05em; }
+    output {
+      min-width: 76px;
+      color: #dffbff;
+      font-variant-numeric: tabular-nums;
+      font-size: 12px;
+      text-align: right;
+    }
+    input[type="range"] {
+      width: 100%;
+      height: 4px;
+      margin: 0;
+      appearance: none;
+      border-radius: 999px;
+      outline: none;
+      background: linear-gradient(90deg, rgba(100, 213, 227, 0.18), rgba(255, 255, 255, 0.09));
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      width: 15px;
+      height: 15px;
+      appearance: none;
+      border: 3px solid #d8faff;
+      border-radius: 50%;
+      background: #1e91a3;
+      box-shadow: 0 0 0 4px rgba(100, 213, 227, 0.12);
+      cursor: ew-resize;
+    }
+    input[type="range"]::-moz-range-thumb {
+      width: 10px;
+      height: 10px;
+      border: 3px solid #d8faff;
+      border-radius: 50%;
+      background: #1e91a3;
+      box-shadow: 0 0 0 4px rgba(100, 213, 227, 0.12);
+      cursor: ew-resize;
+    }
+    input[type="range"]:focus-visible { box-shadow: 0 0 0 3px rgba(100, 213, 227, 0.2); }
+    .metrics { top: 18px; right: 18px; width: 162px; padding: 8px 14px; }
+    .metric {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      min-height: 32px;
+      gap: 16px;
+    }
+    .metric + .metric { border-top: 1px solid rgba(255, 255, 255, 0.055); }
+    .metric-name { color: var(--muted); font-size: 11px; letter-spacing: 0.04em; }
+    .metric-value { color: #f1fafc; font: 600 14px ui-sans-serif, sans-serif; font-variant-numeric: tabular-nums; }
+    .help {
+      position: absolute;
+      z-index: 2;
+      bottom: 17px;
+      left: 50%;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 8px 12px;
+      transform: translateX(-50%);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 999px;
+      color: #7f8e98;
+      background: rgba(7, 13, 20, 0.7);
+      font-size: 11px;
+      pointer-events: none;
+      backdrop-filter: blur(10px);
+    }
+    .help span { white-space: nowrap; }
+    kbd {
+      display: inline-grid;
+      min-width: 21px;
+      height: 20px;
+      place-items: center;
+      margin-right: 5px;
+      padding: 0 5px;
+      border: 1px solid rgba(255, 255, 255, 0.13);
+      border-bottom-color: rgba(255, 255, 255, 0.22);
+      border-radius: 5px;
+      color: #c7d4da;
+      background: rgba(255, 255, 255, 0.055);
+      font-family: inherit;
+      font-size: 10px;
+    }
+    .toast {
+      position: absolute;
+      z-index: 3;
+      right: 20px;
+      bottom: 20px;
+      padding: 8px 11px;
+      transform: translateY(6px);
+      border: 1px solid rgba(100, 213, 227, 0.16);
+      border-radius: 9px;
+      color: #c9f8ff;
+      background: rgba(10, 31, 38, 0.88);
+      font-size: 11px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 160ms ease, transform 160ms ease;
+    }
+    .toast.show { transform: translateY(0); opacity: 1; }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header class="heading">
+      <div>
+        <h1>旋转多边形</h1>
+        <p class="subtitle">移动边界、重力与弹性碰撞的实时物理沙盘</p>
+      </div>
+      <div class="engine-tag">Canvas Physics</div>
+    </header>
+    <section class="stage" aria-label="旋转多边形物理沙盘">
+      <canvas id="sandbox" width="900" height="600" aria-label="可点击生成小球的 900 × 600 物理画布">当前浏览器不支持 Canvas。</canvas>
+      <div class="panel controls" aria-label="沙盘控制">
+        <label class="control">
+          <span class="control-head"><span class="control-label">容器边数</span><output id="sidesValue" for="sides">6</output></span>
+          <input id="sides" type="range" min="3" max="12" step="1" value="6">
+        </label>
+        <label class="control">
+          <span class="control-head"><span class="control-label">旋转角速度</span><output id="speedValue" for="speed">+0.80 rad/s</output></span>
+          <input id="speed" type="range" min="-2" max="2" step="0.05" value="0.8">
+        </label>
+      </div>
+      <div class="panel metrics" aria-label="实时数据">
+        <div class="metric"><span class="metric-name">当前球数</span><span class="metric-value" id="ballCount">20</span></div>
+        <div class="metric"><span class="metric-name">系统总动能</span><span class="metric-value" id="energy">0</span></div>
+        <div class="metric"><span class="metric-name">实时 FPS</span><span class="metric-value" id="fps">0</span></div>
+      </div>
+      <div class="help" aria-hidden="true">
+        <span>单击画布添加小球</span>
+        <span><kbd>空格</kbd>反转方向</span>
+        <span><kbd>R</kbd>重置 20 个球</span>
+      </div>
+      <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    </section>
+  </main>
+  <script>
+    (() => {
+      "use strict";
+
+      const canvas = document.getElementById("sandbox");
+      const ctx = canvas.getContext("2d");
+      if (!ctx) {
+        throw new Error("Canvas 2D context is unavailable");
+      }
+
+      const sidesInput = document.getElementById("sides");
+      const speedInput = document.getElementById("speed");
+      const sidesValue = document.getElementById("sidesValue");
+      const speedValue = document.getElementById("speedValue");
+      const ballCountValue = document.getElementById("ballCount");
+      const energyValue = document.getElementById("energy");
+      const fpsValue = document.getElementById("fps");
+      const toast = document.getElementById("toast");
+
+      const WIDTH = 900;
+      const HEIGHT = 600;
+      const CENTER_X = 450;
+      const CENTER_Y = 316;
+      const CONTAINER_RADIUS = 230;
+      const TAU = Math.PI * 2;
+      const FIXED_STEP = 1 / 120;
+      const GRAVITY = 420;
+      const RESTITUTION = 0.8;
+      const WALL_FRICTION = 0.22;
+      const AIR_DAMPING_AT_60_FPS = 0.997;
+      const MIN_RADIUS = 7.5;
+      const MAX_RADIUS = 16.5;
+      const MAX_SPEED = 920;
+      const WALL_PADDING = 0.18;
+
+      const state = {
+        sides: 6,
+        angle: 0,
+        omega: 0.8,
+        targetOmega: 0.8,
+        balls: [],
+        nextBallId: 1,
+        accumulator: 0,
+        lastFrameTime: 0,
+        metricTime: 0,
+        metricFrames: 0,
+        fps: 0,
+        reshapeDamping: 0
+      };
+      let toastTimer = 0;
+
+      function clamp(value, min, max) {
+        return Math.max(min, Math.min(max, value));
+      }
+
+      function polygonVertices(sides = state.sides, angle = state.angle) {
+        const vertices = [];
+        const startAngle = angle - Math.PI / 2;
+        for (let i = 0; i < sides; i += 1) {
+          const a = startAngle + (i * TAU) / sides;
+          vertices.push({
+            x: CENTER_X + Math.cos(a) * CONTAINER_RADIUS,
+            y: CENTER_Y + Math.sin(a) * CONTAINER_RADIUS
+          });
+        }
+        return vertices;
+      }
+
+      function edgeGeometry(vertices, index) {
+        const a = vertices[index];
+        const b = vertices[(index + 1) % vertices.length];
+        const ex = b.x - a.x;
+        const ey = b.y - a.y;
+        const edgeLength = Math.hypot(ex, ey);
+        return {
+          a,
+          tx: ex / edgeLength,
+          ty: ey / edgeLength,
+          nx: -ey / edgeLength,
+          ny: ex / edgeLength
+        };
+      }
+
+      function signedDistanceToEdge(x, y, edge) {
+        return (x - edge.a.x) * edge.nx + (y - edge.a.y) * edge.ny;
+      }
+
+      function ballColor(radius) {
+        const t = (radius - MIN_RADIUS) / (MAX_RADIUS - MIN_RADIUS);
+        const hue = 194 - t * 158;
+        const saturation = 74 + t * 8;
+        const lightness = 61 + t * 3;
+        return {
+          fill: `hsl(${hue} ${saturation}% ${lightness}%)`,
+          rim: `hsl(${hue} ${saturation - 18}% ${lightness + 15}%)`,
+          glow: `hsla(${hue} ${saturation}% ${lightness}% / 0.24)`
+        };
+      }
+
+      function makeBall(x, y, radius, velocityX = 0, velocityY = 0) {
+        const r = radius ?? MIN_RADIUS + Math.random() * (MAX_RADIUS - MIN_RADIUS);
+        return {
+          id: state.nextBallId++,
+          x,
+          y,
+          vx: velocityX,
+          vy: velocityY,
+          r,
+          mass: Math.PI * r * r / 100,
+          color: ballColor(r)
+        };
+      }
+
+      function pointFitsPolygon(x, y, radius, vertices) {
+        for (let i = 0; i < vertices.length; i += 1) {
+          if (signedDistanceToEdge(x, y, edgeGeometry(vertices, i)) < radius + 2) {
+            return false;
+          }
+        }
+        return true;
+      }
+
+      function pointAvoidsBalls(x, y, radius) {
+        for (const other of state.balls) {
+          const minimum = radius + other.r + 1.2;
+          const dx = x - other.x;
+          const dy = y - other.y;
+          if (dx * dx + dy * dy < minimum * minimum) {
+            return false;
+          }
+        }
+        return true;
+      }
+
+      function seedBalls(count) {
+        const vertices = polygonVertices();
+        for (let i = 0; i < count; i += 1) {
+          const radius = MIN_RADIUS + Math.random() * (MAX_RADIUS - MIN_RADIUS);
+          let placed = false;
+          for (let attempt = 0; attempt < 1200; attempt += 1) {
+            const x = CENTER_X + (Math.random() * 2 - 1) * (CONTAINER_RADIUS - radius - 4);
+            const y = CENTER_Y + (Math.random() * 2 - 1) * (CONTAINER_RADIUS - radius - 4);
+            if (pointFitsPolygon(x, y, radius, vertices) && pointAvoidsBalls(x, y, radius)) {
+              state.balls.push(makeBall(
+                x,
+                y,
+                radius,
+                (Math.random() - 0.5) * 38,
+                (Math.random() - 0.5) * 24
+              ));
+              placed = true;
+              break;
+            }
+          }
+          if (!placed) {
+            const a = (i * 2.3999632297) % TAU;
+            const distance = 6 + Math.sqrt(i + 1) * (MAX_RADIUS * 1.65);
+            const ball = makeBall(
+              CENTER_X + Math.cos(a) * distance,
+              CENTER_Y + Math.sin(a) * distance,
+              radius
+            );
+            constrainBallToPolygon(ball, vertices, "stabilize", 12);
+            state.balls.push(ball);
+          }
+        }
+      }
+
+      function capBallSpeed(ball, limit = MAX_SPEED) {
+        const speed = Math.hypot(ball.vx, ball.vy);
+        if (!Number.isFinite(speed)) {
+          throw new Error(`Ball ${ball.id} developed a non-finite velocity`);
+        }
+        if (speed > limit) {
+          const scale = limit / speed;
+          ball.vx *= scale;
+          ball.vy *= scale;
+        }
+      }
+
+      function constrainBallToPolygon(ball, vertices, mode = "bounce", passes = 3) {
+        let corrected = false;
+        for (let pass = 0; pass < passes; pass += 1) {
+          let correctedThisPass = false;
+          for (let i = 0; i < vertices.length; i += 1) {
+            const edge = edgeGeometry(vertices, i);
+            const distance = signedDistanceToEdge(ball.x, ball.y, edge);
+            const requiredDistance = ball.r + WALL_PADDING;
+            if (distance >= requiredDistance) continue;
+
+            const penetration = requiredDistance - distance;
+            ball.x += edge.nx * penetration;
+            ball.y += edge.ny * penetration;
+            corrected = true;
+            correctedThisPass = true;
+
+            const contactX = ball.x - edge.nx * ball.r;
+            const contactY = ball.y - edge.ny * ball.r;
+            const wallVelocityX = -state.omega * (contactY - CENTER_Y);
+            const wallVelocityY = state.omega * (contactX - CENTER_X);
+            const relativeVelocityX = ball.vx - wallVelocityX;
+            const relativeVelocityY = ball.vy - wallVelocityY;
+            const normalVelocity = relativeVelocityX * edge.nx + relativeVelocityY * edge.ny;
+
+            if (normalVelocity < 0) {
+              const bounce = mode === "bounce" && normalVelocity < -4 ? RESTITUTION : 0;
+              const normalDelta = -(1 + bounce) * normalVelocity;
+              ball.vx += edge.nx * normalDelta;
+              ball.vy += edge.ny * normalDelta;
+              const updatedRelativeX = ball.vx - wallVelocityX;
+              const updatedRelativeY = ball.vy - wallVelocityY;
+              const tangentVelocity = updatedRelativeX * edge.tx + updatedRelativeY * edge.ty;
+              const frictionLimit = WALL_FRICTION * normalDelta;
+              const tangentDelta = clamp(-tangentVelocity, -frictionLimit, frictionLimit);
+              ball.vx += edge.tx * tangentDelta;
+              ball.vy += edge.ty * tangentDelta;
+            }
+          }
+          if (!correctedThisPass) break;
+        }
+        return corrected;
+      }
+
+      function resolveBallPair(a, b, applyImpulse = true) {
+        let dx = b.x - a.x;
+        let dy = b.y - a.y;
+        const minimumDistance = a.r + b.r;
+        let distanceSquared = dx * dx + dy * dy;
+        if (distanceSquared >= minimumDistance * minimumDistance) return false;
+        if (distanceSquared < 1e-10) {
+          const angle = ((a.id * 29 + b.id * 17) % 360) * Math.PI / 180;
+          dx = Math.cos(angle);
+          dy = Math.sin(angle);
+          distanceSquared = 1;
+        }
+
+        const distance = Math.sqrt(distanceSquared);
+        const nx = dx / distance;
+        const ny = dy / distance;
+        const overlap = minimumDistance - distance;
+        const inverseMassA = 1 / a.mass;
+        const inverseMassB = 1 / b.mass;
+        const inverseMassSum = inverseMassA + inverseMassB;
+        const correction = Math.max(0, overlap - 0.015) / inverseMassSum;
+        a.x -= nx * correction * inverseMassA;
+        a.y -= ny * correction * inverseMassA;
+        b.x += nx * correction * inverseMassB;
+        b.y += ny * correction * inverseMassB;
+
+        if (!applyImpulse) return true;
+        const relativeVelocityX = b.vx - a.vx;
+        const relativeVelocityY = b.vy - a.vy;
+        const closingVelocity = relativeVelocityX * nx + relativeVelocityY * ny;
+        if (closingVelocity < 0) {
+          const impulse = -(1 + RESTITUTION) * closingVelocity / inverseMassSum;
+          a.vx -= impulse * nx * inverseMassA;
+          a.vy -= impulse * ny * inverseMassA;
+          b.vx += impulse * nx * inverseMassB;
+          b.vy += impulse * ny * inverseMassB;
+        }
+        return true;
+      }
+
+      function solveBallPairs(applyImpulse = true) {
+        for (let i = 0; i < state.balls.length - 1; i += 1) {
+          for (let j = i + 1; j < state.balls.length; j += 1) {
+            resolveBallPair(state.balls[i], state.balls[j], applyImpulse);
+          }
+        }
+      }
+
+      function reconcileNewShape() {
+        const vertices = polygonVertices();
+        for (let round = 0; round < 10; round += 1) {
+          for (const ball of state.balls) {
+            constrainBallToPolygon(ball, vertices, "stabilize", 2);
+          }
+          solveBallPairs(false);
+        }
+        for (const ball of state.balls) {
+          constrainBallToPolygon(ball, vertices, "stabilize", 8);
+          ball.vx *= 0.86;
+          ball.vy *= 0.86;
+          capBallSpeed(ball, 560);
+        }
+        state.reshapeDamping = 0.28;
+      }
+
+      function simulate(dt) {
+        const omegaBlend = 1 - Math.exp(-dt / 0.16);
+        state.omega += (state.targetOmega - state.omega) * omegaBlend;
+        state.angle = (state.angle + state.omega * dt) % TAU;
+        const damping = Math.pow(AIR_DAMPING_AT_60_FPS, dt * 60);
+        const shapeDamping = state.reshapeDamping > 0 ? Math.pow(0.90, dt * 60) : 1;
+        const vertices = polygonVertices();
+        for (const ball of state.balls) {
+          ball.vy += GRAVITY * dt;
+          ball.vx *= damping * shapeDamping;
+          ball.vy *= damping * shapeDamping;
+          capBallSpeed(ball);
+          ball.x += ball.vx * dt;
+          ball.y += ball.vy * dt;
+        }
+        for (let iteration = 0; iteration < 3; iteration += 1) {
+          for (const ball of state.balls) {
+            constrainBallToPolygon(ball, vertices, "bounce", 2);
+          }
+          solveBallPairs(true);
+        }
+        for (const ball of state.balls) {
+          constrainBallToPolygon(ball, vertices, "bounce", 4);
+          capBallSpeed(ball);
+        }
+        state.reshapeDamping = Math.max(0, state.reshapeDamping - dt);
+      }
+
+      function drawBackground() {
+        const gradient = ctx.createRadialGradient(CENTER_X, CENTER_Y, 40, CENTER_X, CENTER_Y, 520);
+        gradient.addColorStop(0, "#0d1a23");
+        gradient.addColorStop(0.58, "#08121a");
+        gradient.addColorStop(1, "#050b11");
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, WIDTH, HEIGHT);
+        ctx.fillStyle = "rgba(174, 221, 235, 0.055)";
+        for (let y = 14; y < HEIGHT; y += 28) {
+          for (let x = 14; x < WIDTH; x += 28) ctx.fillRect(x, y, 1, 1);
+        }
+      }
+
+      function tracePolygon(vertices) {
+        ctx.beginPath();
+        ctx.moveTo(vertices[0].x, vertices[0].y);
+        for (let i = 1; i < vertices.length; i += 1) ctx.lineTo(vertices[i].x, vertices[i].y);
+        ctx.closePath();
+      }
+
+      function drawContainer(vertices) {
+        ctx.save();
+        tracePolygon(vertices);
+        ctx.fillStyle = "rgba(7, 17, 24, 0.70)";
+        ctx.fill();
+        ctx.shadowColor = "rgba(91, 212, 226, 0.24)";
+        ctx.shadowBlur = 18;
+        ctx.strokeStyle = "rgba(133, 222, 232, 0.66)";
+        ctx.lineWidth = 2;
+        ctx.lineJoin = "round";
+        ctx.stroke();
+        ctx.shadowBlur = 0;
+        for (const vertex of vertices) {
+          ctx.beginPath();
+          ctx.arc(vertex.x, vertex.y, 3.1, 0, TAU);
+          ctx.fillStyle = "rgba(193, 247, 251, 0.76)";
+          ctx.fill();
+        }
+        ctx.beginPath();
+        ctx.arc(CENTER_X, CENTER_Y, 2, 0, TAU);
+        ctx.fillStyle = "rgba(183, 228, 236, 0.25)";
+        ctx.fill();
+        ctx.restore();
+      }
+
+      function drawBall(ball) {
+        ctx.save();
+        ctx.shadowColor = ball.color.glow;
+        ctx.shadowBlur = 12;
+        ctx.beginPath();
+        ctx.arc(ball.x, ball.y, ball.r, 0, TAU);
+        ctx.fillStyle = ball.color.fill;
+        ctx.fill();
+        ctx.shadowBlur = 0;
+        ctx.strokeStyle = ball.color.rim;
+        ctx.globalAlpha = 0.54;
+        ctx.lineWidth = 1;
+        ctx.stroke();
+        ctx.globalAlpha = 0.42;
+        ctx.beginPath();
+        ctx.arc(ball.x - ball.r * 0.28, ball.y - ball.r * 0.31, Math.max(1.2, ball.r * 0.17), 0, TAU);
+        ctx.fillStyle = "#ffffff";
+        ctx.fill();
+        ctx.restore();
+      }
+
+      function render() {
+        drawBackground();
+        const vertices = polygonVertices();
+        drawContainer(vertices);
+        for (const ball of state.balls) drawBall(ball);
+      }
+
+      function totalKineticEnergy() {
+        let energy = 0;
+        for (const ball of state.balls) {
+          energy += 0.5 * ball.mass * (ball.vx * ball.vx + ball.vy * ball.vy);
+        }
+        return energy;
+      }
+
+      function compactNumber(value) {
+        if (!Number.isFinite(value)) return "—";
+        if (value >= 1_000_000) return `${(value / 1_000_000).toFixed(2)}m`;
+        if (value >= 1_000) return `${(value / 1_000).toFixed(1)}k`;
+        return value.toFixed(0);
+      }
+
+      function refreshMetrics() {
+        ballCountValue.textContent = String(state.balls.length);
+        energyValue.textContent = compactNumber(totalKineticEnergy());
+        fpsValue.textContent = state.fps.toFixed(0);
+      }
+
+      function updateSpeedOutput() {
+        const sign = state.targetOmega > 0 ? "+" : "";
+        speedValue.textContent = `${sign}${state.targetOmega.toFixed(2)} rad/s`;
+      }
+
+      function showToast(message) {
+        window.clearTimeout(toastTimer);
+        toast.textContent = message;
+        toast.classList.add("show");
+        toastTimer = window.setTimeout(() => toast.classList.remove("show"), 950);
+      }
+
+      function resetBalls() {
+        state.balls.length = 0;
+        seedBalls(20);
+        reconcileNewShape();
+        refreshMetrics();
+        showToast("已重置为 20 个球");
+      }
+
+      function addBallAt(x, y) {
+        const radius = MIN_RADIUS + Math.random() * (MAX_RADIUS - MIN_RADIUS);
+        const ball = makeBall(x, y, radius);
+        const vertices = polygonVertices();
+        constrainBallToPolygon(ball, vertices, "stabilize", 16);
+        state.balls.push(ball);
+        for (let round = 0; round < 4; round += 1) {
+          solveBallPairs(false);
+          for (const item of state.balls) {
+            constrainBallToPolygon(item, vertices, "stabilize", 3);
+          }
+        }
+        refreshMetrics();
+      }
+
+      function reverseRotation() {
+        state.targetOmega = -state.targetOmega;
+        state.omega = -state.omega;
+        speedInput.value = String(state.targetOmega);
+        updateSpeedOutput();
+        showToast(state.omega >= 0 ? "已切换为顺时针" : "已切换为逆时针");
+      }
+
+      sidesInput.addEventListener("input", () => {
+        state.sides = Number(sidesInput.value);
+        sidesValue.textContent = String(state.sides);
+        reconcileNewShape();
+      });
+
+      speedInput.addEventListener("input", () => {
+        state.targetOmega = Number(speedInput.value);
+        updateSpeedOutput();
+      });
+
+      canvas.addEventListener("pointerdown", (event) => {
+        if (event.button !== 0) return;
+        const bounds = canvas.getBoundingClientRect();
+        const x = (event.clientX - bounds.left) * WIDTH / bounds.width;
+        const y = (event.clientY - bounds.top) * HEIGHT / bounds.height;
+        addBallAt(x, y);
+      });
+
+      window.addEventListener("keydown", (event) => {
+        if (event.repeat) return;
+        if (event.code === "Space") {
+          event.preventDefault();
+          reverseRotation();
+        } else if (event.key.toLowerCase() === "r") {
+          event.preventDefault();
+          resetBalls();
+        }
+      });
+
+      function animationFrame(now) {
+        if (state.lastFrameTime === 0) {
+          state.lastFrameTime = now;
+          state.metricTime = now;
+        }
+        const frameDelta = Math.min(0.05, (now - state.lastFrameTime) / 1000);
+        state.lastFrameTime = now;
+        state.accumulator += frameDelta;
+        state.metricFrames += 1;
+
+        let steps = 0;
+        while (state.accumulator >= FIXED_STEP && steps < 8) {
+          simulate(FIXED_STEP);
+          state.accumulator -= FIXED_STEP;
+          steps += 1;
+        }
+        if (steps === 8) state.accumulator = 0;
+        render();
+
+        const metricElapsed = now - state.metricTime;
+        if (metricElapsed >= 1000) {
+          state.fps = state.metricFrames * 1000 / metricElapsed;
+          state.metricFrames = 0;
+          state.metricTime = now;
+          refreshMetrics();
+        }
+        window.requestAnimationFrame(animationFrame);
+      }
+
+      function physicsHealth() {
+        const vertices = polygonVertices();
+        let maximumWallPenetration = 0;
+        let maximumPairOverlap = 0;
+        let maximumSpeed = 0;
+        let allFinite = true;
+
+        for (const ball of state.balls) {
+          allFinite = allFinite && [ball.x, ball.y, ball.vx, ball.vy].every(Number.isFinite);
+          maximumSpeed = Math.max(maximumSpeed, Math.hypot(ball.vx, ball.vy));
+          for (let i = 0; i < vertices.length; i += 1) {
+            const edge = edgeGeometry(vertices, i);
+            maximumWallPenetration = Math.max(
+              maximumWallPenetration,
+              ball.r - signedDistanceToEdge(ball.x, ball.y, edge)
+            );
+          }
+        }
+        for (let i = 0; i < state.balls.length - 1; i += 1) {
+          for (let j = i + 1; j < state.balls.length; j += 1) {
+            const a = state.balls[i];
+            const b = state.balls[j];
+            maximumPairOverlap = Math.max(
+              maximumPairOverlap,
+              a.r + b.r - Math.hypot(b.x - a.x, b.y - a.y)
+            );
+          }
+        }
+        return {
+          ballCount: state.balls.length,
+          sides: state.sides,
+          omega: state.omega,
+          targetOmega: state.targetOmega,
+          totalKineticEnergy: totalKineticEnergy(),
+          maximumWallPenetration: Math.max(0, maximumWallPenetration),
+          maximumPairOverlap: Math.max(0, maximumPairOverlap),
+          maximumSpeed,
+          allFinite
+        };
+      }
+
+      Object.defineProperty(window, "physicsSandbox", {
+        value: Object.freeze({ health: physicsHealth }),
+        writable: false,
+        configurable: false
+      });
+
+      seedBalls(20);
+      refreshMetrics();
+      window.requestAnimationFrame(animationFrame);
+    })();
+  </script>
+</body>
+</html>

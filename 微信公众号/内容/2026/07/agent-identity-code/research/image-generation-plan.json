@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "updated": "2026-07-22",
+  "project_adapter": "appsso",
+  "profile_registry": "APPSO-数字资产/04-模板/生图风格档案.json",
+  "style_policy": {
+    "profile": "appsso-004",
+    "scope": "all_ai_generated_editorial_images",
+    "new_image_strategy": "two_stage_reference_then_redraw",
+    "allow_final_text_to_image": false
+  },
+  "tasks": [
+    {
+      "id": "cover",
+      "visual_type": "ai_editorial_creative",
+      "purpose": "用办证窗口、钱包和工具门表现 Agent 开始行动与花钱后需要可验证身份。",
+      "reference_strategy": "provided_local",
+      "final_stage": {
+        "mode": "referenced_edit",
+        "prompt_ref": "appsso-004",
+        "prompt_sha256": "6ba5e092a4f8d6fb2bd33602424ba4792715aa59f2bf5f916b90d8bb3f0bbd0a",
+        "input_assets": ["research/source-assets/cover-structure.png"],
+        "output": "assets/cover.png",
+        "receipt": "research/image-generation-runs/cover-final-preflight.json",
+        "present_to_user": true,
+        "preserve": [
+          "The central clumsy Agent at an identity-registration window",
+          "The wallet in one hand, identity form in the other, and the tool-service doorway behind it",
+          "The clear left-to-right relationship between registration and permission to act"
+        ],
+        "output_constraints": [
+          "16:9 horizontal WeChat cover",
+          "Keep all essential objects in the central 70% crop-safe area",
+          "Use no written words, official seals, national emblems, or real company logos",
+          "Make the idea readable at phone-thumbnail size"
+        ],
+        "avoid": [
+          "Polished technology-magazine composition, clean vector geometry, cinematic depth, collage texture, or professional illustration finish",
+          "Official ID-card realism, fake government interface, news-scene realism, logos, trademarks, watermarks, or extra text",
+          "Humanoid robot faces, glowing brains, code rain, cyberpunk city, rockets, or explosions"
+        ]
+      }
+    },
+    {
+      "id": "identity-chain",
+      "visual_type": "qualitative_explainer",
+      "purpose": "解释身份码只是责任链起点，后续仍需授权、工具调用记录、审计和撤销。",
+      "reference_strategy": "provided_local",
+      "final_stage": {
+        "mode": "referenced_edit",
+        "prompt_ref": "appsso-004",
+        "prompt_sha256": "6ba5e092a4f8d6fb2bd33602424ba4792715aa59f2bf5f916b90d8bb3f0bbd0a",
+        "input_assets": ["research/source-assets/identity-chain-structure.png"],
+        "output": "assets/identity-chain-doodle.png",
+        "receipt": "research/image-generation-runs/identity-chain-final-preflight.json",
+        "present_to_user": true,
+        "preserve": [
+          "Four-stage top-to-bottom responsibility chain",
+          "Identity tag, human authorization hand, tool call, and audit plus revocation symbols",
+          "The red thread connecting all four stages"
+        ],
+        "output_constraints": [
+          "4:5 vertical explanatory image",
+          "Show the four exact Chinese labels 身份码, 授权, 工具调用, 审计与撤销 once each",
+          "Keep every label readable at phone width",
+          "Use white background, black hand-drawn lines, and very limited red emphasis"
+        ],
+        "avoid": [
+          "Polished technology-magazine composition, clean vector geometry, cinematic depth, collage texture, or professional illustration finish",
+          "Official seals, logos, screenshots, robot heads, glowing brains, code rain, extra English, garbled text, or watermarks"
+        ]
+      }
+    }
+  ]
+}

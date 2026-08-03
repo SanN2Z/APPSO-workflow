@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>电商销售数据 · 清洗前后对比（Diff）</title>
+<style>
+  body { font-family: "Microsoft YaHei", "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+         margin: 0; background: #faf9f7; color: #333; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 32px 24px 48px; }
+  h1 { font-size: 22px; margin: 0 0 6px; }
+  .sub { color: #888; font-size: 13px; margin: 0 0 24px; }
+  h2 { font-size: 16px; margin: 32px 0 12px; }
+  .cards { display: flex; gap: 16px; flex-wrap: wrap; }
+  .card { flex: 1; min-width: 240px; background: #fff; border-radius: 10px; padding: 16px 18px;
+          box-shadow: 0 1px 3px rgba(0,0,0,.08); border-top: 3px solid #ccc; }
+  .card.err { border-top-color: #d97757; } .card.add { border-top-color: #6a9bcc; }
+  .card.note { border-top-color: #c4a35a; }
+  .card .num { font-size: 26px; font-weight: 700; }
+  .card.err .num { color: #d97757; } .card.add .num { color: #6a9bcc; } .card.note .num { color: #c4a35a; }
+  .card p { margin: 6px 0 0; font-size: 13px; color: #666; line-height: 1.6; }
+  table { border-collapse: collapse; width: 100%; background: #fff; font-size: 13px;
+          box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+  th, td { border: 1px solid #e7e3dc; padding: 8px 10px; text-align: left; vertical-align: top; }
+  th { background: #f3f1ec; font-weight: 600; }
+  .old { color: #b3543f; text-decoration: line-through; background: #fdeee8; padding: 1px 4px; border-radius: 4px; }
+  .new { color: #2f6f4f; background: #e8f4ec; padding: 1px 4px; border-radius: 4px; font-weight: 600; }
+  .added { background: #eef4fa; color: #4a7bab; }
+  .arrow { color: #999; }
+  .dim { color: #999; font-size: 12px; }
+  .reason { color: #555; line-height: 1.6; }
+  .badge { display: inline-block; padding: 2px 10px; border-radius: 10px; font-size: 12px; }
+  .badge.err { background: #fdeee8; color: #b3543f; }
+  .legend { font-size: 12px; color: #888; margin: 8px 0 0; }
+  .note { background: #fff; border-left: 3px solid #c4a35a; border-radius: 0 8px 8px 0;
+          padding: 12px 16px; font-size: 13px; line-height: 1.8; color: #555;
+          box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>电商销售数据 · 清洗前后对比（Diff）</h1>
+  <p class="sub">原始 20 行 → 清洗后 20 行（未删除记录）；字段级修正 2 处，新增派生列 1 列，数据质量标注 1 项</p>
+
+  <div class="cards">
+    <div class="card err"><div class="num">2 处字段错误</div>
+      <p>日期格式不一致 ×1（第 7 行）；退货率缺失 ×1（第 16 行）。均已修正/填补，详见下表。</p></div>
+    <div class="card add"><div class="num">+1 派生列</div>
+      <p>「销售额（元）= 单价 × 销量」对全部 20 行新增，供趋势分析使用，非错误修正。</p></div>
+    <div class="card note"><div class="num">9 个自然日无记录</div>
+      <p>属采集不完整而非字段错误；不虚构插值，趋势图按实际记录日绘制。</p></div>
+  </div>
+
+  <h2>一、错误明细与处理（仅变更单元格）</h2>
+  <table>
+    <tr><th style="width:32px">#</th><th style="width:110px">位置</th><th style="width:80px">字段</th>
+        <th style="width:110px">清洗前</th><th style="width:90px">清洗后</th>
+        <th>错误原因</th><th style="width:220px">处理方式</th></tr>
+    <tr><td>1</td><td>第 7 行<br><span class="dim">2026/07/08</span></td><td><span class="badge err">日期</span></td><td><span class="old">2026/07/08</span></td><td><span class="new">2026-07-08</span></td><td class="reason">日期格式不一致：该行用斜杠分隔，与全表其余记录的横杠格式（YYYY-MM-DD）不统一，直接用于时间序列解析、排序和按日聚合时会失败或产生重复分组。</td><td class="reason">规范化为 ISO 8601 格式（斜杠替换为横杠）。</td></tr><tr><td>2</td><td>第 16 行<br><span class="dim">2026-07-20</span></td><td><span class="badge err">退货率</span></td><td><span class="old">（空）</span></td><td><span class="new">2.9%</span></td><td class="reason">缺失值：字段为空。若删除整行会丢失该日销售记录，填 0 或全表均值会扭曲母婴类别的退货率统计。</td><td class="reason">用同类别（母婴用品）已有记录的中位数 2.9% 填补，填补依据可追溯。</td></tr>
+  </table>
+
+  <h2>二、全表逐行对比</h2>
+  <table>
+    <tr><th>#</th><th>日期</th><th>商品类别</th><th>单价（元）</th><th>销量</th><th>退货率</th>
+        <th>销售额（元）<span class="badge" style="background:#eef4fa;color:#4a7bab">新增列</span></th></tr>
+    <tr><td>2</td><td>2026-07-01</td><td>美妆护肤</td><td>169.00</td><td>108</td><td>4.6%</td><td class="added">18252.0</td></tr><tr><td>3</td><td>2026-07-02</td><td>食品饮料</td><td>39.90</td><td>286</td><td>1.3%</td><td class="added">11411.4</td></tr><tr><td>4</td><td>2026-07-03</td><td>数码配件</td><td>99.00</td><td>157</td><td>3.7%</td><td class="added">15543.0</td></tr><tr><td>5</td><td>2026-07-05</td><td>家居日用</td><td>79.00</td><td>182</td><td>2.5%</td><td class="added">14378.0</td></tr><tr><td>6</td><td>2026-07-06</td><td>服饰鞋包</td><td>229.00</td><td>86</td><td>9.8%</td><td class="added">19694.0</td></tr><tr><td>7</td><td><span class="old">2026/07/08</span> <span class="arrow">→</span> <span class="new">2026-07-08</span></td><td>母婴用品</td><td>139.00</td><td>124</td><td>2.9%</td><td class="added">17236.0</td></tr><tr><td>8</td><td>2026-07-09</td><td>食品饮料</td><td>59.90</td><td>241</td><td>1.1%</td><td class="added">14435.9</td></tr><tr><td>9</td><td>2026-07-10</td><td>小家电</td><td>399.00</td><td>47</td><td>4.2%</td><td class="added">18753.0</td></tr><tr><td>10</td><td>2026-07-12</td><td>美妆护肤</td><td>259.00</td><td>79</td><td>5.3%</td><td class="added">20461.0</td></tr><tr><td>11</td><td>2026-07-13</td><td>运动户外</td><td>189.00</td><td>93</td><td>6.1%</td><td class="added">17577.0</td></tr><tr><td>12</td><td>2026-07-14</td><td>家居日用</td><td>129.00</td><td>136</td><td>3.0%</td><td class="added">17544.0</td></tr><tr><td>13</td><td>2026-07-16</td><td>数码配件</td><td>149.00</td><td>118</td><td>4.4%</td><td class="added">17582.0</td></tr><tr><td>14</td><td>2026-07-17</td><td>服饰鞋包</td><td>189.00</td><td>103</td><td>11.2%</td><td class="added">19467.0</td></tr><tr><td>15</td><td>2026-07-18</td><td>食品饮料</td><td>29.90</td><td>337</td><td>0.8%</td><td class="added">10076.3</td></tr><tr><td>16</td><td>2026-07-20</td><td>母婴用品</td><td>239.00</td><td>72</td><td><span class="old">（空）</span> <span class="arrow">→</span> <span class="new">2.9%</span></td><td class="added">17208.0</td></tr><tr><td>17</td><td>2026-07-21</td><td>美妆护肤</td><td>299.00</td><td>68</td><td>5.7%</td><td class="added">20332.0</td></tr><tr><td>18</td><td>2026-07-23</td><td>小家电</td><td>499.00</td><td>39</td><td>4.6%</td><td class="added">19461.0</td></tr><tr><td>19</td><td>2026-07-25</td><td>家居日用</td><td>59.00</td><td>205</td><td>2.2%</td><td class="added">12095.0</td></tr><tr><td>20</td><td>2026-07-27</td><td>运动户外</td><td>329.00</td><td>61</td><td>6.8%</td><td class="added">20069.0</td></tr><tr><td>21</td><td>2026-07-29</td><td>服饰鞋包</td><td>269.00</td><td>91</td><td>10.6%</td><td class="added">24479.0</td></tr>
+  </table>
+  <p class="legend">图例：<span class="old">删除线</span> = 清洗前原始值；<span class="new">绿色高亮</span> = 清洗后值；
+     <span class="added">蓝色底</span> = 新增派生列。其余单元格清洗前后数值一致，未做改动。</p>
+
+  <h2>三、数据质量标注（非字段错误，未改动数据）</h2>
+  <div class="note">
+    日期序列不连续：2026-07-04、2026-07-07、2026-07-11、2026-07-15、2026-07-19、2026-07-22、2026-07-24、2026-07-26、2026-07-28 共 9 个自然日无销售记录。<br>
+    处理：保留原始记录、不做虚构插值；销售趋势图按实际记录日绘制，分析结论中已说明采样间隔。<br>
+    其余校验项（单价/销量为正数、销量为整数、退货率位于 0–100%、无重复行）全部通过，未发现其他错误。
+  </div>
+</div>
+</body>
+</html>

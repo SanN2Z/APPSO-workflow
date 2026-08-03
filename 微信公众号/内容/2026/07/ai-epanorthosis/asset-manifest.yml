@@ -1,0 +1,129 @@
+version: 2
+updated: 2026-07-26
+assets:
+  - file: assets/source-01-epanorthosis-title.png
+    used_in_draft: true
+    dimensions: 1440x1000
+    source_type: research_page_screenshot
+    source: https://arxiv.org/html/2607.21498
+    creator_or_rightsholder: Federico Boggia
+    obtained_on: 2026-07-26
+    modifications: Viewport screenshot of title and abstract
+    rights_status: licensed
+    rights_basis: CC BY 4.0; attribution and source link retained
+    allowed_platforms: [wechat]
+    attribution: Federico Boggia，CC BY 4.0
+
+  - file: assets/source-02-epanorthosis-measurement.png
+    used_in_draft: true
+    dimensions: 800x396
+    source_type: research_figure_screenshot
+    source: https://arxiv.org/html/2607.21498#S4.SS1
+    creator_or_rightsholder: Federico Boggia
+    obtained_on: 2026-07-26
+    modifications: Element screenshot of Table 1; no annotation or data edits
+    rights_status: licensed
+    rights_basis: CC BY 4.0; attribution and source link retained
+    allowed_platforms: [wechat]
+    attribution: Federico Boggia，CC BY 4.0
+
+  - file: assets/source-03-token-detection-title.png
+    used_in_draft: true
+    dimensions: 1440x1000
+    source_type: research_page_screenshot
+    source: https://arxiv.org/html/2607.21458
+    creator_or_rightsholder: Yangjun Lu, Hongyi Zhou, Fabian Spill, Kai Ye, Chengchun Shi, and Jin Zhu
+    obtained_on: 2026-07-26
+    modifications: Viewport screenshot of title and abstract
+    rights_status: user_confirmed_editorial_commentary
+    rights_basis: User requested source screenshots for this attributed research commentary; not a general republication license
+    allowed_platforms: [wechat]
+    attribution: Lu 等，arXiv 2607.21458
+
+  - file: assets/doodle-01-rhetoric-bucket.png
+    used_in_draft: true
+    dimensions: 1672x941
+    source_type: ai_generated
+    source: Codex built-in image_gen; task doodle-01-rhetoric-bucket
+    creator_or_rightsholder: This project / AI-generated
+    obtained_on: 2026-07-26
+    modifications: No post-generation edits; visually reviewed in generation result
+    rights_status: project_owned
+    allowed_platforms: [wechat]
+    attribution: AI 生成
+    generator: Codex built-in image_gen
+    model: gpt-image-2
+    generation_mode: text_to_image
+    prompt_ref: clumsy-doodle-v1
+    prompt_sha256: e4160da75ebd48f1e8625b61eb840195a66c833dd8373ac61155159826cc2a65
+    invocation_prompt_sha256: 9857d97c7a1edef8a0a86eb0501204b78ce0b2b75777060ea4dd218ea34cf5de
+    generation_constraints: 16:9 纯白底；小调味瓶、破机器人、整桶红色调料与白纸；大色块、硬像素鼠标边；无文字、Logo、真实人物或新闻现场
+    input_assets: []
+    generated_on: 2026-07-26
+    preflight_receipt: research/image-generation-runs/doodle-01-rhetoric-bucket-final-preflight.json
+
+  - file: assets/doodle-02-training-megaphone.png
+    used_in_draft: true
+    dimensions: 1672x941
+    source_type: ai_generated
+    source: Codex built-in image_gen; task doodle-02-training-megaphone
+    creator_or_rightsholder: This project / AI-generated
+    obtained_on: 2026-07-26
+    modifications: No post-generation edits; visually reviewed in generation result
+    rights_status: project_owned
+    allowed_platforms: [wechat]
+    attribution: AI 生成
+    generator: Codex built-in image_gen
+    model: gpt-image-2
+    generation_mode: text_to_image
+    prompt_ref: clumsy-doodle-v1
+    prompt_sha256: e4160da75ebd48f1e8625b61eb840195a66c833dd8373ac61155159826cc2a65
+    invocation_prompt_sha256: 1a8febeacbd416f87f6e9d278fdbd3f6bf9cd91d25d5a518b286cb113f260f4c
+    generation_constraints: 16:9 纯白底；广告传单和点赞经漏斗进入破机器人，小喇叭变成巨大扩音器；不画确定因果箭头；无文字或 Logo
+    input_assets: []
+    generated_on: 2026-07-26
+    preflight_receipt: research/image-generation-runs/doodle-02-training-megaphone-final-preflight.json
+
+  - file: assets/doodle-03-detector-smear.png
+    used_in_draft: true
+    dimensions: 1672x941
+    source_type: ai_generated
+    source: Codex built-in image_gen; task doodle-03-detector-smear
+    creator_or_rightsholder: This project / AI-generated
+    obtained_on: 2026-07-26
+    modifications: No post-generation edits; visually reviewed in generation result
+    rights_status: project_owned
+    allowed_platforms: [wechat]
+    attribution: AI 生成
+    generator: Codex built-in image_gen
+    model: gpt-image-2
+    generation_mode: text_to_image
+    prompt_ref: clumsy-doodle-v1
+    prompt_sha256: e4160da75ebd48f1e8625b61eb840195a66c833dd8373ac61155159826cc2a65
+    invocation_prompt_sha256: ac8b025cea164350ea1c589e1588916164d1f9ac4591a7e8fe6c289a26b16885
+    generation_constraints: 16:9 纯白底；粗荧光笔划过人手和机器人手拼成的长纸条，交界处涂成一团；不画完美检测或裁决；无文字或 Logo
+    input_assets: []
+    generated_on: 2026-07-26
+    preflight_receipt: research/image-generation-runs/doodle-03-detector-smear-final-preflight.json
+
+  - file: assets/doodle-04-human-mirror.png
+    used_in_draft: true
+    dimensions: 1672x941
+    source_type: ai_generated
+    source: Codex built-in image_gen; task doodle-04-human-mirror
+    creator_or_rightsholder: This project / AI-generated
+    obtained_on: 2026-07-26
+    modifications: No post-generation edits; visually reviewed in generation result
+    rights_status: project_owned
+    allowed_platforms: [wechat]
+    attribution: AI 生成
+    generator: Codex built-in image_gen
+    model: gpt-image-2
+    generation_mode: text_to_image
+    prompt_ref: clumsy-doodle-v1
+    prompt_sha256: e4160da75ebd48f1e8625b61eb840195a66c833dd8373ac61155159826cc2a65
+    invocation_prompt_sha256: 48071db0561c2734403be4d6b7a77b9f69d4f0d1c86a80f28d3246f5637a4d21
+    generation_constraints: 16:9 纯白底；普通人对歪镜改稿，镜中的人与破机器人举起相同扩音器；不画精神控制；无文字、Logo 或真实人物
+    input_assets: []
+    generated_on: 2026-07-26
+    preflight_receipt: research/image-generation-runs/doodle-04-human-mirror-final-preflight.json

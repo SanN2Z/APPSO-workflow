@@ -1,0 +1,8 @@
+schema_version: 1
+experiment_id: "zero-context-01"
+assignment_method: "SHA-256('zero-context-01|2026-08-02|AI-next-wang-conjecture') first byte parity; even means A=baseline"
+assignment_hash: "C652DD04CCA745E31A5D44B3DFCC22554BE97C36009F8E6846D2442409A304F0"
+candidate_a: "baseline_current_v4"
+candidate_b: "intervention_v4_plus_article_compiler"
+frozen_on: "2026-08-02"
+judge_must_not_read: true

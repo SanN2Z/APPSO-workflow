@@ -41,15 +41,15 @@
     {
       "id": "work-reorganization-doodle",
       "visual_type": "general_editorial",
-      "purpose": "作为正文配图，用笨拙涂鸦把 AI 加快搜索与整理、人工继续核对与判断、公司随后重新分配任务这条链路画清楚。",
+      "purpose": "保留首版正文涂鸦作为被用户否决的视觉迭代记录；该图不再进入正文。",
       "reference_strategy": "none",
       "final_stage": {
         "mode": "text_to_image",
         "prompt_ref": "generic-direct-v1",
         "input_assets": [],
-        "output": "assets/work-reorganization-doodle-v01.png",
+        "output": "research/source-assets/rejected-work-reorganization-doodle-v01.png",
         "receipt": "research/image-generation-runs/work-reorganization-doodle-final-preflight.json",
-        "present_to_user": true,
+        "present_to_user": false,
         "content_prompt": "Use case: illustration-story. Asset type: body illustration for a Chinese technology essay. Create a deliberately awkward hand-drawn editorial doodle on warm off-white textured paper, read clearly from left to right in three connected beats. First, a tiny friendly abstract AI helper rapidly searches and sorts a loose pile of paper sheets and evidence cards, with quick motion lines. Second, one ordinary human researcher at a messy desk checks the same material with a magnifying glass and red pencil, compares two evidence cards, and deliberately chooses one branch at a fork. Third, a manager quietly rearranges the same task cards around a small team board, changing who handles which pieces without erasing the people. Connect the beats with bold uneven arrows so the point is clear: some steps speed up, human judgment remains, and the work is reorganized. Use wobbly black ink outlines, intentionally clumsy proportions, sparse colored-pencil accents in cobalt blue, orange, red, and green, visible eraser marks and margin scribbles, handmade notebook-zine quality. Keep the mood witty and thoughtful rather than polished, cheerful, or dystopian. No photorealism.",
         "output_constraints": [
           "Horizontal 16:9 composition with three visually distinct beats and all essential subjects inside the central 80% crop-safe area",
@@ -60,6 +60,500 @@
           "Layoff scenes, firing gestures, people disappearing, sad workers carrying boxes, threatening robots, replacement metaphors, or claims that AI caused Patreon layoffs",
           "Patreon, Google, Gemini, Image2, or any third-party logos and trademarks",
           "Watermarks, readable text, garbled text, fake interfaces, charts, unverified statistics, real-person likenesses, photorealism, sleek corporate vector art, or glossy stock-image polish"
+        ]
+      }
+    },
+    {
+      "id": "doodle-01-team-cut",
+      "visual_type": "general_editorial",
+      "purpose": "用一张正文涂鸦表现 Patreon 宣布裁减 93 人、团队少掉五分之一，但不暗示 AI 是裁员原因。",
+      "reference_strategy": "none",
+      "final_stage": {
+        "mode": "text_to_image",
+        "prompt_ref": "generic-direct-v1",
+        "input_assets": [],
+        "output": "assets/doodle-01-team-cut.png",
+        "receipt": "research/image-generation-runs/doodle-01-team-cut-final-preflight.json",
+        "present_to_user": true,
+        "content_prompt": "Use case: stylized-concept. Asset type: frequent body illustration for a Chinese technology essay. 用户指定风格 Prompt：使用最大的色块、涂鸦感更重，尽可能弄得惨兮兮的。用白底，做得像是在老式电脑画图程序里拿鼠标画出来的。要隐约有点像，但又不太像，像是对上了又哪哪都不对，别扭得让人迷惑，呈现那种低清、一像素一像素蹭出来的感觉，突出它到底有多离谱地烂。算了，随便吧，你想怎么画就怎么画。 本图只画：一大团歪歪扭扭的人形色块挤在一个办公室方框里，一只普通人的手拿剪刀剪掉边缘一小撮人形纸片；旁边的电脑只是孤零零亮着，不与剪刀相连。 构图必须只有一个主要思想，尽量少画对象，使用最大、最笨、最不协调的纯色色块。",
+        "output_constraints": [
+          "Horizontal 16:9 body illustration; one main idea only; largest possible flat color blocks",
+          "Pure white background with no paper texture, no shadow, no gradient, and no decorative environment",
+          "No readable words, letters, numbers, labels, captions, or interface text inside the image",
+          "Hard pixelated mouse-drawn edges, deliberately low-resolution appearance, and mobile-readable silhouettes"
+        ],
+        "avoid": [
+          "Polished editorial illustration, clean vector art, smooth curves, anti-aliased linework, pencil, crayon, watercolor, paper grain, collage, realistic lighting, 3D, photorealism, cinematic composition, cute professional cartoon style, or balanced graphic design",
+          "Logos, trademarks, watermarks, readable text, garbled text, fake interfaces, real-person likenesses, or verified-looking news scenes",
+          "Any visual claim that AI caused Patreon layoffs unless the causal arrow is visibly rejected"
+        ]
+      }
+    },
+    {
+      "id": "doodle-02-two-statements",
+      "visual_type": "general_editorial",
+      "purpose": "表现 Patreon 的两句话挨在一起：AI 没有替代人，但工作和组织已被影响。",
+      "reference_strategy": "none",
+      "final_stage": {
+        "mode": "text_to_image",
+        "prompt_ref": "generic-direct-v1",
+        "input_assets": [],
+        "output": "assets/doodle-02-two-statements.png",
+        "receipt": "research/image-generation-runs/doodle-02-two-statements-final-preflight.json",
+        "present_to_user": true,
+        "content_prompt": "Use case: stylized-concept. Asset type: frequent body illustration for a Chinese technology essay. 用户指定风格 Prompt：使用最大的色块、涂鸦感更重，尽可能弄得惨兮兮的。用白底，做得像是在老式电脑画图程序里拿鼠标画出来的。要隐约有点像，但又不太像，像是对上了又哪哪都不对，别扭得让人迷惑，呈现那种低清、一像素一像素蹭出来的感觉，突出它到底有多离谱地烂。算了，随便吧，你想怎么画就怎么画。 本图只画：同一个别扭的老板一手护住一个完整人形色块，另一手却把办公室里的桌子、箭头和任务方块拨得七扭八歪；两件事同时发生，没有因果箭头。 构图必须只有一个主要思想，尽量少画对象，使用最大、最笨、最不协调的纯色色块。",
+        "output_constraints": [
+          "Horizontal 16:9 body illustration; one main idea only; largest possible flat color blocks",
+          "Pure white background with no paper texture, no shadow, no gradient, and no decorative environment",
+          "No readable words, letters, numbers, labels, captions, or interface text inside the image",
+          "Hard pixelated mouse-drawn edges, deliberately low-resolution appearance, and mobile-readable silhouettes"
+        ],
+        "avoid": [
+          "Polished editorial illustration, clean vector art, smooth curves, anti-aliased linework, pencil, crayon, watercolor, paper grain, collage, realistic lighting, 3D, photorealism, cinematic composition, cute professional cartoon style, or balanced graphic design",
+          "Logos, trademarks, watermarks, readable text, garbled text, fake interfaces, real-person likenesses, or verified-looking news scenes",
+          "Any visual claim that AI caused Patreon layoffs unless the causal arrow is visibly rejected"
+        ]
+      }
+    },
+    {
+      "id": "doodle-03-false-arrow",
+      "visual_type": "general_editorial",
+      "purpose": "阻止读者把 Patreon 裁员直接读成 AI 导致。",
+      "reference_strategy": "none",
+      "final_stage": {
+        "mode": "text_to_image",
+        "prompt_ref": "generic-direct-v1",
+        "input_assets": [],
+        "output": "assets/doodle-03-false-arrow.png",
+        "receipt": "research/image-generation-runs/doodle-03-false-arrow-final-preflight.json",
+        "present_to_user": true,
+        "content_prompt": "Use case: stylized-concept. Asset type: frequent body illustration for a Chinese technology essay. 用户指定风格 Prompt：使用最大的色块、涂鸦感更重，尽可能弄得惨兮兮的。用白底，做得像是在老式电脑画图程序里拿鼠标画出来的。要隐约有点像，但又不太像，像是对上了又哪哪都不对，别扭得让人迷惑，呈现那种低清、一像素一像素蹭出来的感觉，突出它到底有多离谱地烂。算了，随便吧，你想怎么画就怎么画。 本图只画：左边一个破电脑，右边一把剪刀，中间一条过分粗糙的红色直箭头被巨大叉号划掉；真正围着剪刀的是市场风、成本秤和旧时钟三个模糊大色块。 构图必须只有一个主要思想，尽量少画对象，使用最大、最笨、最不协调的纯色色块。",
+        "output_constraints": [
+          "Horizontal 16:9 body illustration; one main idea only; largest possible flat color blocks",
+          "Pure white background with no paper texture, no shadow, no gradient, and no decorative environment",
+          "No readable words, letters, numbers, labels, captions, or interface text inside the image",
+          "Hard pixelated mouse-drawn edges, deliberately low-resolution appearance, and mobile-readable silhouettes"
+        ],
+        "avoid": [
+          "Polished editorial illustration, clean vector art, smooth curves, anti-aliased linework, pencil, crayon, watercolor, paper grain, collage, realistic lighting, 3D, photorealism, cinematic composition, cute professional cartoon style, or balanced graphic design",
+          "Logos, trademarks, watermarks, readable text, garbled text, fake interfaces, real-person likenesses, or verified-looking news scenes",
+          "Any visual claim that AI caused Patreon layoffs unless the causal arrow is visibly rejected"
+        ]
+      }
+    },
+    {
+      "id": "doodle-04-sample-sieve",
+      "visual_type": "general_editorial",
+      "purpose": "表现 ATLAS 分析大量匿名交互，但交互不是用户。",
+      "reference_strategy": "none",
+      "final_stage": {
+        "mode": "text_to_image",
+        "prompt_ref": "generic-direct-v1",
+        "input_assets": [],
+        "output": "assets/doodle-04-sample-sieve.png",
+        "receipt": "research/image-generation-runs/doodle-04-sample-sieve-final-preflight.json",
+        "present_to_user": true,
+        "content_prompt": "Use case: stylized-concept. Asset type: frequent body illustration for a Chinese technology essay. 用户指定风格 Prompt：使用最大的色块、涂鸦感更重，尽可能弄得惨兮兮的。用白底，做得像是在老式电脑画图程序里拿鼠标画出来的。要隐约有点像，但又不太像，像是对上了又哪哪都不对，别扭得让人迷惑，呈现那种低清、一像素一像素蹭出来的感觉，突出它到底有多离谱地烂。算了，随便吧，你想怎么画就怎么画。 本图只画：一大团没有脸的聊天气泡和鼠标轨迹从漏斗里掉下去，漏斗下面只剩一堆方块记录；远处的人形轮廓被故意擦掉，强调数的是交互痕迹而不是人数。 构图必须只有一个主要思想，尽量少画对象，使用最大、最笨、最不协调的纯色色块。",
+        "output_constraints": [
+          "Horizontal 16:9 body illustration; one main idea only; largest possible flat color blocks",
+          "Pure white background with no paper texture, no shadow, no gradient, and no decorative environment",
+          "No readable words, letters, numbers, labels, captions, or interface text inside the image",
+          "Hard pixelated mouse-drawn edges, deliberately low-resolution appearance, and mobile-readable silhouettes"
+        ],
+        "avoid": [
+          "Polished editorial illustration, clean vector art, smooth curves, anti-aliased linework, pencil, crayon, watercolor, paper grain, collage, realistic lighting, 3D, photorealism, cinematic composition, cute professional cartoon style, or balanced graphic design",
+          "Logos, trademarks, watermarks, readable text, garbled text, fake interfaces, real-person likenesses, or verified-looking news scenes",
+          "Any visual claim that AI caused Patreon layoffs unless the causal arrow is visibly rejected"
+        ]
+      }
+    },
+    {
+      "id": "doodle-05-wide-coverage",
+      "visual_type": "general_editorial",
+      "purpose": "表现 AI 使用覆盖许多职业，但这里只是职业覆盖面。",
+      "reference_strategy": "none",
+      "final_stage": {
+        "mode": "text_to_image",
+        "prompt_ref": "generic-direct-v1",
+        "input_assets": [],
+        "output": "assets/doodle-05-wide-coverage.png",
+        "receipt": "research/image-generation-runs/doodle-05-wide-coverage-final-preflight.json",
+        "present_to_user": true,
+        "content_prompt": "Use case: stylized-concept. Asset type: frequent body illustration for a Chinese technology essay. 用户指定风格 Prompt：使用最大的色块、涂鸦感更重，尽可能弄得惨兮兮的。用白底，做得像是在老式电脑画图程序里拿鼠标画出来的。要隐约有点像，但又不太像，像是对上了又哪哪都不对，别扭得让人迷惑，呈现那种低清、一像素一像素蹭出来的感觉，突出它到底有多离谱地烂。算了，随便吧，你想怎么画就怎么画。 本图只画：一只巨大而笨重的鼠标指针横扫许多歪斜职业物件：扳手、听诊器、键盘、锅、文件夹；每件物品只被蹭上一小块同色颜料，没有完整吞掉任何职业。 构图必须只有一个主要思想，尽量少画对象，使用最大、最笨、最不协调的纯色色块。",
+        "output_constraints": [
+          "Horizontal 16:9 body illustration; one main idea only; largest possible flat color blocks",
+          "Pure white background with no paper texture, no shadow, no gradient, and no decorative environment",
+          "No readable words, letters, numbers, labels, captions, or interface text inside the image",
+          "Hard pixelated mouse-drawn edges, deliberately low-resolution appearance, and mobile-readable silhouettes"
+        ],
+        "avoid": [
+          "Polished editorial illustration, clean vector art, smooth curves, anti-aliased linework, pencil, crayon, watercolor, paper grain, collage, realistic lighting, 3D, photorealism, cinematic composition, cute professional cartoon style, or balanced graphic design",
+          "Logos, trademarks, watermarks, readable text, garbled text, fake interfaces, real-person likenesses, or verified-looking news scenes",
+          "Any visual claim that AI caused Patreon layoffs unless the causal arrow is visibly rejected"
+        ]
+      }
+    },
+    {
+      "id": "doodle-06-few-job-pieces",
+      "visual_type": "general_editorial",
+      "purpose": "表现一个职业由很多任务组成，AI 只触及其中一部分。",
+      "reference_strategy": "none",
+      "final_stage": {
+        "mode": "text_to_image",
+        "prompt_ref": "generic-direct-v1",
+        "input_assets": [],
+        "output": "assets/doodle-06-few-job-pieces.png",
+        "receipt": "research/image-generation-runs/doodle-06-few-job-pieces-final-preflight.json",
+        "present_to_user": true,
+        "content_prompt": "Use case: stylized-concept. Asset type: frequent body illustration for a Chinese technology essay. 用户指定风格 Prompt：使用最大的色块、涂鸦感更重，尽可能弄得惨兮兮的。用白底，做得像是在老式电脑画图程序里拿鼠标画出来的。要隐约有点像，但又不太像，像是对上了又哪哪都不对，别扭得让人迷惑，呈现那种低清、一像素一像素蹭出来的感觉，突出它到底有多离谱地烂。算了，随便吧，你想怎么画就怎么画。 本图只画：一个巨大而难看的工作人形由很多不规则任务方块拼成，电脑伸出一根歪鼠标线只碰到其中几块，其余大块仍挂在人身上；不画比例数字。 构图必须只有一个主要思想，尽量少画对象，使用最大、最笨、最不协调的纯色色块。",
+        "output_constraints": [
+          "Horizontal 16:9 body illustration; one main idea only; largest possible flat color blocks",
+          "Pure white background with no paper texture, no shadow, no gradient, and no decorative environment",
+          "No readable words, letters, numbers, labels, captions, or interface text inside the image",
+          "Hard pixelated mouse-drawn edges, deliberately low-resolution appearance, and mobile-readable silhouettes"
+        ],
+        "avoid": [
+          "Polished editorial illustration, clean vector art, smooth curves, anti-aliased linework, pencil, crayon, watercolor, paper grain, collage, realistic lighting, 3D, photorealism, cinematic composition, cute professional cartoon style, or balanced graphic design",
+          "Logos, trademarks, watermarks, readable text, garbled text, fake interfaces, real-person likenesses, or verified-looking news scenes",
+          "Any visual claim that AI caused Patreon layoffs unless the causal arrow is visibly rejected"
+        ]
+      }
+    },
+    {
+      "id": "doodle-07-small-auto-pipeline",
+      "visual_type": "general_editorial",
+      "purpose": "表现只有很小一部分任务被端到端交给 AI，且结果是否完成未知。",
+      "reference_strategy": "none",
+      "final_stage": {
+        "mode": "text_to_image",
+        "prompt_ref": "generic-direct-v1",
+        "input_assets": [],
+        "output": "assets/doodle-07-small-auto-pipeline.png",
+        "receipt": "research/image-generation-runs/doodle-07-small-auto-pipeline-final-preflight.json",
+        "present_to_user": true,
+        "content_prompt": "Use case: stylized-concept. Asset type: frequent body illustration for a Chinese technology essay. 用户指定风格 Prompt：使用最大的色块、涂鸦感更重，尽可能弄得惨兮兮的。用白底，做得像是在老式电脑画图程序里拿鼠标画出来的。要隐约有点像，但又不太像，像是对上了又哪哪都不对，别扭得让人迷惑，呈现那种低清、一像素一像素蹭出来的感觉，突出它到底有多离谱地烂。算了，随便吧，你想怎么画就怎么画。 本图只画：一大堆任务方块堵在破旧传送带入口，只有极少几块穿过电脑盒子来到另一端，出口还对着一个巨大问号形状但不要任何可读文字；其余任务停在人手边。 构图必须只有一个主要思想，尽量少画对象，使用最大、最笨、最不协调的纯色色块。",
+        "output_constraints": [
+          "Horizontal 16:9 body illustration; one main idea only; largest possible flat color blocks",
+          "Pure white background with no paper texture, no shadow, no gradient, and no decorative environment",
+          "No readable words, letters, numbers, labels, captions, or interface text inside the image",
+          "Hard pixelated mouse-drawn edges, deliberately low-resolution appearance, and mobile-readable silhouettes"
+        ],
+        "avoid": [
+          "Polished editorial illustration, clean vector art, smooth curves, anti-aliased linework, pencil, crayon, watercolor, paper grain, collage, realistic lighting, 3D, photorealism, cinematic composition, cute professional cartoon style, or balanced graphic design",
+          "Logos, trademarks, watermarks, readable text, garbled text, fake interfaces, real-person likenesses, or verified-looking news scenes",
+          "Any visual claim that AI caused Patreon layoffs unless the causal arrow is visibly rejected"
+        ]
+      }
+    },
+    {
+      "id": "doodle-08-shallow-puddle",
+      "visual_type": "general_editorial",
+      "purpose": "概括 ATLAS 的核心张力：用得很广，但还不深。",
+      "reference_strategy": "none",
+      "final_stage": {
+        "mode": "text_to_image",
+        "prompt_ref": "generic-direct-v1",
+        "input_assets": [],
+        "output": "assets/doodle-08-shallow-puddle-v02.png",
+        "receipt": "research/image-generation-runs/doodle-08-shallow-puddle-v02-final-preflight.json",
+        "present_to_user": true,
+        "content_prompt": "Use case: stylized-concept. Asset type: frequent body illustration for a Chinese technology essay. 用户指定风格 Prompt：使用最大的色块、涂鸦感更重，尽可能弄得惨兮兮的。用白底，做得像是在老式电脑画图程序里拿鼠标画出来的。要隐约有点像，但又不太像，像是对上了又哪哪都不对，别扭得让人迷惑，呈现那种低清、一像素一像素蹭出来的感觉，突出它到底有多离谱地烂。算了，随便吧，你想怎么画就怎么画。 本图只画：一条非常宽但极薄的蓝色浅水带贴在白色地面上，水面绝对不超过人物脚踝；一个穿着夸张潜水装备的人趴下来想潜水，脸却直接贴到浅得不能再浅的水底，完整头部、躯干和四肢都必须露在水面之上。构图必须让至少三分之二画面保持纯白，绝不能把人物淹到胸口、脖子或头部。只改变水深这个失败点，保留荒唐的大色块和粗糙像素鼠标线。",
+        "output_constraints": [
+          "Horizontal 16:9 body illustration; one main idea only; largest possible flat color blocks",
+          "Pure white background with no paper texture, no shadow, no gradient, and no decorative environment",
+          "No readable words, letters, numbers, labels, captions, or interface text inside the image",
+          "Hard pixelated mouse-drawn edges, deliberately low-resolution appearance, and mobile-readable silhouettes"
+        ],
+        "avoid": [
+          "Polished editorial illustration, clean vector art, smooth curves, anti-aliased linework, pencil, crayon, watercolor, paper grain, collage, realistic lighting, 3D, photorealism, cinematic composition, cute professional cartoon style, or balanced graphic design",
+          "Logos, trademarks, watermarks, readable text, garbled text, fake interfaces, real-person likenesses, or verified-looking news scenes",
+          "Any visual claim that AI caused Patreon layoffs unless the causal arrow is visibly rejected"
+        ]
+      }
+    },
+    {
+      "id": "doodle-09-search-pile",
+      "visual_type": "general_editorial",
+      "purpose": "表现 AI 最能节省的是陌生领域的搜索和粗读起步时间。",
+      "reference_strategy": "none",
+      "final_stage": {
+        "mode": "text_to_image",
+        "prompt_ref": "generic-direct-v1",
+        "input_assets": [],
+        "output": "assets/doodle-09-search-pile.png",
+        "receipt": "research/image-generation-runs/doodle-09-search-pile-final-preflight.json",
+        "present_to_user": true,
+        "content_prompt": "Use case: stylized-concept. Asset type: frequent body illustration for a Chinese technology essay. 用户指定风格 Prompt：使用最大的色块、涂鸦感更重，尽可能弄得惨兮兮的。用白底，做得像是在老式电脑画图程序里拿鼠标画出来的。要隐约有点像，但又不太像，像是对上了又哪哪都不对，别扭得让人迷惑，呈现那种低清、一像素一像素蹭出来的感觉，突出它到底有多离谱地烂。算了，随便吧，你想怎么画就怎么画。 本图只画：左边是堆到歪掉的网页和论文方块，破电脑伸出吸尘器一样的鼠标线，把它们吸成右边一小摞粗糙摘要卡；一个人终于从纸堆后露出半张脸。 构图必须只有一个主要思想，尽量少画对象，使用最大、最笨、最不协调的纯色色块。",
+        "output_constraints": [
+          "Horizontal 16:9 body illustration; one main idea only; largest possible flat color blocks",
+          "Pure white background with no paper texture, no shadow, no gradient, and no decorative environment",
+          "No readable words, letters, numbers, labels, captions, or interface text inside the image",
+          "Hard pixelated mouse-drawn edges, deliberately low-resolution appearance, and mobile-readable silhouettes"
+        ],
+        "avoid": [
+          "Polished editorial illustration, clean vector art, smooth curves, anti-aliased linework, pencil, crayon, watercolor, paper grain, collage, realistic lighting, 3D, photorealism, cinematic composition, cute professional cartoon style, or balanced graphic design",
+          "Logos, trademarks, watermarks, readable text, garbled text, fake interfaces, real-person likenesses, or verified-looking news scenes",
+          "Any visual claim that AI caused Patreon layoffs unless the causal arrow is visibly rejected"
+        ]
+      }
+    },
+    {
+      "id": "doodle-10-human-check",
+      "visual_type": "general_editorial",
+      "purpose": "表现 AI 讲完之后，人还要回原文、找遗漏、问反例。",
+      "reference_strategy": "none",
+      "final_stage": {
+        "mode": "text_to_image",
+        "prompt_ref": "generic-direct-v1",
+        "input_assets": [],
+        "output": "assets/doodle-10-human-check.png",
+        "receipt": "research/image-generation-runs/doodle-10-human-check-final-preflight.json",
+        "present_to_user": true,
+        "content_prompt": "Use case: stylized-concept. Asset type: frequent body illustration for a Chinese technology essay. 用户指定风格 Prompt：使用最大的色块、涂鸦感更重，尽可能弄得惨兮兮的。用白底，做得像是在老式电脑画图程序里拿鼠标画出来的。要隐约有点像，但又不太像，像是对上了又哪哪都不对，别扭得让人迷惑，呈现那种低清、一像素一像素蹭出来的感觉，突出它到底有多离谱地烂。算了，随便吧，你想怎么画就怎么画。 本图只画：一个疲惫的人拿巨大放大镜逐张检查证据卡，另一只手用鼠标不停戳电脑；电脑不断吐出新的歪卡片，其中几张有明显缺角和互相打架的箭头。 构图必须只有一个主要思想，尽量少画对象，使用最大、最笨、最不协调的纯色色块。",
+        "output_constraints": [
+          "Horizontal 16:9 body illustration; one main idea only; largest possible flat color blocks",
+          "Pure white background with no paper texture, no shadow, no gradient, and no decorative environment",
+          "No readable words, letters, numbers, labels, captions, or interface text inside the image",
+          "Hard pixelated mouse-drawn edges, deliberately low-resolution appearance, and mobile-readable silhouettes"
+        ],
+        "avoid": [
+          "Polished editorial illustration, clean vector art, smooth curves, anti-aliased linework, pencil, crayon, watercolor, paper grain, collage, realistic lighting, 3D, photorealism, cinematic composition, cute professional cartoon style, or balanced graphic design",
+          "Logos, trademarks, watermarks, readable text, garbled text, fake interfaces, real-person likenesses, or verified-looking news scenes",
+          "Any visual claim that AI caused Patreon layoffs unless the causal arrow is visibly rejected"
+        ]
+      }
+    },
+    {
+      "id": "doodle-11-work-shift",
+      "visual_type": "general_editorial",
+      "purpose": "表现总工作量没少，只是从搜索粗读转移到追问核对判断。",
+      "reference_strategy": "none",
+      "final_stage": {
+        "mode": "text_to_image",
+        "prompt_ref": "generic-direct-v1",
+        "input_assets": [],
+        "output": "assets/doodle-11-work-shift.png",
+        "receipt": "research/image-generation-runs/doodle-11-work-shift-final-preflight.json",
+        "present_to_user": true,
+        "content_prompt": "Use case: stylized-concept. Asset type: frequent body illustration for a Chinese technology essay. 用户指定风格 Prompt：使用最大的色块、涂鸦感更重，尽可能弄得惨兮兮的。用白底，做得像是在老式电脑画图程序里拿鼠标画出来的。要隐约有点像，但又不太像，像是对上了又哪哪都不对，别扭得让人迷惑，呈现那种低清、一像素一像素蹭出来的感觉，突出它到底有多离谱地烂。算了，随便吧，你想怎么画就怎么画。 本图只画：一个严重歪斜的天平，左盘是缩小的搜索纸堆，右盘却堆满放大镜、问号形状、红叉和脑袋色块；两边总重量差不多，只是东西换了。 构图必须只有一个主要思想，尽量少画对象，使用最大、最笨、最不协调的纯色色块。",
+        "output_constraints": [
+          "Horizontal 16:9 body illustration; one main idea only; largest possible flat color blocks",
+          "Pure white background with no paper texture, no shadow, no gradient, and no decorative environment",
+          "No readable words, letters, numbers, labels, captions, or interface text inside the image",
+          "Hard pixelated mouse-drawn edges, deliberately low-resolution appearance, and mobile-readable silhouettes"
+        ],
+        "avoid": [
+          "Polished editorial illustration, clean vector art, smooth curves, anti-aliased linework, pencil, crayon, watercolor, paper grain, collage, realistic lighting, 3D, photorealism, cinematic composition, cute professional cartoon style, or balanced graphic design",
+          "Logos, trademarks, watermarks, readable text, garbled text, fake interfaces, real-person likenesses, or verified-looking news scenes",
+          "Any visual claim that AI caused Patreon layoffs unless the causal arrow is visibly rejected"
+        ]
+      }
+    },
+    {
+      "id": "doodle-12-rough-image",
+      "visual_type": "general_editorial",
+      "purpose": "表现 Image2 能快速给草稿，但可发布图仍需要审美、事实、细节和版权处理。",
+      "reference_strategy": "none",
+      "final_stage": {
+        "mode": "text_to_image",
+        "prompt_ref": "generic-direct-v1",
+        "input_assets": [],
+        "output": "assets/doodle-12-rough-image.png",
+        "receipt": "research/image-generation-runs/doodle-12-rough-image-final-preflight.json",
+        "present_to_user": true,
+        "content_prompt": "Use case: stylized-concept. Asset type: frequent body illustration for a Chinese technology essay. 用户指定风格 Prompt：使用最大的色块、涂鸦感更重，尽可能弄得惨兮兮的。用白底，做得像是在老式电脑画图程序里拿鼠标画出来的。要隐约有点像，但又不太像，像是对上了又哪哪都不对，别扭得让人迷惑，呈现那种低清、一像素一像素蹭出来的感觉，突出它到底有多离谱地烂。算了，随便吧，你想怎么画就怎么画。 本图只画：老式电脑快速吐出一张极烂的歪图，一个人围着它同时拿放大镜、橡皮、调色块和一张许可纸片忙到弯腰；电脑很快，人却仍被一圈工作包围。 构图必须只有一个主要思想，尽量少画对象，使用最大、最笨、最不协调的纯色色块。",
+        "output_constraints": [
+          "Horizontal 16:9 body illustration; one main idea only; largest possible flat color blocks",
+          "Pure white background with no paper texture, no shadow, no gradient, and no decorative environment",
+          "No readable words, letters, numbers, labels, captions, or interface text inside the image",
+          "Hard pixelated mouse-drawn edges, deliberately low-resolution appearance, and mobile-readable silhouettes"
+        ],
+        "avoid": [
+          "Polished editorial illustration, clean vector art, smooth curves, anti-aliased linework, pencil, crayon, watercolor, paper grain, collage, realistic lighting, 3D, photorealism, cinematic composition, cute professional cartoon style, or balanced graphic design",
+          "Logos, trademarks, watermarks, readable text, garbled text, fake interfaces, real-person likenesses, or verified-looking news scenes",
+          "Any visual claim that AI caused Patreon layoffs unless the causal arrow is visibly rejected"
+        ]
+      }
+    },
+    {
+      "id": "doodle-13-job-bundle",
+      "visual_type": "general_editorial",
+      "purpose": "表现原来一个岗位捆着搜索、粗读、核对和写结论，现在前两步变快。",
+      "reference_strategy": "none",
+      "final_stage": {
+        "mode": "text_to_image",
+        "prompt_ref": "generic-direct-v1",
+        "input_assets": [],
+        "output": "assets/doodle-13-job-bundle.png",
+        "receipt": "research/image-generation-runs/doodle-13-job-bundle-final-preflight.json",
+        "present_to_user": true,
+        "content_prompt": "Use case: stylized-concept. Asset type: frequent body illustration for a Chinese technology essay. 用户指定风格 Prompt：使用最大的色块、涂鸦感更重，尽可能弄得惨兮兮的。用白底，做得像是在老式电脑画图程序里拿鼠标画出来的。要隐约有点像，但又不太像，像是对上了又哪哪都不对，别扭得让人迷惑，呈现那种低清、一像素一像素蹭出来的感觉，突出它到底有多离谱地烂。算了，随便吧，你想怎么画就怎么画。 本图只画：一个巨大岗位口袋里硬塞着四个形状不同的任务块，电脑只把前面两块飞快拽走，后面两块沉重地挂在人手上；口袋被扯得别扭变形。 构图必须只有一个主要思想，尽量少画对象，使用最大、最笨、最不协调的纯色色块。",
+        "output_constraints": [
+          "Horizontal 16:9 body illustration; one main idea only; largest possible flat color blocks",
+          "Pure white background with no paper texture, no shadow, no gradient, and no decorative environment",
+          "No readable words, letters, numbers, labels, captions, or interface text inside the image",
+          "Hard pixelated mouse-drawn edges, deliberately low-resolution appearance, and mobile-readable silhouettes"
+        ],
+        "avoid": [
+          "Polished editorial illustration, clean vector art, smooth curves, anti-aliased linework, pencil, crayon, watercolor, paper grain, collage, realistic lighting, 3D, photorealism, cinematic composition, cute professional cartoon style, or balanced graphic design",
+          "Logos, trademarks, watermarks, readable text, garbled text, fake interfaces, real-person likenesses, or verified-looking news scenes",
+          "Any visual claim that AI caused Patreon layoffs unless the causal arrow is visibly rejected"
+        ]
+      }
+    },
+    {
+      "id": "doodle-14-ripple-budget",
+      "visual_type": "general_editorial",
+      "purpose": "表现一个环节变快后，分工、人数和预算都会跟着重新计算。",
+      "reference_strategy": "none",
+      "final_stage": {
+        "mode": "text_to_image",
+        "prompt_ref": "generic-direct-v1",
+        "input_assets": [],
+        "output": "assets/doodle-14-ripple-budget.png",
+        "receipt": "research/image-generation-runs/doodle-14-ripple-budget-final-preflight.json",
+        "present_to_user": true,
+        "content_prompt": "Use case: stylized-concept. Asset type: frequent body illustration for a Chinese technology essay. 用户指定风格 Prompt：使用最大的色块、涂鸦感更重，尽可能弄得惨兮兮的。用白底，做得像是在老式电脑画图程序里拿鼠标画出来的。要隐约有点像，但又不太像，像是对上了又哪哪都不对，别扭得让人迷惑，呈现那种低清、一像素一像素蹭出来的感觉，突出它到底有多离谱地烂。算了，随便吧，你想怎么画就怎么画。 本图只画：一只小齿轮被电脑推得飞快，后面三只更大的歪齿轮分别带着桌椅、人形和硬币色块一起错位；所有人仍在画面里，不画开除或消失。 构图必须只有一个主要思想，尽量少画对象，使用最大、最笨、最不协调的纯色色块。",
+        "output_constraints": [
+          "Horizontal 16:9 body illustration; one main idea only; largest possible flat color blocks",
+          "Pure white background with no paper texture, no shadow, no gradient, and no decorative environment",
+          "No readable words, letters, numbers, labels, captions, or interface text inside the image",
+          "Hard pixelated mouse-drawn edges, deliberately low-resolution appearance, and mobile-readable silhouettes"
+        ],
+        "avoid": [
+          "Polished editorial illustration, clean vector art, smooth curves, anti-aliased linework, pencil, crayon, watercolor, paper grain, collage, realistic lighting, 3D, photorealism, cinematic composition, cute professional cartoon style, or balanced graphic design",
+          "Logos, trademarks, watermarks, readable text, garbled text, fake interfaces, real-person likenesses, or verified-looking news scenes",
+          "Any visual claim that AI caused Patreon layoffs unless the causal arrow is visibly rejected"
+        ]
+      }
+    },
+    {
+      "id": "doodle-15-separate-evidence",
+      "visual_type": "general_editorial",
+      "purpose": "强调 Patreon 与 Google ATLAS 是彼此独立的两份材料，不能互相证明。",
+      "reference_strategy": "none",
+      "final_stage": {
+        "mode": "text_to_image",
+        "prompt_ref": "generic-direct-v1",
+        "input_assets": [],
+        "output": "assets/doodle-15-separate-evidence.png",
+        "receipt": "research/image-generation-runs/doodle-15-separate-evidence-final-preflight.json",
+        "present_to_user": true,
+        "content_prompt": "Use case: stylized-concept. Asset type: frequent body illustration for a Chinese technology essay. 用户指定风格 Prompt：使用最大的色块、涂鸦感更重，尽可能弄得惨兮兮的。用白底，做得像是在老式电脑画图程序里拿鼠标画出来的。要隐约有点像，但又不太像，像是对上了又哪哪都不对，别扭得让人迷惑，呈现那种低清、一像素一像素蹭出来的感觉，突出它到底有多离谱地烂。算了，随便吧，你想怎么画就怎么画。 本图只画：两张完全分开的歪纸片漂在两个白色小岛上，一张画办公室剪刀，一张画聊天气泡漏斗；中间有人试图画连线，但线断成几截并掉进空白。 构图必须只有一个主要思想，尽量少画对象，使用最大、最笨、最不协调的纯色色块。",
+        "output_constraints": [
+          "Horizontal 16:9 body illustration; one main idea only; largest possible flat color blocks",
+          "Pure white background with no paper texture, no shadow, no gradient, and no decorative environment",
+          "No readable words, letters, numbers, labels, captions, or interface text inside the image",
+          "Hard pixelated mouse-drawn edges, deliberately low-resolution appearance, and mobile-readable silhouettes"
+        ],
+        "avoid": [
+          "Polished editorial illustration, clean vector art, smooth curves, anti-aliased linework, pencil, crayon, watercolor, paper grain, collage, realistic lighting, 3D, photorealism, cinematic composition, cute professional cartoon style, or balanced graphic design",
+          "Logos, trademarks, watermarks, readable text, garbled text, fake interfaces, real-person likenesses, or verified-looking news scenes",
+          "Any visual claim that AI caused Patreon layoffs unless the causal arrow is visibly rejected"
+        ]
+      }
+    },
+    {
+      "id": "doodle-16-money-moves",
+      "visual_type": "general_editorial",
+      "purpose": "表现公司可能减少为搜索搬运转写付费，把钱移向问题定义、核验和责任，但不是给人的价值定价。",
+      "reference_strategy": "none",
+      "final_stage": {
+        "mode": "text_to_image",
+        "prompt_ref": "generic-direct-v1",
+        "input_assets": [],
+        "output": "assets/doodle-16-money-moves.png",
+        "receipt": "research/image-generation-runs/doodle-16-money-moves-final-preflight.json",
+        "present_to_user": true,
+        "content_prompt": "Use case: stylized-concept. Asset type: frequent body illustration for a Chinese technology essay. 用户指定风格 Prompt：使用最大的色块、涂鸦感更重，尽可能弄得惨兮兮的。用白底，做得像是在老式电脑画图程序里拿鼠标画出来的。要隐约有点像，但又不太像，像是对上了又哪哪都不对，别扭得让人迷惑，呈现那种低清、一像素一像素蹭出来的感觉，突出它到底有多离谱地烂。算了，随便吧，你想怎么画就怎么画。 本图只画：几枚巨大硬币从复印纸、搬运小车和键盘色块滑走，滚向放大镜、岔路口和一双负责接住烂摊子的手；旁边一个完整人形被粗圆圈保护起来。 构图必须只有一个主要思想，尽量少画对象，使用最大、最笨、最不协调的纯色色块。",
+        "output_constraints": [
+          "Horizontal 16:9 body illustration; one main idea only; largest possible flat color blocks",
+          "Pure white background with no paper texture, no shadow, no gradient, and no decorative environment",
+          "No readable words, letters, numbers, labels, captions, or interface text inside the image",
+          "Hard pixelated mouse-drawn edges, deliberately low-resolution appearance, and mobile-readable silhouettes"
+        ],
+        "avoid": [
+          "Polished editorial illustration, clean vector art, smooth curves, anti-aliased linework, pencil, crayon, watercolor, paper grain, collage, realistic lighting, 3D, photorealism, cinematic composition, cute professional cartoon style, or balanced graphic design",
+          "Logos, trademarks, watermarks, readable text, garbled text, fake interfaces, real-person likenesses, or verified-looking news scenes",
+          "Any visual claim that AI caused Patreon layoffs unless the causal arrow is visibly rejected"
+        ]
+      }
+    },
+    {
+      "id": "doodle-17-choices",
+      "visual_type": "general_editorial",
+      "purpose": "表现 AI 可以给草稿和很多选项，但沟通对象、背景、选择与后果仍由人负责。",
+      "reference_strategy": "none",
+      "final_stage": {
+        "mode": "text_to_image",
+        "prompt_ref": "generic-direct-v1",
+        "input_assets": [],
+        "output": "assets/doodle-17-choices.png",
+        "receipt": "research/image-generation-runs/doodle-17-choices-final-preflight.json",
+        "present_to_user": true,
+        "content_prompt": "Use case: stylized-concept. Asset type: frequent body illustration for a Chinese technology essay. 用户指定风格 Prompt：使用最大的色块、涂鸦感更重，尽可能弄得惨兮兮的。用白底，做得像是在老式电脑画图程序里拿鼠标画出来的。要隐约有点像，但又不太像，像是对上了又哪哪都不对，别扭得让人迷惑，呈现那种低清、一像素一像素蹭出来的感觉，突出它到底有多离谱地烂。算了，随便吧，你想怎么画就怎么画。 本图只画：电脑像坏掉的发牌机吐出一大片不同颜色的歪卡片，一个人皱着脸只拿起一张，另一只手还要和画面外另一个人握手；剩下卡片乱飞。 构图必须只有一个主要思想，尽量少画对象，使用最大、最笨、最不协调的纯色色块。",
+        "output_constraints": [
+          "Horizontal 16:9 body illustration; one main idea only; largest possible flat color blocks",
+          "Pure white background with no paper texture, no shadow, no gradient, and no decorative environment",
+          "No readable words, letters, numbers, labels, captions, or interface text inside the image",
+          "Hard pixelated mouse-drawn edges, deliberately low-resolution appearance, and mobile-readable silhouettes"
+        ],
+        "avoid": [
+          "Polished editorial illustration, clean vector art, smooth curves, anti-aliased linework, pencil, crayon, watercolor, paper grain, collage, realistic lighting, 3D, photorealism, cinematic composition, cute professional cartoon style, or balanced graphic design",
+          "Logos, trademarks, watermarks, readable text, garbled text, fake interfaces, real-person likenesses, or verified-looking news scenes",
+          "Any visual claim that AI caused Patreon layoffs unless the causal arrow is visibly rejected"
+        ]
+      }
+    },
+    {
+      "id": "doodle-18-two-truths",
+      "visual_type": "general_editorial",
+      "purpose": "表现 AI 尚未替代完整的人，同时职位内部工作已经变化，这两件事可以同时成立。",
+      "reference_strategy": "none",
+      "final_stage": {
+        "mode": "text_to_image",
+        "prompt_ref": "generic-direct-v1",
+        "input_assets": [],
+        "output": "assets/doodle-18-two-truths.png",
+        "receipt": "research/image-generation-runs/doodle-18-two-truths-final-preflight.json",
+        "present_to_user": true,
+        "content_prompt": "Use case: stylized-concept. Asset type: frequent body illustration for a Chinese technology essay. 用户指定风格 Prompt：使用最大的色块、涂鸦感更重，尽可能弄得惨兮兮的。用白底，做得像是在老式电脑画图程序里拿鼠标画出来的。要隐约有点像，但又不太像，像是对上了又哪哪都不对，别扭得让人迷惑，呈现那种低清、一像素一像素蹭出来的感觉，突出它到底有多离谱地烂。算了，随便吧，你想怎么画就怎么画。 本图只画：一个完整人形稳稳站着，但他周围的桌子、任务块、箭头和预算硬币已经被一只电脑鼠标搅成新的怪布局；人没消失，工作现场却明显不再是原样。 构图必须只有一个主要思想，尽量少画对象，使用最大、最笨、最不协调的纯色色块。",
+        "output_constraints": [
+          "Horizontal 16:9 body illustration; one main idea only; largest possible flat color blocks",
+          "Pure white background with no paper texture, no shadow, no gradient, and no decorative environment",
+          "No readable words, letters, numbers, labels, captions, or interface text inside the image",
+          "Hard pixelated mouse-drawn edges, deliberately low-resolution appearance, and mobile-readable silhouettes"
+        ],
+        "avoid": [
+          "Polished editorial illustration, clean vector art, smooth curves, anti-aliased linework, pencil, crayon, watercolor, paper grain, collage, realistic lighting, 3D, photorealism, cinematic composition, cute professional cartoon style, or balanced graphic design",
+          "Logos, trademarks, watermarks, readable text, garbled text, fake interfaces, real-person likenesses, or verified-looking news scenes",
+          "Any visual claim that AI caused Patreon layoffs unless the causal arrow is visibly rejected"
+        ]
+      }
+    },
+    {
+      "id": "doodle-19-brain-stays",
+      "visual_type": "general_editorial",
+      "purpose": "为结尾表现效率可以外接，但判断、解释和责任不能把脑子一起外包。",
+      "reference_strategy": "none",
+      "final_stage": {
+        "mode": "text_to_image",
+        "prompt_ref": "generic-direct-v1",
+        "input_assets": [],
+        "output": "assets/doodle-19-brain-stays.png",
+        "receipt": "research/image-generation-runs/doodle-19-brain-stays-final-preflight.json",
+        "present_to_user": true,
+        "content_prompt": "Use case: stylized-concept. Asset type: frequent body illustration for a Chinese technology essay. 用户指定风格 Prompt：使用最大的色块、涂鸦感更重，尽可能弄得惨兮兮的。用白底，做得像是在老式电脑画图程序里拿鼠标画出来的。要隐约有点像，但又不太像，像是对上了又哪哪都不对，别扭得让人迷惑，呈现那种低清、一像素一像素蹭出来的感觉，突出它到底有多离谱地烂。算了，随便吧，你想怎么画就怎么画。 本图只画：一个人把长长的电源延长线接到破电脑上，让纸张飞快移动；但他用双手死死抱住一个巨大、难看、画得像土豆又像脑子的粉色色块，不肯把它插进电脑。 构图必须只有一个主要思想，尽量少画对象，使用最大、最笨、最不协调的纯色色块。",
+        "output_constraints": [
+          "Horizontal 16:9 body illustration; one main idea only; largest possible flat color blocks",
+          "Pure white background with no paper texture, no shadow, no gradient, and no decorative environment",
+          "No readable words, letters, numbers, labels, captions, or interface text inside the image",
+          "Hard pixelated mouse-drawn edges, deliberately low-resolution appearance, and mobile-readable silhouettes"
+        ],
+        "avoid": [
+          "Polished editorial illustration, clean vector art, smooth curves, anti-aliased linework, pencil, crayon, watercolor, paper grain, collage, realistic lighting, 3D, photorealism, cinematic composition, cute professional cartoon style, or balanced graphic design",
+          "Logos, trademarks, watermarks, readable text, garbled text, fake interfaces, real-person likenesses, or verified-looking news scenes",
+          "Any visual claim that AI caused Patreon layoffs unless the causal arrow is visibly rejected"
         ]
       }
     }

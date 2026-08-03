@@ -1,0 +1,426 @@
+{
+  "schema_version": 1,
+  "updated": "2026-07-30",
+  "project_adapter": "generic",
+  "profile_registry": "共享/运营/SOP/笨拙涂鸦风格档案.json",
+  "image_budget": {
+    "default_total_body_images_min": 6,
+    "default_total_body_images_max": 16,
+    "counting_rule": "The body may use 16 images after two explicit user-requested additions: three attributed X screenshots, one licensed Nature figure, seven existing clumsy doodles, and five new gate-summary doodles. Each of the five research questions receives one single-relationship visual. The four neuromodulator roles remain separate labeled doodles. The earlier combined-role doodle and feedback-filter doodle remain unused candidates."
+  },
+  "style_policy": {
+    "profile": "clumsy-doodle-v1",
+    "scope": "task",
+    "new_image_strategy": "direct",
+    "allow_final_text_to_image": true
+  },
+  "tasks": [
+    {
+      "id": "cover-superintelligent-teen",
+      "visual_type": "general_editorial",
+      "purpose": "用一个会进入世界继续成长、但保留回头路的 AI 少年收束全文，并兼作微信封面。",
+      "reference_strategy": "none",
+      "final_stage": {
+        "mode": "text_to_image",
+        "prompt_ref": "clumsy-doodle-v1",
+        "prompt_sha256": "e4160da75ebd48f1e8625b61eb840195a66c833dd8373ac61155159826cc2a65",
+        "input_assets": [],
+        "output": "assets/cover-superintelligent-teen-doodle.png",
+        "receipt": "research/image-generation-runs/cover-superintelligent-teen-final-preflight.json",
+        "present_to_user": true,
+        "preserve": [
+          "只画一个瘦长、年轻但非真实人物的 AI 少年背着小包走进复杂世界；身后保留一条清楚、可以返回的路。"
+        ],
+        "output_constraints": [
+          "Horizontal 16:9 composition usable as a WeChat cover and body illustration; one main figure and one path only",
+          "Pure white background with no texture, shadow, gradient, interface, skyline, or decorative environment",
+          "No readable words, letters, numbers, labels, captions, logos, or watermarks inside the image",
+          "Hard pixelated mouse-drawn edges, deliberately low-resolution appearance, awkward proportions, black outlines, and only a few flat red, blue, yellow, and gray color blocks"
+        ],
+        "avoid": [
+          "Polished editorial illustration, clean vector art, smooth curves, anti-aliased linework, pencil, crayon, watercolor, paper grain, collage, realistic lighting, 3D, photorealism, cinematic composition, cute professional cartoon style, or balanced graphic design",
+          "Real-person likeness, realistic child, school uniform, superhero pose, logos, trademarks, readable text, fake interface, or verified-looking news scene",
+          "A triumphant ending; the mood should remain curious and slightly uncertain"
+        ]
+      }
+    },
+    {
+      "id": "ai-colleague-three-years",
+      "visual_type": "general_editorial",
+      "purpose": "把第一天很聪明与工作三年后是否真正成长的疑问变成开场画面。",
+      "reference_strategy": "none",
+      "final_stage": {
+        "mode": "text_to_image",
+        "prompt_ref": "clumsy-doodle-v1",
+        "prompt_sha256": "e4160da75ebd48f1e8625b61eb840195a66c833dd8373ac61155159826cc2a65",
+        "input_assets": [],
+        "output": "assets/ai-colleague-three-years-doodle.png",
+        "receipt": "research/image-generation-runs/ai-colleague-three-years-final-preflight.json",
+        "present_to_user": true,
+        "preserve": [
+          "只画同一个小机器人同事在一条短时间线上出现两次：左边第一天在干净工位前很能干，右边三年后被大量无字便签包围、停下来思考；两端用一条笨拙弯线连接。"
+        ],
+        "output_constraints": [
+          "Horizontal 16:9 body illustration; one before-and-after relationship only; mobile-readable silhouettes",
+          "Pure white background with no texture, shadow, gradient, office scenery, or decorative environment",
+          "No readable words, letters, numbers, labels, captions, clocks, calendars, logos, or watermarks inside the image",
+          "Hard pixelated mouse-drawn edges, deliberately low-resolution appearance, awkward proportions, black outlines, and a few flat red, blue, yellow, and gray color blocks"
+        ],
+        "avoid": [
+          "Polished editorial illustration, clean vector art, smooth curves, anti-aliased linework, pencil, crayon, watercolor, paper grain, collage, realistic lighting, 3D, photorealism, cinematic composition, cute professional cartoon style, or balanced graphic design",
+          "Real-person likenesses, brand marks, readable sticky-note text, fake interface, realistic corporate office, or verified-looking news scene",
+          "Showing that the robot definitely improves or definitely fails; preserve the open question"
+        ]
+      }
+    },
+    {
+      "id": "learning-governance-gates",
+      "visual_type": "general_editorial",
+      "purpose": "用一条无字流程表现经验先暂存、再筛选、最后少量写入长期能力。",
+      "reference_strategy": "none",
+      "final_stage": {
+        "mode": "text_to_image",
+        "prompt_ref": "clumsy-doodle-v1",
+        "prompt_sha256": "e4160da75ebd48f1e8625b61eb840195a66c833dd8373ac61155159826cc2a65",
+        "input_assets": [],
+        "output": "assets/learning-governance-gates-doodle.png",
+        "receipt": "research/image-generation-runs/learning-governance-gates-final-preflight.json",
+        "present_to_user": true,
+        "preserve": [
+          "只画一条从左到右的关系：很多杂乱无字便签先落进临时托盘，经过一个粗糙漏斗后，只有两三张进入右侧厚重的无字手册。"
+        ],
+        "output_constraints": [
+          "Horizontal 16:9 body illustration; one left-to-right filtering relationship only; very large flat shapes",
+          "Pure white background with no texture, shadow, gradient, room, desk, or decorative environment",
+          "No readable words, letters, numbers, labels, captions, arrows with text, logos, or watermarks inside the image",
+          "Hard pixelated mouse-drawn edges, deliberately low-resolution appearance, awkward geometry, black outlines, and a few flat red, blue, yellow, and gray color blocks"
+        ],
+        "avoid": [
+          "Polished infographic, clean vector art, smooth curves, anti-aliased linework, pencil, crayon, watercolor, paper grain, collage, realistic lighting, 3D, photorealism, cinematic composition, cute professional cartoon style, or balanced graphic design",
+          "Brain anatomy, neurons, flowchart labels, logos, trademarks, readable text, fake interface, or realistic documents",
+          "Implying that the three-stage flow is a proven SSI architecture"
+        ]
+      }
+    },
+    {
+      "id": "feedback-filter",
+      "visual_type": "general_editorial",
+      "purpose": "表现模型面对互相冲突的反馈时不能全部照单全收。",
+      "reference_strategy": "none",
+      "final_stage": {
+        "mode": "text_to_image",
+        "prompt_ref": "clumsy-doodle-v1",
+        "prompt_sha256": "e4160da75ebd48f1e8625b61eb840195a66c833dd8373ac61155159826cc2a65",
+        "input_assets": [],
+        "output": "assets/feedback-filter-doodle.png",
+        "receipt": "research/image-generation-runs/feedback-filter-final-preflight.json",
+        "present_to_user": true,
+        "preserve": [
+          "只画一个小机器人停在原地，面对三股互相冲突的无字反馈符号；它用一个手持粗糙筛网挡住两股，只让一股通过。"
+        ],
+        "output_constraints": [
+          "Horizontal 16:9 body illustration; one robot, three incoming signals, and one filter only; mobile-readable silhouettes",
+          "Pure white background with no texture, shadow, gradient, interface, room, or decorative environment",
+          "No readable words, letters, numbers, labels, captions, logos, or watermarks inside the image",
+          "Hard pixelated mouse-drawn edges, deliberately low-resolution appearance, awkward proportions, black outlines, and a few flat red, blue, yellow, and gray color blocks"
+        ],
+        "avoid": [
+          "Polished infographic, clean vector art, smooth curves, anti-aliased linework, pencil, crayon, watercolor, paper grain, collage, realistic lighting, 3D, photorealism, cinematic composition, cute professional cartoon style, or balanced graphic design",
+          "Human faces, brand marks, thumbs-up icons, readable chat bubbles, fake interface, or verified-looking news scene",
+          "Showing a specific algorithm or claiming the accepted feedback is certainly correct"
+        ]
+      }
+    },
+    {
+      "id": "neuromodulator-auditors",
+      "visual_type": "general_editorial",
+      "purpose": "用四个荒诞审核员把四种神经调质与模型学习角色的对应关系压成一眼能懂的正文图。",
+      "reference_strategy": "none",
+      "final_stage": {
+        "mode": "text_to_image",
+        "prompt_ref": "clumsy-doodle-v1",
+        "prompt_sha256": "e4160da75ebd48f1e8625b61eb840195a66c833dd8373ac61155159826cc2a65",
+        "input_assets": [],
+        "output": "assets/neuromodulator-auditors-doodle.png",
+        "receipt": "research/image-generation-runs/neuromodulator-auditors-final-preflight.json",
+        "present_to_user": true,
+        "preserve": [
+          "本图只画：一个小 AI 同事面前并排坐着四个惨兮兮、比例别扭的审核员；第一个抱着歪斜记分牌比较预期与结果，第二个拿着破日历和过长望远镜看近处与远处，第三个站在乱七八糟的岔路口旁抛一颗歪骰子，第四个用过大的手拧一个忽大忽小的更新旋钮。四个角色共同表达报分、看多远、探索、改多少这一个对应关系。"
+        ],
+        "output_constraints": [
+          "Horizontal 16:9 WeChat body illustration; four huge flat character blocks in a simple left-to-right row; one tiny AI colleague; mobile-readable silhouettes",
+          "Pure white background; no texture, shadow, gradient, room, anatomy diagram, interface, or decorative scenery",
+          "No readable words, letters, numbers, chemical names, captions, logos, or watermarks inside the image; use only crude props and at most plus/minus-like abstract marks",
+          "Extremely clumsy old-computer paint-program look: hard one-pixel stair-step edges, visibly mouse-drawn black outlines, low-resolution feel, awkward spacing, deliberately wrong proportions, and a few enormous flat red, blue, yellow, gray, and sickly green color blocks",
+          "The picture should feel mysteriously almost correct yet visibly off, bleak, embarrassing, and confusing rather than polished or cute"
+        ],
+        "avoid": [
+          "Polished infographic, clean vector art, smooth curves, anti-aliased linework, pencil, crayon, watercolor, paper grain, collage, realistic lighting, 3D, photorealism, cinematic composition, professional cartoon style, or balanced graphic design",
+          "Readable labels, garbled pseudo-text, arrows with words, UI panels, logos, trademarks, real human likenesses, realistic brain anatomy, neurons, or medical illustration",
+          "Showing the four mappings as settled biological facts or implying SSI has implemented them"
+        ]
+      }
+    },
+    {
+      "id": "dopamine-scorekeeper",
+      "visual_type": "general_editorial",
+      "purpose": "单独表现多巴胺像报分员，把实际结果与预期之间的落差变成继续或改向的信号。",
+      "reference_strategy": "none",
+      "final_stage": {
+        "mode": "text_to_image",
+        "prompt_ref": "clumsy-doodle-v1",
+        "prompt_sha256": "e4160da75ebd48f1e8625b61eb840195a66c833dd8373ac61155159826cc2a65",
+        "input_assets": [],
+        "output": "assets/dopamine-scorekeeper-doodle.png",
+        "receipt": "research/image-generation-runs/dopamine-scorekeeper-final-preflight.json",
+        "present_to_user": true,
+        "preserve": [
+          "本图只画：一个巨大、惨兮兮的红色报分员面对一台歪斜比较器，一边是半透明的预期高度，另一边是实际结果高度，两者之间有非常明显的落差；报分员一只手指向继续的循环箭头，另一只手指向换方向的弯箭头；一个很小的 AI 同事站在下面等待判分。画面左上角清楚写唯一中文标签「多巴胺」。"
+        ],
+        "output_constraints": [
+          "Horizontal 16:9 WeChat body illustration; one huge red scorekeeper, one oversized expected-versus-actual comparison object, and one tiny AI colleague only",
+          "Pure white background; no texture, shadow, gradient, room, interface, anatomy, or decorative scenery",
+          "The exact Chinese label 多巴胺 must appear in the upper-left corner, large and clean enough to read on mobile; the tiny robot colleague may carry one small AI mark; no other words, letters, numbers, captions, logos, or watermarks; only crude plus/minus-like marks and arrows without text",
+          "Extremely clumsy old-computer paint-program look with hard one-pixel stair-step edges, visibly mouse-drawn black outlines, low-resolution feel, wrong proportions, and enormous flat red, gray, blue, and dirty yellow blocks"
+        ],
+        "avoid": [
+          "Polished infographic, clean vector art, smooth curves, anti-aliased linework, pencil, crayon, watercolor, paper grain, realistic lighting, 3D, photorealism, cute cartoon, or balanced design",
+          "Readable score numbers, charts with labels, UI panels, logos, real human likenesses, brains, neurons, or medical illustration",
+          "Showing dopamine as pleasure itself; the only visual claim is the gap between expected and actual result guiding repeat or change"
+        ]
+      }
+    },
+    {
+      "id": "serotonin-time-horizon",
+      "visual_type": "general_editorial",
+      "purpose": "单独表现血清素像看日历的人，在眼前小奖励与远处长期结果之间决定看多远。",
+      "reference_strategy": "none",
+      "final_stage": {
+        "mode": "text_to_image",
+        "prompt_ref": "clumsy-doodle-v1",
+        "prompt_sha256": "e4160da75ebd48f1e8625b61eb840195a66c833dd8373ac61155159826cc2a65",
+        "input_assets": [],
+        "output": "assets/serotonin-time-horizon-doodle.png",
+        "receipt": "research/image-generation-runs/serotonin-time-horizon-final-preflight.json",
+        "present_to_user": true,
+        "preserve": [
+          "本图只画：一个巨大、惨兮兮的蓝色审核员拿着破日历和过长望远镜；近处有一个很小但闪亮的即时奖励，远处地平线上有一个朴素但更大的长期成果；一个很小的 AI 同事正要扑向近处奖励，审核员笨拙地把望远镜转向远处。画面左上角清楚写唯一中文标签「血清素」。"
+        ],
+        "output_constraints": [
+          "Horizontal 16:9 WeChat body illustration; one huge blue time-horizon auditor, one tiny near reward, one distant durable outcome, and one tiny AI colleague only",
+          "Pure white background; no texture, shadow, gradient, room, interface, anatomy, or decorative scenery beyond a single crude horizon line",
+          "The only readable text is the exact Chinese label 血清素 in the upper-left corner, large and clean enough to read on mobile; no other words, letters, numbers, dates, captions, logos, or watermarks; calendar must contain only blank crooked boxes",
+          "Extremely clumsy old-computer paint-program look with hard one-pixel stair-step edges, visibly mouse-drawn black outlines, low-resolution feel, wrong scale, and enormous flat blue, red, gray, and dirty yellow blocks"
+        ],
+        "avoid": [
+          "Polished infographic, clean vector art, smooth curves, anti-aliased linework, pencil, crayon, watercolor, paper grain, realistic lighting, 3D, photorealism, cute cartoon, or balanced design",
+          "Readable dates, clocks with numbers, UI timelines, logos, real human likenesses, brains, neurons, or medical illustration",
+          "Showing serotonin as happiness; the only visual claim is choosing how much weight to give near versus distant outcomes"
+        ]
+      }
+    },
+    {
+      "id": "norepinephrine-explorer",
+      "visual_type": "general_editorial",
+      "purpose": "单独表现去甲肾上腺素像探路员，在重复熟路与随机探索新路之间调节选择。",
+      "reference_strategy": "none",
+      "final_stage": {
+        "mode": "text_to_image",
+        "prompt_ref": "clumsy-doodle-v1",
+        "prompt_sha256": "e4160da75ebd48f1e8625b61eb840195a66c833dd8373ac61155159826cc2a65",
+        "input_assets": [],
+        "output": "assets/norepinephrine-explorer-doodle.png",
+        "receipt": "research/image-generation-runs/norepinephrine-explorer-final-preflight.json",
+        "present_to_user": true,
+        "preserve": [
+          "本图只画：一个巨大、惨兮兮的黄色探路员站在歪斜岔路口抛一颗变形骰子；左边是一条被踩烂、不断绕圈的熟路，右边是一条陌生但仍可走的新路；一个很小的 AI 同事卡在路口，不知道该继续重复还是试新路。画面左上角清楚写唯一中文标签「去甲肾上腺素」。"
+        ],
+        "output_constraints": [
+          "Horizontal 16:9 WeChat body illustration; one huge yellow explorer, one clear two-way fork, one crude die, and one tiny AI colleague only",
+          "Pure white background; no texture, shadow, gradient, room, interface, anatomy, or decorative landscape",
+          "The only readable text is the exact Chinese label 去甲肾上腺素 in the upper-left corner, large and clean enough to read on mobile; no other words, letters, numbers, captions, road signs, logos, or watermarks; die may use crude dots only",
+          "Extremely clumsy old-computer paint-program look with hard one-pixel stair-step edges, visibly mouse-drawn black outlines, low-resolution feel, awkward fork geometry, and enormous flat yellow, gray, red, and blue blocks"
+        ],
+        "avoid": [
+          "Polished infographic, clean vector art, smooth curves, anti-aliased linework, pencil, crayon, watercolor, paper grain, realistic lighting, 3D, photorealism, cute cartoon, or balanced design",
+          "Readable signs, mazes with labels, UI controls, logos, real human likenesses, brains, neurons, or medical illustration",
+          "Making the new road obviously correct; the image should show the tension between no exploration and random exploration"
+        ]
+      }
+    },
+    {
+      "id": "acetylcholine-learning-rate",
+      "visual_type": "general_editorial",
+      "purpose": "单独表现乙酰胆碱像更新员，通过学习率决定一次错误让模型改变多少。",
+      "reference_strategy": "none",
+      "final_stage": {
+        "mode": "text_to_image",
+        "prompt_ref": "clumsy-doodle-v1",
+        "prompt_sha256": "e4160da75ebd48f1e8625b61eb840195a66c833dd8373ac61155159826cc2a65",
+        "input_assets": [],
+        "output": "assets/acetylcholine-learning-rate-doodle.png",
+        "receipt": "research/image-generation-runs/acetylcholine-learning-rate-final-preflight.json",
+        "present_to_user": true,
+        "preserve": [
+          "本图只画：一个巨大、惨兮兮的绿色更新员用两只过大的手拧一只荒唐的大旋钮；旋钮太小时，一大摞无字纠错便签也推不动一本厚手册，旋钮太大时，一张无字投诉便签就把整本手册扯得四分五裂；一个很小的 AI 同事夹在两种极端之间。画面左上角清楚写唯一中文标签「乙酰胆碱」。"
+        ],
+        "output_constraints": [
+          "Horizontal 16:9 WeChat body illustration; one huge green update auditor, one absurd central knob, one thick blank manual, two clear extreme outcomes, and one tiny AI colleague",
+          "Pure white background; no texture, shadow, gradient, room, interface, anatomy, or decorative scenery",
+          "The only readable text is the exact Chinese label 乙酰胆碱 in the upper-left corner, large and clean enough to read on mobile; no other words, letters, numbers, captions, knob labels, logos, or watermarks; all notes and manual pages blank",
+          "Extremely clumsy old-computer paint-program look with hard one-pixel stair-step edges, visibly mouse-drawn black outlines, low-resolution feel, grotesque hands, and enormous flat sickly green, red, gray, blue, and dirty yellow blocks"
+        ],
+        "avoid": [
+          "Polished infographic, clean vector art, smooth curves, anti-aliased linework, pencil, crayon, watercolor, paper grain, realistic lighting, 3D, photorealism, cute cartoon, or balanced design",
+          "Any other readable labels, UI sliders, speedometers with numbers, logos, real human likenesses, brains, neurons, or medical illustration",
+          "Showing one universally correct learning rate; the visual claim is only that too little barely changes and too much changes destructively"
+        ]
+      }
+    },
+    {
+      "id": "gate-01-temporary-learning",
+      "visual_type": "general_editorial",
+      "purpose": "表现 AI 看着少量范例可以临时上手，但范例撤走后不一定真正留下能力。",
+      "reference_strategy": "none",
+      "final_stage": {
+        "mode": "text_to_image",
+        "prompt_ref": "clumsy-doodle-v1",
+        "prompt_sha256": "e4160da75ebd48f1e8625b61eb840195a66c833dd8373ac61155159826cc2a65",
+        "input_assets": [],
+        "output": "assets/gate-01-example-vs-learning-doodle.png",
+        "receipt": "research/image-generation-runs/gate-01-temporary-learning-final-preflight.json",
+        "present_to_user": true,
+        "preserve": [
+          "本图只画：同一个小 AI 同事先摊着三张无字范本照着拼出第四张，随后一只粗糙大手抽走三张范本，第四张立刻散成不匹配的碎片；只表达临时上手不等于真正学会。"
+        ],
+        "output_constraints": [
+          "Horizontal 16:9 WeChat body illustration; one before-and-after relationship only; very large flat shapes and mobile-readable silhouettes",
+          "Pure white background with no texture, shadow, gradient, room, desk scenery, interface, or decorative environment",
+          "No readable words, letters, numbers, labels, captions, logos, or watermarks inside the image; every example sheet must be blank except for crude colored shapes",
+          "Hard pixelated mouse-drawn edges, deliberately low-resolution appearance, awkward proportions, black outlines, and only a few flat red, blue, yellow, and gray color blocks"
+        ],
+        "avoid": [
+          "Polished infographic, clean vector art, smooth curves, anti-aliased linework, pencil, crayon, watercolor, paper grain, collage, realistic lighting, 3D, photorealism, cinematic composition, cute professional cartoon style, or balanced graphic design",
+          "Readable template text, classroom labels, UI panels, logos, trademarks, real human likenesses, brains, neurons, or verified-looking news scenes",
+          "Showing parameter updates or claiming that few-shot performance proves durable learning"
+        ]
+      }
+    },
+    {
+      "id": "gate-02-external-verification",
+      "visual_type": "general_editorial",
+      "purpose": "表现 AI 不能只靠自己反复修改答案，需要独立、可核对的外部反馈决定继续还是停止。",
+      "reference_strategy": "none",
+      "final_stage": {
+        "mode": "text_to_image",
+        "prompt_ref": "clumsy-doodle-v1",
+        "prompt_sha256": "e4160da75ebd48f1e8625b61eb840195a66c833dd8373ac61155159826cc2a65",
+        "input_assets": [],
+        "output": "assets/gate-02-external-check-doodle.png",
+        "receipt": "research/image-generation-runs/gate-02-external-verification-final-preflight.json",
+        "present_to_user": true,
+        "preserve": [
+          "本图只画：一个小 AI 同事把自己反复擦改到破洞的无字答卷送进旁边独立的笨重检查机器；机器只亮一盏红灯或绿灯，决定答卷退回继续改还是停下；只表达自我纠错需要可核对的外部验证。"
+        ],
+        "output_constraints": [
+          "Horizontal 16:9 WeChat body illustration; one AI colleague, one damaged blank answer sheet, and one clearly separate checker only",
+          "Pure white background with no texture, shadow, gradient, classroom, office, interface, or decorative environment",
+          "No readable words, letters, numbers, labels, captions, equations, logos, or watermarks inside the image; checker uses only one crude red lamp and one crude green lamp",
+          "Hard pixelated mouse-drawn edges, deliberately low-resolution appearance, awkward proportions, black outlines, and only a few flat red, green, blue, yellow, and gray color blocks"
+        ],
+        "avoid": [
+          "Polished infographic, clean vector art, smooth curves, anti-aliased linework, pencil, crayon, watercolor, paper grain, collage, realistic lighting, 3D, photorealism, cinematic composition, cute professional cartoon style, or balanced graphic design",
+          "Readable grades, check marks with words, UI panels, logos, trademarks, real human likenesses, or verified-looking news scenes",
+          "Showing the correct answer to the AI or implying that every external signal is reliable"
+        ]
+      }
+    },
+    {
+      "id": "gate-03-new-overwrites-old",
+      "visual_type": "general_editorial",
+      "purpose": "表现模型塞进一条新规矩时，旧能力可能从另一边被挤掉，也就是灾难性遗忘。",
+      "reference_strategy": "none",
+      "final_stage": {
+        "mode": "text_to_image",
+        "prompt_ref": "clumsy-doodle-v1",
+        "prompt_sha256": "e4160da75ebd48f1e8625b61eb840195a66c833dd8373ac61155159826cc2a65",
+        "input_assets": [],
+        "output": "assets/gate-03-forgetting-doodle.png",
+        "receipt": "research/image-generation-runs/gate-03-new-overwrites-old-final-preflight.json",
+        "present_to_user": true,
+        "preserve": [
+          "本图只画：一个小 AI 同事费力把一块鲜红的新技能积木塞进自己头顶的破盒子，盒子另一边同时掉出几块已经磨旧的蓝色技能积木；只表达学新东西可能覆盖旧本事。"
+        ],
+        "output_constraints": [
+          "Horizontal 16:9 WeChat body illustration; one robot head-box, one incoming new block, and a few falling old blocks only",
+          "Pure white background with no texture, shadow, gradient, room, interface, anatomy, or decorative environment",
+          "No readable words, letters, numbers, labels, captions, logos, or watermarks inside the image; blocks use only crude shapes without symbols",
+          "Hard pixelated mouse-drawn edges, deliberately low-resolution appearance, awkward proportions, black outlines, and enormous flat red, blue, yellow, and gray color blocks"
+        ],
+        "avoid": [
+          "Polished infographic, clean vector art, smooth curves, anti-aliased linework, pencil, crayon, watercolor, paper grain, collage, realistic lighting, 3D, photorealism, cinematic composition, cute professional cartoon style, or balanced graphic design",
+          "Readable book titles, memory labels, UI storage meters, logos, trademarks, realistic brain anatomy, neurons, or medical illustration",
+          "Implying that all new learning necessarily destroys every old skill"
+        ]
+      }
+    },
+    {
+      "id": "gate-04-transfer-shared-structure",
+      "visual_type": "general_editorial",
+      "purpose": "表现旧经验只有在新任务共享某种底层结构时才可能迁移。",
+      "reference_strategy": "none",
+      "final_stage": {
+        "mode": "text_to_image",
+        "prompt_ref": "clumsy-doodle-v1",
+        "prompt_sha256": "e4160da75ebd48f1e8625b61eb840195a66c833dd8373ac61155159826cc2a65",
+        "input_assets": [],
+        "output": "assets/gate-04-transfer-doodle.png",
+        "receipt": "research/image-generation-runs/gate-04-transfer-shared-structure-final-preflight.json",
+        "present_to_user": true,
+        "preserve": [
+          "本图只画：一个小 AI 同事从左边外形很丑的旧任务门里取出一把歪斜钥匙，再拿它打开右边外观完全不同、但拥有同样锯齿形锁孔的新任务门；只表达共享结构时旧经验才有机会迁移。"
+        ],
+        "output_constraints": [
+          "Horizontal 16:9 WeChat body illustration; one AI colleague, two visually different doors, and one reused crooked key only",
+          "Pure white background with no texture, shadow, gradient, room, landscape, interface, or decorative environment",
+          "No readable words, letters, numbers, labels, captions, signs, logos, or watermarks inside the image; the matching key and keyholes must be visually obvious through shape alone",
+          "Hard pixelated mouse-drawn edges, deliberately low-resolution appearance, awkward proportions, black outlines, and only a few flat red, blue, yellow, and gray color blocks"
+        ],
+        "avoid": [
+          "Polished infographic, clean vector art, smooth curves, anti-aliased linework, pencil, crayon, watercolor, paper grain, collage, realistic lighting, 3D, photorealism, cinematic composition, cute professional cartoon style, or balanced graphic design",
+          "Readable task names, arrows with words, UI panels, logos, trademarks, real human likenesses, or verified-looking news scenes",
+          "Showing transfer between tasks with no shared structure or claiming that meta-learning guarantees universal transfer"
+        ]
+      }
+    },
+    {
+      "id": "gate-05-plasticity-loss",
+      "visual_type": "general_editorial",
+      "purpose": "表现系统工作很久以后仍在接收经验，却可能越来越难把新经验学进去。",
+      "reference_strategy": "none",
+      "final_stage": {
+        "mode": "text_to_image",
+        "prompt_ref": "clumsy-doodle-v1",
+        "prompt_sha256": "e4160da75ebd48f1e8625b61eb840195a66c833dd8373ac61155159826cc2a65",
+        "input_assets": [],
+        "output": "assets/gate-05-plasticity-doodle.png",
+        "receipt": "research/image-generation-runs/gate-05-plasticity-loss-final-preflight.json",
+        "present_to_user": true,
+        "preserve": [
+          "本图只画：同一个小 AI 同事沿一条短训练轨道出现两次；前段脑袋里的软弹簧能接住一块新经验积木，后段弹簧已经僵硬生锈，同样的新积木直接弹开；只表达不是忘了，而是越来越学不进去。"
+        ],
+        "output_constraints": [
+          "Horizontal 16:9 WeChat body illustration; one early-versus-late plasticity relationship only; one repeated experience block shape; mobile-readable silhouettes",
+          "Pure white background with no texture, shadow, gradient, room, interface, anatomy diagram, calendar, or decorative environment",
+          "No readable words, letters, numbers, labels, captions, logos, or watermarks inside the image; use only a crude flexible spring, a rusted stiff spring, and blank blocks",
+          "Hard pixelated mouse-drawn edges, deliberately low-resolution appearance, awkward proportions, black outlines, and only a few flat red, blue, yellow, rusty brown, and gray color blocks"
+        ],
+        "avoid": [
+          "Polished infographic, clean vector art, smooth curves, anti-aliased linework, pencil, crayon, watercolor, paper grain, collage, realistic lighting, 3D, photorealism, cinematic composition, cute professional cartoon style, or balanced graphic design",
+          "Readable timelines, performance charts, UI panels, logos, trademarks, realistic brain anatomy, neurons, or medical illustration",
+          "Showing ordinary forgetting, proving that every long-running LLM loses plasticity, or implying a known SSI architecture"
+        ]
+      }
+    }
+  ]
+}

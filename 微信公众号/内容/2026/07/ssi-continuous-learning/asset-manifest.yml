@@ -1,0 +1,441 @@
+version: 2
+updated: "2026-07-30"
+assets:
+  - file: "assets/cover-superintelligent-teen-doodle.png"
+    used_in_draft: true
+    used_as_cover: false
+    use: "wechat_body_footer"
+    cover_candidate: true
+    dimensions: "1672x941"
+    source_type: "ai_generated"
+    source: "Generated with Codex built-in image_gen in the user's authenticated session; governed task recorded as cover-superintelligent-teen"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-07-29"
+    modifications: "No post-generation edits; visually reviewed at original resolution"
+    rights_status: "project_owned"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "AI 生成"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "text_to_image"
+    prompt_ref: "clumsy-doodle-v1"
+    prompt_sha256: "e4160da75ebd48f1e8625b61eb840195a66c833dd8373ac61155159826cc2a65"
+    invocation_prompt_sha256: "b2e2c8416b78074382818c0a1cd94f382f9f5f8be41c3425e41f5fb2f95e299a"
+    generation_constraints: "16:9 白底笨拙涂鸦；非真实 AI 少年背包走入复杂世界，身后保留返回路径；图内零文字、零品牌、零新闻现场"
+    input_assets: []
+    generated_on: "2026-07-29"
+    preflight_receipt: "research/image-generation-runs/cover-superintelligent-teen-final-preflight.json"
+
+  - file: "assets/ai-colleague-three-years-doodle.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "1672x941"
+    source_type: "ai_generated"
+    source: "Generated with Codex built-in image_gen in the user's authenticated session; governed task recorded as ai-colleague-three-years"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-07-29"
+    modifications: "No post-generation edits; visually reviewed at original resolution"
+    rights_status: "project_owned"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "AI 生成"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "text_to_image"
+    prompt_ref: "clumsy-doodle-v1"
+    prompt_sha256: "e4160da75ebd48f1e8625b61eb840195a66c833dd8373ac61155159826cc2a65"
+    invocation_prompt_sha256: "2584fbeb6527fe78e71021effd68986c30801df977e9992e52378a64aeee679d"
+    generation_constraints: "16:9 白底笨拙涂鸦；同一机器人在第一天与三年后出现，结果保持开放；图内零文字"
+    input_assets: []
+    generated_on: "2026-07-29"
+    preflight_receipt: "research/image-generation-runs/ai-colleague-three-years-final-preflight.json"
+
+  - file: "assets/ilya-dwarkesh-interview-official.jpg"
+    used_in_draft: false
+    used_as_cover: false
+    dimensions: "1280x720"
+    source_type: "official_interview_image"
+    source: "https://www.dwarkesh.com/p/ilya-sutskever-2"
+    source_file: "https://i.ytimg.com/vi/aR20FWCCjAs/maxresdefault.jpg"
+    creator_or_rightsholder: "Dwarkesh Patel / Dwarkesh Podcast"
+    obtained_on: "2026-07-29"
+    modifications: "Downloaded from the official interview video's YouTube thumbnail URL; no crop, annotation, text replacement, or other content edits"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "用户在当前任务中明确要求使用官方图片；本图仅作为对原访谈的署名评论与报道，不构成通用转载或商业授权"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "Dwarkesh Podcast，2025 年 11 月 25 日"
+
+  - file: "assets/ssi-nvidia-official.jpg"
+    used_in_draft: false
+    used_as_cover: false
+    dimensions: "1600x900"
+    source_type: "official_press_image"
+    source: "https://nvidianews.nvidia.com/news/ilya-sutskevers-safe-superintelligence-inc-and-nvidia-announce-long-term-strategic-partnership"
+    source_file: "https://iprsoftwaremedia.com/219/files/202607/595589fd9c7929f74a3726662e15f4ac/ssi-nvidia.jpg?download=true"
+    creator_or_rightsholder: "NVIDIA Corporation; image also contains SSI branding"
+    obtained_on: "2026-07-29"
+    modifications: "Downloaded from the official NVIDIA Newsroom attachment; no crop, annotation, logo isolation, text replacement, or other content edits"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "用户在当前任务中明确要求使用官方图片；本图仅作为对 SSI 与 NVIDIA 合作公告的署名新闻评论素材，不构成通用转载或商业授权"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "NVIDIA Corporation"
+
+  - file: "assets/x-dwarkesh-ilya-interview.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "822x1079"
+    source_type: "social_screenshot"
+    source: "https://x.com/dwarkesh_sp/status/1993371363026125147"
+    creator_or_rightsholder: "Dwarkesh Patel 及 X 界面"
+    obtained_on: "2026-07-29"
+    modifications: "从 X 官方帖子嵌入页以 760 × 1400 视口、1.5 倍像素密度截取外层 article；保留头像、姓名、账号、原文目录、视频预览、日期与互动信息；未改动原帖文字，X 自带的 Show more 保持原样"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "用户在当前任务中明确要求加入 X 截图；本图仅作为对原访谈的署名评论与报道，不构成 X 界面或帖子内容的通用转载许可"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "Dwarkesh Patel 发布 Ilya Sutskever 完整访谈；图源：Dwarkesh Patel / X"
+
+  - file: "assets/x-ssi-partnership.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "unused"
+    dimensions: "822x515"
+    source_type: "social_screenshot"
+    source: "https://x.com/ssi/status/2081732119194394763"
+    creator_or_rightsholder: "Safe Superintelligence Inc. 及 X 界面"
+    obtained_on: "2026-07-29"
+    modifications: "从 X 官方帖子嵌入页以 760 × 1400 视口、1.5 倍像素密度截取外层 article；保留头像、姓名、账号、合作与 10 倍算力原文、日期和互动信息；未改动原帖文字，X 自带的 Show more 保持原样"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "用户在当前任务中明确要求加入 X 截图；本图仅作为对 SSI 官方合作公告的署名新闻评论，不构成 X 界面或帖子内容的通用转载许可"
+    rights_blocker: false
+    allowed_platforms: []
+    attribution: "SSI 宣布与 NVIDIA 长期合作；图源：SSI / X"
+
+  - file: "assets/x-imjustnewatai-ssi-guess.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "824x1259"
+    source_type: "social_screenshot"
+    source: "https://x.com/imjustnewatai/status/2081749227730809127"
+    source_file: "https://platform.twitter.com/embed/Tweet.html?id=2081749227730809127"
+    creator_or_rightsholder: "@imjustnewatai（帖子内容）、Dwarkesh Podcast 与 NVIDIA（随帖截图中的页面和影像）及 X Corp.（界面）"
+    obtained_on: "2026-07-30"
+    modifications: "从 X 官方帖子嵌入页以 760 × 1400 视口、1.5 倍像素密度截取可见原帖卡片；保留头像、姓名、账号、作者明确称为猜测的措辞、随帖两图、引用的 SSI 帖、日期与互动信息；仅裁去嵌入页空白，未展开或改写原帖文字，X 自带的 Show more 保持原样"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "用户在当前任务中明确要求把该帖配图加入正文；本图仅用于对作者个人推测的署名评论，并明确其不是 SSI 技术披露；不构成作者、随帖素材权利人或 X 的通用转载或商业授权"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "@imjustnewatai 对 SSI 公开线索的个人推测；图源：@imjustnewatai / X，2026 年 7 月 27 日"
+
+  - file: "assets/nature-plasticity-ant-fig4.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "unused"
+    dimensions: "685x527"
+    source_type: "official_research_figure"
+    source: "https://www.nature.com/articles/s41586-024-07711-7"
+    source_file: "https://media.springernature.com/lw685/springer-static/image/art%3A10.1038%2Fs41586-024-07711-7/MediaObjects/41586_2024_7711_Fig4_HTML.png"
+    creator_or_rightsholder: "Shibhansh Dohare et al.; published by Springer Nature"
+    obtained_on: "2026-07-29"
+    modifications: "Downloaded from the official article figure URL; no crop, annotation, translation, or other content edits"
+    rights_status: "licensed"
+    rights_basis: "Article and included figures are licensed under CC BY 4.0; attribution, source link, licence, and unchanged status retained"
+    rights_blocker: false
+    allowed_platforms: []
+    attribution: "Dohare et al., Nature (2024), Fig. 4，CC BY 4.0"
+    license_url: "https://creativecommons.org/licenses/by/4.0/"
+
+  - file: "assets/learning-governance-gates-doodle.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "1672x941"
+    source_type: "ai_generated"
+    source: "Generated with Codex built-in image_gen in the user's authenticated session; governed task recorded as learning-governance-gates"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-07-29"
+    modifications: "No post-generation edits; visually reviewed at original resolution"
+    rights_status: "project_owned"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "AI 生成"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "text_to_image"
+    prompt_ref: "clumsy-doodle-v1"
+    prompt_sha256: "e4160da75ebd48f1e8625b61eb840195a66c833dd8373ac61155159826cc2a65"
+    invocation_prompt_sha256: "ad1c4d053652a7a10a7ca2260540b8aa52890bbba5e60f2b9817bb43645c6760"
+    generation_constraints: "16:9 白底笨拙涂鸦；大量无字便签经临时托盘和粗糙漏斗，只有少数进入无字手册；图内零文字"
+    input_assets: []
+    generated_on: "2026-07-29"
+    preflight_receipt: "research/image-generation-runs/learning-governance-gates-final-preflight.json"
+
+  - file: "assets/dopamine-scorekeeper-doodle.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "1672x941"
+    source_type: "ai_generated"
+    source: "Generated with Codex built-in image_gen in the user's authenticated session; governed task recorded as dopamine-scorekeeper"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-07-29"
+    modifications: "No post-generation edits; visually reviewed at original generated resolution, including the exact label 多巴胺"
+    rights_status: "project_owned"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "AI 生成"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "text_to_image"
+    prompt_ref: "clumsy-doodle-v1"
+    prompt_sha256: "e4160da75ebd48f1e8625b61eb840195a66c833dd8373ac61155159826cc2a65"
+    invocation_prompt_sha256: "39ccd1bfb0448b90e239042c159b9c4d4560ce3015cfa6385943c1cedd0d3e34"
+    generation_constraints: "16:9 白底笨拙涂鸦；红色报分员比较实际结果与预期；保留角色标签「多巴胺」与小机器人身上的极小 AI 标记，无其他可读文字、品牌或伪新闻现场"
+    input_assets: []
+    generated_on: "2026-07-29"
+    preflight_receipt: "research/image-generation-runs/dopamine-scorekeeper-final-preflight.json"
+
+  - file: "assets/serotonin-time-horizon-doodle.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "1672x941"
+    source_type: "ai_generated"
+    source: "Generated with Codex built-in image_gen in the user's authenticated session; governed task recorded as serotonin-time-horizon"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-07-29"
+    modifications: "No post-generation edits; visually reviewed at original generated resolution, including the exact label 血清素"
+    rights_status: "project_owned"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "AI 生成"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "text_to_image"
+    prompt_ref: "clumsy-doodle-v1"
+    prompt_sha256: "e4160da75ebd48f1e8625b61eb840195a66c833dd8373ac61155159826cc2a65"
+    invocation_prompt_sha256: "5ab66fe41a484b58191caf56015454f3d17741f5c0538681e643aec51d9973af"
+    generation_constraints: "16:9 白底笨拙涂鸦；蓝色审核员用日历与望远镜权衡眼前和远期结果；仅允许角色标签「血清素」，无其他可读文字、品牌或伪新闻现场"
+    input_assets: []
+    generated_on: "2026-07-29"
+    preflight_receipt: "research/image-generation-runs/serotonin-time-horizon-final-preflight.json"
+
+  - file: "assets/norepinephrine-explorer-doodle.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "1672x941"
+    source_type: "ai_generated"
+    source: "Generated with Codex built-in image_gen in the user's authenticated session; governed task recorded as norepinephrine-explorer"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-07-29"
+    modifications: "No post-generation edits; visually reviewed at original generated resolution, including the exact label 去甲肾上腺素"
+    rights_status: "project_owned"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "AI 生成"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "text_to_image"
+    prompt_ref: "clumsy-doodle-v1"
+    prompt_sha256: "e4160da75ebd48f1e8625b61eb840195a66c833dd8373ac61155159826cc2a65"
+    invocation_prompt_sha256: "68837b7ee6fc0a97bc5972c9dc12003b53cc48e7f2c42777b08e17c76d1f8a74"
+    generation_constraints: "16:9 白底笨拙涂鸦；黄色探路员在熟路与新路之间抛骰子；仅允许角色标签「去甲肾上腺素」，无其他可读文字、品牌或伪新闻现场"
+    input_assets: []
+    generated_on: "2026-07-29"
+    preflight_receipt: "research/image-generation-runs/norepinephrine-explorer-final-preflight.json"
+
+  - file: "assets/acetylcholine-learning-rate-doodle.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "1672x941"
+    source_type: "ai_generated"
+    source: "Generated with Codex built-in image_gen in the user's authenticated session; governed task recorded as acetylcholine-learning-rate"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-07-29"
+    modifications: "No post-generation edits; visually reviewed at original generated resolution, including the exact label 乙酰胆碱"
+    rights_status: "project_owned"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "AI 生成"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "text_to_image"
+    prompt_ref: "clumsy-doodle-v1"
+    prompt_sha256: "e4160da75ebd48f1e8625b61eb840195a66c833dd8373ac61155159826cc2a65"
+    invocation_prompt_sha256: "5457949201b7285420110c57a62bb2fe38d3599a0dc3b141437ca1e1d7dbde28"
+    generation_constraints: "16:9 白底笨拙涂鸦；绿色更新员用巨大旋钮对比改得太少和改得太多；仅允许角色标签「乙酰胆碱」，无其他可读文字、品牌或伪新闻现场"
+    input_assets: []
+    generated_on: "2026-07-29"
+    preflight_receipt: "research/image-generation-runs/acetylcholine-learning-rate-final-preflight.json"
+
+  - file: "assets/neuromodulator-auditors-doodle.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "unused"
+    dimensions: "1672x941"
+    source_type: "ai_generated"
+    source: "Generated with Codex built-in image_gen in the user's authenticated session; governed task recorded as neuromodulator-auditors"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-07-29"
+    modifications: "No post-generation edits; rejected for publication because the four roles were too compressed to communicate clearly; retained as an unused candidate"
+    rights_status: "project_owned"
+    rights_blocker: false
+    allowed_platforms: []
+    attribution: "AI 生成"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "text_to_image"
+    prompt_ref: "clumsy-doodle-v1"
+    prompt_sha256: "e4160da75ebd48f1e8625b61eb840195a66c833dd8373ac61155159826cc2a65"
+    invocation_prompt_sha256: "8819778c0cc8926e1ec414b4903074d319d3d53071a4518d2b24396434749b44"
+    generation_constraints: "16:9 白底笨拙涂鸦；四个巨大审核员分别用记分册、望远镜与日历、骰子与岔路、巨大旋钮表现报分、看远近、探索与更新幅度；一个小 AI 同事；图内无可读文字、品牌或伪新闻现场"
+    input_assets: []
+    generated_on: "2026-07-29"
+    preflight_receipt: "research/image-generation-runs/neuromodulator-auditors-final-preflight.json"
+
+  - file: "assets/feedback-filter-doodle.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "unused"
+    dimensions: "1672x941"
+    source_type: "ai_generated"
+    source: "Generated with Codex built-in image_gen in the user's authenticated session; governed task recorded as feedback-filter"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-07-29"
+    modifications: "No post-generation edits; visually reviewed at original resolution"
+    rights_status: "project_owned"
+    rights_blocker: false
+    allowed_platforms: []
+    attribution: "AI 生成"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "text_to_image"
+    prompt_ref: "clumsy-doodle-v1"
+    prompt_sha256: "e4160da75ebd48f1e8625b61eb840195a66c833dd8373ac61155159826cc2a65"
+    invocation_prompt_sha256: "6d2f88a970b87cf8130e24e4926771b9eea89b6e766d795d3ca0bf0b9c8b1962"
+    generation_constraints: "16:9 白底笨拙涂鸦；一个机器人用粗糙筛网面对三股冲突反馈，仅一股通过；图内零文字"
+    input_assets: []
+    generated_on: "2026-07-29"
+    preflight_receipt: "research/image-generation-runs/feedback-filter-final-preflight.json"
+
+  - file: "assets/gate-01-example-vs-learning-doodle.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "1672x941"
+    source_type: "ai_generated"
+    source: "Generated with Codex built-in image_gen in the user's authenticated session; governed task recorded as gate-01-temporary-learning"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-07-30"
+    modifications: "No post-generation edits; visually reviewed at generated resolution and checked at original file dimensions"
+    rights_status: "project_owned"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "AI 生成"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "text_to_image"
+    prompt_ref: "clumsy-doodle-v1"
+    prompt_sha256: "e4160da75ebd48f1e8625b61eb840195a66c833dd8373ac61155159826cc2a65"
+    invocation_prompt_sha256: "8333afc423454e3940d6335e729ca8b6cd7d7d093cbd0e81a8d0884b58b62fd7"
+    generation_constraints: "16:9 白底笨拙涂鸦；AI 同事照着三张无字范本拼出第四张，范本被抽走后成品散架；图内零文字、零品牌、零新闻现场"
+    input_assets: []
+    generated_on: "2026-07-30"
+    preflight_receipt: "research/image-generation-runs/gate-01-temporary-learning-final-preflight.json"
+
+  - file: "assets/gate-02-external-check-doodle.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "1672x941"
+    source_type: "ai_generated"
+    source: "Generated with Codex built-in image_gen in the user's authenticated session; governed task recorded as gate-02-external-verification"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-07-30"
+    modifications: "No post-generation edits; visually reviewed at generated resolution and checked at original file dimensions"
+    rights_status: "project_owned"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "AI 生成"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "text_to_image"
+    prompt_ref: "clumsy-doodle-v1"
+    prompt_sha256: "e4160da75ebd48f1e8625b61eb840195a66c833dd8373ac61155159826cc2a65"
+    invocation_prompt_sha256: "f273388809a70d8e3b8058feb5166f506f5f891331ce684500e3c23240407ebe"
+    generation_constraints: "16:9 白底笨拙涂鸦；AI 把反复擦改的答卷送进独立检查机器，由红绿灯决定继续或停止；图内零文字、零品牌、零新闻现场"
+    input_assets: []
+    generated_on: "2026-07-30"
+    preflight_receipt: "research/image-generation-runs/gate-02-external-verification-final-preflight.json"
+
+  - file: "assets/gate-03-forgetting-doodle.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "unused"
+    dimensions: "1672x941"
+    source_type: "ai_generated"
+    source: "Generated with Codex built-in image_gen in the user's authenticated session; governed task recorded as gate-03-new-overwrites-old"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-07-30"
+    modifications: "No post-generation edits; visually reviewed at generated resolution and checked at original file dimensions"
+    rights_status: "project_owned"
+    rights_blocker: false
+    allowed_platforms: []
+    attribution: "AI 生成"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "text_to_image"
+    prompt_ref: "clumsy-doodle-v1"
+    prompt_sha256: "e4160da75ebd48f1e8625b61eb840195a66c833dd8373ac61155159826cc2a65"
+    invocation_prompt_sha256: "6d8817eb34de41267347213e40786c762f85531b6b40a235a3e411528bd17e1d"
+    generation_constraints: "16:9 白底笨拙涂鸦；一块红色新技能被塞进 AI 头顶破盒子，旧蓝色技能块从另一侧掉出；图内零文字、零品牌、零脑解剖"
+    input_assets: []
+    generated_on: "2026-07-30"
+    preflight_receipt: "research/image-generation-runs/gate-03-new-overwrites-old-final-preflight.json"
+
+  - file: "assets/gate-04-transfer-doodle.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "unused"
+    dimensions: "1672x941"
+    source_type: "ai_generated"
+    source: "Generated with Codex built-in image_gen in the user's authenticated session; governed task recorded as gate-04-transfer-shared-structure"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-07-30"
+    modifications: "No post-generation edits; visually reviewed at generated resolution and checked at original file dimensions"
+    rights_status: "project_owned"
+    rights_blocker: false
+    allowed_platforms: []
+    attribution: "AI 生成"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "text_to_image"
+    prompt_ref: "clumsy-doodle-v1"
+    prompt_sha256: "e4160da75ebd48f1e8625b61eb840195a66c833dd8373ac61155159826cc2a65"
+    invocation_prompt_sha256: "4ca24fc780ae71e985908d503255656ec094f6afefffad51c563dd244d539e4a"
+    generation_constraints: "16:9 白底笨拙涂鸦；同一把歪钥匙从旧任务门迁移到外观不同但锁孔同形的新任务门；图内零文字、零品牌、零新闻现场"
+    input_assets: []
+    generated_on: "2026-07-30"
+    preflight_receipt: "research/image-generation-runs/gate-04-transfer-shared-structure-final-preflight.json"
+
+  - file: "assets/gate-05-plasticity-doodle.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "1672x941"
+    source_type: "ai_generated"
+    source: "Generated with Codex built-in image_gen in the user's authenticated session; governed task recorded as gate-05-plasticity-loss"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-07-30"
+    modifications: "No post-generation edits; visually reviewed at generated resolution and checked at original file dimensions"
+    rights_status: "project_owned"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "AI 生成"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "text_to_image"
+    prompt_ref: "clumsy-doodle-v1"
+    prompt_sha256: "e4160da75ebd48f1e8625b61eb840195a66c833dd8373ac61155159826cc2a65"
+    invocation_prompt_sha256: "56d91ccfc03f6fa769483a4c12bd3c0b8d139930cbc7acc72f97b77a733efefa"
+    generation_constraints: "16:9 白底笨拙涂鸦；同样的新经验块早期被柔软弹簧接住，后期被僵硬生锈的弹簧弹开；图内零文字、零品牌、零脑解剖"
+    input_assets: []
+    generated_on: "2026-07-30"
+    preflight_receipt: "research/image-generation-runs/gate-05-plasticity-loss-final-preflight.json"

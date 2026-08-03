@@ -1,7 +1,7 @@
 ---
 status: pass
-checked_at: "2026-07-25 21:47:08+09:00"
-body_sha256: "7ac06c2ea724d7a123d1a3061f91e55ff4bc19f43c27f52fb2198eb043b0c269"
+checked_at: "2026-07-25T23:30:25+09:00"
+body_sha256: "143e00defed9a7690ffd2a23984909a88b4f74ab3600f454cebfd23a098f5dea"
 scope: "title, body, headings, lists, captions, quotes, notes"
 ---
 

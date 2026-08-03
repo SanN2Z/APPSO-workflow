@@ -1,0 +1,92 @@
+{
+  "schema_version": 1,
+  "template_only": false,
+  "updated": "2026-07-26",
+  "project_adapter": "generic",
+  "profile_registry": "共享/运营/SOP/笨拙涂鸦风格档案.json",
+  "image_budget": {
+    "default_total_body_images_min": 6,
+    "default_total_body_images_max": 10,
+    "counting_rule": "3 source screenshots plus 4 clumsy doodles; total 7 body images."
+  },
+  "style_policy": {
+    "profile": "clumsy-doodle-v1",
+    "scope": "task",
+    "new_image_strategy": "direct",
+    "allow_final_text_to_image": true
+  },
+  "tasks": [
+    {
+      "id": "doodle-01-rhetoric-bucket",
+      "visual_type": "general_editorial",
+      "purpose": "表现原本应该少量使用的强调修辞，被模型整桶倒进每一句话。",
+      "reference_strategy": "none",
+      "final_stage": {
+        "mode": "text_to_image",
+        "prompt_ref": "clumsy-doodle-v1",
+        "prompt_sha256": "e4160da75ebd48f1e8625b61eb840195a66c833dd8373ac61155159826cc2a65",
+        "input_assets": [],
+        "output": "assets/doodle-01-rhetoric-bucket.png",
+        "receipt": "research/image-generation-runs/doodle-01-rhetoric-bucket-final-preflight.json",
+        "present_to_user": true,
+        "preserve": ["本图只画：一只很小的调味料瓶本来只该撒一点，旁边一台破旧机器人却把整桶鲜红调料倒进一张孤零零的白纸里，表现修辞用量失控。"],
+        "output_constraints": ["Horizontal 16:9 body illustration; one main idea only; largest possible flat color blocks", "Pure white background with no texture, shadow, gradient, or decorative environment", "No readable words, letters, numbers, labels, captions, or interface text inside the image", "Hard pixelated mouse-drawn edges, deliberately low-resolution appearance, and mobile-readable silhouettes"],
+        "avoid": ["Polished editorial illustration, clean vector art, smooth curves, anti-aliased linework, pencil, crayon, watercolor, paper grain, collage, realistic lighting, 3D, photorealism, cinematic composition, cute professional cartoon style, or balanced graphic design", "Logos, trademarks, watermarks, readable text, garbled text, fake interfaces, real-person likenesses, or verified-looking news scenes", "More than one rhetorical idea or any unsupported claim"]
+      }
+    },
+    {
+      "id": "doodle-02-training-megaphone",
+      "visual_type": "general_editorial",
+      "purpose": "把论文作者提出的训练材料与偏好奖励解释画成谨慎的可能机制。",
+      "reference_strategy": "none",
+      "final_stage": {
+        "mode": "text_to_image",
+        "prompt_ref": "clumsy-doodle-v1",
+        "prompt_sha256": "e4160da75ebd48f1e8625b61eb840195a66c833dd8373ac61155159826cc2a65",
+        "input_assets": [],
+        "output": "assets/doodle-02-training-megaphone.png",
+        "receipt": "research/image-generation-runs/doodle-02-training-megaphone-final-preflight.json",
+        "present_to_user": true,
+        "preserve": ["本图只画：一堆夸张广告传单和几只竖起的大拇指从漏斗喂进破机器人，机器人嘴边的小喇叭被撑成巨大扩音器，表现高强调语气可能被训练和奖励放大。"],
+        "output_constraints": ["Horizontal 16:9 body illustration; one main idea only; largest possible flat color blocks", "Pure white background with no texture, shadow, gradient, or decorative environment", "No readable words, letters, numbers, labels, captions, or interface text inside the image", "Hard pixelated mouse-drawn edges, deliberately low-resolution appearance, and mobile-readable silhouettes"],
+        "avoid": ["Polished editorial illustration, clean vector art, smooth curves, anti-aliased linework, pencil, crayon, watercolor, paper grain, collage, realistic lighting, 3D, photorealism, cinematic composition, cute professional cartoon style, or balanced graphic design", "Logos, trademarks, watermarks, readable text, garbled text, fake interfaces, real-person likenesses, or verified-looking news scenes", "A definitive causal arrow or a claim that the proposed mechanism has been proven"]
+      }
+    },
+    {
+      "id": "doodle-03-detector-smear",
+      "visual_type": "general_editorial",
+      "purpose": "表现人机混合写作里，局部检测在边界处容易模糊。",
+      "reference_strategy": "none",
+      "final_stage": {
+        "mode": "text_to_image",
+        "prompt_ref": "clumsy-doodle-v1",
+        "prompt_sha256": "e4160da75ebd48f1e8625b61eb840195a66c833dd8373ac61155159826cc2a65",
+        "input_assets": [],
+        "output": "assets/doodle-03-detector-smear.png",
+        "receipt": "research/image-generation-runs/doodle-03-detector-smear-final-preflight.json",
+        "present_to_user": true,
+        "preserve": ["本图只画：一支笨重荧光笔试图给一条由人手色块和机器人手色块共同拼成的长纸条分区，交界处却涂成一团，表现混合作者边界模糊。"],
+        "output_constraints": ["Horizontal 16:9 body illustration; one main idea only; largest possible flat color blocks", "Pure white background with no texture, shadow, gradient, or decorative environment", "No readable words, letters, numbers, labels, captions, or interface text inside the image", "Hard pixelated mouse-drawn edges, deliberately low-resolution appearance, and mobile-readable silhouettes"],
+        "avoid": ["Polished editorial illustration, clean vector art, smooth curves, anti-aliased linework, pencil, crayon, watercolor, paper grain, collage, realistic lighting, 3D, photorealism, cinematic composition, cute professional cartoon style, or balanced graphic design", "Logos, trademarks, watermarks, readable text, garbled text, fake interfaces, real-person likenesses, or verified-looking news scenes", "A perfect detector, courtroom verdict, or definitive authorship label"]
+      }
+    },
+    {
+      "id": "doodle-04-human-mirror",
+      "visual_type": "general_editorial",
+      "purpose": "表现人类会反过来学习机器的高强调语气。",
+      "reference_strategy": "none",
+      "final_stage": {
+        "mode": "text_to_image",
+        "prompt_ref": "clumsy-doodle-v1",
+        "prompt_sha256": "e4160da75ebd48f1e8625b61eb840195a66c833dd8373ac61155159826cc2a65",
+        "input_assets": [],
+        "output": "assets/doodle-04-human-mirror.png",
+        "receipt": "research/image-generation-runs/doodle-04-human-mirror-final-preflight.json",
+        "present_to_user": true,
+        "preserve": ["本图只画：一个普通人对着歪镜子改纸稿，镜子里的破机器人和真人同时举起一模一样的巨大扩音器，表现人类开始模仿机器腔。"],
+        "output_constraints": ["Horizontal 16:9 body illustration; one main idea only; largest possible flat color blocks", "Pure white background with no texture, shadow, gradient, or decorative environment", "No readable words, letters, numbers, labels, captions, or interface text inside the image", "Hard pixelated mouse-drawn edges, deliberately low-resolution appearance, and mobile-readable silhouettes"],
+        "avoid": ["Polished editorial illustration, clean vector art, smooth curves, anti-aliased linework, pencil, crayon, watercolor, paper grain, collage, realistic lighting, 3D, photorealism, cinematic composition, cute professional cartoon style, or balanced graphic design", "Logos, trademarks, watermarks, readable text, garbled text, fake interfaces, real-person likenesses, or verified-looking news scenes", "Mind-control imagery, coercion, or a claim that all humans already write this way"]
+      }
+    }
+  ]
+}

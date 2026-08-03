@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1500" viewBox="0 0 1200 1500">
+  <rect width="1200" height="1500" fill="#fffdf8"/>
+  <g stroke="#191919" stroke-width="11" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="130" y="100" width="940" height="250" rx="42"/>
+    <path d="M285 165 L430 165 L430 285 L285 285 Z"/>
+    <circle cx="357" cy="205" r="24"/><path d="M318 268 Q357 226 396 268"/>
+    <path d="M510 188 L925 188 M510 240 L820 240 M510 292 L885 292"/>
+    <rect x="130" y="420" width="940" height="250" rx="42"/>
+    <path d="M290 555 Q355 445 420 555 M355 480 L355 605"/>
+    <path d="M480 510 Q590 435 700 510 Q590 620 480 510"/><circle cx="590" cy="510" r="26"/>
+    <rect x="130" y="740" width="940" height="250" rx="42"/>
+    <path d="M300 820 L425 945 M425 820 L300 945"/><circle cx="362" cy="882" r="98"/>
+    <path d="M515 855 L900 855 M515 915 L820 915"/>
+    <rect x="130" y="1060" width="940" height="250" rx="42"/>
+    <circle cx="350" cy="1180" r="95"/><path d="M350 1120 L350 1190 L405 1225"/>
+    <path d="M510 1150 L650 1150 L650 1260 L510 1260 Z M545 1150 L545 1110 L615 1110 L615 1150"/>
+    <path d="M720 1140 L900 1260 M900 1140 L720 1260"/>
+    <path d="M600 350 L600 420 M600 670 L600 740 M600 990 L600 1060" stroke="#e83323" stroke-width="18"/>
+    <path d="M570 390 L600 420 L630 390 M570 710 L600 740 L630 710 M570 1030 L600 1060 L630 1030" stroke="#e83323" stroke-width="18"/>
+  </g>
+  <g fill="#191919" font-family="Microsoft YaHei, sans-serif" font-size="62" font-weight="700">
+    <text x="470" y="265">身份码</text><text x="760" y="545">授权</text>
+    <text x="510" y="930">工具调用</text><text x="720" y="1235">审计与撤销</text>
+  </g>
+</svg>

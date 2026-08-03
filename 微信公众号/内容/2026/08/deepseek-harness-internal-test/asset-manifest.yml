@@ -1,0 +1,124 @@
+version: 2
+updated: "2026-08-02"
+assets:
+  - file: "assets/x-tianyi-harness-internal-test.png"
+    used_in_draft: false
+    used_as_cover: false
+    dimensions: "795x243"
+    source_type: "user_supplied_public_post_screenshot"
+    source: "https://x.com/tianyi/status/2083519855203078320"
+    source_file: "User-provided screenshot in the current task"
+    creator_or_rightsholder: "Tianyi Cui / X; screenshot supplied by user"
+    obtained_on: "2026-08-02"
+    modifications: "Exact project copy; no crop, annotation, text replacement, or content edit"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "用户在当前任务中明确要求为本稿抓取并配置网上素材；该截图仅作为带出处的公开帖新闻评论引用，不构成通用转载授权"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "截图：@tianyi / X"
+
+  - file: "assets/x-linearuncle-fable5-joke.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "807x305"
+    source_type: "user_supplied_public_post_screenshot"
+    source: "User-provided screenshot of a public X post by @LinearUncle quoting @tianyi; original @LinearUncle permalink not located"
+    source_file: "User-provided screenshot in the current task"
+    creator_or_rightsholder: "LinearUncle and Tianyi Cui / X; screenshot supplied by user"
+    obtained_on: "2026-08-02"
+    modifications: "Exact project copy; no crop, annotation, text replacement, or content edit"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "用户在当前任务中提供该公开帖截图，并明确要求以其中 Fable 5 玩笑作为本稿叙事入口；仅作带出处的新闻评论引用"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "截图：@LinearUncle、@tianyi / X"
+
+  - file: "assets/timeline-harness-public-signals.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "1672x941"
+    source_type: "project_generated_data_visualization"
+    source: "Tianyi Cui public posts and DeepSeek-V4-Flash-0731 official model card; see sources.md"
+    creator_or_rightsholder: "This project"
+    obtained_on: "2026-08-02"
+    modifications: "Replaced with the user-supplied 1672x941 final export in the current task; dates, wording, source note and comparison boundary unchanged"
+    rights_status: "project_owned"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "图：作者根据公开资料整理"
+
+  - file: "assets/benchmark-agent-scores.png"
+    used_in_draft: false
+    used_as_cover: false
+    dimensions: "2294x1574"
+    source_type: "project_generated_data_visualization"
+    source: "https://huggingface.co/deepseek-ai/DeepSeek-V4-Flash-0731"
+    creator_or_rightsholder: "This project; underlying data from the DeepSeek model card"
+    obtained_on: "2026-08-02"
+    modifications: "Original grouped bar chart rendered from seven public benchmark rows by tools/render_visuals.py; comparison and limitation notes retained"
+    rights_status: "project_owned"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "图：作者根据 DeepSeek-V4-Flash-0731 官方模型卡整理"
+
+  - file: "assets/harness-system-stack.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "1672x941"
+    source_type: "project_generated_editorial_diagram"
+    source: "Author diagram based on the article's sourced explanation of Agent Harness responsibilities"
+    creator_or_rightsholder: "This project"
+    obtained_on: "2026-08-02"
+    modifications: "Replaced with the user-supplied 1672x941 final export in the current task; explanatory scope and attribution unchanged"
+    rights_status: "project_owned"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "图：作者绘制"
+
+  - file: "assets/doodle-same-brain-different-harness.png"
+    used_in_draft: false
+    used_as_cover: false
+    dimensions: "1672x941"
+    source_type: "ai_generated"
+    source: "Generated with Codex built-in image_gen; governed task doodle-same-brain-different-harness"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-08-02"
+    modifications: "No post-generation edits; original output visually reviewed and selected"
+    rights_status: "project_owned"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "AI 生成"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "text_to_image"
+    prompt_ref: "clumsy-doodle-v1"
+    prompt_sha256: "e4160da75ebd48f1e8625b61eb840195a66c833dd8373ac61155159826cc2a65"
+    invocation_prompt_sha256: "8b9ec509bf6e30d9a910585364ef376c8c9f17b63cff3c45ad50ee0ef5a07108"
+    generation_constraints: "16:9 horizontal body illustration; pure white background; crude pixelated mouse-drawn style; one paragraph-level idea; no readable text, logo, real-person likeness, fake interface, or unsupported claim"
+    input_assets: []
+    generated_on: "2026-08-02"
+    preflight_receipt: "research/image-generation-runs/doodle-same-brain-different-harness-final-preflight.json"
+
+  - file: "assets/doodle-open-source-builders-test.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "1672x941"
+    source_type: "ai_generated"
+    source: "Generated with Codex built-in image_gen; governed task doodle-open-source-builders-test"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-08-02"
+    modifications: "No post-generation edits; original output visually reviewed and selected"
+    rights_status: "project_owned"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "AI 生成"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "text_to_image"
+    prompt_ref: "clumsy-doodle-v1"
+    prompt_sha256: "e4160da75ebd48f1e8625b61eb840195a66c833dd8373ac61155159826cc2a65"
+    invocation_prompt_sha256: "6c19499bcf2f9e0cf416c949a7ae150bab8bb44c458fdea2a28b70615289e770"
+    generation_constraints: "16:9 horizontal body illustration; pure white background; crude pixelated mouse-drawn style; one paragraph-level idea; no readable text, logo, real-person likeness, fake interface, or unsupported claim"
+    input_assets: []
+    generated_on: "2026-08-02"
+    preflight_receipt: "research/image-generation-runs/doodle-open-source-builders-test-final-preflight.json"

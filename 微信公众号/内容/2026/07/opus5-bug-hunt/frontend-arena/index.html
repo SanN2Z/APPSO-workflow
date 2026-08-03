@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>旋转多边形物理沙盘</title>
+<style>
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    margin: 0;
+    padding: 24px 16px;
+    background: #070a10;
+    color: #cbd5e1;
+    font: 14px/1.55 -apple-system, "Segoe UI", "Microsoft YaHei", sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    overflow: auto;
+    -webkit-font-smoothing: antialiased;
+  }
+  canvas {
+    display: block;
+    width: 900px;
+    height: 600px;
+    background: #0b0f16;
+    border: 1px solid #1b2432;
+    border-radius: 10px;
+    cursor: crosshair;
+    box-shadow: 0 18px 50px rgba(0, 0, 0, .55);
+  }
+  .panel {
+    width: 900px;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    flex-wrap: wrap;
+    background: #0d121b;
+    border: 1px solid #1b2432;
+    border-radius: 10px;
+    padding: 13px 18px;
+  }
+  .ctrl { display: flex; flex-direction: column; gap: 6px; flex: 1 1 250px; min-width: 230px; }
+  .ctrl .row { display: flex; justify-content: space-between; align-items: baseline; }
+  .ctrl .lab { font-size: 12px; color: #7d8ba1; letter-spacing: .04em; }
+  .ctrl .val { font: 13px/1 ui-monospace, Consolas, "Courier New", monospace; color: #e2e8f0; }
+  input[type=range] {
+    width: 100%;
+    height: 18px;
+    accent-color: #38bdf8;
+    background: transparent;
+    cursor: pointer;
+  }
+  .hint {
+    font-size: 12px;
+    color: #5c697d;
+    letter-spacing: .02em;
+    flex: 0 0 auto;
+  }
+  .hint b {
+    display: inline-block;
+    padding: 1px 6px;
+    margin: 0 2px;
+    border: 1px solid #263143;
+    border-radius: 4px;
+    background: #111826;
+    color: #93a3b8;
+    font-weight: 500;
+    font-family: ui-monospace, Consolas, monospace;
+    font-size: 11px;
+  }
+</style>
+</head>
+<body>
+
+<canvas id="cv" width="900" height="600"></canvas>
+
+<div class="panel">
+  <div class="ctrl">
+    <div class="row"><span class="lab">容器边数</span><span class="val" id="sidesVal">6</span></div>
+    <input type="range" id="sidesRange" min="3" max="12" step="1" value="6">
+  </div>
+  <div class="ctrl">
+    <div class="row"><span class="lab">角速度 (rad/s)</span><span class="val" id="omegaVal">+1.20</span></div>
+    <input type="range" id="omegaRange" min="-3" max="3" step="0.01" value="1.2">
+  </div>
+  <div class="hint">
+    <b>点击</b>加球　<b>Space</b>反转　<b>R</b>重置
+  </div>
+</div>
+
+<script>
+"use strict";
+
+/* ==========================================================================
+   常量
+   ========================================================================== */
+const W = 900, H = 600;          // 画布尺寸（固定）
+const CX = W / 2, CY = H / 2;    // 容器中心
+
+const DT           = 1 / 120;    // 固定物理步长
+const MAX_STEPS    = 6;          // 单帧最多子步数（掉帧时退化为慢动作，绝不爆炸）
+const G            = 950;        // 重力加速度 px/s^2
+const RESTITUTION  = 0.8;        // 恢复系数
+const WALL_FRICTION= 0.32;       // 壁面切向摩擦：把墙的切向速度传给球
+const BALL_FRICTION= 0.06;       // 球间轻微切向摩擦，让堆积更稳定
+const LINEAR_DAMP  = 0.22;       // 线性阻尼 1/s，抵消旋转墙持续注入的能量
+const REST_EPS     = 26;         // 法向相对速度低于此值时不反弹（消除壁面抖动）
+const DEEP_EPS     = 7;          // 穿透超过此值视为几何突变，不做弹性反弹
+const FULL_FIX     = 10;         // 每子步允许的完整位置修正量（px）
+const SOFT_FIX     = 0.4;        // 超出部分按比例修正 → 深穿透平滑归位
+const MAX_SPEED    = 2400;       // 速度上限
+const DENSITY      = 0.012;      // 面密度：m = DENSITY * r^2
+
+const R_MIN = 6, R_MAX = 20;     // 小球半径范围
+const INIT_BALLS = 20;
+const MAX_BALLS  = 120;
+
+/* ==========================================================================
+   状态
+   ========================================================================== */
+const canvas = document.getElementById('cv');
+const ctx = canvas.getContext('2d');
+
+const state = {
+  balls: [],
+  sides: 6,
+  apothem: 0,        // 当前边心距（壁面到中心的距离）
+  apothemTarget: 0,  // 目标边心距，平滑逼近
+  angle: 0,          // 容器旋转角
+  omega: 1.2,        // 当前角速度
+  omegaTarget: 1.2   // 目标角速度，极短平滑，避免数值冲击
+};
+
+const hud = { count: 0, ke: 0, fps: 0 };
+
+/* --------------------------------------------------------------------------
+   几何：固定"边心距"作为主参数。
+   这样改变边数时，壁面到中心的距离不变，球不会被瞬间甩到墙外；
+   同时按边数限制外接圆半径，保证顶点始终留在画布内。
+   -------------------------------------------------------------------------- */
+function apothemFor(n) {
+  return Math.min(238, 266 * Math.cos(Math.PI / n));
+}
+
+/* 第 i 条边的外法线角度 */
+function wallNormalAngle(i, n, angle) {
+  return angle + (2 * i + 1) * Math.PI / n;
+}
+
+/* ==========================================================================
+   小球
+   ========================================================================== */
+function makeBall(x, y, r, vx, vy) {
+  const m = DENSITY * r * r;
+  return { x: x, y: y, vx: vx || 0, vy: vy || 0, r: r, m: m, im: 1 / m };
+}
+
+function randRadius() {
+  // 偏向小球一点，视觉层次更好
+  const t = Math.pow(Math.random(), 1.35);
+  return R_MIN + t * (R_MAX - R_MIN);
+}
+
+/* 把一个点压进当前容器内部，保证半径 r 的球完全在内 */
+function clampInside(px, py, r) {
+  const n = state.sides, a = state.apothem, ang = state.angle;
+  let x = px, y = py;
+  for (let pass = 0; pass < 4; pass++) {
+    let moved = false;
+    for (let i = 0; i < n; i++) {
+      const phi = wallNormalAngle(i, n, ang);
+      const nx = Math.cos(phi), ny = Math.sin(phi);
+      const proj = (x - CX) * nx + (y - CY) * ny;
+      const over = proj - (a - r - 1);
+      if (over > 0) { x -= nx * over; y -= ny * over; moved = true; }
+    }
+    if (!moved) break;
+  }
+  return { x: x, y: y };
+}
+
+function spawnBall(px, py, r) {
+  if (state.balls.length >= MAX_BALLS) return false;
+  const rad = (r === undefined) ? randRadius() : r;
+  const p = clampInside(px, py, rad);
+  state.balls.push(makeBall(p.x, p.y, rad,
+    (Math.random() - 0.5) * 120,
+    (Math.random() - 0.5) * 120));
+  return true;
+}
+
+function reset() {
+  state.balls.length = 0;
+  const spread = state.apothem * 0.72;
+  for (let i = 0; i < INIT_BALLS; i++) {
+    const ang = Math.random() * Math.PI * 2;
+    const rad = Math.sqrt(Math.random()) * spread;
+    const r = randRadius();
+    const p = clampInside(CX + Math.cos(ang) * rad, CY + Math.sin(ang) * rad, r);
+    state.balls.push(makeBall(p.x, p.y, r,
+      (Math.random() - 0.5) * 200,
+      (Math.random() - 0.5) * 200));
+  }
+}
+
+/* ==========================================================================
+   碰撞求解
+   ========================================================================== */
+
+/* 球 ↔ 球
+   applyVel = true 时施加冲量（每子步只做一次，避免摩擦被重复叠加），
+   false 时只做位置分离迭代。 */
+function resolveBallBall(applyVel) {
+  const b = state.balls, n = b.length;
+  for (let i = 0; i < n - 1; i++) {
+    const A = b[i];
+    for (let j = i + 1; j < n; j++) {
+      const B = b[j];
+      let dx = B.x - A.x, dy = B.y - A.y;
+      const sum = A.r + B.r;
+      let d2 = dx * dx + dy * dy;
+      if (d2 >= sum * sum) continue;
+
+      let d = Math.sqrt(d2);
+      if (d < 1e-6) {                 // 完全重合：随便挑个方向推开
+        const a0 = (i * 2.399963 + j * 0.7);
+        dx = Math.cos(a0); dy = Math.sin(a0); d = 1e-6;
+      } else {
+        dx /= d; dy /= d;
+      }
+      const depth = sum - d;
+
+      // --- 位置分离（按质量反比分摊，留 slop 防抖动） ---
+      const imSum = A.im + B.im;
+      const sep = Math.max(0, depth - 0.02) * 0.7;
+      const sA = sep * (A.im / imSum), sB = sep * (B.im / imSum);
+      A.x -= dx * sA; A.y -= dy * sA;
+      B.x += dx * sB; B.y += dy * sB;
+
+      if (!applyVel) continue;
+
+      // --- 冲量：质量由半径决定，大球撞小球时小球被弹得更远 ---
+      let rvx = A.vx - B.vx, rvy = A.vy - B.vy;
+      const vn = rvx * dx + rvy * dy;
+      if (vn <= 0) continue;          // 已在分离
+      const e = (vn < REST_EPS) ? 0 : RESTITUTION;
+      const jn = -(1 + e) * vn / imSum;
+      A.vx += jn * dx * A.im; A.vy += jn * dy * A.im;
+      B.vx -= jn * dx * B.im; B.vy -= jn * dy * B.im;
+
+      // --- 轻微切向摩擦 ---
+      const tx = -dy, ty = dx;
+      rvx = A.vx - B.vx; rvy = A.vy - B.vy;
+      const vt = rvx * tx + rvy * ty;
+      const jt = -vt * BALL_FRICTION / imSum;
+      A.vx += jt * tx * A.im; A.vy += jt * ty * A.im;
+      B.vx -= jt * tx * B.im; B.vy -= jt * ty * B.im;
+    }
+  }
+}
+
+/* 球 ↔ 旋转的容器壁
+   凸多边形 = 所有边内半平面的交集，逐边约束即可保证球绝不在容器外。 */
+function resolveWalls(applyVel) {
+  const balls = state.balls;
+  const n = state.sides, a = state.apothem, ang = state.angle, om = state.omega;
+
+  for (let i = 0; i < n; i++) {
+    const phi = wallNormalAngle(i, n, ang);
+    const nx = Math.cos(phi), ny = Math.sin(phi);
+    const tx = -ny, ty = nx;
+
+    for (let k = 0; k < balls.length; k++) {
+      const b = balls[k];
+      const dx = b.x - CX, dy = b.y - CY;
+      const proj = dx * nx + dy * ny;
+      const depth = proj - (a - b.r);
+      if (depth <= 0) continue;
+
+      // 碰撞点 = 球心沿法线投影到壁面上的点
+      const qx = b.x - nx * (proj - a);
+      const qy = b.y - ny * (proj - a);
+
+      // --- 位置修正：常规穿透一次修完；深穿透（滑块突变造成）按比例平滑归位 ---
+      const push = Math.min(depth, Math.max(FULL_FIX, depth * SOFT_FIX));
+      b.x -= nx * push;
+      b.y -= ny * push;
+
+      if (!applyVel) continue;
+
+      // --- 壁面在碰撞点的速度：v = ω × r ---
+      const wvx = -om * (qy - CY);
+      const wvy =  om * (qx - CX);
+
+      // 在"相对墙面"的参考系里做碰撞响应
+      let rvx = b.vx - wvx, rvy = b.vy - wvy;
+
+      const vn = rvx * nx + rvy * ny;
+      if (vn > 0) {
+        // 低速接触或几何突变造成的深穿透 → 不反弹，只吸收法向速度
+        const e = (vn < REST_EPS || depth > DEEP_EPS) ? 0 : RESTITUTION;
+        const jn = -(1 + e) * vn;
+        rvx += jn * nx; rvy += jn * ny;
+      }
+
+      // --- 切向摩擦：把墙面切向速度传递给球，球被容器带着沿壁走 ---
+      const vt = rvx * tx + rvy * ty;
+      const jt = -vt * WALL_FRICTION;
+      rvx += jt * tx; rvy += jt * ty;
+
+      // 回到世界系
+      b.vx = rvx + wvx;
+      b.vy = rvy + wvy;
+    }
+  }
+}
+
+/* ==========================================================================
+   物理步进
+   ========================================================================== */
+function physicsStep(h) {
+  // 角速度极短平滑（时间常数约 0.07s，肉眼即时），避免瞬时反向造成数值冲击
+  state.omega += (state.omegaTarget - state.omega) * (1 - Math.exp(-14 * h));
+  // 边心距平滑过渡，换边数时容器形状连续变化
+  state.apothem += (state.apothemTarget - state.apothem) * (1 - Math.exp(-7 * h));
+  state.angle += state.omega * h;
+  if (state.angle > Math.PI * 2) state.angle -= Math.PI * 2;
+  else if (state.angle < -Math.PI * 2) state.angle += Math.PI * 2;
+
+  const balls = state.balls;
+  const damp = Math.exp(-LINEAR_DAMP * h);
+
+  // 积分
+  for (let i = 0; i < balls.length; i++) {
+    const b = balls[i];
+    b.vy += G * h;
+    b.vx *= damp; b.vy *= damp;
+    b.x += b.vx * h;
+    b.y += b.vy * h;
+  }
+
+  // 求解顺序：球球 → 壁。最后一轮必须是壁，保证任何情况下都不穿出容器。
+  resolveBallBall(true);
+  resolveBallBall(false);
+  resolveWalls(true);
+  resolveWalls(false);
+  resolveWalls(false);
+
+  // 速度上限兜底
+  for (let i = 0; i < balls.length; i++) {
+    const b = balls[i];
+    const sp2 = b.vx * b.vx + b.vy * b.vy;
+    if (sp2 > MAX_SPEED * MAX_SPEED) {
+      const s = MAX_SPEED / Math.sqrt(sp2);
+      b.vx *= s; b.vy *= s;
+    }
+  }
+}
+
+/* ==========================================================================
+   渲染
+   ========================================================================== */
+function ballColor(r) {
+  const t = Math.max(0, Math.min(1, (r - R_MIN) / (R_MAX - R_MIN)));
+  const hue = 196 - 176 * t;            // 青 → 橙
+  const light = 60 - 6 * t;
+  return 'hsl(' + hue.toFixed(1) + ', 62%, ' + light.toFixed(1) + '%)';
+}
+
+function polygonPath(n, a, ang) {
+  const R = a / Math.cos(Math.PI / n);
+  ctx.beginPath();
+  for (let i = 0; i < n; i++) {
+    const th = ang + i * 2 * Math.PI / n;
+    const x = CX + Math.cos(th) * R;
+    const y = CY + Math.sin(th) * R;
+    if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+  }
+  ctx.closePath();
+}
+
+function roundRectPath(x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.arcTo(x + w, y, x + w, y + h, r);
+  ctx.arcTo(x + w, y + h, x, y + h, r);
+  ctx.arcTo(x, y + h, x, y, r);
+  ctx.arcTo(x, y, x + w, y, r);
+  ctx.closePath();
+}
+
+function formatNum(v) {
+  if (!isFinite(v)) return '--';
+  if (v >= 1e6) return (v / 1e6).toFixed(2) + 'M';
+  if (v >= 1e3) return (v / 1e3).toFixed(1) + 'k';
+  return v.toFixed(0);
+}
+
+function drawHud() {
+  const w = 190, h = 96, x = W - w - 16, y = 16;
+
+  ctx.save();
+  roundRectPath(x, y, w, h, 9);
+  ctx.fillStyle = 'rgba(9, 13, 21, 0.78)';
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(56, 78, 108, 0.55)';
+  ctx.lineWidth = 1;
+  ctx.stroke();
+
+  const rows = [
+    ['球数', String(hud.count)],
+    ['总动能', formatNum(hud.ke)],
+    ['FPS', hud.fps.toFixed(0)]
+  ];
+  for (let i = 0; i < rows.length; i++) {
+    const by = y + 30 + i * 24;
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'alphabetic';
+    ctx.font = '12px -apple-system, "Segoe UI", "Microsoft YaHei", sans-serif';
+    ctx.fillStyle = '#6f7f95';
+    ctx.fillText(rows[i][0], x + 15, by);
+
+    ctx.textAlign = 'right';
+    ctx.font = '14px ui-monospace, Consolas, "Courier New", monospace';
+    ctx.fillStyle = '#dbe6f2';
+    ctx.fillText(rows[i][1], x + w - 15, by);
+  }
+  ctx.restore();
+}
+
+function render() {
+  const n = state.sides, a = state.apothem, ang = state.angle;
+
+  ctx.clearRect(0, 0, W, H);
+  ctx.fillStyle = '#0b0f16';
+  ctx.fillRect(0, 0, W, H);
+
+  // 容器内部极淡填充
+  polygonPath(n, a, ang);
+  ctx.fillStyle = 'rgba(120, 160, 210, 0.035)';
+  ctx.fill();
+
+  // 小球
+  const balls = state.balls;
+  for (let i = 0; i < balls.length; i++) {
+    const b = balls[i];
+    const c = ballColor(b.r);
+    ctx.beginPath();
+    ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
+    ctx.fillStyle = c;
+    ctx.fill();
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.20)';
+    ctx.stroke();
+  }
+
+  // 容器描边压在小球之上，边界始终干净
+  polygonPath(n, a, ang);
+  ctx.lineWidth = 2.5;
+  ctx.lineJoin = 'round';
+  ctx.strokeStyle = 'rgba(150, 172, 200, 0.62)';
+  ctx.stroke();
+
+  // 顶点标记：让旋转方向与速度一眼可见
+  const R = a / Math.cos(Math.PI / n);
+  for (let i = 0; i < n; i++) {
+    const th = ang + i * 2 * Math.PI / n;
+    const x = CX + Math.cos(th) * R;
+    const y = CY + Math.sin(th) * R;
+    ctx.beginPath();
+    ctx.arc(x, y, i === 0 ? 4.5 : 2.6, 0, Math.PI * 2);
+    ctx.fillStyle = i === 0 ? '#38bdf8' : 'rgba(150, 172, 200, 0.7)';
+    ctx.fill();
+  }
+
+  drawHud();
+}
+
+/* ==========================================================================
+   主循环
+   ========================================================================== */
+let lastT = 0, acc = 0, frameCount = 0, hudTimer = 0;
+
+function totalKE() {
+  let ke = 0;
+  const balls = state.balls;
+  for (let i = 0; i < balls.length; i++) {
+    const b = balls[i];
+    ke += 0.5 * b.m * (b.vx * b.vx + b.vy * b.vy);
+  }
+  return ke;
+}
+
+function refreshHud(fps) {
+  hud.count = state.balls.length;
+  hud.ke = totalKE();
+  hud.fps = fps;
+}
+
+function frame(t) {
+  const dt = Math.min(0.05, (t - lastT) / 1000) || 0;
+  lastT = t;
+
+  acc += dt;
+  let steps = 0;
+  while (acc >= DT && steps < MAX_STEPS) {
+    physicsStep(DT);
+    acc -= DT;
+    steps++;
+  }
+  if (acc > DT) acc = 0;   // 严重掉帧时丢弃积压，避免螺旋恶化
+
+  render();
+
+  // HUD 每秒刷新一次
+  frameCount++;
+  hudTimer += dt;
+  if (hudTimer >= 1) {
+    refreshHud(frameCount / hudTimer);
+    frameCount = 0;
+    hudTimer = 0;
+  }
+
+  requestAnimationFrame(frame);
+}
+
+/* ==========================================================================
+   交互
+   ========================================================================== */
+const sidesRange = document.getElementById('sidesRange');
+const omegaRange = document.getElementById('omegaRange');
+const sidesVal = document.getElementById('sidesVal');
+const omegaVal = document.getElementById('omegaVal');
+
+function fmtOmega(v) {
+  return (v >= 0 ? '+' : '−') + Math.abs(v).toFixed(2);
+}
+
+sidesRange.addEventListener('input', function () {
+  state.sides = parseInt(sidesRange.value, 10);
+  state.apothemTarget = apothemFor(state.sides);
+  sidesVal.textContent = state.sides;
+});
+
+omegaRange.addEventListener('input', function () {
+  state.omegaTarget = parseFloat(omegaRange.value);
+  omegaVal.textContent = fmtOmega(state.omegaTarget);
+});
+
+canvas.addEventListener('mousedown', function (ev) {
+  const rect = canvas.getBoundingClientRect();
+  const x = (ev.clientX - rect.left) * (W / rect.width);
+  const y = (ev.clientY - rect.top) * (H / rect.height);
+  spawnBall(x, y);
+  refreshHud(hud.fps);
+});
+
+window.addEventListener('keydown', function (ev) {
+  if (ev.code === 'Space') {
+    ev.preventDefault();
+    state.omegaTarget = -state.omegaTarget;
+    omegaRange.value = String(state.omegaTarget);
+    omegaVal.textContent = fmtOmega(state.omegaTarget);
+  } else if (ev.code === 'KeyR') {
+    ev.preventDefault();
+    reset();
+    refreshHud(hud.fps);
+  }
+});
+
+/* ==========================================================================
+   启动
+   ========================================================================== */
+state.sides = parseInt(sidesRange.value, 10);
+state.omegaTarget = parseFloat(omegaRange.value);
+state.omega = state.omegaTarget;
+state.apothem = state.apothemTarget = apothemFor(state.sides);
+sidesVal.textContent = state.sides;
+omegaVal.textContent = fmtOmega(state.omegaTarget);
+
+reset();
+refreshHud(60);
+lastT = performance.now();
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>

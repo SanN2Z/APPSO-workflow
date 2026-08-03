@@ -1,0 +1,657 @@
+version: 2
+updated: "2026-07-28"
+assets:
+  - file: "assets/qwenwork-six-core-capabilities.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "wechat_body_header"
+    dimensions: "1440x3000"
+    source_type: "official_page_screenshot"
+    source: "https://qwenwork.cn/#capabilities"
+    creator_or_rightsholder: "千问办公（阿里云）"
+    obtained_on: "2026-07-28"
+    modifications: "Viewport screenshot of the official six-core-capabilities section; no annotation or content replacement"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "User explicitly requested suitable official screenshots for this attributed WeChat product guide; this is not a general republication or commercial license"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "千问办公官网"
+
+  - file: "assets/qwenwork-desktop-download.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "wechat_body_header"
+    dimensions: "1440x1200"
+    source_type: "official_page_screenshot"
+    source: "https://qwenwork.cn/download"
+    creator_or_rightsholder: "千问办公（阿里云）"
+    obtained_on: "2026-07-28"
+    modifications: "Viewport screenshot of the official desktop download page; no annotation or content replacement"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "User explicitly requested suitable official screenshots for this attributed WeChat product guide; this is not a general republication or commercial license"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "千问办公官网"
+
+  - file: "assets/qwenwork-task-dialogue.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "wechat_body_header"
+    dimensions: "2880x1800"
+    source_type: "official_product_image"
+    source: "https://qwenwork.cn/docs/getting-started/basic-workflow"
+    source_file: "https://img.alicdn.com/imgextra/i2/O1CN01WW6EQ01GpMulpz3pI_!!6000000000671-49-tps-2880-1800.webp"
+    creator_or_rightsholder: "千问办公（阿里云）"
+    obtained_on: "2026-07-28"
+    modifications: "Downloaded from the official help center and converted from WebP to PNG; no crop, annotation, or content replacement"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "User explicitly requested suitable official screenshots for this attributed WeChat product guide; this is not a general republication or commercial license"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "千问办公帮助中心"
+
+  - file: "assets/qwenwork-computer-control.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "wechat_body_header"
+    dimensions: "1384x1081"
+    source_type: "official_product_image"
+    source: "https://qwenwork.cn/docs/desktop/computer-use"
+    source_file: "https://img.alicdn.com/imgextra/i1/O1CN017LlCGG25y6sZZFycQ_!!6000000007594-49-tps-1384-1081.webp"
+    creator_or_rightsholder: "千问办公（阿里云）"
+    obtained_on: "2026-07-28"
+    modifications: "Downloaded from the official help center and converted from WebP to PNG; no crop, annotation, or content replacement"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "User explicitly requested suitable official screenshots for this attributed WeChat product guide; this is not a general republication or commercial license"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "千问办公帮助中心"
+
+  - file: "assets/qwenwork-extensions-center.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "wechat_body_header"
+    dimensions: "2930x1586"
+    source_type: "official_product_image"
+    source: "https://qwenwork.cn/docs/features/extensions"
+    source_file: "https://img.alicdn.com/imgextra/i2/O1CN01y0fpEi1kZjsArXVH9_!!6000000004698-49-tps-2930-1586.webp"
+    creator_or_rightsholder: "千问办公（阿里云）"
+    obtained_on: "2026-07-28"
+    modifications: "Downloaded from the official help center and converted from WebP to PNG; no crop, annotation, or content replacement"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "User explicitly requested suitable official screenshots for this attributed WeChat product guide; this is not a general republication or commercial license"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "千问办公帮助中心"
+
+  - file: "assets/qwenwork-design-workbench.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "wechat_body_header"
+    dimensions: "2145x1072"
+    source_type: "official_product_image"
+    source: "https://qwenwork.cn/docs/workspaces/design"
+    source_file: "https://img.alicdn.com/imgextra/i2/O1CN01oCoRAU1jhEjzpi8ga_!!6000000004579-49-tps-2145-1072.webp"
+    creator_or_rightsholder: "千问办公（阿里云）"
+    obtained_on: "2026-07-28"
+    modifications: "Downloaded from the official help center and converted from WebP to PNG; no crop, annotation, or content replacement"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "User explicitly requested suitable official screenshots for this attributed WeChat product guide; this is not a general republication or commercial license"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "千问办公帮助中心"
+
+  - file: "assets/qwenwork-slides-workbench.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "wechat_body_header"
+    dimensions: "1514x1081"
+    source_type: "official_product_image"
+    source: "https://qwenwork.cn/docs/workspaces/slides"
+    source_file: "https://img.alicdn.com/imgextra/i1/O1CN01kQosUM1J7LhEczghK_!!6000000000981-49-tps-1514-1081.webp"
+    creator_or_rightsholder: "千问办公（阿里云）"
+    obtained_on: "2026-07-28"
+    modifications: "Downloaded from the official help center and converted from WebP to PNG; no crop, annotation, or content replacement"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "User explicitly requested suitable official screenshots for this attributed WeChat product guide; this is not a general republication or commercial license"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "千问办公帮助中心"
+
+  - file: "assets/qwenwork-writing-workbench.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "wechat_body_header"
+    dimensions: "1514x1081"
+    source_type: "official_product_image"
+    source: "https://qwenwork.cn/docs/workspaces/writing"
+    source_file: "https://img.alicdn.com/imgextra/i2/O1CN01fD5Yig27sjSb262yz_!!6000000007853-49-tps-1514-1081.webp"
+    creator_or_rightsholder: "千问办公（阿里云）"
+    obtained_on: "2026-07-28"
+    modifications: "Downloaded from the official help center and converted from WebP to PNG; no crop, annotation, or content replacement"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "User explicitly requested suitable official screenshots for this attributed WeChat product guide; this is not a general republication or commercial license"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "千问办公帮助中心"
+
+  - file: "assets/qwenwork-pages.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "wechat_body_header"
+    dimensions: "2880x1800"
+    source_type: "official_product_image"
+    source: "https://qwenwork.cn/docs/getting-started/basic-workflow"
+    source_file: "https://img.alicdn.com/imgextra/i2/O1CN01JtrX5U1ociutgd0Gy_!!6000000005246-49-tps-2880-1800.webp"
+    creator_or_rightsholder: "千问办公（阿里云）"
+    obtained_on: "2026-07-28"
+    modifications: "Downloaded from the official help center and converted from WebP to PNG; no crop, annotation, or content replacement"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "User explicitly requested suitable official screenshots for this attributed WeChat product guide; this is not a general republication or commercial license"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "千问办公帮助中心"
+
+  - file: "assets/qwenwork-im-channels.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "wechat_body_header"
+    dimensions: "1384x1081"
+    source_type: "official_product_image"
+    source: "https://qwenwork.cn/docs/desktop/im-channels"
+    source_file: "https://img.alicdn.com/imgextra/i1/O1CN01ZJdplh1nPbxhgi37a_!!6000000005082-49-tps-1384-1081.webp"
+    creator_or_rightsholder: "千问办公（阿里云）"
+    obtained_on: "2026-07-28"
+    modifications: "Downloaded from the official help center and converted from WebP to PNG; no crop, annotation, or content replacement"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "User explicitly requested suitable official screenshots for this attributed WeChat product guide; this is not a general republication or commercial license"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "千问办公帮助中心"
+
+  - file: "assets/qwenwork-scheduled-tasks.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "wechat_body_header"
+    dimensions: "1391x1002"
+    source_type: "official_product_image"
+    source: "https://qwenwork.cn/docs/desktop/scheduled-tasks"
+    source_file: "https://img.alicdn.com/imgextra/i2/O1CN010nqhsQ1TUqAVuQwYR_!!6000000002386-49-tps-1391-1002.webp"
+    creator_or_rightsholder: "千问办公（阿里云）"
+    obtained_on: "2026-07-28"
+    modifications: "Downloaded from the official help center and converted from WebP to PNG; no crop, annotation, or content replacement"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "User explicitly requested suitable official screenshots for this attributed WeChat product guide; this is not a general republication or commercial license"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "千问办公帮助中心"
+
+  - file: "assets/qwenwork-pricing-monthly.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "wechat_body_header"
+    dimensions: "1440x1500"
+    source_type: "official_page_screenshot"
+    source: "https://qwenwork.cn/pricing?audience=individual&billing=monthly"
+    creator_or_rightsholder: "千问办公（阿里云）"
+    obtained_on: "2026-07-28"
+    modifications: "Viewport screenshot of the official individual monthly pricing page; no annotation or content replacement"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "User explicitly requested suitable official screenshots for this attributed WeChat product guide; this is not a general republication or commercial license"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "千问办公官网"
+
+  - file: "assets/qwenwork-wechat-desktop-task-user.png"
+    used_in_draft: true
+    used_as_cover: false
+    use: "wechat_body_header"
+    dimensions: "1974x1184"
+    source_type: "user_supplied_product_screenshot"
+    source: "User-provided attachment in the current task"
+    creator_or_rightsholder: "用户提供的实机截图 / 千问办公界面"
+    obtained_on: "2026-07-28"
+    modifications: "Copied from the user-provided attachment; no crop, annotation, or content replacement"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "User supplied the screenshot and explicitly requested it be added to this WeChat product guide; this is not a general republication or commercial license"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "用户提供的千问办公实机截图"
+
+  - file: "assets/workbuddy-benchmark-complete-user.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "research_reference"
+    dimensions: "2559x1368"
+    source_type: "user_supplied_product_test_screenshot"
+    source: "User-provided attachment in the current task"
+    creator_or_rightsholder: "用户提供的实测截图 / WorkBuddy 产品界面"
+    obtained_on: "2026-07-28"
+    modifications: "Copied from the user-provided attachment; no crop, annotation, or content replacement"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "User supplied the screenshot while requesting a three-product WeChat evaluation draft"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "用户实测截图"
+
+  - file: "assets/codex-benchmark-dashboard.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "research_reference"
+    dimensions: "1440x8554"
+    source_type: "user_test_artifact"
+    source: "D:/projects/codex-test/benchmark-output/codex/native_default/06_dashboard_preview.png"
+    creator_or_rightsholder: "用户本次 Codex 测试产物"
+    obtained_on: "2026-07-28"
+    modifications: "Copied into the content package; no crop, annotation, or content replacement"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "Generated in the user-authorized benchmark and requested for the comparison article"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "用户实测产物"
+
+  - file: "assets/qwen-benchmark-dashboard.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "research_reference"
+    dimensions: "1440x6029"
+    source_type: "user_test_artifact"
+    source: "QwenWork native_default benchmark output"
+    creator_or_rightsholder: "用户本次千问办公测试产物"
+    obtained_on: "2026-07-28"
+    modifications: "Copied into the content package; no crop, annotation, or content replacement"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "Generated in the user-authorized benchmark and requested for the comparison article"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "用户实测产物"
+
+  - file: "assets/qwen-xhs-skill-market-user.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "research_reference"
+    dimensions: "1566x1167"
+    source_type: "user_supplied_product_screenshot"
+    source: "User-provided attachment in the current task"
+    creator_or_rightsholder: "用户提供的实机截图 / 千问办公 Skill 商店界面"
+    obtained_on: "2026-07-28"
+    modifications: "Copied from the user-provided attachment; no crop, annotation, or content replacement"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "User supplied the screenshot while discussing the current QwenWork benchmark article"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "用户实测截图"
+  - file: "assets/workbuddy-benchmark-delivery-crop.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "research_reference"
+    dimensions: "1500x1368"
+    source_type: "deterministic_crop"
+    source: "assets/workbuddy-benchmark-complete-user.png"
+    creator_or_rightsholder: "用户提供的实测截图 / WorkBuddy 产品界面"
+    obtained_on: "2026-07-28"
+    modifications: "Cropped to the delivery-list region only; no content replacement or annotation"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "User supplied the original screenshot and explicitly requested mobile-readable crops"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "用户实测截图"
+
+  - file: "assets/codex-benchmark-summary-crop.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "wechat_body_header"
+    dimensions: "1440x2200"
+    source_type: "deterministic_crop"
+    source: "assets/codex-benchmark-dashboard.png"
+    creator_or_rightsholder: "用户本次 Codex 测试产物"
+    obtained_on: "2026-07-28"
+    modifications: "Cropped to the top summary region only; no content replacement or annotation"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "Generated in the user-authorized benchmark and explicitly requested as a mobile-readable crop"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "用户实测产物"
+
+  - file: "assets/codex-benchmark-sources-crop.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "research_reference"
+    dimensions: "1440x2200"
+    source_type: "deterministic_crop"
+    source: "assets/codex-benchmark-dashboard.png"
+    creator_or_rightsholder: "用户本次 Codex 测试产物"
+    obtained_on: "2026-07-28"
+    modifications: "Cropped from the lower evidence region; retained as an optional research reference"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "Generated in the user-authorized benchmark"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "用户实测产物"
+
+  - file: "assets/qwen-benchmark-summary-crop.png"
+    used_in_draft: true
+    used_as_cover: false
+    use: "wechat_body_header"
+    dimensions: "1440x2100"
+    source_type: "deterministic_crop"
+    source: "assets/qwen-benchmark-dashboard.png"
+    creator_or_rightsholder: "用户本次千问办公测试产物"
+    obtained_on: "2026-07-28"
+    modifications: "Cropped to the top summary region only; no content replacement or annotation"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "Generated in the user-authorized benchmark and explicitly requested as a mobile-readable crop"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "用户实测产物"
+
+  - file: "assets/qwen-benchmark-sources-crop.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "research_reference"
+    dimensions: "1440x2029"
+    source_type: "deterministic_crop"
+    source: "assets/qwen-benchmark-dashboard.png"
+    creator_or_rightsholder: "用户本次千问办公测试产物"
+    obtained_on: "2026-07-28"
+    modifications: "Cropped from the lower evidence region; retained as an optional research reference"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "Generated in the user-authorized benchmark"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "用户实测产物"
+  - file: "research/source-assets/workbuddy-ui-duration-19m37-user.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "research_reference"
+    dimensions: "1407x1026"
+    source_type: "user_supplied_product_test_screenshot"
+    source: "User-provided attachment in the current task"
+    creator_or_rightsholder: "用户提供的实测截图 / WorkBuddy 产品界面"
+    obtained_on: "2026-07-28"
+    modifications: "User-added red circles highlight the UI duration and message time; otherwise unchanged"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "User supplied the screenshot to correct the benchmark duration"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "用户实测截图"
+
+  - file: "research/source-assets/workbuddy-ui-finish-1737-user.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "research_reference"
+    dimensions: "1131x375"
+    source_type: "user_supplied_product_test_screenshot"
+    source: "User-provided attachment in the current task"
+    creator_or_rightsholder: "用户提供的实测截图 / WorkBuddy 产品界面"
+    obtained_on: "2026-07-28"
+    modifications: "User-added red circle highlights the final-response time; otherwise unchanged"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "User supplied the screenshot to correct the benchmark duration"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "用户实测截图"
+
+  - file: "research/source-assets/workbuddy-self-report-47m-user.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "research_reference"
+    dimensions: "714x201"
+    source_type: "user_supplied_product_test_screenshot"
+    source: "User-provided attachment in the current task"
+    creator_or_rightsholder: "用户提供的实测截图 / WorkBuddy 生成内容"
+    obtained_on: "2026-07-28"
+    modifications: "Copied from the user-provided attachment; no content replacement"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "User supplied the screenshot to document the incorrect self-reported duration"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "用户实测截图"
+  - file: "research/source-assets/qwen-ui-duration-41m36-user.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "research_reference"
+    dimensions: "1230x873"
+    source_type: "user_supplied_product_test_screenshot"
+    source: "User-provided attachment in the current task"
+    creator_or_rightsholder: "用户提供的实测截图 / 千问办公产品界面"
+    obtained_on: "2026-07-28"
+    modifications: "User-added red circles highlight self-reported and UI duration; otherwise unchanged"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "User supplied the screenshot to correct the benchmark duration"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "用户实测截图"
+
+  - file: "research/source-assets/codex-ui-duration-25m36-user.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "research_reference"
+    dimensions: "849x561"
+    source_type: "user_supplied_product_test_screenshot"
+    source: "User-provided attachment in the current task"
+    creator_or_rightsholder: "用户提供的实测截图 / Codex 产品界面"
+    obtained_on: "2026-07-28"
+    modifications: "User-added red circles highlight self-reported and UI duration; otherwise unchanged"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "User supplied the screenshot to correct the benchmark duration"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "用户实测截图"
+  - file: "assets/workbuddy-self-report-vs-ui-user.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "wechat_body_header"
+    dimensions: "1377x915"
+    source_type: "user_supplied_product_test_screenshot"
+    source: "User-provided attachment in the current task"
+    creator_or_rightsholder: "用户提供的实测截图 / WorkBuddy 产品界面与生成内容"
+    obtained_on: "2026-07-28"
+    modifications: "User-added red circles highlight the self-reported 47-minute duration and the 17:37 final-response time; otherwise unchanged"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "User supplied the screenshot and explicitly requested the article be updated based on this evidence"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "用户实测截图"
+
+  - file: "research/source-assets/workbuddy-prompt-1717-user.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "research_reference"
+    dimensions: "1287x639"
+    source_type: "user_supplied_product_test_screenshot"
+    source: "User-provided attachment in the current task"
+    creator_or_rightsholder: "用户提供的实测截图 / WorkBuddy 产品界面"
+    obtained_on: "2026-07-28"
+    modifications: "User-added red circle highlights the 17:17 prompt time; otherwise unchanged"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "User supplied the screenshot to establish the task start time"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "用户实测截图"
+  - file: "assets/agent-benchmark-ui-vs-self-summary-user.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "wechat_body_header"
+    dimensions: "1055x1491"
+    source_type: "user_supplied_derived_infographic"
+    source: "User-provided attachment generated from the benchmark data in the current task"
+    creator_or_rightsholder: "用户提供的信息图 / 本次三方实测数据"
+    obtained_on: "2026-07-28"
+    modifications: "Copied from the user-provided attachment; no crop, annotation, or content replacement"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "User supplied the infographic and explicitly requested it be arranged into the full WeChat article"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "用户实测数据整理"
+  - file: "assets/qwen-self-report-vs-ui-user.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "wechat_body_header"
+    dimensions: "1332x590"
+    source_type: "user_supplied_product_test_screenshot"
+    source: "User-provided attachment in the current task"
+    creator_or_rightsholder: "用户提供的实测截图 / 千问办公产品界面与生成内容"
+    obtained_on: "2026-07-28"
+    modifications: "User-added red circles highlight the self-reported and UI duration; otherwise unchanged"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "User supplied the screenshot and explicitly requested it be arranged into the article"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "用户实测截图"
+
+  - file: "assets/codex-self-report-vs-ui-user.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "wechat_body_header"
+    dimensions: "848x615"
+    source_type: "user_supplied_product_test_screenshot"
+    source: "User-provided attachment in the current task"
+    creator_or_rightsholder: "用户提供的实测截图 / Codex 产品界面与生成内容"
+    obtained_on: "2026-07-28"
+    modifications: "User-added red circles highlight the self-reported and UI duration; otherwise unchanged"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "User supplied the screenshot and explicitly requested it be arranged into the article"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "用户实测截图"
+  - file: "assets/qwenwork-capabilities-live-20260728.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "research_reference"
+    dimensions: "1440x1800"
+    source_type: "official_page_screenshot"
+    source: "https://qwenwork.cn/#capabilities"
+    creator_or_rightsholder: "千问办公（阿里云）"
+    obtained_on: "2026-07-28"
+    modifications: "Viewport screenshot of the official capabilities page; no annotation or content replacement"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "User requested a product experience article and official feature evidence; screenshot is used with attribution for editorial commentary"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "千问办公官网"
+  - file: "assets/qwenwork-official-professional-data-source-20260728.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "research_reference"
+    dimensions: "1136x518"
+    source_type: "official_page_screenshot"
+    source: "https://www.qianwenai.com/agents/qwenwork"
+    creator_or_rightsholder: "千问办公（阿里巴巴）"
+    obtained_on: "2026-07-28"
+    modifications: "Element screenshot of the official 专业数据源接入 capability card; no annotation or content replacement"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "User requested exact official evidence for the 1688 and Xiaohongshu claim; screenshot is used with attribution for editorial commentary"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "千问办公官网"
+  - file: "assets/qwenwork-official-data-sources-user-annotated.png"
+    used_in_draft: true
+    used_as_cover: false
+    use: "wechat_body_header"
+    dimensions: "2451x1020"
+    source_type: "user_supplied_annotated_official_page_screenshot"
+    source: "User-provided attachment in the current task; underlying page https://www.qianwenai.com/agents/qwenwork"
+    creator_or_rightsholder: "用户提供的标注截图 / 千问办公官方页面"
+    obtained_on: "2026-07-28"
+    modifications: "User-provided screenshot includes a red outline around the 专业数据源接入 card; no further modification"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "User explicitly supplied and requested this screenshot for the current WeChat article; used with official-page attribution"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "千问办公官网 / 用户标注"
+
+  - file: "assets/qwenwork-xhs-environment-check-user.png"
+    used_in_draft: true
+    used_as_cover: false
+    use: "wechat_body_header"
+    dimensions: "1178x1026"
+    source_type: "user_supplied_product_test_screenshot"
+    source: "User-provided attachment in the current task"
+    creator_or_rightsholder: "用户提供的千问办公实测截图 / 千问办公界面"
+    obtained_on: "2026-07-28"
+    modifications: "Copied from the user-provided attachment; no crop, annotation, or content replacement"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "User explicitly supplied and requested this screenshot for the current WeChat article"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "用户提供的千问办公实测截图"
+  - file: "assets/qwenwork-self-research-clarify-user.png"
+    used_in_draft: true
+    used_as_cover: false
+    use: "wechat_body_header"
+    dimensions: "1212x1236"
+    source_type: "user_supplied_product_test_screenshot"
+    source: "User-provided attachment in the current task"
+    creator_or_rightsholder: "用户提供的千问办公实测截图 / 千问办公界面"
+    obtained_on: "2026-07-28"
+    modifications: "Copied from the user-provided attachment; no crop, annotation, or content replacement"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "User explicitly supplied and requested this screenshot for the current WeChat article"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "用户提供的千问办公实测截图"
+
+  - file: "assets/qwenwork-self-research-running-user.png"
+    used_in_draft: true
+    used_as_cover: false
+    use: "wechat_body_header"
+    dimensions: "2142x1191"
+    source_type: "user_supplied_product_test_screenshot"
+    source: "User-provided attachment in the current task"
+    creator_or_rightsholder: "用户提供的千问办公实测截图 / 千问办公界面"
+    obtained_on: "2026-07-28"
+    modifications: "Copied from the user-provided attachment; no crop, annotation, or content replacement"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "User explicitly supplied and requested this screenshot for the current WeChat article"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "用户提供的千问办公实测截图"
+
+  - file: "assets/qwenwork-self-research-hero-user.png"
+    used_in_draft: true
+    used_as_cover: false
+    use: "wechat_body_header"
+    dimensions: "1613x1065"
+    source_type: "user_supplied_generated_artifact_screenshot"
+    source: "User-provided attachment from a QwenWork-generated HTML page"
+    creator_or_rightsholder: "用户提供的千问办公生成页面截图 / 千问办公生成内容"
+    obtained_on: "2026-07-28"
+    modifications: "Copied from the user-provided attachment; no crop, annotation, or content replacement"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "User explicitly supplied the generated result and requested it be discussed in the current WeChat article"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "用户实测产物"
+
+  - file: "assets/qwenwork-self-research-three-agents-user.png"
+    used_in_draft: true
+    used_as_cover: false
+    use: "wechat_body_header"
+    dimensions: "1614x930"
+    source_type: "user_supplied_generated_artifact_screenshot"
+    source: "User-provided attachment from a QwenWork-generated HTML page"
+    creator_or_rightsholder: "用户提供的千问办公生成页面截图 / 千问办公生成内容"
+    obtained_on: "2026-07-28"
+    modifications: "Copied from the user-provided attachment; no crop, annotation, or content replacement"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "User explicitly supplied the generated result and requested it be discussed in the current WeChat article"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "用户实测产物"
+
+  - file: "assets/qwenwork-self-research-entry-modes-user.png"
+    used_in_draft: true
+    used_as_cover: false
+    use: "wechat_body_header"
+    dimensions: "1689x903"
+    source_type: "user_supplied_generated_artifact_screenshot"
+    source: "User-provided attachment from a QwenWork-generated HTML page"
+    creator_or_rightsholder: "用户提供的千问办公生成页面截图 / 千问办公生成内容"
+    obtained_on: "2026-07-28"
+    modifications: "Copied from the user-provided attachment; no crop, annotation, or content replacement"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "User explicitly supplied the generated result and requested it be discussed in the current WeChat article"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "用户实测产物"

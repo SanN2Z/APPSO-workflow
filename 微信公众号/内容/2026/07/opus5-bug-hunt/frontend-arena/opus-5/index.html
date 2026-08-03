@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>旋转多边形物理沙盘</title>
+<style>
+  :root{
+    --bg:#080a0e;
+    --panel:#11141b;
+    --line:#232a36;
+    --text:#c8d2e2;
+    --dim:#7a8497;
+    --accent:#7aa2f7;
+  }
+  *{ box-sizing:border-box; }
+  html,body{ height:100%; }
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",Roboto,Helvetica,Arial,sans-serif;
+    font-size:13px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:24px 16px;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{ width:900px; }
+  .stage{
+    position:relative;
+    width:900px;
+    height:600px;
+    border:1px solid var(--line);
+    border-radius:10px;
+    overflow:hidden;
+    background:#0d1015;
+    box-shadow:0 18px 50px rgba(0,0,0,.55);
+  }
+  canvas{ display:block; width:900px; height:600px; cursor:crosshair; }
+
+  .hud{
+    position:absolute;
+    top:14px; right:14px;
+    min-width:168px;
+    padding:10px 12px;
+    background:rgba(10,13,18,.72);
+    border:1px solid rgba(122,162,247,.18);
+    border-radius:8px;
+    backdrop-filter:blur(6px);
+    pointer-events:none;
+    font-variant-numeric:tabular-nums;
+  }
+  .hud .row{
+    display:flex; justify-content:space-between; align-items:baseline;
+    padding:2px 0;
+  }
+  .hud .row span{ color:var(--dim); font-size:12px; letter-spacing:.04em; }
+  .hud .row b{ color:#e7edf8; font-size:14px; font-weight:600; }
+
+  .panel{
+    margin-top:14px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px 22px;
+    padding:14px 18px;
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:10px;
+  }
+  .ctrl{ display:flex; flex-direction:column; gap:7px; }
+  .ctrl .cap{ display:flex; justify-content:space-between; align-items:baseline; }
+  .ctrl .cap label{ color:var(--dim); letter-spacing:.04em; }
+  .ctrl .cap output{
+    color:#e7edf8; font-weight:600; font-variant-numeric:tabular-nums;
+  }
+  input[type=range]{
+    -webkit-appearance:none; appearance:none;
+    width:100%; height:4px; margin:0;
+    background:#242c39; border-radius:3px; outline:none;
+    accent-color:var(--accent);
+  }
+  input[type=range]::-webkit-slider-thumb{
+    -webkit-appearance:none; appearance:none;
+    width:15px; height:15px; border-radius:50%;
+    background:var(--accent); border:none; cursor:pointer;
+    box-shadow:0 0 0 3px rgba(122,162,247,.16);
+  }
+  input[type=range]::-moz-range-thumb{
+    width:15px; height:15px; border-radius:50%;
+    background:var(--accent); border:none; cursor:pointer;
+  }
+  .hint{
+    margin-top:10px; color:var(--dim); font-size:12px; line-height:1.7; letter-spacing:.02em;
+  }
+  .hint kbd{
+    display:inline-block; padding:1px 6px; margin:0 1px;
+    border:1px solid var(--line); border-bottom-width:2px; border-radius:4px;
+    background:#171b24; color:#b6c1d4; font:inherit; font-size:11px;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="stage">
+    <canvas id="cv" width="900" height="600"></canvas>
+    <div class="hud">
+      <div class="row"><span>球数</span><b id="hudCount">0</b></div>
+      <div class="row"><span>总动能</span><b id="hudKE">0.0</b></div>
+      <div class="row"><span>FPS</span><b id="hudFps">0</b></div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="ctrl">
+      <div class="cap"><label for="sSides">容器边数</label><output id="oSides">6</output></div>
+      <input type="range" id="sSides" min="3" max="12" step="1" value="6">
+    </div>
+    <div class="ctrl">
+      <div class="cap"><label for="sOmega">角速度</label><output id="oOmega">60 °/s</output></div>
+      <input type="range" id="sOmega" min="-240" max="240" step="5" value="60">
+    </div>
+  </div>
+
+  <div class="hint">
+    点击画布在该处生成新球 · <kbd>空格</kbd> 反转旋转方向 · <kbd>R</kbd> 清空并重置为 20 球<br>
+    角速度为正表示顺时针，为负表示逆时针，居中为静止。
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ---------------- 常量 ---------------- */
+  const W = 900, H = 600;              // 逻辑画布尺寸（固定）
+  const CX = 450, CY = 300;            // 容器中心
+  const R_CIRC = 250;                  // 容器外接圆半径（顶点到中心）
+  const GRAVITY = 900;                 // px/s^2
+  const REST_BALL = 0.8;               // 球-球恢复系数
+  const REST_WALL = 0.8;               // 球-壁恢复系数
+  const WALL_FRICTION = 0.18;          // 壁面切向牵引强度（每个接触子步）
+  const REST_VN_EPS = 45;              // 低于该法向接近速度视为静止接触，不再反弹
+  const REST_VN_EPS_BALL = 20;         // 球堆叠时的微小接触速度，同样不反弹，避免持续抖动
+  const DAMPING = 0.9995;              // 每子步空气阻尼
+  const MAX_SPEED = 1600;              // 速度上限，防止旋转注入能量导致数值爆炸
+  const FIXED_DT = 1 / 120;            // 固定物理步长
+  const MAX_SUBSTEPS = 8;
+  const INIT_COUNT = 20;
+  const MAX_BALLS = 220;
+  const R_MIN = 7, R_MAX = 20;
+  const POS_ITER = 3;                  // 每子步的墙面投影迭代次数（保证角落也被约束住）
+
+  /* ---------------- 画布 ---------------- */
+  const cv = document.getElementById('cv');
+  const ctx = cv.getContext('2d');
+
+  function setupCanvas() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    cv.width = Math.round(W * dpr);
+    cv.height = Math.round(H * dpr);
+    cv.style.width = W + 'px';
+    cv.style.height = H + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    bgGrad = null;
+  }
+
+  let bgGrad = null;
+  function backgroundGradient() {
+    if (!bgGrad) {
+      bgGrad = ctx.createRadialGradient(CX, CY - 40, 40, CX, CY, 560);
+      bgGrad.addColorStop(0, '#151a23');
+      bgGrad.addColorStop(1, '#0a0c11');
+    }
+    return bgGrad;
+  }
+
+  setupCanvas();
+  window.addEventListener('resize', setupCanvas);
+
+  /* ---------------- 状态 ---------------- */
+  let sides = 6;                        // 边数
+  let omega = 60 * Math.PI / 180;       // 角速度 rad/s（正 = 屏幕顺时针）
+  let theta = 0;                        // 当前旋转角
+  const balls = [];
+
+  const sSides = document.getElementById('sSides');
+  const oSides = document.getElementById('oSides');
+  const sOmega = document.getElementById('sOmega');
+  const oOmega = document.getElementById('oOmega');
+  const hudCount = document.getElementById('hudCount');
+  const hudKE = document.getElementById('hudKE');
+  const hudFps = document.getElementById('hudFps');
+
+  function clamp(v, lo, hi) { return v < lo ? lo : (v > hi ? hi : v); }
+
+  // 正 n 边形的内切圆半径（中心到边的距离）
+  function apothemOf(n) { return R_CIRC * Math.cos(Math.PI / n); }
+
+  /* ---------------- 小球 ---------------- */
+  function makeBall(x, y, r, vx, vy) {
+    const t = clamp((r - R_MIN) / (R_MAX - R_MIN), 0, 1);
+    const h = Math.round(200 + t * 140);   // 冷蓝 -> 紫 -> 粉
+    const s = Math.round(60 - t * 6);
+    const l = Math.round(68 - t * 11);
+    const m = r * r;                       // 二维质量 ∝ 面积
+    return {
+      x: x, y: y, r: r, vx: vx, vy: vy,
+      m: m, im: 1 / m,
+      fill: 'hsl(' + h + ',' + s + '%,' + l + '%)',
+      rim: 'hsla(' + h + ',' + s + '%,' + (l + 16) + '%,0.8)'
+    };
+  }
+
+  // 在容器内切圆内随机取点，尽量不与已有球重叠
+  function spawnRandom() {
+    const r = R_MIN + Math.random() * (R_MAX - R_MIN);
+    const lim = Math.max(apothemOf(sides) - r - 4, 1);
+    let x = CX, y = CY;
+    for (let attempt = 0; attempt < 60; attempt++) {
+      const ang = Math.random() * Math.PI * 2;
+      const rad = Math.sqrt(Math.random()) * lim;
+      x = CX + Math.cos(ang) * rad;
+      y = CY + Math.sin(ang) * rad;
+      let ok = true;
+      for (let i = 0; i < balls.length; i++) {
+        const b = balls[i];
+        const dx = b.x - x, dy = b.y - y, rr = b.r + r + 2;
+        if (dx * dx + dy * dy < rr * rr) { ok = false; break; }
+      }
+      if (ok) break;
+    }
+    balls.push(makeBall(x, y, r, (Math.random() - 0.5) * 140, (Math.random() - 0.5) * 140));
+  }
+
+  // 在指定位置生成球；若点在容器外则拉回内切圆内
+  function addBallAt(px, py) {
+    const r = R_MIN + Math.random() * (R_MAX - R_MIN);
+    const lim = Math.max(apothemOf(sides) - r - 2, 1);
+    let dx = px - CX, dy = py - CY;
+    const d = Math.hypot(dx, dy);
+    if (d > lim) {
+      const k = lim / (d || 1);
+      dx *= k; dy *= k;
+    }
+    if (balls.length >= MAX_BALLS) balls.shift();
+    balls.push(makeBall(CX + dx, CY + dy, r, (Math.random() - 0.5) * 90, (Math.random() - 0.5) * 90));
+  }
+
+  function reset() {
+    balls.length = 0;
+    for (let i = 0; i < INIT_COUNT; i++) spawnRandom();
+  }
+
+  /* ---------------- 空间网格（球-球宽相位） ---------------- */
+  const CELL = 2 * R_MAX + 6;
+  const COLS = Math.ceil(W / CELL), ROWS = Math.ceil(H / CELL);
+  const buckets = [];
+  for (let i = 0; i < COLS * ROWS; i++) buckets.push([]);
+
+  function resolveBallPairs() {
+    for (let i = 0; i < buckets.length; i++) buckets[i].length = 0;
+    for (let i = 0; i < balls.length; i++) {
+      const b = balls[i];
+      const cx = clamp(Math.floor(b.x / CELL), 0, COLS - 1);
+      const cy = clamp(Math.floor(b.y / CELL), 0, ROWS - 1);
+      buckets[cy * COLS + cx].push(i);
+    }
+    // 半邻域枚举：(0,0) (1,0) (-1,1) (0,1) (1,1)，保证每对格子只处理一次
+    for (let cy = 0; cy < ROWS; cy++) {
+      for (let cx = 0; cx < COLS; cx++) {
+        const list = buckets[cy * COLS + cx];
+        if (list.length === 0) continue;
+        for (let dy = 0; dy <= 1; dy++) {
+          const dxStart = (dy === 0) ? 0 : -1;
+          for (let dx = dxStart; dx <= 1; dx++) {
+            const nx = cx + dx, ny = cy + dy;
+            if (nx < 0 || nx >= COLS || ny < 0 || ny >= ROWS) continue;
+            const other = buckets[ny * COLS + nx];
+            if (other.length === 0) continue;
+            const same = (dx === 0 && dy === 0);
+            for (let ii = 0; ii < list.length; ii++) {
+              const a = balls[list[ii]];
+              for (let jj = same ? ii + 1 : 0; jj < other.length; jj++) {
+                collidePair(a, balls[other[jj]]);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  function collidePair(A, B) {
+    let dx = B.x - A.x, dy = B.y - A.y;
+    let d2 = dx * dx + dy * dy;
+    const rsum = A.r + B.r;
+    if (d2 >= rsum * rsum) return;
+    if (d2 < 1e-9) { B.x += 0.05; B.y += 0.05; return; }
+
+    const d = Math.sqrt(d2);
+    const nx = dx / d, ny = dy / d;
+    const overlap = rsum - d;
+
+    // 位置分离：按逆质量分配，小球被推开得更多
+    const imSum = A.im + B.im;
+    const corr = (overlap * 0.8) / imSum;
+    A.x -= nx * corr * A.im; A.y -= ny * corr * A.im;
+    B.x += nx * corr * B.im; B.y += ny * corr * B.im;
+
+    // 冲量：质量差异体现在 im 上，大球撞小球时小球速度变化更大
+    const rvx = B.vx - A.vx, rvy = B.vy - A.vy;
+    const vn = rvx * nx + rvy * ny;
+    if (vn > 0) return;                       // 已在分离
+    const e = (-vn < REST_VN_EPS_BALL) ? 0 : REST_BALL;
+    const j = -(1 + e) * vn / imSum;
+    A.vx -= j * nx * A.im; A.vy -= j * ny * A.im;
+    B.vx += j * nx * B.im; B.vy += j * ny * B.im;
+  }
+
+  /* ---------------- 容器壁 ---------------- */
+  // 正多边形 = N 个半平面的交集：dot(p-C, n_k) <= apothem
+  // 边 k 的外法线角度；theta=0 时边 0 的法线朝屏幕正下方（底边水平）
+  const nxs = new Float64Array(16), nys = new Float64Array(16);
+  function buildNormals() {
+    const base = Math.PI / 2 - Math.PI / sides + theta;
+    const stepAng = 2 * Math.PI / sides;
+    for (let k = 0; k < sides; k++) {
+      const a = base + stepAng * k;
+      nxs[k] = Math.cos(a);
+      nys[k] = Math.sin(a);
+    }
+  }
+
+  function resolveWalls() {
+    const apo = apothemOf(sides);
+    for (let i = 0; i < balls.length; i++) {
+      const b = balls[i];
+      const limit = apo - b.r;
+      if (limit <= 1) { b.x = CX; b.y = CY; b.vx = 0; b.vy = 0; continue; }
+      for (let k = 0; k < sides; k++) {
+        const nx = nxs[k], ny = nys[k];
+        const d = (b.x - CX) * nx + (b.y - CY) * ny;
+        if (d <= limit) continue;
+
+        // 1) 位置投影回壁内（不注入速度，绝不穿出）
+        const pen = d - limit;
+        b.x -= nx * pen;
+        b.y -= ny * pen;
+
+        // 2) 速度：先算该接触点上墙面的线速度 v_wall = ω × r
+        const rx = b.x - CX, ry = b.y - CY;
+        const wvx = -omega * ry, wvy = omega * rx;
+
+        const rvx = b.vx - wvx, rvy = b.vy - wvy;   // 墙参考系下的相对速度
+        const vn = rvx * nx + rvy * ny;
+        const tx = -ny, ty = nx;                    // 壁面切向
+        let vt = rvx * tx + rvy * ty;
+
+        // 切向牵引：把墙面切向速度传给球（vt 是相对速度，衰减即向墙面速度靠拢）
+        vt *= (1 - WALL_FRICTION);
+
+        // 法向：接近时按恢复系数反弹；接近速度很小则完全吸收，避免壁内抖动
+        let vnOut = vn;
+        if (vn > 0) vnOut = (vn < REST_VN_EPS) ? 0 : -REST_WALL * vn;
+
+        b.vx = wvx + nx * vnOut + tx * vt;
+        b.vy = wvy + ny * vnOut + ty * vt;
+      }
+    }
+  }
+
+  // 最终硬约束：沿中心方向做一次解析投影，保证球心严格落在收缩多边形内。
+  // 尖角（三角形）处逐边投影收敛较慢，会残留亚像素穿透，这一步把它归零。
+  function clampInside() {
+    const apo = apothemOf(sides);
+    for (let i = 0; i < balls.length; i++) {
+      const b = balls[i];
+      const limit = apo - b.r;
+      if (limit <= 1) { b.x = CX; b.y = CY; b.vx = 0; b.vy = 0; continue; }
+      const rx = b.x - CX, ry = b.y - CY;
+      let m = -Infinity;
+      for (let k = 0; k < sides; k++) {
+        const d = rx * nxs[k] + ry * nys[k];
+        if (d > m) m = d;
+      }
+      if (m > limit) {
+        const s = limit / m;
+        b.x = CX + rx * s;
+        b.y = CY + ry * s;
+      }
+    }
+  }
+
+  /* ---------------- 物理主循环 ---------------- */
+  function physics(dt) {
+    theta += omega * dt;
+    if (theta > Math.PI * 2) theta -= Math.PI * 2;
+    else if (theta < -Math.PI * 2) theta += Math.PI * 2;
+
+    for (let i = 0; i < balls.length; i++) {
+      const b = balls[i];
+      b.vy += GRAVITY * dt;
+      b.vx *= DAMPING; b.vy *= DAMPING;
+      b.x += b.vx * dt;
+      b.y += b.vy * dt;
+    }
+
+    buildNormals();
+
+    // 顺序求解：球球 -> 壁 -> 球球 -> 壁，壁在最后，保证约束闭合
+    resolveBallPairs();
+    for (let it = 0; it < POS_ITER; it++) resolveWalls();
+    resolveBallPairs();
+    for (let it = 0; it < POS_ITER; it++) resolveWalls();
+    clampInside();
+
+    for (let i = 0; i < balls.length; i++) {
+      const b = balls[i];
+      const sp2 = b.vx * b.vx + b.vy * b.vy;
+      if (sp2 > MAX_SPEED * MAX_SPEED) {
+        const k = MAX_SPEED / Math.sqrt(sp2);
+        b.vx *= k; b.vy *= k;
+      }
+    }
+  }
+
+  /* ---------------- 绘制 ---------------- */
+  function polygonPoints() {
+    const base = Math.PI / 2 - Math.PI / sides + theta - Math.PI / sides;
+    const stepAng = 2 * Math.PI / sides;
+    const pts = [];
+    for (let k = 0; k < sides; k++) {
+      const a = base + stepAng * k;
+      pts.push(CX + Math.cos(a) * R_CIRC, CY + Math.sin(a) * R_CIRC);
+    }
+    return pts;
+  }
+
+  function draw() {
+    ctx.fillStyle = backgroundGradient();
+    ctx.fillRect(0, 0, W, H);
+
+    const pts = polygonPoints();
+
+    ctx.beginPath();
+    ctx.moveTo(pts[0], pts[1]);
+    for (let i = 2; i < pts.length; i += 2) ctx.lineTo(pts[i], pts[i + 1]);
+    ctx.closePath();
+    ctx.fillStyle = 'rgba(122,162,247,0.035)';
+    ctx.fill();
+    ctx.lineWidth = 2.5;
+    ctx.strokeStyle = 'rgba(150,178,224,0.5)';
+    ctx.stroke();
+
+    // 顶点 0 的标记，用来看清旋转方向
+    ctx.beginPath();
+    ctx.arc(pts[0], pts[1], 4.5, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(122,162,247,0.9)';
+    ctx.fill();
+
+    // 中心点
+    ctx.beginPath();
+    ctx.arc(CX, CY, 2, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(200,214,235,0.22)';
+    ctx.fill();
+
+    for (let i = 0; i < balls.length; i++) {
+      const b = balls[i];
+      ctx.beginPath();
+      ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
+      ctx.fillStyle = b.fill;
+      ctx.fill();
+      ctx.lineWidth = 1;
+      ctx.strokeStyle = b.rim;
+      ctx.stroke();
+
+      // 克制的高光
+      ctx.beginPath();
+      ctx.arc(b.x - b.r * 0.3, b.y - b.r * 0.32, b.r * 0.42, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(255,255,255,0.10)';
+      ctx.fill();
+    }
+  }
+
+  /* ---------------- HUD ---------------- */
+  function totalKineticEnergy() {
+    // 单位为演示用：质量取 (r/10)^2，速度取 (v/100)
+    let e = 0;
+    for (let i = 0; i < balls.length; i++) {
+      const b = balls[i];
+      const m = (b.r / 10) * (b.r / 10);
+      const v2 = (b.vx * b.vx + b.vy * b.vy) / 10000;
+      e += 0.5 * m * v2;
+    }
+    return e;
+  }
+
+  /* ---------------- 主循环 ---------------- */
+  let last = performance.now();
+  let acc = 0;
+  let hudAcc = 0, frames = 0;
+
+  function frame(now) {
+    let dt = (now - last) / 1000;
+    last = now;
+    if (!(dt > 0)) dt = 0;
+    if (dt > 0.1) dt = 0.1;              // 标签页切回来时不要一次补算
+
+    acc += dt;
+    let steps = 0;
+    while (acc >= FIXED_DT && steps < MAX_SUBSTEPS) {
+      physics(FIXED_DT);
+      acc -= FIXED_DT;
+      steps++;
+    }
+    if (acc > FIXED_DT) acc = 0;         // 丢弃积压，避免死亡螺旋
+
+    draw();
+
+    frames++;
+    hudAcc += dt;
+    if (hudAcc >= 1) {
+      hudCount.textContent = balls.length;
+      hudKE.textContent = totalKineticEnergy().toFixed(1);
+      hudFps.textContent = Math.round(frames / hudAcc);
+      frames = 0;
+      hudAcc = 0;
+    }
+
+    requestAnimationFrame(frame);
+  }
+
+  /* ---------------- 交互 ---------------- */
+  sSides.addEventListener('input', function () {
+    const next = parseInt(sSides.value, 10);
+    if (next === sides) return;
+    const aOld = apothemOf(sides);
+    const aNew = apothemOf(next);
+    // 容器变窄时按比例把球一起收拢，避免形状突变导致的瞬时深穿透与炸开
+    const k = Math.min(1, aNew / aOld);
+    if (k < 1) {
+      for (let i = 0; i < balls.length; i++) {
+        const b = balls[i];
+        b.x = CX + (b.x - CX) * k;
+        b.y = CY + (b.y - CY) * k;
+      }
+    }
+    sides = next;
+    oSides.textContent = String(sides);
+    buildNormals();
+    for (let it = 0; it < 4; it++) resolveWalls();
+    clampInside();
+  });
+
+  function applyOmegaFromSlider() {
+    const deg = parseFloat(sOmega.value);
+    omega = deg * Math.PI / 180;
+    oOmega.textContent = (deg > 0 ? '+' : '') + deg + ' °/s';
+  }
+  sOmega.addEventListener('input', applyOmegaFromSlider);
+
+  cv.addEventListener('pointerdown', function (e) {
+    const rect = cv.getBoundingClientRect();
+    const x = (e.clientX - rect.left) * (W / rect.width);
+    const y = (e.clientY - rect.top) * (H / rect.height);
+    addBallAt(x, y);
+  });
+
+  window.addEventListener('keydown', function (e) {
+    if (e.code === 'Space') {
+      e.preventDefault();
+      sOmega.value = String(-parseFloat(sOmega.value));
+      applyOmegaFromSlider();
+    } else if (e.key === 'r' || e.key === 'R') {
+      reset();
+    }
+  });
+
+  /* ---------------- 启动 ---------------- */
+  oSides.textContent = String(sides);
+  applyOmegaFromSlider();
+  reset();
+  buildNormals();
+  hudCount.textContent = balls.length;
+  hudKE.textContent = totalKineticEnergy().toFixed(1);
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>

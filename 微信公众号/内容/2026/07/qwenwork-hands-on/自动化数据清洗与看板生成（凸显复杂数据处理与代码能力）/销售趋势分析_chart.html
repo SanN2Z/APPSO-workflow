@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>7月销售趋势分析</title>
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+</head>
+<body style="margin:0;background:#fff;">
+  <div id="chart" style="width: 100%; height: 600px;"></div>
+  <script>
+    var chart = echarts.init(document.getElementById('chart'));
+    var option = {"title": {"text": "7月销售额稳中有升，月末服饰鞋包创全月最高（2.45万元）", "left": "center", "textStyle": {"fontSize": 16, "color": "#333"}}, "legend": {"top": "8%", "data": ["日销售额", "3日移动平均"]}, "tooltip": {"trigger": "axis"}, "grid": {"left": "8%", "right": "6%", "bottom": "3%", "top": "22%", "containLabel": true}, "xAxis": {"type": "category", "boundaryGap": false, "data": ["07-01", "07-02", "07-03", "07-05", "07-06", "07-08", "07-09", "07-10", "07-12", "07-13", "07-14", "07-16", "07-17", "07-18", "07-20", "07-21", "07-23", "07-25", "07-27", "07-29"], "axisLabel": {"color": "#666", "rotate": 45}, "axisLine": {"lineStyle": {"color": "#666"}}}, "yAxis": {"type": "value", "name": "销售额(万元)", "axisLabel": {"color": "#666"}, "axisLine": {"lineStyle": {"color": "#666"}}}, "series": [{"name": "日销售额", "type": "line", "data": [1.83, 1.14, 1.55, 1.44, 1.97, 1.72, 1.44, 1.88, 2.05, 1.76, 1.75, 1.76, 1.95, 1.01, 1.72, 2.03, 1.95, 1.21, 2.01, 2.45], "smooth": true, "symbol": "circle", "symbolSize": 6, "itemStyle": {"color": "#d97757"}, "lineStyle": {"width": 2, "color": "#d97757"}, "areaStyle": {"color": {"type": "linear", "x": 0, "y": 0, "x2": 0, "y2": 1, "colorStops": [{"offset": 0, "color": "rgba(217,119,87,0.35)"}, {"offset": 1, "color": "rgba(217,119,87,0)"}]}}, "markLine": {"symbol": "none", "lineStyle": {"type": "dashed", "color": "#c4a35a"}, "label": {"formatter": "均值 {c} 万", "color": "#c4a35a"}, "data": [{"type": "average", "name": "平均值"}]}, "markPoint": {"data": [{"type": "max", "name": "峰值", "itemStyle": {"color": "#788c5d"}}, {"type": "min", "name": "谷值", "itemStyle": {"color": "#8b7cb6"}}]}}, {"name": "3日移动平均", "type": "line", "data": [null, 1.51, 1.38, 1.65, 1.71, 1.71, 1.68, 1.79, 1.89, 1.85, 1.76, 1.82, 1.57, 1.56, 1.59, 1.9, 1.73, 1.72, 1.89, null], "smooth": true, "symbol": "none", "connectNulls": true, "itemStyle": {"color": "#6a9bcc"}, "lineStyle": {"width": 2, "type": "dashed", "color": "#6a9bcc"}}]};
+    chart.setOption(option);
+    window.addEventListener('resize', function() { chart.resize(); });
+  </script>
+</body>
+</html>

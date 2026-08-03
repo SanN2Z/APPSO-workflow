@@ -26,29 +26,461 @@ assets:
     generated_on: "2026-07-25"
     preflight_receipt: "research/image-generation-runs/cover-human-ai-collaboration-final-preflight.json"
 
-  - file: "assets/work-reorganization-doodle-v01.png"
+  - file: "assets/doodle-01-team-cut.png"
     used_in_draft: true
     used_as_cover: false
     dimensions: "1672x941"
     source_type: "ai_generated"
-    source: "Generated with Codex built-in image_gen in the user's authenticated session; governed task recorded as work-reorganization-doodle"
+    source: "Generated with Codex built-in image_gen in the user's authenticated session; governed task recorded as doodle-01-team-cut"
     creator_or_rightsholder: "This project / AI-generated"
     obtained_on: "2026-07-25"
-    modifications: "No post-generation edits; visually reviewed at original resolution"
+    modifications: "No post-generation edits; generated for the matching paragraph and visually reviewed in the generation session"
     rights_status: "project_owned"
     rights_blocker: false
     allowed_platforms: ["wechat"]
-    attribution: "AI 生成；画面逻辑由本文整理"
+    attribution: "AI 生成"
     generator: "Codex built-in image_gen"
     model: "gpt-image-2"
     generation_mode: "text_to_image"
     prompt_ref: "generic-direct-v1"
-    prompt_sha256: "ad8a4e939503edaabd4536e144929fdfb34e9f1a7bef9021d4da0803a4d77a83"
-    invocation_prompt_sha256: "ad8a4e939503edaabd4536e144929fdfb34e9f1a7bef9021d4da0803a4d77a83"
-    generation_constraints: "16:9 横版三段笨拙涂鸦；依次表现 AI 加快搜索与整理、人工核对与判断、公司重排任务；无可读文字、品牌标识、真实人物、裁员现场或未经核实的数据"
+    prompt_sha256: "0be1a19398e57158a023a9480ab3162bbb9e6d47d5614738aacf0fd192341911"
+    invocation_prompt_sha256: "0be1a19398e57158a023a9480ab3162bbb9e6d47d5614738aacf0fd192341911"
+    generation_constraints: "16:9 horizontal body illustration; deliberately crude pixelated mouse-drawn style; one paragraph-level idea; no readable text, logo, real-person likeness, or unsupported causal claim"
     input_assets: []
     generated_on: "2026-07-25"
-    preflight_receipt: "research/image-generation-runs/work-reorganization-doodle-final-preflight.json"
+    preflight_receipt: "research/image-generation-runs/doodle-01-team-cut-final-preflight.json"
+
+  - file: "assets/doodle-02-two-statements.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "1672x941"
+    source_type: "ai_generated"
+    source: "Generated with Codex built-in image_gen in the user's authenticated session; governed task recorded as doodle-02-two-statements"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-07-25"
+    modifications: "No post-generation edits; generated for the matching paragraph and visually reviewed in the generation session"
+    rights_status: "project_owned"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "AI 生成"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "text_to_image"
+    prompt_ref: "generic-direct-v1"
+    prompt_sha256: "af956502e73fa7428b3cec4b87991df1eab1803f8c7c2e1342f24d3f988ef422"
+    invocation_prompt_sha256: "af956502e73fa7428b3cec4b87991df1eab1803f8c7c2e1342f24d3f988ef422"
+    generation_constraints: "16:9 horizontal body illustration; deliberately crude pixelated mouse-drawn style; one paragraph-level idea; no readable text, logo, real-person likeness, or unsupported causal claim"
+    input_assets: []
+    generated_on: "2026-07-25"
+    preflight_receipt: "research/image-generation-runs/doodle-02-two-statements-final-preflight.json"
+
+  - file: "assets/doodle-03-false-arrow.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "1672x941"
+    source_type: "ai_generated"
+    source: "Generated with Codex built-in image_gen in the user's authenticated session; governed task recorded as doodle-03-false-arrow"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-07-25"
+    modifications: "No post-generation edits; generated for the matching paragraph and visually reviewed in the generation session"
+    rights_status: "project_owned"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "AI 生成"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "text_to_image"
+    prompt_ref: "generic-direct-v1"
+    prompt_sha256: "d7c6c6031b898a67aa164eafe9c522cee2525e9b477251e4b96e0462b68df61d"
+    invocation_prompt_sha256: "d7c6c6031b898a67aa164eafe9c522cee2525e9b477251e4b96e0462b68df61d"
+    generation_constraints: "16:9 horizontal body illustration; deliberately crude pixelated mouse-drawn style; one paragraph-level idea; no readable text, logo, real-person likeness, or unsupported causal claim"
+    input_assets: []
+    generated_on: "2026-07-25"
+    preflight_receipt: "research/image-generation-runs/doodle-03-false-arrow-final-preflight.json"
+
+  - file: "assets/doodle-04-sample-sieve.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "1672x941"
+    source_type: "ai_generated"
+    source: "Generated with Codex built-in image_gen in the user's authenticated session; governed task recorded as doodle-04-sample-sieve"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-07-25"
+    modifications: "No post-generation edits; generated for the matching paragraph and visually reviewed in the generation session"
+    rights_status: "project_owned"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "AI 生成"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "text_to_image"
+    prompt_ref: "generic-direct-v1"
+    prompt_sha256: "a9b81deb4d0161dfb3397d6ddfdaa0de68bb0dcfc78ea4c272687e0aba23ca06"
+    invocation_prompt_sha256: "a9b81deb4d0161dfb3397d6ddfdaa0de68bb0dcfc78ea4c272687e0aba23ca06"
+    generation_constraints: "16:9 horizontal body illustration; deliberately crude pixelated mouse-drawn style; one paragraph-level idea; no readable text, logo, real-person likeness, or unsupported causal claim"
+    input_assets: []
+    generated_on: "2026-07-25"
+    preflight_receipt: "research/image-generation-runs/doodle-04-sample-sieve-final-preflight.json"
+
+  - file: "assets/doodle-05-wide-coverage.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "1672x941"
+    source_type: "ai_generated"
+    source: "Generated with Codex built-in image_gen in the user's authenticated session; governed task recorded as doodle-05-wide-coverage"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-07-25"
+    modifications: "No post-generation edits; generated for the matching paragraph and visually reviewed in the generation session"
+    rights_status: "project_owned"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "AI 生成"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "text_to_image"
+    prompt_ref: "generic-direct-v1"
+    prompt_sha256: "c6299536e4957865c9dec982f48d106f6fc69b63ec2f2f6877ebafdcbec6f55a"
+    invocation_prompt_sha256: "c6299536e4957865c9dec982f48d106f6fc69b63ec2f2f6877ebafdcbec6f55a"
+    generation_constraints: "16:9 horizontal body illustration; deliberately crude pixelated mouse-drawn style; one paragraph-level idea; no readable text, logo, real-person likeness, or unsupported causal claim"
+    input_assets: []
+    generated_on: "2026-07-25"
+    preflight_receipt: "research/image-generation-runs/doodle-05-wide-coverage-final-preflight.json"
+
+  - file: "assets/doodle-06-few-job-pieces.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "1672x941"
+    source_type: "ai_generated"
+    source: "Generated with Codex built-in image_gen in the user's authenticated session; governed task recorded as doodle-06-few-job-pieces"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-07-25"
+    modifications: "No post-generation edits; generated for the matching paragraph and visually reviewed in the generation session"
+    rights_status: "project_owned"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "AI 生成"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "text_to_image"
+    prompt_ref: "generic-direct-v1"
+    prompt_sha256: "d14d052b081c94bf8f86427f390666731b35122a8eb1502887e7c0816ce98a02"
+    invocation_prompt_sha256: "d14d052b081c94bf8f86427f390666731b35122a8eb1502887e7c0816ce98a02"
+    generation_constraints: "16:9 horizontal body illustration; deliberately crude pixelated mouse-drawn style; one paragraph-level idea; no readable text, logo, real-person likeness, or unsupported causal claim"
+    input_assets: []
+    generated_on: "2026-07-25"
+    preflight_receipt: "research/image-generation-runs/doodle-06-few-job-pieces-final-preflight.json"
+
+  - file: "assets/doodle-07-small-auto-pipeline.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "1672x941"
+    source_type: "ai_generated"
+    source: "Generated with Codex built-in image_gen in the user's authenticated session; governed task recorded as doodle-07-small-auto-pipeline"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-07-25"
+    modifications: "No post-generation edits; generated for the matching paragraph and visually reviewed in the generation session"
+    rights_status: "project_owned"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "AI 生成"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "text_to_image"
+    prompt_ref: "generic-direct-v1"
+    prompt_sha256: "dee851bca6d342395c2b5f559642462f0cd5e73c5561fc265492152613ed08b4"
+    invocation_prompt_sha256: "dee851bca6d342395c2b5f559642462f0cd5e73c5561fc265492152613ed08b4"
+    generation_constraints: "16:9 horizontal body illustration; deliberately crude pixelated mouse-drawn style; one paragraph-level idea; no readable text, logo, real-person likeness, or unsupported causal claim"
+    input_assets: []
+    generated_on: "2026-07-25"
+    preflight_receipt: "research/image-generation-runs/doodle-07-small-auto-pipeline-final-preflight.json"
+
+  - file: "assets/doodle-08-shallow-puddle-v02.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "1672x941"
+    source_type: "ai_generated"
+    source: "Generated with Codex built-in image_gen in the user's authenticated session; governed task recorded as doodle-08-shallow-puddle"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-07-25"
+    modifications: "No post-generation edits; generated for the matching paragraph and visually reviewed in the generation session"
+    rights_status: "project_owned"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "AI 生成"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "text_to_image"
+    prompt_ref: "generic-direct-v1"
+    prompt_sha256: "30449ddc8d53d77c5bb9e126d1281a736a61725a7f2fea9edcfa61a0f7029e60"
+    invocation_prompt_sha256: "30449ddc8d53d77c5bb9e126d1281a736a61725a7f2fea9edcfa61a0f7029e60"
+    generation_constraints: "16:9 horizontal body illustration; deliberately crude pixelated mouse-drawn style; one paragraph-level idea; no readable text, logo, real-person likeness, or unsupported causal claim"
+    input_assets: []
+    generated_on: "2026-07-25"
+    preflight_receipt: "research/image-generation-runs/doodle-08-shallow-puddle-final-preflight.json"
+
+  - file: "assets/doodle-09-search-pile.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "1672x941"
+    source_type: "ai_generated"
+    source: "Generated with Codex built-in image_gen in the user's authenticated session; governed task recorded as doodle-09-search-pile"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-07-25"
+    modifications: "No post-generation edits; generated for the matching paragraph and visually reviewed in the generation session"
+    rights_status: "project_owned"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "AI 生成"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "text_to_image"
+    prompt_ref: "generic-direct-v1"
+    prompt_sha256: "8bb54936e5bbeeb7c606970d73837e0215387c983df60fdec2ff5483ded31cf9"
+    invocation_prompt_sha256: "8bb54936e5bbeeb7c606970d73837e0215387c983df60fdec2ff5483ded31cf9"
+    generation_constraints: "16:9 horizontal body illustration; deliberately crude pixelated mouse-drawn style; one paragraph-level idea; no readable text, logo, real-person likeness, or unsupported causal claim"
+    input_assets: []
+    generated_on: "2026-07-25"
+    preflight_receipt: "research/image-generation-runs/doodle-09-search-pile-final-preflight.json"
+
+  - file: "assets/doodle-10-human-check.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "1672x941"
+    source_type: "ai_generated"
+    source: "Generated with Codex built-in image_gen in the user's authenticated session; governed task recorded as doodle-10-human-check"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-07-25"
+    modifications: "No post-generation edits; generated for the matching paragraph and visually reviewed in the generation session"
+    rights_status: "project_owned"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "AI 生成"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "text_to_image"
+    prompt_ref: "generic-direct-v1"
+    prompt_sha256: "c422a01d90361169e6ddaa8ef0c36e8cedb7d3a49b8702855409cbcf72468c19"
+    invocation_prompt_sha256: "c422a01d90361169e6ddaa8ef0c36e8cedb7d3a49b8702855409cbcf72468c19"
+    generation_constraints: "16:9 horizontal body illustration; deliberately crude pixelated mouse-drawn style; one paragraph-level idea; no readable text, logo, real-person likeness, or unsupported causal claim"
+    input_assets: []
+    generated_on: "2026-07-25"
+    preflight_receipt: "research/image-generation-runs/doodle-10-human-check-final-preflight.json"
+
+  - file: "assets/doodle-11-work-shift.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "1672x941"
+    source_type: "ai_generated"
+    source: "Generated with Codex built-in image_gen in the user's authenticated session; governed task recorded as doodle-11-work-shift"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-07-25"
+    modifications: "No post-generation edits; generated for the matching paragraph and visually reviewed in the generation session"
+    rights_status: "project_owned"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "AI 生成"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "text_to_image"
+    prompt_ref: "generic-direct-v1"
+    prompt_sha256: "33026859bcec792d9a100e8f93a3548dfe4b6da0d4b78b8849fc229269f1bcae"
+    invocation_prompt_sha256: "33026859bcec792d9a100e8f93a3548dfe4b6da0d4b78b8849fc229269f1bcae"
+    generation_constraints: "16:9 horizontal body illustration; deliberately crude pixelated mouse-drawn style; one paragraph-level idea; no readable text, logo, real-person likeness, or unsupported causal claim"
+    input_assets: []
+    generated_on: "2026-07-25"
+    preflight_receipt: "research/image-generation-runs/doodle-11-work-shift-final-preflight.json"
+
+  - file: "assets/doodle-12-rough-image.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "1672x941"
+    source_type: "ai_generated"
+    source: "Generated with Codex built-in image_gen in the user's authenticated session; governed task recorded as doodle-12-rough-image"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-07-25"
+    modifications: "No post-generation edits; generated for the matching paragraph and visually reviewed in the generation session"
+    rights_status: "project_owned"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "AI 生成"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "text_to_image"
+    prompt_ref: "generic-direct-v1"
+    prompt_sha256: "70a827a11d8c4ae486d783f655896e61479bf8831850604fefe0c095968b274a"
+    invocation_prompt_sha256: "70a827a11d8c4ae486d783f655896e61479bf8831850604fefe0c095968b274a"
+    generation_constraints: "16:9 horizontal body illustration; deliberately crude pixelated mouse-drawn style; one paragraph-level idea; no readable text, logo, real-person likeness, or unsupported causal claim"
+    input_assets: []
+    generated_on: "2026-07-25"
+    preflight_receipt: "research/image-generation-runs/doodle-12-rough-image-final-preflight.json"
+
+  - file: "assets/doodle-13-job-bundle.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "1672x941"
+    source_type: "ai_generated"
+    source: "Generated with Codex built-in image_gen in the user's authenticated session; governed task recorded as doodle-13-job-bundle"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-07-25"
+    modifications: "No post-generation edits; generated for the matching paragraph and visually reviewed in the generation session"
+    rights_status: "project_owned"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "AI 生成"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "text_to_image"
+    prompt_ref: "generic-direct-v1"
+    prompt_sha256: "e12e95439a8a2d4c93fb4f4162f4d6f755ae3bace7e9cfb33d3cdf4ea1eccfaa"
+    invocation_prompt_sha256: "e12e95439a8a2d4c93fb4f4162f4d6f755ae3bace7e9cfb33d3cdf4ea1eccfaa"
+    generation_constraints: "16:9 horizontal body illustration; deliberately crude pixelated mouse-drawn style; one paragraph-level idea; no readable text, logo, real-person likeness, or unsupported causal claim"
+    input_assets: []
+    generated_on: "2026-07-25"
+    preflight_receipt: "research/image-generation-runs/doodle-13-job-bundle-final-preflight.json"
+
+  - file: "assets/doodle-14-ripple-budget.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "1672x941"
+    source_type: "ai_generated"
+    source: "Generated with Codex built-in image_gen in the user's authenticated session; governed task recorded as doodle-14-ripple-budget"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-07-25"
+    modifications: "No post-generation edits; generated for the matching paragraph and visually reviewed in the generation session"
+    rights_status: "project_owned"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "AI 生成"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "text_to_image"
+    prompt_ref: "generic-direct-v1"
+    prompt_sha256: "02c4aa40cd6e471e9243272c839238770148437972090682e421cb0b8491a746"
+    invocation_prompt_sha256: "02c4aa40cd6e471e9243272c839238770148437972090682e421cb0b8491a746"
+    generation_constraints: "16:9 horizontal body illustration; deliberately crude pixelated mouse-drawn style; one paragraph-level idea; no readable text, logo, real-person likeness, or unsupported causal claim"
+    input_assets: []
+    generated_on: "2026-07-25"
+    preflight_receipt: "research/image-generation-runs/doodle-14-ripple-budget-final-preflight.json"
+
+  - file: "assets/doodle-15-separate-evidence.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "1672x941"
+    source_type: "ai_generated"
+    source: "Generated with Codex built-in image_gen in the user's authenticated session; governed task recorded as doodle-15-separate-evidence"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-07-25"
+    modifications: "No post-generation edits; generated for the matching paragraph and visually reviewed in the generation session"
+    rights_status: "project_owned"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "AI 生成"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "text_to_image"
+    prompt_ref: "generic-direct-v1"
+    prompt_sha256: "477db4913ca32ee7353001f0d38135e88b6a914884f68ec8bbe917886d6be6ac"
+    invocation_prompt_sha256: "477db4913ca32ee7353001f0d38135e88b6a914884f68ec8bbe917886d6be6ac"
+    generation_constraints: "16:9 horizontal body illustration; deliberately crude pixelated mouse-drawn style; one paragraph-level idea; no readable text, logo, real-person likeness, or unsupported causal claim"
+    input_assets: []
+    generated_on: "2026-07-25"
+    preflight_receipt: "research/image-generation-runs/doodle-15-separate-evidence-final-preflight.json"
+
+  - file: "assets/doodle-16-money-moves.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "1672x941"
+    source_type: "ai_generated"
+    source: "Generated with Codex built-in image_gen in the user's authenticated session; governed task recorded as doodle-16-money-moves"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-07-25"
+    modifications: "No post-generation edits; generated for the matching paragraph and visually reviewed in the generation session"
+    rights_status: "project_owned"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "AI 生成"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "text_to_image"
+    prompt_ref: "generic-direct-v1"
+    prompt_sha256: "05c12c8868192edbc8d36ff38e4cc2fcbe7661ed28592239d1b2d7984a405e4b"
+    invocation_prompt_sha256: "05c12c8868192edbc8d36ff38e4cc2fcbe7661ed28592239d1b2d7984a405e4b"
+    generation_constraints: "16:9 horizontal body illustration; deliberately crude pixelated mouse-drawn style; one paragraph-level idea; no readable text, logo, real-person likeness, or unsupported causal claim"
+    input_assets: []
+    generated_on: "2026-07-25"
+    preflight_receipt: "research/image-generation-runs/doodle-16-money-moves-final-preflight.json"
+
+  - file: "assets/doodle-17-choices.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "1672x941"
+    source_type: "ai_generated"
+    source: "Generated with Codex built-in image_gen in the user's authenticated session; governed task recorded as doodle-17-choices"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-07-25"
+    modifications: "No post-generation edits; generated for the matching paragraph and visually reviewed in the generation session"
+    rights_status: "project_owned"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "AI 生成"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "text_to_image"
+    prompt_ref: "generic-direct-v1"
+    prompt_sha256: "63274d4eac0baebc1610a4c9f517c6be6883add426fde1c5c14585d4e1dccd00"
+    invocation_prompt_sha256: "63274d4eac0baebc1610a4c9f517c6be6883add426fde1c5c14585d4e1dccd00"
+    generation_constraints: "16:9 horizontal body illustration; deliberately crude pixelated mouse-drawn style; one paragraph-level idea; no readable text, logo, real-person likeness, or unsupported causal claim"
+    input_assets: []
+    generated_on: "2026-07-25"
+    preflight_receipt: "research/image-generation-runs/doodle-17-choices-final-preflight.json"
+
+  - file: "assets/doodle-18-two-truths.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "1672x941"
+    source_type: "ai_generated"
+    source: "Generated with Codex built-in image_gen in the user's authenticated session; governed task recorded as doodle-18-two-truths"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-07-25"
+    modifications: "No post-generation edits; generated for the matching paragraph and visually reviewed in the generation session"
+    rights_status: "project_owned"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "AI 生成"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "text_to_image"
+    prompt_ref: "generic-direct-v1"
+    prompt_sha256: "8a26cf4e3f745f18cbee3d45cb7f3307d58e121332e0285818f3f3af770f73f3"
+    invocation_prompt_sha256: "8a26cf4e3f745f18cbee3d45cb7f3307d58e121332e0285818f3f3af770f73f3"
+    generation_constraints: "16:9 horizontal body illustration; deliberately crude pixelated mouse-drawn style; one paragraph-level idea; no readable text, logo, real-person likeness, or unsupported causal claim"
+    input_assets: []
+    generated_on: "2026-07-25"
+    preflight_receipt: "research/image-generation-runs/doodle-18-two-truths-final-preflight.json"
+
+  - file: "assets/doodle-19-brain-stays.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "1672x941"
+    source_type: "ai_generated"
+    source: "Generated with Codex built-in image_gen in the user's authenticated session; governed task recorded as doodle-19-brain-stays"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-07-25"
+    modifications: "No post-generation edits; generated for the matching paragraph and visually reviewed in the generation session"
+    rights_status: "project_owned"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "AI 生成"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "text_to_image"
+    prompt_ref: "generic-direct-v1"
+    prompt_sha256: "cca67b79085ad49bc17306b0332abb8e26f916823cc5f60292e2b1355438b788"
+    invocation_prompt_sha256: "cca67b79085ad49bc17306b0332abb8e26f916823cc5f60292e2b1355438b788"
+    generation_constraints: "16:9 horizontal body illustration; deliberately crude pixelated mouse-drawn style; one paragraph-level idea; no readable text, logo, real-person likeness, or unsupported causal claim"
+    input_assets: []
+    generated_on: "2026-07-25"
+    preflight_receipt: "research/image-generation-runs/doodle-19-brain-stays-final-preflight.json"
 
   - file: "research/source-assets/google-atlas-official-hero-original.png"
     use: "research_reference"

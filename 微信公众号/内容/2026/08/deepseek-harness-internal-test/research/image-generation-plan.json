@@ -1,0 +1,79 @@
+{
+  "schema_version": 1,
+  "template_only": false,
+  "updated": "2026-08-02",
+  "project_adapter": "generic",
+  "profile_registry": "共享/运营/SOP/笨拙涂鸦风格档案.json",
+  "image_budget": {
+    "default_total_body_images_min": 6,
+    "default_total_body_images_max": 10,
+    "planned_total": 6,
+    "counting_rule": "1 public-post screenshot + 3 project-generated charts/diagrams + 2 clumsy doodles."
+  },
+  "style_policy": {
+    "profile": "clumsy-doodle-v1",
+    "scope": "task",
+    "new_image_strategy": "direct",
+    "allow_final_text_to_image": true
+  },
+  "tasks": [
+    {
+      "id": "doodle-same-brain-different-harness",
+      "visual_type": "general_editorial",
+      "purpose": "解释同一模型装进不同 Harness 后，可能呈现不同的任务表现。",
+      "reference_strategy": "none",
+      "final_stage": {
+        "mode": "text_to_image",
+        "prompt_ref": "clumsy-doodle-v1",
+        "prompt_sha256": "e4160da75ebd48f1e8625b61eb840195a66c833dd8373ac61155159826cc2a65",
+        "input_assets": [],
+        "output": "assets/doodle-same-brain-different-harness.png",
+        "receipt": "research/image-generation-runs/doodle-same-brain-different-harness-final-preflight.json",
+        "present_to_user": true,
+        "preserve": [
+          "本图只画：同一颗歪歪扭扭的大脑被分别装进两台结构完全不同的破工作机，一台顺利交出完整物件，另一台只吐出散落碎片。"
+        ],
+        "output_constraints": [
+          "Horizontal 16:9 body illustration; one main idea only; largest possible flat color blocks",
+          "Pure white background with no texture, shadow, gradient, or decorative environment",
+          "No readable words, letters, numbers, labels, captions, or interface text inside the image",
+          "Hard pixelated mouse-drawn edges, deliberately low-resolution appearance, and mobile-readable silhouettes"
+        ],
+        "avoid": [
+          "Polished editorial illustration, clean vector art, smooth curves, anti-aliased linework, pencil, crayon, watercolor, paper grain, collage, realistic lighting, 3D, photorealism, cinematic composition, cute professional cartoon style, or balanced graphic design",
+          "Logos, trademarks, watermarks, readable text, garbled text, fake interfaces, real-person likenesses, or verified-looking news scenes",
+          "Arrows or labels claiming that Harness alone caused the benchmark improvement"
+        ]
+      }
+    },
+    {
+      "id": "doodle-open-source-builders-test",
+      "visual_type": "general_editorial",
+      "purpose": "表现开源 Harness 作者带着不同工程经验，通过一扇窄门进入内测。",
+      "reference_strategy": "none",
+      "final_stage": {
+        "mode": "text_to_image",
+        "prompt_ref": "clumsy-doodle-v1",
+        "prompt_sha256": "e4160da75ebd48f1e8625b61eb840195a66c833dd8373ac61155159826cc2a65",
+        "input_assets": [],
+        "output": "assets/doodle-open-source-builders-test.png",
+        "receipt": "research/image-generation-runs/doodle-open-source-builders-test-final-preflight.json",
+        "present_to_user": true,
+        "preserve": [
+          "本图只画：三个歪歪扭扭的修理匠各自扛着一种形状不同的机械零件，排队挤进一扇很窄的门，门内只有一张尚未装完的工作台。"
+        ],
+        "output_constraints": [
+          "Horizontal 16:9 body illustration; one main idea only; largest possible flat color blocks",
+          "Pure white background with no texture, shadow, gradient, or decorative environment",
+          "No readable words, letters, numbers, labels, captions, or interface text inside the image",
+          "Hard pixelated mouse-drawn edges, deliberately low-resolution appearance, and mobile-readable silhouettes"
+        ],
+        "avoid": [
+          "Polished editorial illustration, clean vector art, smooth curves, anti-aliased linework, pencil, crayon, watercolor, paper grain, collage, realistic lighting, 3D, photorealism, cinematic composition, cute professional cartoon style, or balanced graphic design",
+          "Logos, trademarks, watermarks, readable text, garbled text, fake interfaces, real-person likenesses, or verified-looking news scenes",
+          "Visual claims of acquisition, investment, formal partnership, or an already-formed open-source alliance"
+        ]
+      }
+    }
+  ]
+}

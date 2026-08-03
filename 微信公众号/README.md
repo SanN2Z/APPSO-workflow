@@ -38,11 +38,13 @@
 
 不按 `draft/ready/published` 移动目录。结构性反馈保留在内容包；跨文章可复用的规律通过复盘晋升门进入 SOP。
 
-## 本机预览与草稿箱
+## 排版预览与草稿箱
 
 排版、图片上传和微信草稿 API 复用开源 [Wenyan CLI](https://github.com/caol64/wenyan-cli)，项目固定为 `@wenyan-md/cli@2.0.11`；本地适配层不重复实现渲染器和微信客户端。
 
 用户只需选择 `company_browser`、`manual_editor` 或 `sealed_draft`。工具内部继续保留品牌、交付方式和视觉主题字段做严格校验。命令与失败处理见 [wechat-publishing.md](../.agents/skills/self-media-ops/references/wechat-publishing.md)，主题能力见 [themes/README.md](themes/README.md)。
+
+APPSO／公司稿由 Agent 处理时，默认预览交付为飞书在线文档：从仓库根目录运行 `python tools/company_content_sync/company_content_sync.py status <内容包路径> --json`，按返回的唯一下一步先完成锁定排版校验，再新建并读回飞书文档。成功回执中的 `document_url` 才是在线预览链接；本地 HTML 保留为精确微信样式凭据。个人稿或用户明确接受的离线回退，才直接打开本机预览。
 
 当前固定版本会把正文图片作为永久图片素材上传并缓存重复素材；自定义摘要暂不随 API 提交，需在公众号后台检查微信自动生成的摘要。`draft --execute` 只接受显式 `.env` 作为凭证真源并显示非敏感账号指纹；上传和建草稿不是原子事务，执行期失败后必须先检查目标账号后台和素材库，再决定是否重试。其余已知限制记录在发布参考文档中。
 
@@ -59,7 +61,7 @@ Copy-Item 微信公众号/.env.example 微信公众号/.env
 以下命令也从仓库根目录运行：
 
 ```powershell
-# 本机手机宽预览，不上传
+# 本机手机宽诊断预览或明确接受的离线回退，不上传
 python 微信公众号/tools/wechat_publish.py preview <内容包路径> --open
 
 # 人工编辑交接，不上传；生成版本化复制页

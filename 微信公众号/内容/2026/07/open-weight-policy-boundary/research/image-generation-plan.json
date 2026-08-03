@@ -1,0 +1,107 @@
+{
+  "schema_version": 1,
+  "template_only": false,
+  "updated": "2026-07-26",
+  "project_adapter": "generic",
+  "profile_registry": "共享/运营/SOP/笨拙涂鸦风格档案.json",
+  "image_budget": {
+    "default_total_body_images_min": 6,
+    "default_total_body_images_max": 10,
+    "counting_rule": "3 X screenshots plus 1 OpenAI official screenshot plus 3 clumsy doodles; total 7 body images."
+  },
+  "style_policy": {
+    "profile": "clumsy-doodle-v1",
+    "scope": "task",
+    "new_image_strategy": "direct",
+    "allow_final_text_to_image": true
+  },
+  "tasks": [
+    {
+      "id": "doodle-01-api-vs-local",
+      "visual_type": "general_editorial",
+      "purpose": "表现封闭 API 按次租用与开放权重搬回自己机房的控制差异。",
+      "reference_strategy": "none",
+      "final_stage": {
+        "mode": "text_to_image",
+        "prompt_ref": "clumsy-doodle-v1",
+        "prompt_sha256": "e4160da75ebd48f1e8625b61eb840195a66c833dd8373ac61155159826cc2a65",
+        "input_assets": [],
+        "output": "assets/doodle-01-api-vs-local.png",
+        "receipt": "research/image-generation-runs/doodle-01-api-vs-local-final-preflight.json",
+        "present_to_user": true,
+        "preserve": [
+          "本图只画：一只普通手反复把硬币塞进墙外的黑盒并取回一张小纸条，另一只手把一台方形小机器搬进自己的房间，表现按次租用能力与把模型部署在自己手中的差别。"
+        ],
+        "output_constraints": [
+          "Horizontal 16:9 body illustration; one main idea only; largest possible flat color blocks",
+          "Pure white background with no texture, shadow, gradient, or decorative environment",
+          "No readable words, letters, numbers, labels, captions, or interface text inside the image",
+          "Hard pixelated mouse-drawn edges, deliberately low-resolution appearance, and mobile-readable silhouettes"
+        ],
+        "avoid": [
+          "Polished editorial illustration, clean vector art, smooth curves, anti-aliased linework, pencil, crayon, watercolor, paper grain, collage, realistic lighting, 3D, photorealism, cinematic composition, cute professional cartoon style, or balanced graphic design",
+          "Logos, trademarks, watermarks, readable text, garbled text, fake interfaces, real-person likenesses, or verified-looking news scenes",
+          "A claim that local deployment is always cheaper or safer"
+        ]
+      }
+    },
+    {
+      "id": "doodle-02-distillation-gate",
+      "visual_type": "general_editorial",
+      "purpose": "表现合法蒸馏与规避控制的提取行为，共用技术管道但授权方式不同。",
+      "reference_strategy": "none",
+      "final_stage": {
+        "mode": "text_to_image",
+        "prompt_ref": "clumsy-doodle-v1",
+        "prompt_sha256": "e4160da75ebd48f1e8625b61eb840195a66c833dd8373ac61155159826cc2a65",
+        "input_assets": [],
+        "output": "assets/doodle-02-distillation-gate.png",
+        "receipt": "research/image-generation-runs/doodle-02-distillation-gate-final-preflight.json",
+        "present_to_user": true,
+        "preserve": [
+          "本图只画：一台大蓝色机器通出一根粗蓝管，粗管穿过敞开的闸门，末端把一小杯蓝色液体倒给一个没有面罩、没有伪装的黄色小机器；同时只有 3 个红色偷接者戴黑面罩，用细红吸管从闸门缝隙偷接粗管。必须清楚区分：合法接收者是无面罩的黄色小机器，只有红色偷接者戴面罩。"
+        ],
+        "output_constraints": [
+          "Horizontal 16:9 body illustration; one main idea only; largest possible flat color blocks",
+          "Pure white background with no texture, shadow, gradient, or decorative environment",
+          "No readable words, letters, numbers, labels, captions, or interface text inside the image",
+          "Hard pixelated mouse-drawn edges, deliberately low-resolution appearance, and mobile-readable silhouettes"
+        ],
+        "avoid": [
+          "Polished editorial illustration, clean vector art, smooth curves, anti-aliased linework, pencil, crayon, watercolor, paper grain, collage, realistic lighting, 3D, photorealism, cinematic composition, cute professional cartoon style, or balanced graphic design",
+          "Logos, trademarks, watermarks, readable text, garbled text, fake interfaces, real-person likenesses, or verified-looking news scenes",
+          "National flags, named companies, courtroom verdicts, a mask on the legitimate yellow receiver, or a claim that every distillation request is illicit"
+        ]
+      }
+    },
+    {
+      "id": "doodle-03-contract-stamp",
+      "visual_type": "general_editorial",
+      "purpose": "表现私人平台条款可能进入公共政策边界，但相关法案仍未落地。",
+      "reference_strategy": "none",
+      "final_stage": {
+        "mode": "text_to_image",
+        "prompt_ref": "clumsy-doodle-v1",
+        "prompt_sha256": "e4160da75ebd48f1e8625b61eb840195a66c833dd8373ac61155159826cc2a65",
+        "input_assets": [],
+        "output": "assets/doodle-03-contract-stamp.png",
+        "receipt": "research/image-generation-runs/doodle-03-contract-stamp-final-preflight.json",
+        "present_to_user": true,
+        "preserve": [
+          "本图只画：一只穿普通公司袖口的手用铅笔画出一条歪虚线，另一只没有任何徽记的公共机构手拿着尚未落下的大印章悬在虚线上方，一个小模型停在边界前，表现私人条款可能被带入公共规则但提案尚未落地。"
+        ],
+        "output_constraints": [
+          "Horizontal 16:9 body illustration; one main idea only; largest possible flat color blocks",
+          "Pure white background with no texture, shadow, gradient, or decorative environment",
+          "No readable words, letters, numbers, labels, captions, or interface text inside the image",
+          "Hard pixelated mouse-drawn edges, deliberately low-resolution appearance, and mobile-readable silhouettes"
+        ],
+        "avoid": [
+          "Polished editorial illustration, clean vector art, smooth curves, anti-aliased linework, pencil, crayon, watercolor, paper grain, collage, realistic lighting, 3D, photorealism, cinematic composition, cute professional cartoon style, or balanced graphic design",
+          "Logos, trademarks, watermarks, readable text, garbled text, fake interfaces, real-person likenesses, or verified-looking news scenes",
+          "A landed stamp, enacted-law imagery, flags, seals, national emblems, or a claim that the proposal is already law"
+        ]
+      }
+    }
+  ]
+}
