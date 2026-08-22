@@ -7,9 +7,11 @@
 *.yaml text eol=lf
 *.json text eol=lf
 *.py text eol=lf
+*.sh text eol=lf
 *.ps1 text eol=crlf
 *.cmd text eol=crlf
 *.bat text eol=crlf
+**/.cursorrules text eol=lf
 
 # PDF text extraction may contain embedded NUL bytes and preserved CRLF data.
 **/research/source-assets/arxiv-*.txt -text -diff
@@ -17,3 +19,6 @@
 # Preserve imported company-tool versions byte for byte so registered hashes stay reproducible.
 # Whitespace lint is disabled only for these immutable upstream copies.
 tools/company/*/v*/** -text -whitespace
+
+# The vendored qu-ai-wei fixtures intentionally use Markdown hard-break spaces.
+.claude/skills/qu-ai-wei/** -whitespace

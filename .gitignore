@@ -24,6 +24,9 @@ Thumbs.db
 /.company-content-sync/
 /.tmp/
 /.tmp-*/
+/.pytest_cache/
+/.aris/verify-papers/
+/tmp????????/
 /output/
 /临时素材/
 

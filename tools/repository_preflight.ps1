@@ -52,22 +52,39 @@ try {
         Write-Error ("Files outside the Git boundary were found:`n" + (($blockedFiles | Sort-Object -Unique) -join "`n"))
     }
 
-    $secretPattern = 'sk-[A-Za-z0-9_-]{20,}|ghp_[A-Za-z0-9]{30,}|github_pat_[A-Za-z0-9_]{30,}|AKIA[0-9A-Z]{16}|Bearer\s+[A-Za-z0-9._~+/-]{24,}|-----BEGIN (RSA |EC |OPENSSH )?PRIVATE KEY-----'
-    $secretMatches = @(rg -n --hidden --glob '!.git/**' --glob '!tmp*' --glob '!*.png' --glob '!*.jpg' --glob '!*.jpeg' --glob '!*.gif' --glob '!*.mp4' --glob '!*.pdf' $secretPattern . 2>$null)
-    $rgExitCode = $LASTEXITCODE
-    if ($rgExitCode -gt 1) {
-        throw 'Secret scan failed to execute.'
+    $secretPattern = '(?<![A-Za-z0-9/_-])sk-(?:proj-|svcacct-)?[A-Za-z0-9_-]{20,}|ghp_[A-Za-z0-9]{30,}|github_pat_[A-Za-z0-9_]{30,}|AKIA[0-9A-Z]{16}|Bearer\s+[A-Za-z0-9._~+/-]{24,}|-----BEGIN (RSA |EC |OPENSSH )?PRIVATE KEY-----'
+    $binaryExtensions = @('.png', '.jpg', '.jpeg', '.gif', '.webp', '.mp4', '.pdf')
+    $secretFiles = foreach ($path in $candidatePaths) {
+        if (-not (Test-Path -LiteralPath $path -PathType Leaf)) {
+            continue
+        }
+        $extension = [IO.Path]::GetExtension($path).ToLowerInvariant()
+        if ($binaryExtensions -contains $extension) {
+            continue
+        }
+        try {
+            $content = [IO.File]::ReadAllText((Resolve-Path -LiteralPath $path).Path)
+        }
+        catch {
+            throw "Cannot read candidate file for credential scan: $path"
+        }
+        if ([regex]::IsMatch($content, $secretPattern)) {
+            $path
+        }
     }
-    if ($secretMatches) {
-        Write-Error ("Possible credentials require review:`n" + ($secretMatches -join "`n"))
+    if ($secretFiles) {
+        Write-Error (
+            "Possible credentials require review; values are intentionally redacted:`n" +
+            (($secretFiles | Sort-Object -Unique) -join "`n")
+        )
     }
 
-    $diffCheck = @(git diff --check 2>&1)
+    $diffCheck = @(git -c core.safecrlf=false diff --check 2>&1)
     if ($LASTEXITCODE -ne 0) {
         Write-Error ("git diff --check failed:`n" + ($diffCheck -join "`n"))
     }
 
-    $stagedDiffCheck = @(git diff --cached --check 2>&1)
+    $stagedDiffCheck = @(git -c core.safecrlf=false diff --cached --check 2>&1)
     if ($LASTEXITCODE -ne 0) {
         Write-Error ("git diff --cached --check failed:`n" + ($stagedDiffCheck -join "`n"))
     }
