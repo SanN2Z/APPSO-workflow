@@ -1,5 +1,5 @@
 schema_version: 1
-updated_on: '2026-08-03'
+updated_on: '2026-08-11'
 timezone: Asia/Tokyo
 wip_limit: 1
 insights:
@@ -15,12 +15,12 @@ insights:
 - id: INSIGHT-002
   title: 并行多稿盲选能否提高首稿上限
   record: insights/INSIGHT-002-parallel-best-of-n-selection/insight.yml
-  status: refined
+  status: retired
   evidence_level: E1
   classification: internal
   owner: strategy_editor
-  updated_on: '2026-08-03'
-  next_review_on: '2026-08-16'
+  updated_on: '2026-08-11'
+  next_review_on: '2026-09-11'
 - id: INSIGHT-003
   title: 红库能否减少表达返工又不制造新套话
   record: insights/INSIGHT-003-red-corpus-without-new-stencils/insight.yml
@@ -30,3 +30,12 @@ insights:
   owner: strategy_editor
   updated_on: '2026-08-03'
   next_review_on: '2026-08-25'
+- id: INSIGHT-004
+  title: 分阶段人控共写能否减少中心重置与语义返工
+  record: insights/INSIGHT-004-stage-routed-cowriting/insight.yml
+  status: test_ready
+  evidence_level: E0
+  classification: internal
+  owner: strategy_editor
+  updated_on: '2026-08-11'
+  next_review_on: '2026-09-11'

@@ -126,6 +126,7 @@ v1.10.0 当前合同：
 - 修复飞书内容并重新收录；
 - 新建空白草稿后重试；
 - 回退到仓库 `manual_editor` 版本化交接；
+- 仅需交付固定 300 px 高的连续图片纵向滑动组件时，按 [`wechat-publishing.md` 的离线纵向滑动合同](<../../.agents/skills/self-media-ops/references/wechat-publishing.md#纵向滑动长图组件离线交接>) 使用统一 `scroll-handoff` 命令；
 - 在另行明确授权且主题已取得资格时，使用 `sealed_draft`。
 
 ## 8. 验收矩阵

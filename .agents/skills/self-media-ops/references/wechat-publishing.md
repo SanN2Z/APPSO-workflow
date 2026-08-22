@@ -82,6 +82,29 @@ Wenyan 仍负责 Markdown 与本地图片渲染。适配器先在 Markdown token
 
 该模式只做本地交接，`handoff` 命令不访问网络，`draft` 与 `draft --execute` 均必须 fail loud。交接计划封存复制页、结构正文、复制输入和每张本地图的 SHA-256；`handoff --open` 会在调用浏览器前以限长稳定读取重新校验，届时检测到任一产物被替换、修改或异常膨胀都会阻断打开。浏览器打开后的文件或 DOM 状态不在这次校验的封存范围内。内容包快照采用分块稳定复制，发布图片在暂存前执行单图和累计字节上限；计划还记录图片尺寸、字节数、帧数、出现顺序和复制载荷体积，并在 Base64 编码及复制前再次执行资源上限。若图片没有随正文粘贴，交接页会按正文顺序列出本次版本化 `assets/` 作为人工上传降级路径。自动化只能证明结构、资源和本地门禁正确；首次启用或适配器变化后，仍需在公众号后台完成一次复制、修改、保存和重开检查。
 
+#### 纵向滑动长图组件（离线交接）
+
+`PROJECT-WECHAT-VERTICAL-SCROLL-HANDOFF-001`：当在线转换器不可用，或编辑明确要求把一组连续长图做成公众号内的上下滑动窗口时，使用仓库现有发布适配器生成，不在内容包里保留一次性 HTML 构建器。图片必须位于内容包 `assets/`，按展示顺序逐张登记为 `use: "wechat_body_interactive"`，允许 `wechat`，且权利状态已经解决。
+
+```powershell
+python 微信公众号/tools/wechat_publish.py scroll-handoff <content-package> `
+  --image "assets/scroll-01.png" `
+  --image "assets/scroll-02.png" `
+  --image "assets/scroll-03.png" `
+  --title "公众号纵向滑动组件" `
+  --open
+```
+
+执行合同：
+
+- 触发：内容包已经是 `ready`，事实、权利与终校布尔门均为 `true`；输入为 1—9 张已登记静态图。单篇仅预览效果、未准备交付时不启动该命令。
+- 动作：工具只生成固定 300 px 高、内层 `overflow-y:auto` 的竖向组件；图片经同一资源预算检查后转为 Base64，复制按钮只向剪贴板写入组件的 `text/html` 与纯文本，不复制门禁说明。
+- 通过：版本化真源位于 `dist/scroll-handoffs/scroll-handoff-*/wechat-scroll-handoff.html`，同目录回执记录图片顺序、尺寸、字节数、SHA-256、工具哈希和 `wechat_backend_roundtrip: "pending"`；`dist/wechat-scroll-handoff.html` 只是最近一次便利副本。
+- 失败：图片不在 `assets/`、重复或超过 9 张，manifest 用途不符、权利未解决、未允许 `wechat`，内容包校验失败，或单图／累计资源超限时，一律 fail loud，不生成可复制的放行页。
+- 范围：这是离线人工交接，不接受任意 HTML／CSS 输入，不访问在线转换器，不写公众号后台，也不替代整篇 `manual_editor` 交接。它只覆盖连续图片的竖向滑动组件。
+- 验收：本机打开、可滚动和复制成功只证明离线载荷成立。首次启用或工具变化后，仍须在目标公众号草稿中粘贴、保存、重开并做手机预览；未完成前不得把回执中的 `wechat_backend_roundtrip` 改为通过。
+- 来源与回归：规则来自 `ox-alpha-stealth-self-investigation` 的 FB-004—005；回归覆盖自包含 3 图输出、1—9 图边界、路径逃逸、用途／权利／平台门禁与产物篡改检测。
+
 ### 密封草稿模式
 
 用户明确要求按既定主题创建草稿，而且后台原则上不再重新排版时，使用：

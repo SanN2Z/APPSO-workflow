@@ -8,8 +8,8 @@ Create files when the work reaches the stage that needs them. A new idea does no
 |---|---|
 | Any package | `draft.md` |
 | `research` or later | `sources.md` |
-| New WeChat analytical long-form or structural rewrite | `brief.md` and, when `PROJECT-WECHAT-JUDGMENT-001` applies, `research/judgment-workshop.md` |
-| Parallel candidate round | `research/candidates/round-XX/frozen-input.md`, 3—5 anonymous `candidate-*.md` files, and `selection.md` |
+| New or materially restructured L2 / L3 WeChat analysis | `brief.md` + `research/co-writing-log.md`; add `research/judgment-workshop.md` only when `PROJECT-WECHAT-JUDGMENT-001` applies |
+| Explicit multi-version delivery | Separate version bodies and audit sidecars under `research/alternatives/<round>/`; the user selects, versions are never merged or AI-voted |
 | First image or visual task | `asset-manifest.yml`, `assets/` and optional `research/source-assets/` |
 | `editorial_review` or later | `review.md` |
 | `ready` or later | `copyedit.md`; complete `asset-manifest.yml` even when the list is empty |
@@ -20,7 +20,8 @@ Create files when the work reaches the stage that needs them. A new idea does no
 Optional:
 
 - `research/`: internal notes and unused source assets.
-- `research/candidates/`: frozen multi-draft rounds. Losing candidates remain internal research artifacts and never enter publishing manifests.
+- `research/candidates/`: historical frozen multi-draft rounds from the retired default; keep as internal evidence and do not use as the current production path.
+- `research/alternatives/`: optional complete versions only when the user explicitly asks for them; no automatic selector or promoted winner.
 - `research/image-generation-plan.json` and `research/image-generation-runs/`: required only for AI-image work.
 - `tools/`: deterministic package-local transforms.
 - `dist/`: disposable, generated, and Git-ignored.
@@ -59,9 +60,28 @@ Rules:
 - `published` requires a real `published_url` or an explicit user-confirmed offline record.
 - Use an ISO date for `created`, `updated`, and `as_of`.
 
+## L2 standard analysis
+
+L2 is the default analytical lane when one core judgment and story route clearly dominate. Record the lane reason, `T_intake`, `T_evidence_ready`, compact story contract, irreversible decisions, and escalation condition in `brief.md`; then use `research/co-writing-log.md` to stage the canonical `draft.md` by section or high-impact paragraph. Do not create placeholder candidates or a selection record.
+
+A reviewer who did not generate the body first reads only the public draft, records located problems, reader harm, reasoning, and pass conditions in `review.md`, and only then opens `brief.md` to map the finished draft back to the compact contract. The reviewer does not silently rewrite the body; accepted changes use local diffs and preserve locked units. Record `T_contract_locked`, `T_first_text_handoff`, `T_owner_reviewed`, and actual elapsed time. A local defect stays in L2; a failed center frame returns to research or escalates to L3 under `CORE-LANE-001`.
+
+## Staged co-writing record
+
+New or materially restructured L2 / L3 analysis uses `research/co-writing-log.md`. The record holds the collaboration mode (`guided` or `direct_write`), irreversible decisions, selected L3 route if any, voice anchors, unit contracts, acceptance labels, locks, reopen reasons, and issue-first patches. Adjacent ordinary paragraphs may share one section contract; do not turn every sentence into a form.
+
+Use these acceptance labels without translating them into a score:
+
+- `keep`
+- `meaning_right_wording_wrong`
+- `wrong_direction`
+- `delete`
+
+An accepted unit is `locked`. Reopen it only for a fact error, a demonstrated chain break, or an explicit user request, and record the old text reference plus a local diff. Public prose never contains the collaboration record or internal evidence grading.
+
 ## Judgment workshop record
 
-The trigger and exemptions are defined only by [`PROJECT-WECHAT-JUDGMENT-001`](../../../../共享/运营/SOP/内容工作流.md#project-wechat-judgment-001公众号写前共创门试运行项目配置). When the rule applies, declare `judgment_workshop: "research/judgment-workshop.md"` in draft frontmatter and copy the repository template into that path.
+The trigger and exemptions are defined only by [`PROJECT-WECHAT-JUDGMENT-001`](../../../../共享/运营/SOP/内容工作流.md#project-wechat-judgment-001公众号写前共创门试运行项目配置). The workshop is mandatory for L3 and applies to L2 only when a material choice needs explicit confirmation or the user explicitly asks to co-create. When the rule applies, declare `judgment_workshop: "research/judgment-workshop.md"` in draft frontmatter and copy the repository template into that path.
 
 The workshop uses YAML frontmatter:
 
@@ -81,21 +101,21 @@ reason: ""
 
 Allowed states are `discussing`, `locked`, and `not_required`. A package that enters the workshop cannot enter `draft` or a later state while the workshop is `discussing`. `locked` requires 3–5 real decision points resolved with the user, `personal` or `company` voice mode, explicit user confirmation, a complete four-cell narrative chain, a narrative engine, a non-empty strongest opponent or an explicit downgrade, and non-empty sections for the ordinary-person situation, main judgment, 2–4 supporting judgments, rejected directions, and reader takeaway. Several decisions may be resolved in one user response; do not create ceremonial turns. `not_required` needs a concrete reason.
 
-Historical packages with or without the frontmatter pointer remain readable. New and materially restructured packages follow the current rule and template.
+Historical packages with or without the frontmatter pointer remain readable. New and materially restructured packages follow the current rule and template. L3 records the route selected by the user before prose; it does not start full-draft candidates by default.
 
-## Parallel candidate round
+## Historical candidate rounds and explicit alternatives
 
-New WeChat analytical drafts and structural rewrites that pass the value gate use `CORE-SELECTION-001`.
+`research/candidates/round-XX/` remains readable for historical packages created under workflow v6.1 or earlier. Do not create a new candidate round merely because a task is L3, long, fact-dense, important, or under time pressure. Current L3 compares route cards before prose and then uses one canonical writer line.
 
-Each `round-XX` directory contains:
+When the user explicitly requests multiple complete versions, use `research/alternatives/<round>/` and freeze:
 
-- `frozen-input.md`: one reader question, source references, allowed and forbidden claims, target length, shared hard boundaries, stop condition, the locked four-cell narrative chain copied from the workshop, and the selected narrative engine;
-- `candidate-a.md` through `candidate-c.md` by default, extending to d/e only for real judgment branches; every candidate is one complete body plus an HTML-comment fact map;
-- `selection.md`: candidate hashes, isolation statement, two raw anonymous choices, optional final choice, none decisions, fact blockers, winner rationale, and the exact candidate promoted to `draft.md`.
+- one shared fact packet, allowed / forbidden claims, target range, and stop condition;
+- one independent body and audit sidecar per requested version;
+- a user decision record naming the adopted version, requested merge, or no selection.
 
-Launch the candidate writers concurrently. They may read only the frozen input and required platform profile, not another candidate, prior round, experimental mapping, or review. Before freeze, a writer checks only that the draft stays within the fact boundary and does not reuse a ready-made skeleton outside the frozen input. Launch 2 fresh selectors concurrently only after every candidate hash is frozen. Selectors may choose none and cannot merge text. Copy the frozen winner to `draft.md`; any later edit begins normal editorial history and must not be described as the blind-selected body.
+Versions may be produced independently when that is useful, but AI reviewers do not vote on the final. Do not merge versions automatically. Only a user-selected version may enter `draft.md`; a requested synthesis starts a new canonical unit contract and records which decisions were retained.
 
-`frozen-input.md` records T0 and the minute-22, minute-28, and minute-40 deadlines. `selection.md` records candidate freeze time, selection freeze time, text handoff time, wall-clock minutes, generation and selection wave counts, SLA status, and any slow-lane reason. The ordinary text lane is 0—8 minutes research and value judgment, 8—22 parallel generation, 22—28 parallel selection, 28—38 winner-only verification, and 38—40 handoff. Image, layout, upload, and publication time are not silently included.
+Historical `candidate-round-frozen-input.md` and `candidate-selection.md` templates are evidence of the retired experiment and must not be mistaken for the current route. Current timing follows `CORE-TIME-001`: record actual intake, evidence-ready, contract-lock, text-handoff, and owner-review times without claiming an unverified SLA.
 
 ## Copyedit record
 

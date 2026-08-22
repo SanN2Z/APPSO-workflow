@@ -1,4 +1,6 @@
-# 并行候选轮次｜round-XX
+# 历史模板：L3 并行候选轮次｜round-XX
+
+仅用于读取 v6.1 及更早的历史轮次。当前 v6.2 先按 `CORE-ROUTE-001` 比较成文前路线卡，再按 `CORE-COAUTHOR-001` 单线逐节成文。用户明确要求多个完整版本时，改用 `research/alternatives/<round>/`，最终由用户选择。
 
 ---
 status: frozen
@@ -9,7 +11,12 @@ content_type: analytical
 story_contract_ref: research/judgment-workshop.md
 story_contract_confirmed_on: ''
 chain_rule_id: CORE-CHAIN-001
+evidence_seam_rule_id: CORE-EVIDENCE-SEAM-001
+opening_rule_id: PROJECT-WECHAT-OPENING-001
 narrative_engine: ''
+opening_engine: ''
+opening_pressure: ''
+time_first_exception: ''
 candidate_fact_boundary_check_required: true
 candidate_skeleton_difference_check_required: true
 t0: ''
@@ -27,6 +34,10 @@ text_handoff_deadline: T0+40m
 - 唯一核心判断：
 - 一句话故事主线：
 - 读者追问链：
+- 选定开场卡：
+- 开场发动机：具体场景或动作 / 矛盾或异常事实 / 反直觉结果 / 人物进入难题 / 直接判断或决策
+- 首屏未解决压力：
+- `time_first_exception`：默认留空；只有日期、倒计时、时间差或先后顺序本身构成核心因果压力时填写具体理由
 - 叙事发动机：谜团揭示 / 人物追求 / 问题升级 / 实验验证 / 对照决策
 - 最强对手及在第几拍正面接它：
 - 平行比较共享尺度（非平行稿填不适用）：
@@ -47,7 +58,7 @@ text_handoff_deadline: T0+40m
 |  |  |  |  |
 |  |  |  |  |
 
-## 40 分钟文本时钟
+## L3 40 分钟文本时钟
 
 - Pre-T0：广搜、价值门、叙事与表达定调、与用户讨论并锁定故事合同；等待时间不计入文本 SLA。
 - T0 在用户确认故事合同且材料可执行后启动。
@@ -76,8 +87,9 @@ text_handoff_deadline: T0+40m
 - 同时启动 3 个隔离写作 Agent；只有材料确实存在更多互斥执行路线时才把 candidate_count 提高到 4—5。
 - 每个 Agent 读取同一份已锁定故事合同，只写 1 篇完整候选；不得读取其他候选、共享句子级计划、继承前一个 Agent 的写法或参与评选。
 - 候选必须服从共同核心判断与逻辑依赖；差异落在人物／场景选择、信息揭示顺序、技术压缩或叙事执行。只换标题、语气、开头和近义词视为同一稿。
-- 每篇正文后用 HTML 注释记录实际使用的来源、作者推断与保留未知项。
+- 每篇候选另建同名 `.audit.md` sidecar，记录实际使用的来源、作者推断与保留未知项；正文不附内部事实映射，也不向读者解释信源等级、核验过程或事实边界。
 - 每名候选作者冻结前只自查两项：事实是否越出本文件冻结边界；骨架是否复用了本文件之外的现成大纲。分别记录 `pass` 或具体问题。
+- 候选冻结前运行 `python .agents/skills/self-media-ops/scripts/check_wechat_opening.py <candidate-file>`；若命中时间／通稿式导语，只能重写，或按 `PROJECT-WECHAT-OPENING-001` 的窄豁免在本文件记录 `time_first_exception` 后复核。
 - 候选阶段不加载完整节奏、语用、项目词表或红库检查；这些检查按核心流程留给胜出稿。
 - 候选先冻结哈希，再启动评审；生成阶段不得覆盖 canonical draft.md。
 

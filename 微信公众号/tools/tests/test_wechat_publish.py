@@ -123,6 +123,35 @@ theme: "default"
         )
         self.register_body_image(package)
 
+    def register_scroll_images(
+        self,
+        package: Path,
+        names: tuple[str, ...],
+        *,
+        use: str = "wechat_body_interactive",
+        rights_status: str = "project_owned",
+        allowed_platforms: str = '["wechat"]',
+    ) -> list[str]:
+        paths: list[str] = []
+        entries: list[str] = []
+        for name in names:
+            relative = f"assets/{name}"
+            paths.append(relative)
+            self.write_test_image(package / relative)
+            entries.append(
+                f'''  - file: "{relative}"
+    use: "{use}"
+    used_in_draft: false
+    rights_blocker: false
+    rights_status: "{rights_status}"
+    allowed_platforms: {allowed_platforms}
+'''
+            )
+        (package / "asset-manifest.yml").write_text(
+            "version: 2\nassets:\n" + "".join(entries), encoding="utf-8"
+        )
+        return paths
+
     def enable_appsso_layout(
         self,
         package: Path,
@@ -1064,6 +1093,92 @@ theme: "default"
                 self.assertRaisesRegex(MODULE.WorkflowError, "requires delivery_mode manual_editor"),
             ):
                 MODULE.command_handoff(args)
+
+    def test_scroll_handoff_builds_versioned_self_contained_component(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            package = self.make_package(Path(temp))
+            paths = self.register_scroll_images(
+                package, ("scroll-01.png", "scroll-02.png", "scroll-03.png")
+            )
+            with mock.patch.object(
+                MODULE, "validator_report", return_value=(True, "validator pass")
+            ):
+                build = MODULE.build_scroll_handoff(package, paths, "纵向长图")
+
+            self.assertEqual(build.image_order, paths)
+            self.assertIn("scroll-handoffs", build.handoff_path.parts)
+            component = build.component_path.read_text(encoding="utf-8")
+            self.assertIn("height:300px", component)
+            self.assertIn("overflow-y:auto", component)
+            self.assertIn("上下滑动查看更多内容", component)
+            self.assertEqual(component.count("data:image/png;base64,"), 3)
+            handoff = build.handoff_path.read_text(encoding="utf-8")
+            self.assertIn('id="copy-article"', handoff)
+            self.assertEqual(handoff.count("data:image/png;base64,"), 3)
+            receipt = json.loads(build.receipt_path.read_text(encoding="utf-8"))
+            self.assertEqual(receipt["handoff_type"], "wechat_vertical_scroll")
+            self.assertEqual(receipt["fixed_height_px"], 300)
+            self.assertEqual(receipt["image_order"], paths)
+            self.assertEqual(receipt["wechat_backend_roundtrip"], "pending")
+            MODULE.verify_scroll_handoff_artifact(build)
+            self.assertEqual(
+                (package / "dist" / "wechat-scroll-handoff.html").read_text(
+                    encoding="utf-8"
+                ),
+                handoff,
+            )
+
+    def test_scroll_handoff_rejects_invalid_count_and_duplicate(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            package = self.make_package(Path(temp))
+            one = self.register_scroll_images(package, ("scroll.png",))
+            with self.assertRaisesRegex(MODULE.WorkflowError, "between 1 and 9"):
+                MODULE.validate_scroll_handoff_assets(package, [])
+            with self.assertRaisesRegex(MODULE.WorkflowError, "between 1 and 9"):
+                MODULE.validate_scroll_handoff_assets(package, one * 10)
+            with self.assertRaisesRegex(MODULE.WorkflowError, "duplicates"):
+                MODULE.validate_scroll_handoff_assets(package, one * 2)
+
+    def test_scroll_handoff_rejects_non_asset_and_unapproved_manifest_use(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            package = self.make_package(Path(temp))
+            with self.assertRaisesRegex(MODULE.WorkflowError, "assets/ directory"):
+                MODULE.validate_scroll_handoff_assets(
+                    package, ["research/source-assets/page.png"]
+                )
+            paths = self.register_scroll_images(
+                package, ("scroll.png",), use="unused"
+            )
+            with self.assertRaisesRegex(
+                MODULE.WorkflowError, "use: wechat_body_interactive"
+            ):
+                MODULE.validate_scroll_handoff_assets(package, paths)
+
+    def test_scroll_handoff_rejects_rights_or_platform_blocker(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            package = self.make_package(Path(temp))
+            paths = self.register_scroll_images(
+                package, ("scroll.png",), rights_status="needs_review"
+            )
+            with self.assertRaisesRegex(MODULE.WorkflowError, "not release-cleared"):
+                MODULE.validate_scroll_handoff_assets(package, paths)
+            paths = self.register_scroll_images(
+                package, ("scroll.png",), allowed_platforms="[]"
+            )
+            with self.assertRaisesRegex(MODULE.WorkflowError, "not allowed"):
+                MODULE.validate_scroll_handoff_assets(package, paths)
+
+    def test_scroll_handoff_verification_detects_tampering(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            package = self.make_package(Path(temp))
+            paths = self.register_scroll_images(package, ("scroll.png",))
+            with mock.patch.object(
+                MODULE, "validator_report", return_value=(True, "validator pass")
+            ):
+                build = MODULE.build_scroll_handoff(package, paths, "纵向长图")
+            build.component_path.write_text("tampered", encoding="utf-8")
+            with self.assertRaisesRegex(MODULE.WorkflowError, "hash mismatch"):
+                MODULE.verify_scroll_handoff_artifact(build)
 
     def test_url_encoded_local_image_with_chinese_space_and_ampersand(self) -> None:
         with tempfile.TemporaryDirectory() as temp:

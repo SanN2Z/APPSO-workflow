@@ -97,7 +97,7 @@ class JudgmentWorkflowContractTests(unittest.TestCase):
             "## 主判断",
             "## 小标题与逻辑框架",
             "## 支撑判断",
-            "### 开场候选卡",
+            "### 开场卡",
             "尚未解决的压力",
             "叙事发动机",
             "## 最强对手",
@@ -160,10 +160,86 @@ class JudgmentWorkflowContractTests(unittest.TestCase):
         self.assertIn("PROJECT-WECHAT-PRAGMATIC-001", editorial)
         self.assertIn("PROJECT-WECHAT-AI-LEXICON-001", editorial)
         self.assertIn("HUMAN-RHY-*", copy_editor)
-        self.assertIn("先独立冷读，再打开故事合同", review_template)
+        self.assertIn("先独立冷读，再打开适用故事合同", review_template)
         self.assertIn("删具体、留抽象", review_template)
 
-    def test_five_layer_parallel_selection_and_time_contract_is_default(self):
+    def test_quicknews_prompt_contract_and_short_route(self):
+        data = yaml.safe_load(
+            (REFERENCE_DIR / "wechat-quicknews-prompt.yml").read_text(
+                encoding="utf-8"
+            )
+        )
+        self.assertEqual(data["rule_id"], "PROJECT-WECHAT-QUICKNEWS-001")
+        self.assertEqual(data["prompt_version"], "1.0")
+        self.assertEqual(
+            data["effectiveness_status"], "owner_binding_e0_unverified"
+        )
+        self.assertEqual(
+            data["input_contract"]["defaults"]["target_length"],
+            "shortest_complete",
+        )
+        self.assertEqual(
+            set(data["input_contract"]["allowed_claim_types"]),
+            {
+                "verified_fact",
+                "vendor_claim",
+                "third_party_result",
+                "author_judgment",
+                "inference",
+                "unknown",
+            },
+        )
+        fact_packet_template = data["input_contract"]["fact_packet_template"]
+        for required in ("source_id: S1", "claim_id: F1", "image_assets: []"):
+            self.assertIn(required, fact_packet_template)
+
+        prompt = data["writing_prompt"]["zh_v1_0"]
+        for required in (
+            "快讯事实包",
+            "最短但完整",
+            "内部事实回映",
+            "STOP_RESEARCH",
+            "不得凭空输出「图片」占位符",
+            "不设置词库命中率",
+        ):
+            self.assertIn(required, prompt)
+        for copied_stencil in (
+            "量子位 | 公众号 QbitAI",
+            "4 段话里有一个",
+            "2000-2500",
+        ):
+            self.assertNotIn(copied_stencil, prompt)
+
+        expected_routes = {
+            case["expected"] for case in data["regression_cases"]
+        }
+        self.assertEqual(
+            expected_routes,
+            {
+                "write_quicknews",
+                "write_shortest_complete",
+                "write_without_image_placeholder",
+                "stop_research",
+                "route_to_analytical_workflow",
+            },
+        )
+
+        core = (ROOT / "共享/运营/SOP/内容工作流.md").read_text(
+            encoding="utf-8"
+        )
+        skill = (ROOT / ".agents/skills/self-media-ops/SKILL.md").read_text(
+            encoding="utf-8"
+        )
+        self.assertEqual(
+            core.count("### PROJECT-WECHAT-QUICKNEWS-001｜"), 1
+        )
+        self.assertIn("wechat-quicknews-prompt.yml", core)
+        self.assertIn("wechat-quicknews-prompt.yml", skill)
+        self.assertIn("| L1 factual |", skill)
+        self.assertIn("Fact packet → one short draft → fact mapping", skill)
+        self.assertIn("逐段事实回映", core)
+
+    def test_four_lane_stage_routed_coauthor_contract(self):
         core = (ROOT / "共享/运营/SOP/内容工作流.md").read_text(
             encoding="utf-8"
         )
@@ -180,6 +256,16 @@ class JudgmentWorkflowContractTests(unittest.TestCase):
             / "共享/模板/微信公众号内容包/research/candidate-round-frozen-input.md"
         ).read_text(encoding="utf-8")
         agents = (ROOT / "AGENTS.md").read_text(encoding="utf-8")
+        brief_template = (
+            ROOT / "共享/模板/微信公众号内容包/brief.md"
+        ).read_text(encoding="utf-8")
+        review_template = (
+            ROOT / "共享/模板/微信公众号内容包/review.md"
+        ).read_text(encoding="utf-8")
+        cowriting_template = (
+            ROOT
+            / "共享/模板/微信公众号内容包/research/co-writing-log.md"
+        ).read_text(encoding="utf-8")
         draft_template = (
             ROOT / "共享/模板/微信公众号内容包/draft.md"
         ).read_text(encoding="utf-8")
@@ -190,46 +276,85 @@ class JudgmentWorkflowContractTests(unittest.TestCase):
         )
 
         for required in (
-            "自由判断层",
-            "写前定调层",
-            "并行候选层",
-            "匿名评选层",
-            "硬门检查层",
+            "L0 局部任务",
+            "L1 事实短稿",
+            "L2 标准分析",
+            "L3 多路线稿",
             "CORE-VALUE-001",
+            "CORE-LANE-001",
+            "CORE-STANDARD-001",
+            "CORE-EVIDENCE-SEAM-001",
             "PROJECT-WECHAT-JUDGMENT-001",
             "PROJECT-WECHAT-PRAGMATIC-001",
             "PROJECT-WECHAT-AI-LEXICON-001",
-            "CORE-SELECTION-001",
+            "CORE-ROUTE-001",
+            "CORE-COAUTHOR-001",
             "CORE-TIME-001",
-            "一篇都不要",
-            "40 分钟文本出稿",
+            "问题优先审稿",
+            "确认锁定",
             "不值得写",
+            "这是公众号分析稿默认档位",
         ):
             self.assertIn(required, core)
-        self.assertIn("Launch 3 isolated writing agents at the same time", skill)
-        self.assertIn("launch 2 fresh reviewer agents in parallel", skill)
-        self.assertIn("minute 40", skill)
-        self.assertIn("3 isolated full-draft writers", team)
-        self.assertIn("2 fresh selectors in parallel", team)
-        self.assertIn("fact boundary", team)
-        self.assertIn("ready-made skeleton", team)
+        self.assertIn("| L2 standard analysis |", skill)
+        self.assertIn("staged co-writing log", skill)
+        self.assertIn("| L3 multi-route |", skill)
+        self.assertNotIn("Launch 3 isolated writing agents at the same time", skill)
+        self.assertNotIn("minute 40", skill)
+        self.assertNotIn("### 1. Free judgment layer", skill)
+        self.assertLessEqual(len(skill.splitlines()), 80)
+        self.assertIn("one human-directed canonical writer line", team)
+        self.assertIn("the user selects", team)
+        self.assertIn("issue-first cold reader", team)
+        self.assertIn("never edit the canonical body concurrently", team)
+        self.assertNotIn("3 isolated full-draft writers", team)
+        self.assertNotIn("2 fresh selectors in parallel", team)
         self.assertIn("wall_clock_minutes", selection_template)
         self.assertIn("sla_status", selection_template)
         self.assertIn("story_contract_ref", frozen_template)
         self.assertIn("candidate_fact_boundary_check_required", frozen_template)
         self.assertIn("candidate_skeleton_difference_check_required", frozen_template)
         self.assertIn("chain_rule_id: CORE-CHAIN-001", frozen_template)
+        self.assertIn("evidence_seam_rule_id: CORE-EVIDENCE-SEAM-001", frozen_template)
+        self.assertIn("同名 `.audit.md` sidecar", frozen_template)
+        self.assertNotIn("正文后用 HTML 注释", frozen_template)
         self.assertIn("narrative_engine:", frozen_template)
         self.assertIn("下一节为什么必须回答这个问题", frozen_template)
         self.assertIn("Pre-T0", frozen_template)
-        self.assertIn("### 2. Prewriting calibration layer", skill)
-        self.assertIn("checks only two things", skill)
+        self.assertIn("# 历史模板：L3 并行候选轮次", frozen_template)
+        self.assertIn("CORE-COAUTHOR-001", frozen_template)
+        self.assertIn("# 历史模板：L3 匿名候选评选", selection_template)
+        self.assertIn("不让 AI 盲选完整终稿", selection_template)
         self.assertIn("跨题表演句", selection_template)
         self.assertIn("叙事链粗查", selection_template)
         self.assertIn("更像人", selection_template)
         self.assertNotIn("candidate_pragmatic_selfcheck_required", frozen_template)
         self.assertNotIn("candidate_lexicon_scan_required", frozen_template)
-        self.assertIn("公众号分析长稿或结构重写", agents)
+        self.assertIn("L3 多路线稿、中心结构性重写或用户明确共创", agents)
+        self.assertNotIn("公众号分析长稿或结构重写", agents)
+        for required in (
+            "生产档位：L0 / L1 / L2 / L3",
+            "`T_intake`",
+            "`T_evidence_ready`",
+            "L2 独立冷读",
+            "L3 用户选定路线",
+            "共写记录：`research/co-writing-log.md`",
+        ):
+            self.assertIn(required, brief_template)
+        self.assertIn("故事合同来源", review_template)
+        self.assertIn("声音锚点和锁定单元", review_template)
+        self.assertIn("问题优先审稿与补丁决定", review_template)
+        for required in (
+            "workflow_rule: CORE-COAUTHOR-001",
+            "human_first",
+            "ai_candidate",
+            "critique_only",
+            "meaning_right_wording_wrong",
+            "wrong_direction",
+            "重开记录",
+            "问题优先审稿与补丁",
+        ):
+            self.assertIn(required, cowriting_template)
         self.assertNotIn("judgment_workshop:", draft_template)
         self.assertFalse(clumsy["default_invocation"])
 
@@ -335,7 +460,7 @@ class JudgmentWorkflowContractTests(unittest.TestCase):
         self.assertLessEqual(review_template.count("- [ ]"), 15)
         self.assertNotIn("3–8", review_template)
         self.assertNotIn("### 表达候选库", review_template)
-        self.assertIn("### 具体性守恒 diff", review_template)
+        self.assertIn("### 具体性、声音锚点与锁定单元记录", review_template)
 
     def test_active_docs_use_core_rule_contracts_as_single_source(self):
         core = (ROOT / "共享/运营/SOP/内容工作流.md").read_text(
@@ -344,6 +469,7 @@ class JudgmentWorkflowContractTests(unittest.TestCase):
         active_files = [
             ROOT / ".agents/skills/self-media-ops/SKILL.md",
             REFERENCE_DIR / "content-package.md",
+            REFERENCE_DIR / "wechat-quicknews-prompt.yml",
             REFERENCE_DIR / "wechat-judgment-workshop.md",
             REFERENCE_DIR / "wechat-ai-pattern-pass.md",
             REFERENCE_DIR / "wechat-human-voice-pass.md",
@@ -361,6 +487,8 @@ class JudgmentWorkflowContractTests(unittest.TestCase):
             / "共享/模板/微信公众号内容包/research/candidate-round-frozen-input.md",
             ROOT
             / "共享/模板/微信公众号内容包/research/candidate-selection.md",
+            ROOT
+            / "共享/模板/微信公众号内容包/research/co-writing-log.md",
         ]
         rule_ids = (
             "CORE-CHAIN-001",
@@ -369,7 +497,12 @@ class JudgmentWorkflowContractTests(unittest.TestCase):
             "PROJECT-WECHAT-PRAGMATIC-001",
             "PROJECT-WECHAT-AI-LEXICON-001",
             "PROJECT-WECHAT-JUDGMENT-001",
-            "CORE-SELECTION-001",
+            "PROJECT-WECHAT-QUICKNEWS-001",
+            "CORE-ROUTE-001",
+            "CORE-COAUTHOR-001",
+            "CORE-LANE-001",
+            "CORE-STANDARD-001",
+            "CORE-EVIDENCE-SEAM-001",
         )
         for rule_id in rule_ids:
             self.assertEqual(core.count(f"### {rule_id}｜"), 1)
@@ -377,9 +510,7 @@ class JudgmentWorkflowContractTests(unittest.TestCase):
                 text = path.read_text(encoding="utf-8")
                 self.assertNotIn(f"### {rule_id}｜", text, path.as_posix())
 
-        trigger_sentence = (
-            "公众号新分析稿与结构性重写，通过价值门后默认触发写前共创门。"
-        )
+        trigger_sentence = "任何内容任务完成初步稿型识别后"
         self.assertEqual(core.count(trigger_sentence), 1)
         for path in active_files:
             self.assertNotIn(

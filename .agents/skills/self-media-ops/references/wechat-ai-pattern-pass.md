@@ -1,15 +1,15 @@
 # WeChat 句法节奏与 AI-pattern 诊断
 
-本文件是胜出稿进入 `editorial_review` 后的一次完整诊断细则。表达层主检查是核心流程中的 `PROJECT-WECHAT-RHYTHM-001`，并与 `PROJECT-WECHAT-PRAGMATIC-001`、`PROJECT-WECHAT-CONCRETE-001` 分工：RHYTHM 管句法节奏骨架，PRAGMATIC 管高显著句有没有真实说话必要，CONCRETE 管编辑是否删具体、留抽象。候选写手与匿名评审不运行本文件。
+本文件是 L2／L3 单一 canonical draft 进入 `editorial_review` 后的一次完整诊断细则。表达层主检查是核心流程中的 `PROJECT-WECHAT-RHYTHM-001`，并与 `PROJECT-WECHAT-PRAGMATIC-001`、`PROJECT-WECHAT-CONCRETE-001` 分工：RHYTHM 管句法节奏骨架，PRAGMATIC 管高显著句有没有真实说话必要，CONCRETE 管编辑是否删具体、留抽象或静默覆盖声音锚点。
 
 本诊断不替代事实核验、独立冷读、叙事链逐拍对照、具体性 diff 或精确正文终校。
 
 ## 工作流位置
 
 1. Feature writer 完成 [wechat-human-voice-pass.md](wechat-human-voice-pass.md) 的 Pass A，包括压缩方向自查。
-2. Release auditor 对胜出稿运行一轮完整诊断：六类节奏指纹、语用必要性高显著句抽查、内部工作流泄漏与推测性填空。
-3. Feature writer 修复确认缺陷；涉及事实或语义边界的修改退回 evidence editor。
-4. Release auditor 只复核已记录的修复点，不重跑整轮诊断；随后按 human-voice 细则完成独立冷读、叙事链逐拍对照与具体性 diff。
+2. Release auditor 对 canonical draft 运行一轮完整诊断：六类节奏指纹、语用必要性高显著句抽查、内部工作流泄漏与推测性填空。
+3. Feature writer 只对接受的问题提交局部补丁；涉及事实或语义边界的修改退回 evidence editor，涉及 `locked` 单元先按 `CORE-COAUTHOR-001` 记录重开理由。
+4. Release auditor 只复核已记录的修复点，不重跑整轮诊断；随后按 human-voice 细则完成独立冷读、叙事链逐拍对照与档位对应的具体性检查。
 5. 结构与表达修复完成后、copyedit 前，只运行一次文末的项目词表附录扫描。
 
 任何 copyedit 后的正文修改都会使正文哈希失效。
@@ -89,6 +89,7 @@
 - tool、prompt、model、搜索、路径、缺陷 ID、哈希或审校流程；
 - 原始引用 token、跟踪参数、占位符、TODO 或给写手的指令；
 - 围绕写作系统做了什么来组织主张，而不是说明读者需要知道什么。
+- 违反 `CORE-EVIDENCE-SEAM-001` 的证据审计旁白，如「证据等级」「事实边界」「证伪」「只能证明／不能证明」「替传闻背书」「把消息降回」，以及向读者解释作者怎样核验、分类或决定相信材料。
 
 明确泄漏一律记为 `HUMAN-AI-*` blocker。
 
@@ -98,7 +99,7 @@
 
 ## 终校附录：项目表达禁用词表
 
-结构与表达修复完成后、逐句 copyedit 前，按 `PROJECT-WECHAT-AI-LEXICON-001` 只加载一次 [wechat-expression-library.yml](wechat-expression-library.yml) 的 `wechat_analytical` adapter。这里不复述词条，也不在候选、匿名评审或修复点复核阶段重复扫描。
+结构与表达修复完成后、逐句 copyedit 前，按 `PROJECT-WECHAT-AI-LEXICON-001` 只加载一次 [wechat-expression-library.yml](wechat-expression-library.yml) 的 `wechat_analytical` adapter。这里不复述词条，也不在路线卡、单元起草、独立冷读或修复点复核阶段重复扫描。
 
 命中只允许三种处理：删除；改成主体、动作、尺度、条件和结果明确的正面陈述；记录窄豁免。豁免须写 entry ID、完整句、上下文、豁免类型、不可替代的信息任务和批准人。命中不得用于推断 AI 使用、代写或诚信问题。adapter 变化时运行 [wechat-expression-ban-regression.yml](wechat-expression-ban-regression.yml)。
 

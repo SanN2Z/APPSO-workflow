@@ -65,8 +65,9 @@ Git 提交可以作为证据单元的版本边界，但提交次数、代码行�
 | ID | 命题 | 当前状态 | 证据 | 下一步 |
 |---|---|---|---|---|
 | [`INSIGHT-001`](insights/INSIGHT-001-feedback-loop-compounding/evidence.md) | 反馈资产只有分层后才会形成工作流复利吗 | `framed` | `E1` | 不推广文章编译器 0.2，保留反向结果 |
-| [`INSIGHT-002`](insights/INSIGHT-002-parallel-best-of-n-selection/evidence.md) | 并行生成 3—5 篇完整候选并匿名评选，能否避免首稿路径锁定 | `refined` | `E1` | 固定四格叙事链、最强对手和胜出稿诊断后，在独立选题重测 Best-of-3 增量 |
+| [`INSIGHT-002`](insights/INSIGHT-002-parallel-best-of-n-selection/evidence.md) | 并行生成 3—5 篇完整候选并匿名评选，能否避免首稿路径锁定 | `retired` | `E1` | 保留历史反向结果；默认流程已被 INSIGHT-004 的人控单线试跑取代 |
 | [`INSIGHT-003`](insights/INSIGHT-003-red-corpus-without-new-stencils/insight.yml) | 红库能否减少表达返工又不制造新套话 | `framed` | `E0` | 在后续 3 篇适用稿做匿名黑库／红黑库配对冷读 |
+| [`INSIGHT-004`](insights/INSIGHT-004-stage-routed-cowriting/insight.yml) | 分阶段人控共写能否减少中心重置与语义返工 | `test_ready` | `E0` | 后续 3 个适用稿前瞻记录中心重置、单元返工、锁定保留、实耗和质量护栏 |
 
 这里验证的是自媒体工作流机制，不是「谁未来发展更好」。职业上限、组织竞争力和所有 AI 工作的长期规律仍属于未证实的远期命题。
 

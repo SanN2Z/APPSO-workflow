@@ -1180,7 +1180,11 @@ assets:
         self.assertTrue(any("rights_status is not release-cleared" in item for item in errors))
 
     def test_v2_ready_wechat_layout_assets_are_release_bound(self) -> None:
-        for asset_use in ("wechat_body_header", "wechat_body_footer"):
+        for asset_use in (
+            "wechat_body_header",
+            "wechat_body_footer",
+            "wechat_body_interactive",
+        ):
             with self.subTest(asset_use=asset_use):
                 manifest = f"""version: 2
 assets:

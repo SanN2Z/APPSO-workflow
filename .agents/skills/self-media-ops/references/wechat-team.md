@@ -1,18 +1,20 @@
 # WeChat execution modes
 
-Default to the smallest mode that fits the task. New WeChat analytical drafts and structural rewrites use parallel full-draft candidates; quick edits and fixed factual formats still use one operator. Roles are concrete assignments, not a ceremonial standing team.
+Default to the smallest mode that fits the task. Research and independent specialist review may fan out; public prose follows one human-directed canonical writer line. L3 compares route cards before prose, not full drafts after prose. Roles are concrete assignments, not a ceremonial standing team.
 
 ## Modes
 
 | Mode | Use when | Operators |
 |---|---|---|
-| Quick edit | Claims, structure, assets, and state do not change | One writer |
-| Standard factual | Fast news, fixed-format brief, translation, or ordinary local rewrite | One managing writer; add one cold reviewer only when needed |
-| Parallel candidate | New analytical article or structural rewrite after the value gate | 3 isolated full-draft writers by default, up to 5 when real judgment branches exist; then 2 fresh selectors in parallel |
-| High risk | Dense claims, uncertain rights, sensitive company material, or release preparation | Managing writer plus only the needed evidence, rights, copyedit, or release reviewer |
-| Parallel specialist | Research and asset work are independent and time-sensitive | Explicitly assigned specialists; never parallel-edit `draft.md` |
+| L0 local | Claims, structure, assets, and state do not change | One operator |
+| L1 factual | Fast news, fixed-format brief, translation, or source index | One managing writer |
+| L2 standard analysis | One core judgment and story route clearly dominate | One canonical writer working by unit contract, then one fresh issue-first cold reader |
+| L3 route decision | Competing substantive frames, central structural rewrite, flagship risk, explicit route comparison, or failed L2 center frame | One managing editor proposes up to 3 route cards; the user selects; then the L2 staged single-draft path |
+| Parallel research | Open-ended sources, independent fact questions, or asset / rights research can be separated | Bounded researchers return evidence cards to one managing editor |
+| Targeted review | Fact, argument, rights, copyedit, or release questions are independent | Reviewers report located problems and pass conditions; they do not rewrite `draft.md` |
+| Explicit alternatives | The user explicitly asks for multiple complete versions | Separate version writers may work independently; the user selects and AI never votes or merges automatically |
 
-Do not spawn separate title, style, conclusion, or per-section writers. Candidate writers each own one complete candidate; selectors have a frozen pairwise or pool-selection task. If one operator can safely finish an exempt task, use one operator.
+Do not spawn separate title, style, conclusion, or per-section writers. One operator owns canonical prose at a time. Parallel researchers and reviewers return structured evidence or issue reports to that owner; they never edit the canonical body concurrently.
 
 ## Context
 
@@ -27,47 +29,38 @@ Do not make every reviewer load `当前重点.md`, all APPSO assets, publishing 
 
 ## Workflow
 
-1. The managing writer researches enough to pass or reject the value gate without drafting a full article.
-2. In a separate prewriting-calibration layer, submit the reader question, single core judgment, one-sentence story line, four-cell narrative chain, one narrative engine, strongest opponent and response beat, opening pressure, ending, omissions, and the concrete job of any planned high-salience rhetoric. Write provisional headings only after the chain works.
-3. Apply the trigger and exemptions from `PROJECT-WECHAT-JUDGMENT-001`; applicable work completes [the story-contract gate](wechat-judgment-workshop.md) and freezes the user confirmation date before candidate work.
-4. Start 3 candidate writers concurrently. Each reads the same frozen story contract and evidence packet, writes one complete anonymous candidate under `research/candidates/<round>/`, and cannot read another branch, share sentence-level plans, or inherit another branch.
-5. Before freezing, each candidate writer records only two self-checks: compliance with the frozen fact boundary and no reuse of a ready-made skeleton outside `frozen-input.md`.
-6. After all candidates freeze, start 2 new selector Agents concurrently. Each separately judges facts, argument / narrative with a rough narrative-chain check, and exact-quote evidence of cross-topic performance sentences, then chooses one candidate or none. A generic「more human」verdict is invalid. Disagreement triggers one final selector over the nominees. Generators never select.
-7. Copy the frozen winner to `draft.md` without merging losing drafts. If all candidates repeat a major performance sentence or break the narrative chain, select none and return to the layer that caused it.
+1. The managing editor researches enough to pass or reject `CORE-VALUE-001`, then records the lane and reason under `CORE-LANE-001`.
+2. For L2, lock the compact story contract and irreversible decisions in `brief.md`. For L3, propose up to 3 route cards under `CORE-ROUTE-001`; only the user can select, modify, or reject them.
+3. Open `research/co-writing-log.md`. Record the collaboration mode, voice anchors, and one unit contract per section or high-impact paragraph. Adjacent ordinary paragraphs may share a section contract.
+4. Assign each unit `human_first`, `ai_candidate`, or `critique_only`. Fact explanation and mechanism units may use one AI candidate; opening, ending, core judgment, and existing voice anchors default to human-first or critique-only.
+5. After a user or designated human editor accepts a unit, label it `locked`. Reopen only for a fact error, demonstrated chain break, or explicit user request, and record the reason plus local diff.
+6. The cold reader first reads only the public body. Report each issue with location, reader harm, reasoning, and pass condition. Do not silently rewrite the body or synthesize a new full draft.
+7. The canonical writer proposes a local patch only for accepted issues. Preserve locked units unless their reopen condition is recorded; the reviewer rechecks only repaired points.
 8. Verify changed claims and changed assets, not the whole package after every small edit.
-9. At `editorial_review`, the writer runs Pass A; one auditor then runs a single rhythm / pragmatic diagnosis, performs the independent cold read, maps the finished draft back to the narrative chain, and checks the candidate-to-draft concrete-detail diff. After repair, the auditor rechecks only recorded repair points.
-10. Before `ready`, run the project lexicon appendix once, then exact-body copyedit, rights review, platform checks, and the validator.
-11. The managing writer updates state only when the recorded checks support it.
+9. Before `ready`, run the one complete rhythm / pragmatic diagnosis, the project lexicon appendix once, exact-body copyedit, rights review, platform checks, and the validator. Update state only when records support it.
 
-## 40-minute text lane
+## Timing
 
-- Pre-T0: research, pass or fail the value gate, complete narrative and expression calibration, discuss the story contract, and wait for user confirmation.
-- T0—8 minutes: run supplemental checks and freeze the user-confirmed story contract with the evidence packet.
-- 8—22 minutes: 3 full-draft writers run in one concurrent wave.
-- 22—28 minutes: 2 fresh selectors run in one concurrent wave and choose a winner or none.
-- 28—38 minutes: verify only the frozen winner's necessary facts.
-- 38—40 minutes: record hashes, elapsed time, and hand off readable text.
-
-The deadline measures wall-clock draft time after user confirmation, not discussion waiting or summed Agent compute. Finishing early is allowed. Five candidates cannot extend the 40-minute limit; use them only when capacity and a real fourth or fifth execution route both exist. At minute 8, an evidence-to-story-contract mismatch means downgrade or stop. Images and layout run as a separate concurrent lane when requested.
+Record `T_intake`, `T_evidence_ready`, `T_contract_locked`, `T_first_text_handoff`, and `T_owner_reviewed`. Distinguish research time, text time, user waiting, and unavailable human minutes. Do not infer work time from token usage, chat duration, or Git timestamps, and do not sacrifice quality gates to preserve the retired 40-minute candidate experiment.
 
 ## Optional specialist lenses
 
-- [Managing editor](wechat-role-managing-editor.md): central question, structure, scope, and state.
+- [Managing editor](wechat-role-managing-editor.md): central question, route cards, unit contracts, scope, and state.
 - [Evidence editor](wechat-role-evidence-editor.md): changed claims, sources, and factual labels.
-- [Feature writer](wechat-role-feature-writer.md): one complete candidate writer, or the post-selection owner of the winning body.
+- [Feature writer](wechat-role-feature-writer.md): sole owner of the canonical body during an assigned writing window.
 - [Copy editor](wechat-role-copy-editor.md): exact-body correctness and hash.
 - [Visual and rights editor](wechat-role-visual-rights-editor.md): used assets, captions, privacy, and rights.
-- [Release auditor](wechat-role-release-auditor.md): independent final gate.
+- [Release auditor](wechat-role-release-auditor.md): independent issue-first final gate.
 
 Load a role file only when that lens is assigned.
 
 ## File discipline
 
-- Keep one canonical `draft.md`. Parallel candidates are anonymous, round-scoped research artifacts rather than competing canonical drafts.
-- Use `research/candidates/round-XX/candidate-a.md` through `candidate-e.md`; do not put Agent names in filenames or headings.
-- Freeze candidates before selection. The selection record names the winner or none and preserves both raw reviewer choices.
-- Use `review.md` for editorial defects and `copyedit.md` for exact-body defects.
-- A reviewer does not silently rewrite another operator's owned file.
+- Keep one canonical `draft.md` and one `research/co-writing-log.md` for the active body.
+- Historical `research/candidates/` rounds remain evidence only. New explicit complete versions go under `research/alternatives/` and remain non-canonical until the user selects.
+- Record voice anchors by stable reference and information relationship; do not turn their surface words into a stencil.
+- A reviewer does not silently rewrite another operator's owned file. A patch records the issue, old location, proposed diff, human decision, and result.
+- Multiple review reports may be compared, but they are never auto-merged into prose and cannot outvote the user.
 - Publication remains a user-authorized external action.
 
 Use [wechat-editorial-gates.md](wechat-editorial-gates.md) as the single WeChat final checklist. Human voice, AI-pattern, copyedit, image, and publishing references are loaded only when their stage is reached.

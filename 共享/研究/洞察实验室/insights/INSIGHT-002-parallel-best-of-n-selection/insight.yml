@@ -2,12 +2,12 @@ schema_version: 1
 id: "INSIGHT-002"
 title: "并行多稿盲选能否提高首稿上限"
 classification: "internal"
-status: "refined"
+status: "retired"
 evidence_level: "E1"
 owner: "strategy_editor"
 created_on: "2026-08-02"
-updated_on: "2026-08-03"
-next_review_on: "2026-08-16"
+updated_on: "2026-08-11"
+next_review_on: "2026-09-11"
 
 claim:
   statement: "对已经通过价值门，且标题、核心判断与章节转折已形成共享故事合同的公众号分析稿，同时调用 3—5 个隔离写作 Agent 生成完整候选，再由未参与生成的评审 Agent 匿名选择一篇或全部退回，可能比单稿直接进入编辑更容易得到结构与公共价值都合格的正文。"
@@ -148,7 +148,7 @@ experiments:
     end_condition: "下一篇符合范围的新分析稿完成冻结输入、3 篇并行候选、匿名选稿、40 分钟墙钟记录、2 名后验盲评和用户首次冷读反馈后结束；按 supports／neutral／contradicts 记录，不在看到结果后改变阈值。"
 
 assetization:
-  status: "prototype"
+  status: "retired"
   type: "workflow_and_templates"
   target: "形成可复用的并行候选生成、匿名评选、none 退回与胜出稿交接机制。"
   authoritative_refs:
@@ -164,9 +164,16 @@ assetization:
   portable_core: "冻结共同输入、隔离并行生成、匿名独立评选、none 出口、无拼稿与结果记录。"
   adapter_boundary: "平台、候选数量、并发容量、文件路径、模型、用户反馈口径与发布硬门。"
 
-next_action: "在另一个独立选题中，先冻结用户确认的四格叙事链、叙事发动机、最强对手与相同事实包，再预注册单稿基线与 Best-of-3；候选只执行事实边界与骨架差异自查，评审统一记录叙事链断点与跨题表演句，胜出稿使用相同的一次完整诊断，以隔离评选层增量。round-02、FB-031 与本次 SOP 重构都只作为机制修订信号，不追溯改写 EXP-001。"
+next_action: "不再把完整多稿与 AI 盲选作为默认生产路径，也不启动新的 Best-of-3 实验。保留 EXP-001 的 contradicts 历史；若用户未来明确要求重开，必须另建新实验并重新冻结基线。当前替代机制由 INSIGHT-004 前瞻测试。"
 
 decision_log:
+  - date: "2026-08-11"
+    decision: "retired"
+    rationale: "EXP-001 已显示自动盲评和速度通过仍不能阻止用户首次冷读推翻核心思想；round-02 又无法隔离 Best-of-3 增量。最新研究复核与 Astra FB-009 提示，应把作者控制前移到路线和段落关系，并保护已认可表达。用户明确采用分阶段人控共写方式后，v6.2 停用默认完整多稿和 AI 盲选。该决定是项目路线调整，不增加支持或反对证据，E1 不变。"
+    evidence_refs:
+      - "微信公众号/内容/2026/08/astra-pause-trillion-param-myth/retrospective.md#fb-010"
+      - "共享/运营/复盘/2026-08-11-人机协同写作模式复核与试运行设计.md"
+      - "共享/研究/洞察实验室/insights/INSIGHT-004-stage-routed-cowriting/insight.yml"
   - date: "2026-08-03"
     decision: "refined"
     rationale: "三篇成稿与候选对照显示，旧故事合同只给并列内容块，候选级语用与词表扫描又重复后置诊断、增加仪式成本；本次前瞻性改为四格叙事链和最强对手，候选只查事实边界与骨架差异，完整节奏／语用诊断收敛到胜出稿一次。该变更不改写 EXP-001 的 contradicts，也不构成 Best-of-3 效果证据。"

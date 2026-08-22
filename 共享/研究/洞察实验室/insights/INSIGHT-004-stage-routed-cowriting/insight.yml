@@ -1,0 +1,145 @@
+schema_version: 1
+id: INSIGHT-004
+title: 分阶段人控共写能否减少中心重置与语义返工
+classification: internal
+status: test_ready
+evidence_level: E0
+owner: strategy_editor
+created_on: '2026-08-11'
+updated_on: '2026-08-11'
+next_review_on: '2026-09-11'
+claim:
+  statement: 在本仓库微信公众号 L2／L3 分析稿中，把研究与定向审稿并行、把不可逆决定和 L3 路线选择留给用户、按小节或高影响段落契约单线成文、确认单元锁定、审稿只报问题并以局部 diff 修复，可能比 v6.1 的一次性完整正文／完整多稿 AI 盲选更少触发用户在首次整体冷读后重做核心判断、开场发动机或章节依赖，同时不增加质量阻断项和不可接受的维护成本。
+  scope: 后续 3 个符合范围的微信公众号 L2／L3 新分析稿或实质结构重写；包括科技解释、观点、人物和产品稿。用户明确要求多个完整版本时仍由用户选择，不把该例外混入默认路径效果。
+  mechanism: 人先锁定读者问题、核心判断、入文事实、开场、声音锚点和结尾，减少模型在高影响决定上的代理空间；小节／段落契约把错误限制在局部；确认锁定阻止后续全稿润色把已认可表达规整化；问题优先审稿让人接受、修改或拒绝建议，而不是在替代全文中重新寻找自己的意思。
+  exclusions:
+  - 不声称 AI 永远不能写正文；事实解释和机制段可以使用一个 AI 候选。
+  - 不适用于 L0 错字、固定格式 L1、纯翻译、数据表和资料索引的完整记录要求。
+  - 不声称最新预印本已经证明本仓库的因果效果。
+  - 不用 AI 检测分数、禁词命中率、短句数量或红项数量衡量成功。
+  - 不把用户等待时间、Agent token 或 Git 时间推算成人工成本。
+falsifiability:
+  prediction: 后续 3 个适用案例中，至少 2 个在首个完整 canonical draft 的用户整体冷读后，不需要更换核心判断、开场发动机或整体章节依赖；确认锁定单元没有无理由覆盖，重大事实、引语、权利、隐私、copyedit 和外部操作阻断项不增加。
+  failure_condition: 3 个案例中至少 2 个仍需中心重置；任一案例出现无理由覆盖声音锚点或 locked 单元；任一质量护栏回退；审稿补丁再次演化成无记录的替代全文；或新增日志维护成本明显高于避免的返工，均不支持当前实现。一个案例最多形成 E1。
+  alternative_explanations:
+  - 后续选题更简单、资料更完整或天然只有一条路线。
+  - 用户与 Codex 已经通过此前多轮合作熟悉彼此，改善来自操作者学习而非流程。
+  - 模型版本、推理强度或上下文质量改变。
+  - 更多写前讨论本身改善了结果，而不是段落契约、锁定或问题优先审稿。
+  - 主理人知道实验目的后更愿意接受新稿。
+  - 维护记录使总成本上升，即使中心重置减少也可能不值得。
+evidence:
+  supporting: []
+  contradicting: []
+  neutral:
+  - relation: neutral
+    ref: 微信公众号/内容/2026/08/astra-pause-trillion-param-myth/retrospective.md#fb-009
+    case_id: astra-pause-trillion-param-myth:FB-009
+    note: 用户明确认可一段按「纠错、限制、机制、实例」推进的技术解释；这支持建立声音锚点与关系记录，不证明新协作流程有效。
+  - relation: neutral
+    ref: 微信公众号/内容/2026/08/astra-pause-trillion-param-myth/retrospective.md#fb-010
+    case_id: astra-pause-trillion-param-myth:FB-010
+    note: 用户明确采用分阶段人控共写方式并同意试跑，决定项目配置，不构成效果证据。
+  - relation: neutral
+    ref: 共享/运营/复盘/2026-08-11-人机协同写作模式复核与试运行设计.md
+    note: 最新研究支持阶段化、作者控制、反馈中介、声音锚定和过程追踪的设计方向；多数 2026 研究仍是预印本，不能替代本仓库前瞻结果。
+  - relation: neutral
+    ref: 共享/研究/洞察实验室/insights/INSIGHT-002-parallel-best-of-n-selection/insight.yml#experiments
+    case_id: deepseek-harness-internal-test:round-01
+    note: v6.1 Best-of-3 实验的自动盲评与速度通过，但用户首次冷读要求更换核心思想和整体结构；它反对旧实现，不直接支持新实现。
+  unknowns:
+  - 用户愿意在哪些高影响单元逐节确认，何时更适合 direct_write。
+  - 小节契约是否足够，还是某些技术解释需要段落级契约。
+  - "`meaning_right_wording_wrong` 与 `wrong_direction` 能否稳定区分。"
+  - 锁定机制会不会保护了局部声音，却阻碍必要的全局结构修复。
+  - 三案例日志的维护成本是否可接受。
+experiments:
+- id: EXP-001
+  title: 三个公众号分析稿的分阶段人控共写前瞻试跑
+  status: planned
+  question: v6.2 的路线前置、人控单线、单元契约、声音锚点、确认锁定和问题优先审稿，能否在不降低质量的前提下减少首次整体冷读后的中心重置？
+  baseline:
+    description: v6.1 路径：L2 一次形成完整正文后冷读；L3 完整多稿由 AI 匿名选择；没有统一 locked 单元和局部补丁决策日志。
+    frozen_ref: 共享/研究/洞察实验室/insights/INSIGHT-004-stage-routed-cowriting/baseline.md#v61-基线
+    missing_data_rule: 缺少用户首次冷读原话、单元标签、稳定正文引用、时点或实测人工分钟时保留 null；不从聊天时长、Agent token、Git 时间或事后印象补算。
+  intervention:
+    description: 按 v6.2 执行：L3 只提交最多 3 张成文前路线卡并由用户选择；L2／L3 使用同一份 co-writing log，按小节或高影响段落契约单线成文，保存声音锚点，确认单元锁定，审稿只报问题，接受后用局部 diff 修复。
+    artifact_ref: 共享/运营/SOP/内容工作流.md#core-coauthor-001分阶段人控共写与确认锁定试运行项目配置
+    version_ref: '6.2'
+  controls:
+  - 每个案例继续执行相同的事实、引语、权利、隐私、copyedit、状态和外部授权硬门。
+  - 开工前记录模型、推理强度、稿型、档位、来源就绪状态和用户确认模式；发生变化时作为混杂项记录。
+  - L3 路线卡只比较真实决定差异，不把标题或同义词变化算成路线。
+  - 用户首次整体冷读原话与中心重置判定先记录，再打开实验结果汇总。
+  - 历史 Astra 版本不追溯回填为前瞻结果；每个案例必须在使用 v6.2 前冻结实验资格。
+  metrics:
+    primary:
+      id: no-center-reset-first-owner-read
+      definition: 首次完整 canonical draft 经用户整体冷读后，无需更换核心判断、开场发动机或整体章节依赖的适用案例数，分母固定为完成试跑的 3 个案例；局部事实、措辞和段落顺序修复不算中心重置。
+      direction: higher
+      success_threshold: 至少 2 / 3 个案例无需中心重置，且用户原话和判定理由可追溯。
+      baseline: v6.1 已有 Best-of-3 案例触发中心重置；不把单个历史案例换算成总体比例。
+      result: null
+    secondary:
+    - id: semantic-repair-unit-rate
+      definition: 标签为 wrong_direction 或 delete 的已呈现单元数，除以 keep、meaning_right_wording_wrong、wrong_direction、delete 四类已呈现单元总数。
+      direction: lower
+      success_threshold: 完整记录分子与分母；首轮只观察，不因缺少历史同口径基线设效果阈值。
+      baseline: null
+      result: null
+    - id: locked-unit-preservation
+      definition: 未经无理由改写的 locked 单元数，除以所有进入终稿或被合法重开的 locked 单元数；合法重开须有事实错误、链条断裂或用户明确要求。
+      direction: higher
+      success_threshold: 3 个案例均为 100%；任一无理由覆盖直接失败。
+      baseline: null
+      result: null
+    - id: evidence-ready-to-first-text
+      definition: T_first_text_handoff 减 T_evidence_ready 的实际墙钟时间；用户等待另列，不包含图片、排版、上传和发布。
+      direction: lower
+      success_threshold: 三案如实记录；首轮不设速度胜出阈值，不得牺牲质量护栏。
+      baseline: null
+      result: null
+    - id: measured-human-minutes
+      definition: 用户或指定人类编辑实际用于路线选择、单元确认、整体冷读和补丁决定的计时分钟。
+      direction: lower
+      success_threshold: 能计时则记录；不能可靠计时保持 null，不作成功证据。
+      baseline: null
+      result: null
+    guardrails:
+    - id: release-blockers
+      condition: 重大事实、引语、权利、隐私、copyedit、敏感信息和外部操作阻断项不得相对现行硬门增加。
+    - id: locked-voice-integrity
+      condition: 声音锚点和 locked 单元不得被无理由覆盖；合法重开必须有稳定旧文引用与局部 diff。
+    - id: no-workflow-leakage
+      condition: 共写记录、证据等级、提示词、路径、缺陷 ID 和内部审校过程不得进入普通公开正文。
+    - id: no-ai-vote
+      condition: L3 路线与明确多版本的最终采用决定必须由用户作出；AI 多数票不能替代。
+  evidence_refs:
+  - 共享/研究/洞察实验室/insights/INSIGHT-004-stage-routed-cowriting/baseline.md
+  - 共享/运营/SOP/内容工作流.md#core-coauthor-001分阶段人控共写与确认锁定试运行项目配置
+  - 共享/模板/微信公众号内容包/research/co-writing-log.md
+  - 微信公众号/内容/2026/08/astra-pause-trillion-param-myth/retrospective.md#fb-010
+  decision: pending
+  end_condition: 完成 3 个符合范围且在开工前冻结资格的公众号 L2／L3 案例，或任一质量护栏触发后结束；按 supports、contradicts 或 neutral 记录，不在看到结果后改变 2 / 3 阈值。
+assetization:
+  status: trial_project_configuration
+  type: workflow_and_template
+  target: 形成可复用的阶段路由、人控决定、单元契约、声音锚点、确认锁定和问题优先补丁机制。
+  authoritative_refs:
+  - 共享/运营/SOP/内容工作流.md
+  - 共享/模板/微信公众号内容包/research/co-writing-log.md
+  - .agents/skills/self-media-ops/references/wechat-team.md
+  regression_check: 回放 L2 单一路线、L3 双路线、事实解释 AI 候选、声音锚点、locked 单元事实重开、审稿替代全文、用户明确多版本 7 个案例；机器检查规则唯一性和模板字段，人工核对语义与用户决定。
+  transfer_test: null
+  retirement_condition: 3 案例中至少 2 个仍需中心重置；任一无理由覆盖 locked 单元或质量护栏回退；问题优先审稿反复变成替代全文；或维护成本高于避免的返工。
+  portable_core: 按阶段分配决定权；人在高影响控制点做选择；正文单线生成；确认内容锁定；反馈先报告问题，改文使用可接受的局部差异。
+  adapter_boundary: 微信公众号档位、文件路径、确认标签、主理人声音锚点、模型配置、时间字段、质量硬门和复核日期。
+next_action: 下一次符合范围的新分析稿或实质结构重写开工前，复制 co-writing-log 模板，冻结资格、协作模式、故事合同、声音锚点与时间字段，并把该稿登记为案例 1；当前 Astra 日志只作为 test_ready 入口，不追溯计入结果。
+decision_log:
+- date: '2026-08-11'
+  decision: test_ready
+  rationale: 用户在阅读最新研究综合后明确同意先采用分阶段人控共写方式并试跑。当前只有主理人配置、Astra 正向段落反馈、旧 Best-of-N 的反向结果与外部研究设计依据，没有新流程的前瞻效果，因此保持 E0 并冻结三案例实验，不直接宣称有效。
+  evidence_refs:
+  - 微信公众号/内容/2026/08/astra-pause-trillion-param-myth/retrospective.md#fb-009
+  - 微信公众号/内容/2026/08/astra-pause-trillion-param-myth/retrospective.md#fb-010
+  - 共享/运营/复盘/2026-08-11-人机协同写作模式复核与试运行设计.md

@@ -1,0 +1,54 @@
+schema_version: 1
+rule_id: "CORE-EVIDENCE-SEAM-001"
+mode: "manual_semantic_regression"
+scope: "本仓库所有平台与品牌的普通公开成品"
+purpose: "验证事实核验留在后台，普通正文只保留必要归属与会改变事实含义的不确定性"
+
+cases:
+  - id: "flag-evidence-grade-narration"
+    text: "把两条消息降回各自的证据等级后，问题反而更有意思。"
+    context: "普通科技分析稿开头，来源可靠性不是标题承诺"
+    expected: "flag"
+    reason: "作者在讲解内部信源分级，没有推进读者要看的事件或判断"
+    repair_target: "直接写两条消息的具体内容，或删除与主判断无关的材料"
+
+  - id: "flag-falsification-narration"
+    text: "即便 Astra 的 10T 最终被证伪，后面的分析仍然成立。"
+    context: "普通参数趋势稿，事实核查不是稿型"
+    expected: "flag"
+    reason: "正文向读者解释论证如何抵御材料失效，暴露写作与核验过程"
+    repair_target: "删除元论证，直接进入公开模型已经呈现的结构变化"
+
+  - id: "flag-proof-boundary-disclaimer"
+    text: "这张截图只能证明公告存在，不能替 10T 传闻背书。"
+    context: "普通分析稿图注，图片并非事实核查对象"
+    expected: "flag"
+    reason: "图注承担证据审计说明，而不是告诉读者图中出现了什么"
+    repair_target: "若公告与主线有关，直接说明公告动作；无关则删除图片"
+
+  - id: "allow-normal-attribution"
+    text: "Financial Times 报道称，字节的新模型仍处预训练早期，最终规模最高可能达到 10 万亿参数。"
+    context: "普通科技报道中的必要来源归属和对象级不确定性"
+    expected: "allow"
+    reason: "句子直接报告事件，来源与『最高可能』会改变事实含义"
+
+  - id: "allow-object-level-unknown"
+    text: "OpenAI 尚未公布 Astra 的参数量。"
+    context: "参数量与文章判断直接相关"
+    expected: "allow"
+    reason: "这是对象当前状态，不是作者核验过程或信源等级说明"
+
+  - id: "allow-fact-check-genre"
+    text: "原帖把截图日期裁掉了；完整页面显示，这份公告发布于模型上线之后。"
+    context: "标题明确承诺核查『这张截图是真的吗』，截图来源可靠性就是正文内容"
+    expected: "allow"
+    reason: "材料比较是读者购买的结论，不是后台审校旁白"
+
+pass_condition: "3 个普通稿泄漏例全部 flag；最小归属、对象级未知和事实核查稿例外全部 allow"
+failure_signal: "把必要归属一并删掉，或把证据审计换成同义词继续写进普通正文"
+source_cases:
+  - "astra-pause-trillion-param-myth:FB-007"
+classification: "internal"
+owner: "content-workflow"
+introduced_on: "2026-08-11"
+review_on: "2026-09-11"

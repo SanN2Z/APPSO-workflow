@@ -74,6 +74,7 @@ MAX_INLINE_IMAGE_REFERENCES = 200
 MAX_HANDOFF_OCCURRENCE_FRAMES = 10_000
 MAX_HANDOFF_TOTAL_DECODED_FRAME_PIXELS = 800_000_000
 MAX_HANDOFF_OCCURRENCE_DECODED_FRAME_PIXELS = 1_200_000_000
+MAX_SCROLL_HANDOFF_IMAGES = 9
 MAX_COMPANY_BUILD_BYTES = 2 * 1024 * 1024
 MAX_COMPANY_HTML_BYTES = 96 * 1024 * 1024
 PINNED_WENYAN_VERSION = "2.0.11"
@@ -514,6 +515,17 @@ class PreparedImageGraph:
     projected_copy_payload_bytes: int
     source_sha256: str
     rendered_fragment: str
+
+
+@dataclass(frozen=True)
+class ScrollHandoffBuild:
+    handoff_path: Path
+    component_path: Path
+    receipt_path: Path
+    image_order: list[str]
+    copy_payload_bytes: int
+    handoff_sha256: str
+    component_sha256: str
 
 
 class SealedCompanyImageParser(HTMLParser):
@@ -1101,6 +1113,27 @@ def create_handoff_dir(package: Path) -> Path:
             continue
         return candidate
     raise WorkflowError("could not allocate a unique editor handoff directory")
+
+
+def create_scroll_handoff_dir(package: Path) -> Path:
+    dist = safe_dist(package)
+    handoffs = dist / "scroll-handoffs"
+    try:
+        handoffs.mkdir(exist_ok=False)
+    except FileExistsError:
+        pass
+    if is_link_or_junction(handoffs) or not handoffs.is_dir():
+        raise WorkflowError(
+            f"dist/scroll-handoffs must be a regular directory: {handoffs}"
+        )
+    for _ in range(8):
+        candidate = handoffs / f"scroll-handoff-{secrets.token_hex(12)}"
+        try:
+            candidate.mkdir(exist_ok=False)
+        except FileExistsError:
+            continue
+        return candidate
+    raise WorkflowError("could not allocate a unique vertical-scroll handoff directory")
 
 
 def atomic_write_bytes(path: Path, data: bytes) -> None:
@@ -3014,6 +3047,235 @@ def handoff_document(
 <script nonce="{nonce}">(function(){{var button=document.getElementById('copy-article');var article=document.getElementById('wechat-handoff-content');var status=document.getElementById('copy-status');if(!button||button.disabled)return;button.addEventListener('click',function(){{var onCopy=function(event){{event.clipboardData.setData('text/html',article.innerHTML);event.clipboardData.setData('text/plain',article.innerText);event.preventDefault();}};document.addEventListener('copy',onCopy,{{once:true}});var copied=document.execCommand('copy');status.textContent=copied?'正文已复制；请粘贴到公众号后台并完成编辑检查。':'浏览器未允许自动复制；请只选中正文区域手动复制。';}});}})();</script></body></html>"""
 
 
+def vertical_scroll_fragment(image_paths: list[str]) -> str:
+    images = "".join(
+        (
+            f'<img src="{html.escape(path, quote=True)}" '
+            f'alt="纵向滑动长图，第 {index} 段" '
+            'style="display:block;width:100%;height:auto;">'
+        )
+        for index, path in enumerate(image_paths, start=1)
+    )
+    return (
+        '<section style="width:100%;height:300px;overflow:hidden;">'
+        '<section style="display:flex;flex-direction:column;height:100%;overflow-y:auto;">'
+        f"{images}"
+        "</section>"
+        "</section>"
+        '<section style="margin:6px 0;font-size:12px;line-height:17px;'
+        'color:#A7A7A7;text-align:center;">上下滑动查看更多内容</section>'
+    )
+
+
+def validate_scroll_handoff_assets(
+    package: Path, raw_paths: list[str]
+) -> tuple[list[str], dict[str, dict[str, Any]]]:
+    if not 1 <= len(raw_paths) <= MAX_SCROLL_HANDOFF_IMAGES:
+        raise WorkflowError(
+            "vertical-scroll handoff requires between 1 and "
+            f"{MAX_SCROLL_HANDOFF_IMAGES} images"
+        )
+
+    manifest = load_yaml(package / "asset-manifest.yml")
+    raw_assets = manifest.get("assets") or []
+    assets = [item for item in raw_assets if isinstance(item, dict)]
+    manifest_by_path: dict[str, dict[str, Any]] = {}
+    for entry in assets:
+        raw_file = str(entry.get("file") or "").strip()
+        if not raw_file:
+            continue
+        try:
+            normalized = canonical_package_relative_path(
+                raw_file, "manifest asset", require_assets=True
+            )
+        except WorkflowError:
+            continue
+        manifest_by_path.setdefault(normalized, entry)
+
+    normalized_paths: list[str] = []
+    selected: dict[str, dict[str, Any]] = {}
+    package_resolved = package.resolve()
+    for index, raw_path in enumerate(raw_paths, start=1):
+        label = f"vertical-scroll image #{index}"
+        normalized = canonical_package_relative_path(
+            raw_path, label, require_assets=True
+        )
+        if normalized in selected:
+            raise WorkflowError(f"{label} duplicates an earlier image: {normalized}")
+        source = (package / Path(normalized)).resolve()
+        try:
+            source.relative_to(package_resolved)
+        except ValueError as exc:
+            raise WorkflowError(f"{label} escapes the content package") from exc
+        if not source.is_file():
+            raise WorkflowError(f"{label} does not exist: {normalized}")
+        if is_link_or_junction(source) or is_multiply_linked_file(source):
+            raise WorkflowError(
+                f"{label} must not be a symlink, junction, or hardlink"
+            )
+        problem = image_file_problem(source)
+        if problem is not None:
+            raise WorkflowError(f"{label} is not a valid release image: {problem}")
+
+        entry = manifest_by_path.get(normalized)
+        if entry is None:
+            raise WorkflowError(f"{label} is not registered in asset-manifest.yml")
+        if str(entry.get("use") or "") != "wechat_body_interactive":
+            raise WorkflowError(
+                f"{label} manifest must declare use: wechat_body_interactive"
+            )
+        rights = str(entry.get("rights_status") or "").strip()
+        if rights not in RELEASE_RIGHTS_STATUSES or entry.get("rights_blocker") is True:
+            raise WorkflowError(
+                f"{label} rights_status is not release-cleared: {rights or 'missing'}"
+            )
+        platforms = entry.get("allowed_platforms") or []
+        if not isinstance(platforms, list) or "wechat" not in platforms:
+            raise WorkflowError(f"{label} is not allowed for the wechat platform")
+        normalized_paths.append(normalized)
+        selected[normalized] = entry
+    return normalized_paths, selected
+
+
+def build_scroll_handoff(
+    package_arg: str | Path, raw_paths: list[str], title: str
+) -> ScrollHandoffBuild:
+    package = Path(package_arg).resolve()
+    if not package.is_dir():
+        raise WorkflowError(f"content package is not a directory: {package}")
+    metadata, _ = load_draft(package)
+    blockers = []
+    if str(metadata.get("status") or "") != "ready":
+        blockers.append(
+            f"content status is {metadata.get('status') or 'missing'}, not ready"
+        )
+    for flag in ("fact_checked", "rights_checked", "copyedit_checked"):
+        if metadata.get(flag) is not True:
+            blockers.append(f"draft frontmatter has {flag} != true")
+    validator_ok, report = validator_report(package)
+    if not validator_ok:
+        blockers.append("content-package validator did not pass")
+    if blockers:
+        raise WorkflowError(
+            "vertical-scroll handoff is blocked:\n- " + "\n- ".join(blockers)
+            + (f"\n\n{report}" if report else "")
+        )
+
+    image_paths, entries = validate_scroll_handoff_assets(package, raw_paths)
+    graph = prepare_inline_image_graph(vertical_scroll_fragment(image_paths), package)
+    if graph.image_order != image_paths:
+        raise WorkflowError("vertical-scroll image order changed during inline preparation")
+
+    handoff_dir = create_scroll_handoff_dir(package)
+    component_path = handoff_dir / "wechat-scroll-component.html"
+    handoff_path = handoff_dir / "wechat-scroll-handoff.html"
+    receipt_path = handoff_dir / "scroll-handoff-receipt.json"
+    atomic_write_text(component_path, graph.rendered_fragment)
+    component_sha256 = file_sha256(component_path)
+    local_report = (
+        "内容包、图片登记、权利与资源门禁已通过；"
+        f"纵向滑动图片 {len(image_paths)} 张，组件固定高度 300 px，"
+        f"复制载荷 {graph.projected_copy_payload_bytes} 字节。"
+    )
+    document = handoff_document(
+        title=title,
+        fragment=graph.rendered_fragment,
+        validator_ok=True,
+        report=local_report,
+        blockers=[],
+        image_order=graph.image_order,
+        copy_payload_bytes=graph.projected_copy_payload_bytes,
+    )
+    atomic_write_text(handoff_path, document)
+    handoff_sha256 = file_sha256(handoff_path)
+    receipt = {
+        "schema_version": 1,
+        "handoff_type": "wechat_vertical_scroll",
+        "created_at": datetime.now(EDITORIAL_TIMEZONE).isoformat(),
+        "package": package.name,
+        "title": title,
+        "fixed_height_px": 300,
+        "image_count": len(image_paths),
+        "image_order": image_paths,
+        "images": {
+            path: {
+                "sha256": graph.images[path].sha256,
+                "bytes": len(graph.images[path].payload),
+                "width": graph.images[path].width,
+                "height": graph.images[path].height,
+                "rights_status": str(entries[path].get("rights_status") or ""),
+            }
+            for path in image_paths
+        },
+        "copy_payload_bytes": graph.projected_copy_payload_bytes,
+        "source_fragment_sha256": graph.source_sha256,
+        "component_sha256": component_sha256,
+        "handoff_sha256": handoff_sha256,
+        "validator_report_sha256": hashlib.sha256(report.encode("utf-8")).hexdigest(),
+        "tool_sha256": file_sha256(Path(__file__)),
+        "external_effect": "none; local files only",
+        "wechat_backend_roundtrip": "pending",
+    }
+    serialized_receipt = json.dumps(receipt, ensure_ascii=False, indent=2) + "\n"
+    atomic_write_text(receipt_path, serialized_receipt)
+
+    dist = safe_dist(package)
+    atomic_write_text(dist / "wechat-scroll-component.html", graph.rendered_fragment)
+    atomic_write_text(dist / "wechat-scroll-handoff.html", document)
+    atomic_write_text(dist / "wechat-scroll-handoff-receipt.json", serialized_receipt)
+    build = ScrollHandoffBuild(
+        handoff_path=handoff_path,
+        component_path=component_path,
+        receipt_path=receipt_path,
+        image_order=image_paths,
+        copy_payload_bytes=graph.projected_copy_payload_bytes,
+        handoff_sha256=handoff_sha256,
+        component_sha256=component_sha256,
+    )
+    verify_scroll_handoff_artifact(build)
+    return build
+
+
+def verify_scroll_handoff_artifact(build: ScrollHandoffBuild) -> None:
+    for path, expected, label, ceiling in (
+        (
+            build.handoff_path,
+            build.handoff_sha256,
+            "vertical-scroll handoff",
+            MAX_HANDOFF_DOCUMENT_BYTES,
+        ),
+        (
+            build.component_path,
+            build.component_sha256,
+            "vertical-scroll component",
+            MAX_HANDOFF_COPY_HTML_BYTES,
+        ),
+    ):
+        if not path.is_file() or is_link_or_junction(path) or is_multiply_linked_file(path):
+            raise WorkflowError(f"{label} must be a regular single-link file: {path}")
+        payload = stable_file_bytes(path, max_bytes=ceiling)
+        if hashlib.sha256(payload).hexdigest() != expected:
+            raise WorkflowError(f"{label} hash mismatch")
+    if not build.receipt_path.is_file():
+        raise WorkflowError("vertical-scroll handoff receipt is missing")
+    receipt_payload = stable_file_bytes(
+        build.receipt_path, max_bytes=MAX_HANDOFF_PLAN_BYTES
+    )
+    try:
+        receipt = json.loads(receipt_payload.decode("utf-8"))
+    except (UnicodeError, json.JSONDecodeError) as exc:
+        raise WorkflowError("vertical-scroll handoff receipt is invalid") from exc
+    if (
+        not isinstance(receipt, dict)
+        or receipt.get("handoff_type") != "wechat_vertical_scroll"
+        or receipt.get("handoff_sha256") != build.handoff_sha256
+        or receipt.get("component_sha256") != build.component_sha256
+        or receipt.get("image_order") != build.image_order
+        or receipt.get("copy_payload_bytes") != build.copy_payload_bytes
+    ):
+        raise WorkflowError("vertical-scroll handoff receipt does not match the build")
+
+
 def preview_document(
     title: str,
     fragment: str,
@@ -4295,6 +4557,22 @@ def command_handoff(args: argparse.Namespace) -> int:
     return 0
 
 
+def command_scroll_handoff(args: argparse.Namespace) -> int:
+    build = build_scroll_handoff(args.package, args.image, args.title)
+    print(f"[scroll handoff ready] {build.handoff_path}")
+    print(
+        f"[scroll component] images={len(build.image_order)}; "
+        f"copy_payload_bytes={build.copy_payload_bytes}; "
+        f"sha256={build.handoff_sha256}"
+    )
+    if args.open:
+        if os.name != "nt":
+            raise WorkflowError("--open is currently implemented for Windows only")
+        verify_scroll_handoff_artifact(build)
+        os.startfile(build.handoff_path)  # type: ignore[attr-defined]
+    return 0
+
+
 def command_draft(args: argparse.Namespace) -> int:
     package = Path(args.package).resolve()
     build = build_preview(package)
@@ -4432,6 +4710,26 @@ def make_parser() -> argparse.ArgumentParser:
         help="open the editor handoff in the default browser",
     )
     handoff.set_defaults(func=command_handoff)
+    scroll_handoff = subparsers.add_parser(
+        "scroll-handoff",
+        help="build a rights-gated, offline vertical-scroll WeChat component handoff",
+    )
+    scroll_handoff.add_argument("package", help="path to a ready WeChat content package")
+    scroll_handoff.add_argument(
+        "--image",
+        action="append",
+        required=True,
+        help="registered package-local image under assets/; repeat in display order",
+    )
+    scroll_handoff.add_argument(
+        "--title", default="公众号纵向滑动组件", help="handoff page title"
+    )
+    scroll_handoff.add_argument(
+        "--open",
+        action="store_true",
+        help="verify and open the local handoff in the default browser",
+    )
+    scroll_handoff.set_defaults(func=command_scroll_handoff)
     draft = subparsers.add_parser(
         "draft", help="dry-run by default; --execute creates one draft"
     )

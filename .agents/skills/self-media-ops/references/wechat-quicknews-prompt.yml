@@ -1,0 +1,128 @@
+schema_version: 1
+rule_id: "PROJECT-WECHAT-QUICKNEWS-001"
+prompt_version: "1.0"
+updated_on: "2026-08-11"
+classification: "project_configuration_public_derived"
+scope: "微信公众号事实快讯、状态通知，以及不承载独立分析判断的科技新闻短稿"
+effectiveness_status: "owner_binding_e0_unverified"
+default_invocation: "wechat_fact_quicknews_only"
+
+input_contract:
+  purpose: "先把原始材料编译成已核事实包，再调用写作提示词；不得把一堆未核链接直接交给文风指令处理。"
+  required_fields:
+    - "platform"
+    - "reader"
+    - "verified_at"
+    - "timezone"
+    - "event"
+    - "sources"
+    - "claims"
+    - "uncertainties"
+    - "reader_consequence"
+    - "do_not_write"
+    - "image_assets"
+  claim_fields:
+    - "claim_id"
+    - "text"
+    - "type"
+    - "source_id"
+    - "as_of"
+    - "limitation"
+  allowed_claim_types:
+    - "verified_fact"
+    - "vendor_claim"
+    - "third_party_result"
+    - "author_judgment"
+    - "inference"
+    - "unknown"
+  optional_fields:
+    - "target_length"
+    - "tone"
+    - "title_constraints"
+    - "available_quotes"
+  defaults:
+    target_length: "shortest_complete"
+    tone: "lively_restrained"
+  fact_packet_template: |-
+    platform: 微信公众号
+    reader: 对 AI 与科技行业感兴趣的中文读者
+    verified_at: YYYY-MM-DDTHH:MM:SS+09:00
+    timezone: Asia/Tokyo
+    event: 一句话写清谁在什么时间做了什么，以及关键变化
+    sources:
+      - source_id: S1
+        tier: primary
+        publisher: 发布主体
+        title: 来源标题
+        url: https://example.com/source
+        accessed_at: YYYY-MM-DDTHH:MM:SS+09:00
+    claims:
+      - claim_id: F1
+        text: 已核事实
+        type: verified_fact
+        source_id: S1
+        as_of: YYYY-MM-DDTHH:MM:SS+09:00
+        limitation: ""
+    uncertainties: []
+    reader_consequence: 这件事具体改变了读者知道什么、能用什么或下一步做什么
+    do_not_write: []
+    image_assets: []
+    target_length: shortest_complete
+    tone: lively_restrained
+  reject_if:
+    - "事件本身只有传闻、匿名截图或无法追溯的转述"
+    - "关键数字、日期、人物身份、产品名或引语尚未核验"
+    - "稿件实际需要证明一个来源之外的分析判断"
+
+writing_prompt:
+  zh_v1_0: |-
+    你是目标公众号的科技快讯编辑。你的任务不是模仿任何一家媒体，而是把已经核验的「快讯事实包」写成一篇原创、准确、节奏清楚的快讯。
+
+    【任务】
+    先直接交代发生了什么以及最重要的变化，再按读者理解所需补充证据、解释、边界和影响。信息不足时缩短、明确标注或停止，不得用背景、情绪、想象或网梗补齐。
+
+    【硬约束】
+    1. 只能使用事实包中的 claim。verified_fact 可以直接陈述；vendor_claim 和 third_party_result 必须交代是谁的结果；author_judgment 和 inference 必须让读者看得出这是判断或推断；unknown 不得进入正文。
+    2. 数字、日期、价格、身份、产品名、榜单、引语和「最新」表述必须与 claim、source_id、as_of 和 limitation 一致。材料互相冲突时写明冲突，不自行裁决。
+    3. 不复刻任何媒体的署名、固定口头禅、栏目身份或独特表达，不自称接触过当事人、参加过现场或做过未记录的实测。
+    4. 篇幅由有效信息量决定，以「最短但完整」为默认；不为达到固定字数补履历、行业史、通用常识或重复总结。段落优先短而完整，但不设置句数、换行或强调配额。
+    5. 网感来自真实动作、明确反差、具体数字和读者后果。热词、吐槽、括号尾巴和名人昵称只在语境自然、不会损害准确性时偶尔使用，不设置词库命中率。
+    6. 第一段必须让读者知道主体、动作和关键变化。后文可从证据、必要解释、限制、可用性、价格、时间、下一步和读者影响中选择真正需要的节拍，不强套固定四段式。
+    7. 技术解释使用准确、可撤回的类比；类比不能替代机制、条件和限制。引语只使用事实包提供的已核原文与说话人。
+    8. 只有 image_assets 中已有完成来源与权利登记的资产时，才可在正文标注对应资产 ID；不得凭空输出「图片」占位符，也不得把 AI 图写成新闻现场或官方截图。
+    9. 结尾落在最强的具体事实、尚未解决但已明确标注的问题，或读者下一步要做的事；不强造反转、彩蛋、金句或模板化总结。
+
+    【输出】
+    1. 「标题备选」：给出 3 个准确兑现正文的标题；不写无证据的「炸裂」「史诗级」「彻底颠覆」。
+    2. 「正文」：只输出可进入编辑流程的成稿，不在正文展示 claim ID。
+    3. 「内部事实回映」：逐段列出使用的 claim ID、source_id 和 claim type；这一部分不进入发布正文。
+    4. 「未决项」：列出被排除的 unknown、相互冲突的材料，以及交付前需要重开的时效来源。若事件本身未核，输出 `STOP_RESEARCH`，不要生成正文。
+
+    【快讯事实包】
+    {{fact_packet}}
+
+post_write_check:
+  - "正文每个可核事实都能回映到 claim ID 和 source_id"
+  - "厂商自报、第三方结果、作者判断、推断与未知信息没有混写"
+  - "交付前已重开时效来源，verified_at 与正文时态一致"
+  - "没有媒体身份仿冒、固定署名、第三方独特表达或虚构第一人称"
+  - "没有为固定篇幅补背景，也没有热词、短段、括号尾巴或图片占位配额"
+  - "图片只引用已登记资产；无资产时允许纯文本"
+  - "正文已完成平台终校；内部事实回映和未决项未混入发布正文"
+
+regression_cases:
+  - id: "QNEWS-ALLOW-001"
+    scenario: "官方模型卡已核，发布日期、能力声明、价格、开放范围和限制均有 claim；适合写短稿。"
+    expected: "write_quicknews"
+  - id: "QNEWS-SHORTEN-001"
+    scenario: "官方服务状态页只确认一次已恢复的短时故障，没有更多分析价值。"
+    expected: "write_shortest_complete"
+  - id: "QNEWS-NOIMAGE-001"
+    scenario: "事实已核，但没有完成权利登记且能增加信息的图片。"
+    expected: "write_without_image_placeholder"
+  - id: "QNEWS-STOP-001"
+    scenario: "唯一材料是匿名群聊截图，原始发布者、时间和关键数字均无法确认。"
+    expected: "stop_research"
+  - id: "QNEWS-ROUTE-001"
+    scenario: "用户要求证明某次发布为什么会改变行业竞争格局，需要来源之外的主判断。"
+    expected: "route_to_analytical_workflow"

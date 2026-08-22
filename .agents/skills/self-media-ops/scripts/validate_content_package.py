@@ -210,6 +210,7 @@ MARKDOWN_PARSER.validateLink = lambda _url: True
 RELEASE_ASSET_USES = {
     "wechat_body_footer",
     "wechat_body_header",
+    "wechat_body_interactive",
     "wechat_cover",
     "x_media",
 }

@@ -13,7 +13,8 @@
 | 触发条件 | 追加读取 |
 |---|---|
 | APPSO、Hunt Good、公司稿或公司资产 | `APPSO-数字资产/README.md`、保密分级及对应专项 SOP |
-| 公众号分析长稿或结构重写 | `wechat-judgment-workshop.md` 与 `wechat-clumsy-writing.yml` |
+| L3 多路线稿、中心结构性重写或用户明确共创 | `wechat-judgment-workshop.md`；只有并行研究或独立定向审稿才加载 `wechat-team.md`，不得并行改 canonical prose |
+| 用户明确要求文风实验且已有实质正文 | `wechat-clumsy-writing.yml` |
 | 生图或图片编辑 | `共享/运营/SOP/Image2 生图工作流.md` |
 | 预览、排版、草稿交接 | `wechat-publishing.md` 或公司浏览器排版 SOP |
 | 收到实质修改意见、交付或发布 | `.agents/skills/content-retrospective/SKILL.md` |

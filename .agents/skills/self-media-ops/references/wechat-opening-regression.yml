@@ -1,0 +1,54 @@
+schema_version: 1
+rule_id: "PROJECT-WECHAT-OPENING-001"
+mode: "manual_semantic_plus_heuristic"
+purpose: "拦截公众号分析稿默认使用日期加公司公告的通稿导语，同时放行事实快讯和时间本身构成因果压力的窄例外"
+forbidden_implementation:
+  - "把所有日期都删掉"
+  - "把具体日期机械替换成近日或刚刚"
+  - "为了绕过检查虚构现场或第一人称"
+  - "把启发式命中当作文章质量或作者身份判断"
+
+cases:
+  - id: "flag-date-led-announcement"
+    content_type: "analytical"
+    text: |
+      # 示例标题
+
+      8 月 7 日，OpenAI 公告暂停部分涉及 Astra 的内部活动。原因是内部安全评估仍未完成。
+    expected: "flag"
+    mechanism: "日期、主体、公告依次播报，尚未出现分析稿真正追问的冲突"
+
+  - id: "flag-subject-date-announcement"
+    content_type: "analytical"
+    text: |
+      # 示例标题
+
+      OpenAI 在 8 月 7 日公告暂停部分涉及 Astra 的内部活动，随后介绍了评估背景。
+    expected: "flag"
+    mechanism: "只把日期挪到主体后面，仍是通稿导语"
+
+  - id: "allow-conflict-before-background"
+    content_type: "analytical"
+    text: |
+      # 示例标题
+
+      「10 万亿参数」同时挂在了两个模型后面，证据却对不上：一个数字没有官方出处，另一个还只是匿名信源描述的早期计划。
+    expected: "allow"
+    mechanism: "首句先交代具体错位，日期可以在后文作为证据补入"
+
+  - id: "allow-time-is-causal-pressure"
+    content_type: "analytical"
+    exception_reason: "2021 年已有 10T 与五年后市场重新追逐 10T 的时间差，就是全文要解释的异常"
+    text: |
+      # 示例标题
+
+      2021 年，10 万亿参数已经被训练出来；五年后，同一个数字却再次被当成前沿目标。
+    expected: "allow"
+    mechanism: "日期不是新闻背景，而是同一段内可见的因果压力；必须记录窄豁免"
+
+  - id: "allow-l1-quicknews"
+    content_type: "quicknews"
+    text: |
+      8 月 7 日，服务方公告部分接口暂停 30 分钟，预计 14:30 恢复。
+    expected: "allow"
+    mechanism: "事实快讯的任务就是先报告已核事件，不受分析稿首句规则约束"
