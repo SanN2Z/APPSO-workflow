@@ -1,0 +1,7 @@
+schema_version: 1
+package: hubspot-ai-outcome-pricing
+updated: 2026-08-04
+assets: []
+notes:
+  - "网上官方视觉候选池见 research/visual-notes.md；6 张官方原图已下载到 research/visual-candidates/，仅供编辑筛选。"
+  - "候选图尚未插入正文，也未确认转载权或平台许可；因此未登记为发布 assets，rights_checked 必须保持 false。"

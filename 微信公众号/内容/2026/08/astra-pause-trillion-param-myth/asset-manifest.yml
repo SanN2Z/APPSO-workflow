@@ -1,0 +1,201 @@
+version: 2
+updated: "2026-08-11"
+assets:
+  - file: "assets/openai-astra-announcement-screenshot.png"
+    used_in_draft: true
+    source_type: "official_page_screenshot"
+    source: "https://openai.com/index/responding-next-frontier-critical-cyber-capabilities/ (captured via image.thum.io screenshot service; text cross-verified against a web.archive.org snapshot dated 2026-08-10)"
+    creator_or_rightsholder: "OpenAI"
+    obtained_on: "2026-08-10"
+    dimensions: "1200x1200 (viewport crop; page continues below the fold)"
+    modifications: "Unmodified screenshot; direct fetch of openai.com returned 403, so a third-party screenshot service and an independent web archive were used to confirm the page's real content and appearance"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "Reproducing a screenshot of OpenAI's own public announcement for attributed news commentary about that announcement; not a commercial use. Needs a final human rights check before ready, per this package's standing rights_checked gate"
+    allowed_platforms: ["wechat"]
+    attribution: "OpenAI"
+
+  - file: "assets/epoch-token-economics.png"
+    used_in_draft: true
+    source_type: "third_party_licensed_chart"
+    source: "https://epoch.ai/gradient-updates/frontier-language-models-have-become-much-smaller"
+    creator_or_rightsholder: "Epoch AI"
+    obtained_on: "2026-08-10"
+    dimensions: "1600x1150"
+    modifications: "Downloaded as-is from Epoch AI's site; no content edits"
+    rights_status: "licensed"
+    rights_basis: "Image is marked CC-BY on the chart itself (bottom-left \"CC-BY\" label) and on the source page; reproduced with attribution to Epoch AI"
+    allowed_platforms: ["wechat"]
+    attribution: "Epoch AI（CC-BY）"
+
+  - file: "assets/epoch-gpt6-compute-forecast.png"
+    used_in_draft: true
+    source_type: "third_party_licensed_chart"
+    source: "https://epoch.ai/gradient-updates/why-gpt5-used-less-training-compute-than-gpt45-but-gpt6-probably-wont"
+    creator_or_rightsholder: "Epoch AI"
+    obtained_on: "2026-08-10"
+    dimensions: "3200x2400"
+    modifications: "Downloaded as-is from Epoch AI's site; no content edits"
+    rights_status: "licensed"
+    rights_basis: "Image is marked CC-BY on the chart itself (top-right \"CC-BY\" label) and on the source page; reproduced with attribution to Epoch AI"
+    allowed_platforms: ["wechat"]
+    attribution: "Epoch AI（CC-BY）"
+
+  - file: "assets/gpt-oss-120b-modelcard-screenshot.png"
+    used_in_draft: true
+    source_type: "official_page_screenshot"
+    source: "https://huggingface.co/openai/gpt-oss-120b (captured via image.thum.io; content cross-verified live via direct page read on 2026-08-10, matches sources.md figures: 117B total / 5.1B active / 4.4%)"
+    creator_or_rightsholder: "OpenAI / Hugging Face"
+    obtained_on: "2026-08-10"
+    dimensions: "1200x1200 (viewport crop; page continues below the fold)"
+    modifications: "Unmodified screenshot"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "Screenshot of a public model card page reproduced for attributed technical commentary; not commercial use. Needs a final human rights check before ready"
+    allowed_platforms: ["wechat"]
+    attribution: "Hugging Face / OpenAI"
+
+  - file: "assets/m6-10t-arxiv-screenshot.png"
+    used_in_draft: true
+    source_type: "official_page_screenshot"
+    source: "https://arxiv.org/abs/2110.03888 (captured via image.thum.io)"
+    creator_or_rightsholder: "arXiv / paper authors (Alibaba DAMO Academy)"
+    obtained_on: "2026-08-10"
+    dimensions: "1200x1200 (viewport crop)"
+    modifications: "Unmodified screenshot"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "Screenshot of a public arXiv abstract page reproduced for attributed commentary; not commercial use. Needs a final human rights check before ready"
+    allowed_platforms: ["wechat"]
+    attribution: "arXiv"
+
+  - file: "assets/aliyun-m890-ithome-screenshot.png"
+    used_in_draft: true
+    source_type: "official_page_screenshot"
+    source: "https://www.ithome.com/0/978/578.htm (captured via image.thum.io; IT之家 report dated 2026-07-18 reproducing Alibaba Cloud's WAIC launch, includes a photo of the presentation slide showing '10T MoE')"
+    creator_or_rightsholder: "IT之家 (article + event photo)"
+    obtained_on: "2026-08-10"
+    dimensions: "1200x1200 (viewport crop)"
+    modifications: "Unmodified screenshot"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "Screenshot of a public news article reproduced for attributed commentary about Alibaba Cloud's own announcement; not commercial use. Needs a final human rights check before ready; direct Alibaba Cloud primary-source page still not located"
+    allowed_platforms: ["wechat"]
+    attribution: "IT之家"
+
+  - file: "assets/techcrunch-astra-report.png"
+    used_in_draft: false
+    source_type: "official_page_screenshot"
+    source: "https://techcrunch.com/2026/08/07/openai-says-it-slowed-astra-model-development-over-security-concerns/ (captured via image.thum.io on 2026-08-10; shows headline, byline Kirsten Korosec, timestamp 3:48 PM PDT August 7 2026)"
+    creator_or_rightsholder: "TechCrunch"
+    obtained_on: "2026-08-10"
+    dimensions: "1200x1200 (viewport crop)"
+    modifications: "Unmodified screenshot"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "Screenshot of a public news article page reproduced to evidence the cited report; not commercial use. Needs a final human rights check before ready"
+    allowed_platforms: ["wechat"]
+    attribution: "TechCrunch"
+
+  - file: "assets/anthropic-mythos-page.png"
+    used_in_draft: false
+    source_type: "official_page_screenshot"
+    source: "https://www.anthropic.com/claude/mythos (captured via image.thum.io on 2026-08-10; announcement timeline visible, no parameter counts anywhere on the page)"
+    creator_or_rightsholder: "Anthropic PBC"
+    obtained_on: "2026-08-10"
+    dimensions: "1200x1200 (viewport crop)"
+    modifications: "Unmodified screenshot"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "Screenshot of Anthropic's own public product page reproduced to evidence the claim that no parameter count is disclosed; not commercial use. Needs a final human rights check before ready"
+    allowed_platforms: ["wechat"]
+    attribution: "Anthropic"
+
+  - file: "assets/epoch-smaller-article.png"
+    used_in_draft: false
+    source_type: "official_page_screenshot"
+    source: "https://epoch.ai/gradient-updates/frontier-language-models-have-become-much-smaller (captured via image.thum.io on 2026-08-10; shows Dec. 13, 2024 date and author Ege Erdil)"
+    creator_or_rightsholder: "Epoch AI"
+    obtained_on: "2026-08-10"
+    dimensions: "1200x1200 (viewport crop)"
+    modifications: "Unmodified screenshot"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "Screenshot of a public article page reproduced to evidence the cited analysis and its date; not commercial use. Needs a final human rights check before ready"
+    allowed_platforms: ["wechat"]
+    attribution: "Epoch AI"
+
+  - file: "assets/epoch-gpt6-article.png"
+    used_in_draft: false
+    source_type: "official_page_screenshot"
+    source: "https://epoch.ai/gradient-updates/why-gpt5-used-less-training-compute-than-gpt45-but-gpt6-probably-wont (captured via image.thum.io on 2026-08-10; shows Sep. 26, 2025 date and authors Yafah Edelman, Jean-Stanislas Denain, Jaime Sevilla, Anson Ho)"
+    creator_or_rightsholder: "Epoch AI"
+    obtained_on: "2026-08-10"
+    dimensions: "1200x1200 (viewport crop)"
+    modifications: "Unmodified screenshot"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "Screenshot of a public article page reproduced to evidence the cited analysis and its date; not commercial use. Needs a final human rights check before ready"
+    allowed_platforms: ["wechat"]
+    attribution: "Epoch AI"
+
+  - file: "assets/bytedance-seed2-page.png"
+    used_in_draft: false
+    source_type: "official_page_screenshot"
+    source: "https://seed.bytedance.com/zh/seed2 (captured via image.thum.io on 2026-08-10; shows Seed2.0 Pro/Lite/Mini described as 通用 Agent 模型, no parameter counts on the page)"
+    creator_or_rightsholder: "ByteDance Seed"
+    obtained_on: "2026-08-10"
+    dimensions: "1200x1200 (viewport crop)"
+    modifications: "Unmodified screenshot"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "Screenshot of ByteDance's own public product page reproduced to evidence the claim that no parameter count is disclosed; not commercial use. Needs a final human rights check before ready"
+    allowed_platforms: ["wechat"]
+    attribution: "字节跳动 Seed"
+
+  - file: "research/source-assets/anthropic-mythos-hero.jpg"
+    used_in_draft: false
+    use: "research_reference"
+    source_type: "official_brand_asset"
+    source: "https://www.anthropic.com/claude/mythos"
+    creator_or_rightsholder: "Anthropic PBC"
+    obtained_on: "2026-08-10"
+    dimensions: "2400x1260"
+    modifications: "Downloaded as-is; not used, purely decorative wordmark with no informational content for this piece"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "Not currently used; retained only as a research candidate pending editorial decision"
+    allowed_platforms: []
+    attribution: "Anthropic"
+
+  - file: "research/source-assets/hf-kimi-k3-thumbnail.png"
+    used_in_draft: false
+    use: "research_reference"
+    source_type: "platform_auto_thumbnail"
+    source: "https://huggingface.co/moonshotai/Kimi-K3"
+    creator_or_rightsholder: "Hugging Face (auto-generated)"
+    obtained_on: "2026-08-10"
+    dimensions: "1200x630"
+    modifications: "Downloaded as-is; not used, generic auto-generated social card with no informational content"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "Not currently used; retained only as a research candidate pending editorial decision"
+    allowed_platforms: []
+    attribution: "Hugging Face"
+
+  - file: "research/source-assets/hf-gpt-oss-120b-thumbnail.png"
+    used_in_draft: false
+    use: "research_reference"
+    source_type: "platform_auto_thumbnail"
+    source: "https://huggingface.co/openai/gpt-oss-120b"
+    creator_or_rightsholder: "Hugging Face (auto-generated)"
+    obtained_on: "2026-08-10"
+    dimensions: "1200x630"
+    modifications: "Downloaded as-is; not used, generic auto-generated social card with no informational content"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "Not currently used; retained only as a research candidate pending editorial decision"
+    allowed_platforms: []
+    attribution: "Hugging Face"
+
+  - file: "research/source-assets/techcrunch-openai-logo-seoul.jpg"
+    used_in_draft: false
+    use: "research_reference"
+    source_type: "editorial_stock_photo"
+    source: "https://techcrunch.com/2026/08/07/openai-says-it-slowed-astra-model-development-over-security-concerns/"
+    creator_or_rightsholder: "TechCrunch"
+    obtained_on: "2026-08-10"
+    dimensions: "1024x683"
+    modifications: "Downloaded as-is; not used, TechCrunch's own editorial photo, rights not cleared for reproduction"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "Not currently used and not rights-cleared; retained only as a research candidate, do not promote to assets/ without separate rights review"
+    allowed_platforms: []
+    attribution: "TechCrunch"

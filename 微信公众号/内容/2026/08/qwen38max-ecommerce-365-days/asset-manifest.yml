@@ -1,0 +1,240 @@
+version: 2
+updated: "2026-08-04"
+assets:
+  - file: "research/source-assets/qwen38-ecommerce-official-poster.png"
+    use: "research_reference"
+    used_in_draft: false
+    used_as_cover: false
+    dimensions: "6667x3752"
+    source_type: "official_product_video_poster"
+    source: "https://qwen.ai/blog?id=qwen3.8"
+    source_file: "https://img.alicdn.com/imgextra/i2/O1CN01VFGGPw23Iltqd8QIM_!!6000000007233-2-tps-6667-3752.png"
+    creator_or_rightsholder: "Qwen Team / Alibaba"
+    obtained_on: "2026-08-04"
+    modifications: "Downloaded from the official Qwen release page; no crop, annotation, text replacement, or generative edit"
+    rights_status: "research_reference"
+    rights_basis: "Official first-party material, but no explicit media republication license was found on the release page"
+    rights_blocker: true
+    allowed_platforms: []
+    attribution: "Qwen Team 官方发布页"
+
+  - file: "research/source-assets/qwen38-ecommerce-video-25s-progress.png"
+    use: "research_reference"
+    used_in_draft: false
+    used_as_cover: false
+    dimensions: "3840x2160"
+    source_type: "official_video_frame"
+    source: "https://qwen.ai/blog?id=qwen3.8"
+    source_file: "https://cloud.video.taobao.com/vod/o9WMOJ5_YDP8ewmaVJz8HoL1oZLmW8E2ZvCozb7qFWo.mp4"
+    creator_or_rightsholder: "Qwen Team / Alibaba"
+    obtained_on: "2026-08-04"
+    modifications: "Deterministic no-controls frame capture at 00:25 and 3840x2160; no annotation, text replacement, or generative edit"
+    rights_status: "research_reference"
+    rights_basis: "Official first-party video, but no explicit media republication license was found on the release page"
+    rights_blocker: true
+    allowed_platforms: []
+    attribution: "Qwen3.8-Max 官方电商经营演示，00:25"
+
+  - file: "research/source-assets/qwen38-ecommerce-video-45s-progress.png"
+    use: "research_reference"
+    used_in_draft: false
+    used_as_cover: false
+    dimensions: "3840x2160"
+    source_type: "official_video_frame"
+    source: "https://qwen.ai/blog?id=qwen3.8"
+    source_file: "https://cloud.video.taobao.com/vod/o9WMOJ5_YDP8ewmaVJz8HoL1oZLmW8E2ZvCozb7qFWo.mp4"
+    creator_or_rightsholder: "Qwen Team / Alibaba"
+    obtained_on: "2026-08-04"
+    modifications: "Deterministic no-controls frame capture at 00:45 and 3840x2160; no annotation, text replacement, or generative edit"
+    rights_status: "research_reference"
+    rights_basis: "Official first-party video, but no explicit media republication license was found on the release page"
+    rights_blocker: true
+    allowed_platforms: []
+    attribution: "Qwen3.8-Max 官方电商经营演示，00:45"
+
+  - file: "research/source-assets/qwen38-ecommerce-video-60s-final-curve.png"
+    use: "research_reference"
+    used_in_draft: false
+    used_as_cover: false
+    dimensions: "3840x2160"
+    source_type: "official_video_frame"
+    source: "https://qwen.ai/blog?id=qwen3.8"
+    source_file: "https://cloud.video.taobao.com/vod/o9WMOJ5_YDP8ewmaVJz8HoL1oZLmW8E2ZvCozb7qFWo.mp4"
+    creator_or_rightsholder: "Qwen Team / Alibaba"
+    obtained_on: "2026-08-04"
+    modifications: "Deterministic no-controls frame capture at 01:00 and 3840x2160; no annotation, text replacement, or generative edit"
+    rights_status: "research_reference"
+    rights_basis: "Official first-party video, but no explicit media republication license was found on the release page"
+    rights_blocker: true
+    allowed_platforms: []
+    attribution: "Qwen3.8-Max 官方电商经营演示，01:00"
+
+  - file: "research/source-assets/qwen38-ecommerce-video-65s-final-ranking.png"
+    use: "research_reference"
+    used_in_draft: false
+    used_as_cover: false
+    dimensions: "3840x2160"
+    source_type: "official_video_frame"
+    source: "https://qwen.ai/blog?id=qwen3.8"
+    source_file: "https://cloud.video.taobao.com/vod/o9WMOJ5_YDP8ewmaVJz8HoL1oZLmW8E2ZvCozb7qFWo.mp4"
+    creator_or_rightsholder: "Qwen Team / Alibaba"
+    obtained_on: "2026-08-04"
+    modifications: "Deterministic no-controls frame capture at 01:05 and 3840x2160; no annotation, text replacement, or generative edit"
+    rights_status: "research_reference"
+    rights_basis: "Official first-party video, but no explicit media republication license was found on the release page"
+    rights_blocker: true
+    allowed_platforms: []
+    attribution: "Qwen3.8-Max 官方电商经营演示，01:05"
+
+  - file: "research/source-assets/qwen38-official-performance.png"
+    use: "research_reference"
+    used_in_draft: false
+    used_as_cover: false
+    dimensions: "4364x3211"
+    source_type: "official_benchmark_figure"
+    source: "https://qwen.ai/blog?id=qwen3.8"
+    source_file: "https://qianwen-res.oss-cn-beijing.aliyuncs.com/Qwen3.8/performance.png"
+    creator_or_rightsholder: "Qwen Team / Alibaba"
+    obtained_on: "2026-08-04"
+    modifications: "Downloaded from the official Qwen release page; no crop, annotation, text replacement, or generative edit"
+    rights_status: "research_reference"
+    rights_basis: "Official first-party material, but no explicit media republication license was found on the release page"
+    rights_blocker: true
+    allowed_platforms: []
+    attribution: "Qwen Team 官方发布页"
+
+  - file: "research/source-assets/qwen38-official-release-x.jpg"
+    use: "research_reference"
+    used_in_draft: false
+    used_as_cover: false
+    dimensions: "4096x3014"
+    source_type: "official_social_post_image"
+    source: "https://x.com/Alibaba_Qwen/status/2084100707423289643"
+    source_file: "https://pbs.twimg.com/media/HOw1F2ebgAAkpJJ.jpg?name=orig"
+    creator_or_rightsholder: "Qwen Team / Alibaba"
+    obtained_on: "2026-08-04"
+    modifications: "Downloaded at the original social-media resolution; no crop, annotation, text replacement, or generative edit"
+    rights_status: "research_reference"
+    rights_basis: "Official first-party social post, but no explicit media republication license was provided"
+    rights_blocker: true
+    allowed_platforms: []
+    attribution: "Qwen 官方 X 账号"
+
+  - file: "research/source-assets/qwen38-training-env-scale.png"
+    use: "research_reference"
+    used_in_draft: false
+    used_as_cover: false
+    dimensions: "1971x1078"
+    source_type: "official_benchmark_figure"
+    source: "https://qwen.ai/blog?id=qwen3.8"
+    source_file: "https://qianwen-res.oss-cn-beijing.aliyuncs.com/Qwen3.8/work_showcases/training-score-vs-envs-scale.png"
+    creator_or_rightsholder: "Qwen Team / Alibaba"
+    obtained_on: "2026-08-04"
+    modifications: "Downloaded from the official Qwen release page; no crop, annotation, text replacement, or generative edit"
+    rights_status: "research_reference"
+    rights_basis: "Official first-party material, but no explicit media republication license was found on the release page"
+    rights_blocker: true
+    allowed_platforms: []
+    attribution: "Qwen Team 官方发布页"
+
+  - file: "research/source-assets/qwen38-harness-generalization.png"
+    use: "research_reference"
+    used_in_draft: false
+    used_as_cover: false
+    dimensions: "4316x884"
+    source_type: "official_benchmark_figure"
+    source: "https://qwen.ai/blog?id=qwen3.8"
+    source_file: "https://qianwen-res.oss-cn-beijing.aliyuncs.com/Qwen3.8/work_showcases/harness-generalization-3.8.png"
+    creator_or_rightsholder: "Qwen Team / Alibaba"
+    obtained_on: "2026-08-04"
+    modifications: "Downloaded from the official Qwen release page; no crop, annotation, text replacement, or generative edit"
+    rights_status: "research_reference"
+    rights_basis: "Official first-party material, but no explicit media republication license was found on the release page"
+    rights_blocker: true
+    allowed_platforms: []
+    attribution: "Qwen Team 官方发布页"
+
+  - file: "research/source-assets/merchantbench-fig1-delayed-feedback.png"
+    use: "research_reference"
+    used_in_draft: false
+    used_as_cover: false
+    dimensions: "995x704"
+    source_type: "research_paper_figure"
+    source: "https://arxiv.org/html/2607.28956"
+    source_file: "https://arxiv.org/html/2607.28956v1/x1.png"
+    creator_or_rightsholder: "Qiming Shi et al."
+    obtained_on: "2026-08-04"
+    modifications: "Downloaded from the arXiv HTML paper; no crop, annotation, text replacement, or generative edit"
+    rights_status: "research_reference"
+    rights_basis: "The arXiv distribution license does not establish third-party commercial republication permission"
+    rights_blocker: true
+    allowed_platforms: []
+    attribution: "MerchantBench，Figure 1"
+
+  - file: "research/source-assets/merchantbench-fig2-overview.png"
+    use: "research_reference"
+    used_in_draft: false
+    used_as_cover: false
+    dimensions: "1163x654"
+    source_type: "research_paper_figure"
+    source: "https://arxiv.org/html/2607.28956"
+    source_file: "https://arxiv.org/html/2607.28956v1/x2.png"
+    creator_or_rightsholder: "Qiming Shi et al."
+    obtained_on: "2026-08-04"
+    modifications: "Downloaded from the arXiv HTML paper; no crop, annotation, text replacement, or generative edit"
+    rights_status: "research_reference"
+    rights_basis: "The arXiv distribution license does not establish third-party commercial republication permission"
+    rights_blocker: true
+    allowed_platforms: []
+    attribution: "MerchantBench，Figure 2"
+
+  - file: "research/source-assets/merchantbench-fig4-run-variance.png"
+    use: "research_reference"
+    used_in_draft: false
+    used_as_cover: false
+    dimensions: "1163x408"
+    source_type: "research_paper_figure"
+    source: "https://arxiv.org/html/2607.28956"
+    source_file: "https://arxiv.org/html/2607.28956v1/x4.png"
+    creator_or_rightsholder: "Qiming Shi et al."
+    obtained_on: "2026-08-04"
+    modifications: "Downloaded from the arXiv HTML paper; no crop, annotation, text replacement, or generative edit"
+    rights_status: "research_reference"
+    rights_basis: "The arXiv distribution license does not establish third-party commercial republication permission"
+    rights_blocker: true
+    allowed_platforms: []
+    attribution: "MerchantBench，Figure 4"
+
+  - file: "research/source-assets/merchantbench-fig5-operational-coherence.png"
+    use: "research_reference"
+    used_in_draft: false
+    used_as_cover: false
+    dimensions: "1162x383"
+    source_type: "research_paper_figure"
+    source: "https://arxiv.org/html/2607.28956"
+    source_file: "https://arxiv.org/html/2607.28956v1/x5.png"
+    creator_or_rightsholder: "Qiming Shi et al."
+    obtained_on: "2026-08-04"
+    modifications: "Downloaded from the arXiv HTML paper; no crop, annotation, text replacement, or generative edit"
+    rights_status: "research_reference"
+    rights_basis: "The arXiv distribution license does not establish third-party commercial republication permission"
+    rights_blocker: true
+    allowed_platforms: []
+    attribution: "MerchantBench，Figure 5"
+
+  - file: "research/source-assets/merchantbench-fig6-product-sourcing.png"
+    use: "research_reference"
+    used_in_draft: false
+    used_as_cover: false
+    dimensions: "998x968"
+    source_type: "research_paper_figure"
+    source: "https://arxiv.org/html/2607.28956"
+    source_file: "https://arxiv.org/html/2607.28956v1/x6.png"
+    creator_or_rightsholder: "Qiming Shi et al."
+    obtained_on: "2026-08-04"
+    modifications: "Downloaded from the arXiv HTML paper; no crop, annotation, text replacement, or generative edit"
+    rights_status: "research_reference"
+    rights_basis: "The arXiv distribution license does not establish third-party commercial republication permission"
+    rights_blocker: true
+    allowed_platforms: []
+    attribution: "MerchantBench，Figure 6"

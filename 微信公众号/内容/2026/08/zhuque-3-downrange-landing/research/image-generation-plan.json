@@ -1,0 +1,195 @@
+{
+  "schema_version": 1,
+  "updated": "2026-08-19",
+  "project_adapter": "appsso",
+  "profile_registry": "APPSO-数字资产/04-模板/生图风格档案.json",
+  "style_policy": {
+    "profile": "appsso-004",
+    "scope": "all_ai_generated_editorial_images",
+    "new_image_strategy": "two_stage_reference_then_redraw",
+    "allow_final_text_to_image": false
+  },
+  "tasks": [
+    {
+      "id": "rocket-two-stations",
+      "visual_type": "ai_editorial_creative",
+      "purpose": "用一个清楚的日常路线关系说明：同一枚可回收火箭可以从一个场站起飞，在下游另一个场站落下。",
+      "reference_strategy": "generated_base",
+      "reference_stage": {
+        "mode": "text_to_image",
+        "prompt_ref": "package-structure-reference-v1",
+        "output": "research/source-assets/rocket-two-stations-structure.png",
+        "receipt": "research/image-generation-runs/rocket-two-stations-reference-preflight.json",
+        "present_to_user": false,
+        "content_prompt": "Create a neutral structural reference for a landscape editorial illustration. Show the same reusable rocket in exactly two time-separated positions along one left-to-right journey: lifting off from a small inland launch pad, then descending upright onto a separate landing pad far downstream. Connect the two positions with one clear curved route arrow. Keep the two ground sites visibly separate. No explosion and no readable text.",
+        "output_constraints": [
+          "Landscape 3:2 composition with all important objects inside the central 80 percent mobile crop-safe area",
+          "Exactly two time-separated instances of one rocket design, two ground pads, and one route arrow",
+          "No readable text"
+        ],
+        "avoid": [
+          "Logos, trademarks, national flags, watermarks, fake interfaces, news-scene realism, crowds, or extra vehicles"
+        ]
+      },
+      "final_stage": {
+        "mode": "referenced_edit",
+        "prompt_ref": "appsso-004",
+        "prompt_sha256": "6ba5e092a4f8d6fb2bd33602424ba4792715aa59f2bf5f916b90d8bb3f0bbd0a",
+        "input_assets": [
+          "research/source-assets/rocket-two-stations-structure.png"
+        ],
+        "output": "assets/rocket-two-stations-image2.png",
+        "receipt": "research/image-generation-runs/rocket-two-stations-final-preflight.json",
+        "present_to_user": true,
+        "preserve": [
+          "Preserve exactly two time-separated instances of the same rocket design, two separate ground pads, the left-to-right reading order, and one curved route arrow"
+        ],
+        "output_constraints": [
+          "Landscape 3:2 composition with all important objects inside the central 80 percent mobile crop-safe area",
+          "Use a white background",
+          "No readable text"
+        ],
+        "avoid": [
+          "Polished technology-magazine composition, clean vector geometry, cinematic depth, or professional illustration finish",
+          "Logos, trademarks, national flags, watermarks, extra text, garbled text, fake interfaces, news-scene realism, explosions, crowds, or extra vehicles"
+        ]
+      }
+    },
+    {
+      "id": "rocket-ground-service",
+      "visual_type": "ai_editorial_creative",
+      "purpose": "借机场地勤的日常场景说明：火箭落地以后还要转运、检查和维护，接住它只是第一步。",
+      "reference_strategy": "generated_base",
+      "reference_stage": {
+        "mode": "text_to_image",
+        "prompt_ref": "package-structure-reference-v1",
+        "output": "research/source-assets/rocket-ground-service-structure.png",
+        "receipt": "research/image-generation-runs/rocket-ground-service-reference-preflight.json",
+        "present_to_user": false,
+        "content_prompt": "Create a neutral structural reference for a landscape comparison illustration with two adjacent service bays. In the left bay, show a passenger airplane at an airport gate with a small service cart and two ground workers. In the right bay, show a recovered reusable rocket first stage on a maintenance stand with a small inspection cart and two technicians. Match the two scenes by layout so the everyday ground-service analogy is immediately clear. No readable text.",
+        "output_constraints": [
+          "Landscape 3:2 composition with both service bays fully visible inside the central 80 percent mobile crop-safe area",
+          "Exactly one airplane, one recovered rocket stage, two service carts, and four workers in total",
+          "No readable text"
+        ],
+        "avoid": [
+          "Logos, trademarks, national flags, watermarks, fake interfaces, news-scene realism, launch flames, or extra vehicles"
+        ]
+      },
+      "final_stage": {
+        "mode": "referenced_edit",
+        "prompt_ref": "appsso-004",
+        "prompt_sha256": "6ba5e092a4f8d6fb2bd33602424ba4792715aa59f2bf5f916b90d8bb3f0bbd0a",
+        "input_assets": [
+          "research/source-assets/rocket-ground-service-structure.png"
+        ],
+        "output": "assets/rocket-ground-service-image2.png",
+        "receipt": "research/image-generation-runs/rocket-ground-service-final-preflight.json",
+        "present_to_user": true,
+        "preserve": [
+          "Preserve the side-by-side service-bay comparison, one airplane, one recovered rocket stage, matching ground-service carts, and four workers in total"
+        ],
+        "output_constraints": [
+          "Landscape 3:2 composition with both service bays fully visible inside the central 80 percent mobile crop-safe area",
+          "Use a white background",
+          "No readable text"
+        ],
+        "avoid": [
+          "Polished technology-magazine composition, clean vector geometry, cinematic depth, or professional illustration finish",
+          "Logos, trademarks, national flags, watermarks, extra text, garbled text, fake interfaces, news-scene realism, launch flames, or extra vehicles"
+        ]
+      }
+    },
+    {
+      "id": "mars-delay-ai",
+      "visual_type": "ai_editorial_creative",
+      "purpose": "说明火星通信有明显延迟时，火星车不能为每个路口都停下来等待地球回复。",
+      "reference_strategy": "generated_base",
+      "reference_stage": {
+        "mode": "text_to_image",
+        "prompt_ref": "package-structure-reference-v1",
+        "output": "research/source-assets/mars-delay-ai-structure.png",
+        "receipt": "research/image-generation-runs/mars-delay-ai-reference-preflight.json",
+        "present_to_user": false,
+        "content_prompt": "Create a neutral structural reference for a landscape editorial illustration. Place Earth far away in the upper left and Mars terrain in the lower right. Show one broken or delayed communication path between Earth and one Mars rover. In front of the rover, show a fork around several rocks and one locally selected safe path curving around the obstacle. Add one simple clock symbol near the delayed signal. No readable text.",
+        "output_constraints": [
+          "Landscape 3:2 composition with Earth, Mars rover, delayed signal, and local route visible inside the central 80 percent mobile crop-safe area",
+          "Exactly one Earth, one rover, one delayed communication path, one clock symbol, and one selected route",
+          "No readable text"
+        ],
+        "avoid": [
+          "Logos, trademarks, national flags, watermarks, fake interfaces, news-scene realism, astronauts, extra rovers, or text labels"
+        ]
+      },
+      "final_stage": {
+        "mode": "referenced_edit",
+        "prompt_ref": "appsso-004",
+        "prompt_sha256": "6ba5e092a4f8d6fb2bd33602424ba4792715aa59f2bf5f916b90d8bb3f0bbd0a",
+        "input_assets": [
+          "research/source-assets/mars-delay-ai-structure.png"
+        ],
+        "output": "assets/mars-delay-ai-image2.png",
+        "receipt": "research/image-generation-runs/mars-delay-ai-final-preflight.json",
+        "present_to_user": true,
+        "preserve": [
+          "Preserve one distant Earth, one Mars rover, one visibly delayed communication path, one clock symbol, the forked terrain, and one locally selected safe route around rocks"
+        ],
+        "output_constraints": [
+          "Landscape 3:2 composition with all key elements inside the central 80 percent mobile crop-safe area",
+          "Use a white background",
+          "No readable text"
+        ],
+        "avoid": [
+          "Polished technology-magazine composition, clean vector geometry, cinematic depth, or professional illustration finish",
+          "Logos, trademarks, national flags, watermarks, extra text, garbled text, fake interfaces, news-scene realism, astronauts, or extra rovers"
+        ]
+      }
+    },
+    {
+      "id": "starship-ai-shift",
+      "visual_type": "ai_editorial_creative",
+      "purpose": "把星际旅行里的 AI 写成日常值班角色：人在休息时，机器继续照看导航、设备和安全。",
+      "reference_strategy": "generated_base",
+      "reference_stage": {
+        "mode": "text_to_image",
+        "prompt_ref": "package-structure-reference-v1",
+        "output": "research/source-assets/starship-ai-shift-structure.png",
+        "receipt": "research/image-generation-runs/starship-ai-shift-reference-preflight.json",
+        "present_to_user": false,
+        "content_prompt": "Create a neutral structural reference for a landscape cutaway illustration of a small interstellar spacecraft cabin. Show one human crewmember asleep in a bunk. Show one small generic service robot awake at a central workstation, monitoring three simple areas at once: a navigation window with a star route, an equipment panel with a wrench symbol, and a security camera icon. The robot may have a tiny entertainment screen beside it, but do not resemble any known fictional character. No readable text.",
+        "output_constraints": [
+          "Landscape 3:2 composition with the sleeping human, service robot, and three monitored areas inside the central 80 percent mobile crop-safe area",
+          "Exactly one human crewmember, one generic service robot, one workstation, and three simple monitored areas",
+          "No readable text"
+        ],
+        "avoid": [
+          "Logos, trademarks, national flags, watermarks, fake interfaces, news-scene realism, copyrighted character likenesses, extra people, or extra robots"
+        ]
+      },
+      "final_stage": {
+        "mode": "referenced_edit",
+        "prompt_ref": "appsso-004",
+        "prompt_sha256": "6ba5e092a4f8d6fb2bd33602424ba4792715aa59f2bf5f916b90d8bb3f0bbd0a",
+        "input_assets": [
+          "research/source-assets/starship-ai-shift-structure.png"
+        ],
+        "output": "assets/starship-ai-shift-image2.png",
+        "receipt": "research/image-generation-runs/starship-ai-shift-final-preflight.json",
+        "present_to_user": true,
+        "preserve": [
+          "Preserve one sleeping human crewmember, one awake generic service robot at a central workstation, and three monitored areas for navigation, equipment, and security",
+          "Keep the robot generic and clearly different from any known fictional character"
+        ],
+        "output_constraints": [
+          "Landscape 3:2 composition with all key elements inside the central 80 percent mobile crop-safe area",
+          "Use a white background",
+          "No readable text"
+        ],
+        "avoid": [
+          "Polished technology-magazine composition, clean vector geometry, cinematic depth, or professional illustration finish",
+          "Logos, trademarks, national flags, watermarks, extra text, garbled text, fake interfaces, news-scene realism, copyrighted character likenesses, extra people, or extra robots"
+        ]
+      }
+    }
+  ]
+}

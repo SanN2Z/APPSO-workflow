@@ -1,0 +1,498 @@
+- generic [active] [ref=f15e1]:
+  - alert [ref=f15e2]
+  - generic [ref=f15e5]:
+    - banner [ref=f15e6]:
+      - generic [ref=f15e7]:
+        - link "Webhound Webhound" [ref=f15e8] [cursor=pointer]:
+          - /url: /
+          - img "Webhound" [ref=f15e10]
+          - generic [ref=f15e11]: Webhound
+        - navigation [ref=f15e12]:
+          - link "Thesis" [ref=f15e13] [cursor=pointer]:
+            - /url: /thesis
+          - link "Examples" [ref=f15e14] [cursor=pointer]:
+            - /url: /examples
+          - link "Guide" [ref=f15e15] [cursor=pointer]:
+            - /url: /guide
+          - link "API" [ref=f15e16] [cursor=pointer]:
+            - /url: /docs/api
+          - link "MCP" [ref=f15e17] [cursor=pointer]:
+            - /url: /mcp-setup
+          - link "Pricing" [ref=f15e18] [cursor=pointer]:
+            - /url: /pricing
+        - generic [ref=f15e19]:
+          - button "Log in" [ref=f15e20] [cursor=pointer]
+          - button "Start free" [ref=f15e21] [cursor=pointer]
+    - main [ref=f15e22]:
+      - generic [ref=f15e23]:
+        - generic [ref=f15e25]:
+          - heading "Agents are lazy at research." [level=1] [ref=f15e27]
+          - generic [ref=f15e28]:
+            - paragraph [ref=f15e29]: Most agents stop once they have enough evidence to sound confident. Give Webhound a question and a budget, and it keeps following leads and checking sources until the budget runs out. You get the answer and the work behind it.
+            - link "Read more" [ref=f15e31] [cursor=pointer]:
+              - /url: /thesis
+              - text: Read more
+              - generic [ref=f15e32]: →
+            - generic [ref=f15e33]:
+              - button "Start free" [ref=f15e34] [cursor=pointer]:
+                - text: Start free
+                - generic [ref=f15e35]: →
+              - link "Set up MCP" [ref=f15e36] [cursor=pointer]:
+                - /url: /mcp-setup
+            - generic [ref=f15e39]: new accounts get $5 free — about 75 minutes of research
+            - link "or book a demo→" [ref=f15e44] [cursor=pointer]:
+              - /url: https://calendar.app.google/y84xyHsNEMWRwECq6
+        - generic [ref=f15e46]:
+          - generic [ref=f15e47]:
+            - generic [ref=f15e48]:
+              - generic [ref=f15e49]:
+                - generic [ref=f15e51]: A normal agent
+                - generic [ref=f15e52]: stops too early
+              - generic [ref=f15e53]:
+                - generic [ref=f15e54]:
+                  - generic [ref=f15e55]: "“Map a market: sizing, pricing, churn”"
+                  - generic [ref=f15e56]: Stalled
+                - generic [ref=f15e59]:
+                  - generic [ref=f15e60]: Searching the web…
+                  - generic [ref=f15e66]: Read 3 sources. Here is a quick summary.
+                - generic [ref=f15e81]:
+                  - generic [ref=f15e82]: "0"
+                  - generic [ref=f15e83]: follow-ups typed
+                  - generic [ref=f15e84]: still not done
+            - generic [ref=f15e85]:
+              - generic [ref=f15e86]:
+                - generic [ref=f15e88]: Webhound
+                - generic [ref=f15e89]: keeps going deeper
+              - generic [ref=f15e91]:
+                - generic [ref=f15e92]:
+                  - generic [ref=f15e93]: "“Map a market: sizing, pricing, churn”"
+                  - generic [ref=f15e94]: Researching
+                - generic [ref=f15e97]:
+                  - generic [ref=f15e98]: Planning research · 6 tasks
+                  - generic [ref=f15e104]: Searching "category market size 2026"
+                  - generic [ref=f15e110]: Reading mckinsey.com
+                  - generic [ref=f15e116]: Reading sec.gov filing (PDF)
+                - generic [ref=f15e131]:
+                  - generic [ref=f15e132]: "2"
+                  - generic [ref=f15e133]: sources
+                  - generic [ref=f15e134]: ·
+                  - generic [ref=f15e135]: "0"
+                  - generic [ref=f15e136]: claims
+                  - generic [ref=f15e139]: ~2m · $0.13
+          - paragraph [ref=f15e140]: One you have to keep prodding; the other just gets it done.
+      - generic [ref=f15e141]:
+        - paragraph [ref=f15e142]: Used by people at
+        - generic [ref=f15e145]:
+          - img "Amazon" [ref=f15e147]
+          - img "Stripe" [ref=f15e149]
+          - img "DoorDash" [ref=f15e151]
+          - img "ByteDance" [ref=f15e153]
+          - img "DHL" [ref=f15e155]
+          - img "Maersk" [ref=f15e157]
+          - img "IEEE" [ref=f15e159]
+          - img "Airwallex" [ref=f15e161]
+          - img "Semafor" [ref=f15e163]
+          - img "Neo4j" [ref=f15e165]
+          - img "Stanford" [ref=f15e167]
+          - img "Harvard" [ref=f15e169]
+          - img "Amazon" [ref=f15e171]
+          - img "Stripe" [ref=f15e173]
+          - img "DoorDash" [ref=f15e175]
+          - img "ByteDance" [ref=f15e177]
+          - img "DHL" [ref=f15e179]
+          - img "Maersk" [ref=f15e181]
+          - img "IEEE" [ref=f15e183]
+          - img "Airwallex" [ref=f15e185]
+          - img "Semafor" [ref=f15e187]
+          - img "Neo4j" [ref=f15e189]
+          - img "Stanford" [ref=f15e191]
+          - img "Harvard" [ref=f15e193]
+      - generic [ref=f15e244]:
+        - generic [ref=f15e245]:
+          - paragraph [ref=f15e246]: What it is
+          - heading "An autonomous research sidecar you don't babysit." [level=2] [ref=f15e247]
+          - paragraph [ref=f15e248]: Webhound is your agent’s research engine — made to be called by an agent and left to run. When you want to get hands-on, the same engine runs behind a rich interactive UI.
+        - generic [ref=f15e249]:
+          - generic [ref=f15e251]:
+            - generic [ref=f15e252]: Default
+            - heading "Your agent drives" [level=3] [ref=f15e255]
+            - paragraph [ref=f15e256]: MCP & API — the default
+            - list [ref=f15e257]:
+              - listitem [ref=f15e258]:
+                - generic [ref=f15e261]: An agent starts research on its own
+              - listitem [ref=f15e262]:
+                - generic [ref=f15e265]: Wire it into a pipeline or a tool call
+              - listitem [ref=f15e266]:
+                - generic [ref=f15e269]: Results come back as structured JSON
+              - listitem [ref=f15e270]:
+                - generic [ref=f15e273]: No human has to sit in the loop
+            - link "Set up MCP" [ref=f15e274] [cursor=pointer]:
+              - /url: /mcp-setup
+          - generic [ref=f15e278]:
+            - heading "You drive" [level=3] [ref=f15e284]
+            - paragraph [ref=f15e285]: the UI — when you want control
+            - list [ref=f15e286]:
+              - listitem [ref=f15e287]:
+                - generic [ref=f15e290]: Read and verify in a rich UI
+              - listitem [ref=f15e291]:
+                - generic [ref=f15e294]: Steer a run mid-flight
+              - listitem [ref=f15e295]:
+                - generic [ref=f15e298]: Publish and share results
+              - listitem [ref=f15e299]:
+                - generic [ref=f15e302]: Explore claim traces by hand
+            - button "See the app" [ref=f15e303] [cursor=pointer]
+      - generic [ref=f15e307]:
+        - generic [ref=f15e308]:
+          - paragraph [ref=f15e309]: Search vs. research
+          - heading "Search isn't research." [level=2] [ref=f15e310]
+          - paragraph [ref=f15e311]: A search returns the top results for a single query. Research follows what it finds — each answer opening new paths — and keeps digging until the question is actually answered. A few searches with a summary on top never gets there.
+        - generic [ref=f15e312]:
+          - generic [ref=f15e314]:
+            - generic [ref=f15e315]: "01"
+            - heading "Web research has no natural stopping point." [level=3] [ref=f15e316]
+            - paragraph [ref=f15e317]: There's no signal that tells an agent it's done — the more it reads, the more ground it covers and the stronger the case gets. The real question isn't when the work ends. It's how much the answer is worth to you.
+          - generic [ref=f15e319]:
+            - generic [ref=f15e320]: "02"
+            - heading "Most agent failures are missing context, not missing reasoning." [level=3] [ref=f15e321]
+            - paragraph [ref=f15e322]: A coding agent misses the current best practice for a stack. An ops agent misses a policy buried in a PDF. Plain search returns the top page — not the twentieth source where the real answer lives. Webhound goes deep enough to bring back the specifics the task actually needs.
+      - generic [ref=f15e324]:
+        - generic [ref=f15e325]:
+          - paragraph [ref=f15e326]: Outputs
+          - heading "Human-readable and agent-optimized." [level=2] [ref=f15e327]
+        - generic [ref=f15e328]:
+          - generic [ref=f15e330]:
+            - generic [ref=f15e331]: Unstructured
+            - heading "Reports" [level=3] [ref=f15e336]
+            - paragraph [ref=f15e337]: Cited long-form analysis. Every claim links to the page and the tool call behind it. Export to Word or HTML.
+          - generic [ref=f15e339]:
+            - generic [ref=f15e340]: Structured
+            - heading "Datasets" [level=3] [ref=f15e344]
+            - paragraph [ref=f15e345]: Tables where every cell is sourced. You define the columns; rows come back as CSV, JSON, or Excel.
+          - generic [ref=f15e347]:
+            - generic [ref=f15e348]: Agent-optimized
+            - heading "Claims + traces" [level=3] [ref=f15e353]
+            - paragraph [ref=f15e354]: Every fact as JSON, carrying its evidence, source, and confidence — so your agent can consume, filter, and cite results in code.
+        - generic [ref=f15e356]:
+          - generic [ref=f15e357]:
+            - paragraph [ref=f15e358]: Every fact, machine-readable
+            - heading "Not just an answer — the evidence behind it." [level=3] [ref=f15e359]
+            - paragraph [ref=f15e360]: Every claim comes back with its source, a supporting quote, a confidence level, and the tool calls that produced it. Your agent can filter by confidence, drop weak claims, and cite the rest.
+          - code [ref=f15e362]: "{ \"claim\": \"Market grew 34% YoY in 2025\", \"confidence\": \"high\", \"source\": { \"url\": \"sec.gov/.../10-K\", \"quote\": \"...net revenue increased 34%...\" }, \"trace\": [\"search\", \"open_page\", \"extract\"] }"
+      - generic [ref=f15e364]:
+        - generic [ref=f15e365]:
+          - paragraph [ref=f15e366]: Use cases
+          - heading "Point it at the questions your agent keeps getting wrong." [level=2] [ref=f15e367]
+          - paragraph [ref=f15e368]: A design call that needs the tradeoffs from dozens of real implementations. A number that only holds up once you reconcile conflicting sources. A risk that only surfaces deep in the filings. Aim Webhound at the questions a top-of-page skim gets wrong.
+        - generic [ref=f15e369]:
+          - generic [ref=f15e371]:
+            - heading "Weigh the evidence before you commit" [level=3] [ref=f15e372]
+            - paragraph [ref=f15e373]: Before an agent locks in an architecture, a vendor, or a strategy, make it weigh real production experience first — postmortems, issue threads, and tradeoffs from dozens of sources, not the first result that ranks.
+            - generic [ref=f15e374]: Report
+          - generic [ref=f15e377]:
+            - heading "Do the lit review before you build" [level=3] [ref=f15e378]
+            - paragraph [ref=f15e379]: A search API gets your coding agent one page. Webhound runs the whole survey — current techniques, benchmarks, and failure modes across dozens of sources — so it builds on the 2026 state of the art, not its training data.
+            - generic [ref=f15e380]: Report
+          - generic [ref=f15e383]:
+            - heading "Catch the competitor move it missed" [level=3] [ref=f15e384]
+            - paragraph [ref=f15e385]: A pricing change, a quiet launch, a feature gate that moved. Get a sourced competitive map built from pricing pages, changelogs, and what customers are actually saying.
+            - generic [ref=f15e386]:
+              - generic [ref=f15e387]: Report
+              - generic [ref=f15e388]: Dataset
+          - generic [ref=f15e390]:
+            - heading "Enrich a list without guessing" [level=3] [ref=f15e391]
+            - paragraph [ref=f15e392]: "Turn a list of companies into sourced rows: decision-makers, hiring signals, tech stack, funding stage, LinkedIn URLs — every cell traceable to where it was found."
+            - generic [ref=f15e393]: Dataset
+          - generic [ref=f15e396]:
+            - heading "Diligence that holds up" [level=3] [ref=f15e397]
+            - paragraph [ref=f15e398]: A company teardown with market map, red flags, and regulatory exposure — every claim cited and single-source claims flagged, so nothing ships “almost right.”
+            - generic [ref=f15e399]: Report
+          - generic [ref=f15e402]:
+            - heading "Timelines with real dates" [level=3] [ref=f15e403]
+            - paragraph [ref=f15e404]: Forensic policy and regulatory timelines with exact dates, named actors, bills, and rulings — built from primary documents, not a summary your agent half-remembers.
+            - generic [ref=f15e405]: Report
+        - link "See example research reports" [ref=f15e408] [cursor=pointer]:
+          - /url: /examples
+      - generic [ref=f15e413]:
+        - generic [ref=f15e414]:
+          - paragraph [ref=f15e415]: Budget control
+          - heading "Depth you control, not depth someone else caps." [level=2] [ref=f15e416]
+        - generic [ref=f15e417]:
+          - generic [ref=f15e419]:
+            - generic [ref=f15e420]: "01"
+            - heading "A budget is the honest stop button." [level=3] [ref=f15e421]
+            - paragraph [ref=f15e422]: Research has no finish line, so the budget you set becomes the stop control. Tell Webhound how much a question is worth and it spends exactly that on depth — no more, no less.
+          - generic [ref=f15e424]:
+            - generic [ref=f15e425]: "02"
+            - heading "A subscription profits when it does less." [level=3] [ref=f15e426]
+            - paragraph [ref=f15e427]: Flat-rate research tools make more money every time they stop early. Their incentive is a shallow answer that still counts as a run — fewer sources, thinner checks, faster hand-off.
+          - generic [ref=f15e429]:
+            - generic [ref=f15e430]: "03"
+            - heading "You pay for work, not a seat." [level=3] [ref=f15e431]
+            - paragraph [ref=f15e432]: You're billed by the dollar for research actually done, so the incentive is finally to keep digging, not to bail. Depth stays a dial you control.
+      - generic [ref=f15e435]:
+        - generic [ref=f15e436]:
+          - paragraph [ref=f15e437]: Hound 1.0
+          - heading "Pay only for what you use." [level=2] [ref=f15e438]
+          - paragraph [ref=f15e439]: Hound 1.0 is Webhound’s research harness, built with DeepSeek V4 Pro and GPT-5.4. Set a dollar budget and it spends that effort on the investigation. No subscription, no seats.
+        - generic [ref=f15e441]:
+          - generic [ref=f15e442]:
+            - generic [ref=f15e443]: $1
+            - generic [ref=f15e444]: ≈ 15 minutes of thinking time
+          - generic [ref=f15e445]:
+            - generic [ref=f15e446]: $1
+            - generic [ref=f15e447]: per million input tokens
+          - generic [ref=f15e448]:
+            - generic [ref=f15e449]: $3
+            - generic [ref=f15e450]: per million output tokens
+          - generic [ref=f15e451]:
+            - generic [ref=f15e452]: $5
+            - generic [ref=f15e453]: one included run for eligible new accounts
+        - generic [ref=f15e455]:
+          - button "Start free" [ref=f15e456] [cursor=pointer]:
+            - text: Start free
+            - generic [ref=f15e457]: →
+          - generic [ref=f15e458]: $5 free on signup — about 75 minutes of research. No subscription.
+          - link "See full pricing" [ref=f15e459] [cursor=pointer]:
+            - /url: /pricing
+      - generic [ref=f15e461]:
+        - generic [ref=f15e462]:
+          - paragraph [ref=f15e463]: See it run
+          - heading "Inside your agent." [level=2] [ref=f15e464]
+          - paragraph [ref=f15e465]: Webhound runs as a tool call inside Claude Code, Codex, Manus, and any MCP client. Kick off a research job, keep working, and read structured results back without leaving your agent.
+        - generic [ref=f15e466]:
+          - generic [ref=f15e467]:
+            - generic [ref=f15e468]: codex · webhound mcp
+            - button "Play the coding agent demo" [ref=f15e473] [cursor=pointer]:
+              - img "Webhound running as a tool call inside a coding agent" [ref=f15e474]
+              - generic [ref=f15e476]: Watch it run
+          - paragraph [ref=f15e482]:
+            - text: Want a walkthrough now?
+            - link "Read the docs" [ref=f15e483] [cursor=pointer]:
+              - /url: /docs/api
+      - generic [ref=f15e484]:
+        - generic [ref=f15e485]:
+          - generic [ref=f15e486]:
+            - paragraph [ref=f15e487]: Community
+            - heading "Join the community" [level=2] [ref=f15e488]
+            - paragraph [ref=f15e489]: Researchers, operators, and developers are building with Webhound every day. Come say hi.
+          - generic [ref=f15e490]:
+            - link "Join us on Discord" [ref=f15e491] [cursor=pointer]:
+              - /url: https://discord.gg/jKfBsTjtZR
+            - link "Follow on X" [ref=f15e494] [cursor=pointer]:
+              - /url: https://x.com/WebhoundAI
+        - generic [ref=f15e498]:
+          - generic [ref=f15e499]:
+            - 'link "MS Michael Seibel @mwseibel I always wanted an AI deep research product: 1) I set the price and it runs for as long as I''m willing to pay, 2) it can produce reports or structured data, 3) great data validation. I think I found what I''m looking for." [ref=f15e500] [cursor=pointer]':
+              - /url: https://x.com/mwseibel/status/2025297589323890839
+              - generic [ref=f15e501]:
+                - generic [ref=f15e502]: MS
+                - generic [ref=f15e503]:
+                  - generic [ref=f15e504]: Michael Seibel
+                  - generic [ref=f15e505]: "@mwseibel"
+              - paragraph [ref=f15e508]: "I always wanted an AI deep research product: 1) I set the price and it runs for as long as I'm willing to pay, 2) it can produce reports or structured data, 3) great data validation. I think I found what I'm looking for."
+            - 'link "SE Stav Elkayam KLINK There''s no way to build a dataset of 300+ companies with a single prompt. Webhound: Hold my beer. I needed a weird dataset — companies with interactive demos on their websites, but didn''t want to build a scraper." [ref=f15e509] [cursor=pointer]':
+              - /url: https://www.linkedin.com/posts/stav-elkayam_theres-no-way-to-build-a-dataset-of-300-share-7349324673106509825-_QOO
+              - generic [ref=f15e510]:
+                - generic [ref=f15e511]: SE
+                - generic [ref=f15e512]:
+                  - generic [ref=f15e513]: Stav Elkayam
+                  - generic [ref=f15e514]: KLINK
+              - paragraph [ref=f15e517]: "There's no way to build a dataset of 300+ companies with a single prompt. Webhound: Hold my beer. I needed a weird dataset — companies with interactive demos on their websites, but didn't want to build a scraper."
+            - link "L Lyron @lyronctk Huge +1, Webhound is significantly more effective than the vanilla deep research products I've used." [ref=f15e518] [cursor=pointer]:
+              - /url: https://x.com/lyronctk/status/2025673319228309976
+              - generic [ref=f15e519]:
+                - generic [ref=f15e520]: L
+                - generic [ref=f15e521]:
+                  - generic [ref=f15e522]: Lyron
+                  - generic [ref=f15e523]: "@lyronctk"
+              - paragraph [ref=f15e526]: Huge +1, Webhound is significantly more effective than the vanilla deep research products I've used.
+            - link "DM Diogo Machado Maybe we are seeing the birth of a new Unicorn. Today I tested Webhound, and it is jaw-dropping. The system offers the value proposition to create any dataset possible, scraping tons of different sources and links to get the job done." [ref=f15e527] [cursor=pointer]:
+              - /url: https://www.linkedin.com/posts/diogoribeiromachado_maybe-we-are-seeing-the-birth-of-a-new-unicorn-share-7355801237407080448-eTzK
+              - generic [ref=f15e528]:
+                - generic [ref=f15e529]: DM
+                - generic [ref=f15e530]: Diogo Machado
+              - paragraph [ref=f15e534]: Maybe we are seeing the birth of a new Unicorn. Today I tested Webhound, and it is jaw-dropping. The system offers the value proposition to create any dataset possible, scraping tons of different sources and links to get the job done.
+            - link "JQ Jamie Quint @jamiequint I tried 5 different tools and Webhound was the best so far." [ref=f15e535] [cursor=pointer]:
+              - /url: https://x.com/jamiequint/status/2039121616148537422
+              - generic [ref=f15e536]:
+                - generic [ref=f15e537]: JQ
+                - generic [ref=f15e538]:
+                  - generic [ref=f15e539]: Jamie Quint
+                  - generic [ref=f15e540]: "@jamiequint"
+              - paragraph [ref=f15e543]: I tried 5 different tools and Webhound was the best so far.
+            - link "AR Aryan Reddy Loka Using Webhound and NotebookLM to take my product research process to the next level. Mapped the market conversation, aggregated discussions from Reddit forums, reviews, and social channels to capture real user sentiments." [ref=f15e544] [cursor=pointer]:
+              - /url: https://www.linkedin.com/posts/loka-aryan-reddy_you-cant-build-a-great-product-in-isolation-share-7358513674006745088-lJEJ
+              - generic [ref=f15e545]:
+                - generic [ref=f15e546]: AR
+                - generic [ref=f15e547]: Aryan Reddy Loka
+              - paragraph [ref=f15e551]: Using Webhound and NotebookLM to take my product research process to the next level. Mapped the market conversation, aggregated discussions from Reddit forums, reviews, and social channels to capture real user sentiments.
+            - link "TM Tony Murillo @tonytico As a data company we're constantly building datasets. Here's a tool we've been using almost daily — even though we build our own scrapers, we still use a few third-party tools, and they did a good job with this one." [ref=f15e552] [cursor=pointer]:
+              - /url: https://x.com/tonytico/status/1952018651449589976
+              - generic [ref=f15e553]:
+                - generic [ref=f15e554]: TM
+                - generic [ref=f15e555]:
+                  - generic [ref=f15e556]: Tony Murillo
+                  - generic [ref=f15e557]: "@tonytico"
+              - paragraph [ref=f15e560]: As a data company we're constantly building datasets. Here's a tool we've been using almost daily — even though we build our own scrapers, we still use a few third-party tools, and they did a good job with this one.
+            - 'link "RM Rafael Marin Jr Tool Spotlight: Webhound for YouTube Research. If you''re a content creator, Webhound can help you research YouTube videos and transcripts to gather insights quickly." [ref=f15e561] [cursor=pointer]':
+              - /url: https://www.linkedin.com/posts/rafaelmarinjr_tool-spotlight-webhound-for-youtube-research-share-7357161633078493184-8nl2
+              - generic [ref=f15e562]:
+                - generic [ref=f15e563]: RM
+                - generic [ref=f15e564]: Rafael Marin Jr
+              - paragraph [ref=f15e568]: "Tool Spotlight: Webhound for YouTube Research. If you're a content creator, Webhound can help you research YouTube videos and transcripts to gather insights quickly."
+          - generic [ref=f15e569]:
+            - link [ref=f15e570] [cursor=pointer]:
+              - /url: https://x.com/mwseibel/status/2025297589323890839
+              - generic [ref=f15e571]:
+                - generic [ref=f15e572]: MS
+                - generic [ref=f15e573]:
+                  - generic [ref=f15e574]: Michael Seibel
+                  - generic [ref=f15e575]: "@mwseibel"
+              - paragraph [ref=f15e578]: "I always wanted an AI deep research product: 1) I set the price and it runs for as long as I'm willing to pay, 2) it can produce reports or structured data, 3) great data validation. I think I found what I'm looking for."
+            - link [ref=f15e579] [cursor=pointer]:
+              - /url: https://www.linkedin.com/posts/stav-elkayam_theres-no-way-to-build-a-dataset-of-300-share-7349324673106509825-_QOO
+              - generic [ref=f15e580]:
+                - generic [ref=f15e581]: SE
+                - generic [ref=f15e582]:
+                  - generic [ref=f15e583]: Stav Elkayam
+                  - generic [ref=f15e584]: KLINK
+              - paragraph [ref=f15e587]: "There's no way to build a dataset of 300+ companies with a single prompt. Webhound: Hold my beer. I needed a weird dataset — companies with interactive demos on their websites, but didn't want to build a scraper."
+            - link [ref=f15e588] [cursor=pointer]:
+              - /url: https://x.com/lyronctk/status/2025673319228309976
+              - generic [ref=f15e589]:
+                - generic [ref=f15e590]: L
+                - generic [ref=f15e591]:
+                  - generic [ref=f15e592]: Lyron
+                  - generic [ref=f15e593]: "@lyronctk"
+              - paragraph [ref=f15e596]: Huge +1, Webhound is significantly more effective than the vanilla deep research products I've used.
+            - link [ref=f15e597] [cursor=pointer]:
+              - /url: https://www.linkedin.com/posts/diogoribeiromachado_maybe-we-are-seeing-the-birth-of-a-new-unicorn-share-7355801237407080448-eTzK
+              - generic [ref=f15e598]:
+                - generic [ref=f15e599]: DM
+                - generic [ref=f15e600]: Diogo Machado
+              - paragraph [ref=f15e604]: Maybe we are seeing the birth of a new Unicorn. Today I tested Webhound, and it is jaw-dropping. The system offers the value proposition to create any dataset possible, scraping tons of different sources and links to get the job done.
+            - link [ref=f15e605] [cursor=pointer]:
+              - /url: https://x.com/jamiequint/status/2039121616148537422
+              - generic [ref=f15e606]:
+                - generic [ref=f15e607]: JQ
+                - generic [ref=f15e608]:
+                  - generic [ref=f15e609]: Jamie Quint
+                  - generic [ref=f15e610]: "@jamiequint"
+              - paragraph [ref=f15e613]: I tried 5 different tools and Webhound was the best so far.
+            - link [ref=f15e614] [cursor=pointer]:
+              - /url: https://www.linkedin.com/posts/loka-aryan-reddy_you-cant-build-a-great-product-in-isolation-share-7358513674006745088-lJEJ
+              - generic [ref=f15e615]:
+                - generic [ref=f15e616]: AR
+                - generic [ref=f15e617]: Aryan Reddy Loka
+              - paragraph [ref=f15e621]: Using Webhound and NotebookLM to take my product research process to the next level. Mapped the market conversation, aggregated discussions from Reddit forums, reviews, and social channels to capture real user sentiments.
+            - link [ref=f15e622] [cursor=pointer]:
+              - /url: https://x.com/tonytico/status/1952018651449589976
+              - generic [ref=f15e623]:
+                - generic [ref=f15e624]: TM
+                - generic [ref=f15e625]:
+                  - generic [ref=f15e626]: Tony Murillo
+                  - generic [ref=f15e627]: "@tonytico"
+              - paragraph [ref=f15e630]: As a data company we're constantly building datasets. Here's a tool we've been using almost daily — even though we build our own scrapers, we still use a few third-party tools, and they did a good job with this one.
+            - link [ref=f15e631] [cursor=pointer]:
+              - /url: https://www.linkedin.com/posts/rafaelmarinjr_tool-spotlight-webhound-for-youtube-research-share-7357161633078493184-8nl2
+              - generic [ref=f15e632]:
+                - generic [ref=f15e633]: RM
+                - generic [ref=f15e634]: Rafael Marin Jr
+              - paragraph [ref=f15e638]: "Tool Spotlight: Webhound for YouTube Research. If you're a content creator, Webhound can help you research YouTube videos and transcripts to gather insights quickly."
+      - generic [ref=f15e640]:
+        - generic [ref=f15e641]:
+          - paragraph [ref=f15e642]: FAQ
+          - heading "Frequently asked questions." [level=2] [ref=f15e643]
+        - generic [ref=f15e644]:
+          - generic [ref=f15e645]:
+            - button "Should I use the UI or the MCP?" [ref=f15e646] [cursor=pointer]
+            - generic [ref=f15e650]: Both, for different jobs. Use the app when you are driving the research and want to read, verify, steer, and share in a rich UI. Use MCP or the API when an agent should run research on its own, or when you are building a pipeline and want results back as structured JSON. Same engine, same pricing.
+          - button "What is Hound?" [ref=f15e653] [cursor=pointer]
+          - button "What does my agent get back?" [ref=f15e658] [cursor=pointer]
+          - button "Which agents and clients work?" [ref=f15e663] [cursor=pointer]
+          - button "What is a “minute of thinking time”?" [ref=f15e668] [cursor=pointer]
+          - button "How deep does it go — and when does it stop?" [ref=f15e673] [cursor=pointer]
+          - button "Can I steer or pause a run?" [ref=f15e678] [cursor=pointer]
+          - button "Can it use my own data and API keys?" [ref=f15e683] [cursor=pointer]
+          - button "What sources can it reach?" [ref=f15e688] [cursor=pointer]
+    - generic [ref=f15e692]:
+      - generic [ref=f15e695]:
+        - paragraph [ref=f15e696]: Ready when your agent is
+        - heading "Stop convincing. Start researching." [level=2] [ref=f15e697]
+        - paragraph [ref=f15e698]: $5 free on signup — about 75 minutes of research. No subscription.
+        - generic [ref=f15e699]:
+          - button "Start free" [ref=f15e700] [cursor=pointer]:
+            - text: Start free
+            - generic [ref=f15e701]: →
+          - link "Book a demo" [ref=f15e702] [cursor=pointer]:
+            - /url: https://calendar.app.google/y84xyHsNEMWRwECq6
+          - link "Read the docs" [ref=f15e703] [cursor=pointer]:
+            - /url: /docs/api
+      - contentinfo [ref=f15e704]:
+        - generic [ref=f15e705]:
+          - generic [ref=f15e706]:
+            - generic [ref=f15e707]:
+              - link "Webhound Webhound" [ref=f15e708] [cursor=pointer]:
+                - /url: /
+                - img "Webhound" [ref=f15e710]
+                - generic [ref=f15e711]: Webhound
+              - paragraph [ref=f15e712]: A research engine for your agents and for you. Pay-as-you-go, every claim cited.
+            - generic [ref=f15e713]:
+              - paragraph [ref=f15e714]: Product
+              - list [ref=f15e715]:
+                - listitem [ref=f15e716]:
+                  - link "Pricing" [ref=f15e717] [cursor=pointer]:
+                    - /url: /pricing
+                - listitem [ref=f15e718]:
+                  - link "Examples" [ref=f15e719] [cursor=pointer]:
+                    - /url: /examples
+                - listitem [ref=f15e720]:
+                  - link "Explore" [ref=f15e721] [cursor=pointer]:
+                    - /url: /explore
+                - listitem [ref=f15e722]:
+                  - link "Live demo" [ref=f15e723] [cursor=pointer]:
+                    - /url: /demo
+            - generic [ref=f15e724]:
+              - paragraph [ref=f15e725]: Developers
+              - list [ref=f15e726]:
+                - listitem [ref=f15e727]:
+                  - link "API docs" [ref=f15e728] [cursor=pointer]:
+                    - /url: /docs/api
+                - listitem [ref=f15e729]:
+                  - link "SKILL.md" [ref=f15e730] [cursor=pointer]:
+                    - /url: https://webhound.ai/skill.md
+                - listitem [ref=f15e731]:
+                  - link "Guide" [ref=f15e732] [cursor=pointer]:
+                    - /url: /guide
+            - generic [ref=f15e733]:
+              - paragraph [ref=f15e734]: Company
+              - list [ref=f15e735]:
+                - listitem [ref=f15e736]:
+                  - link "Thesis" [ref=f15e737] [cursor=pointer]:
+                    - /url: /thesis
+                - listitem [ref=f15e738]:
+                  - link "Blog" [ref=f15e739] [cursor=pointer]:
+                    - /url: /news
+                - listitem [ref=f15e740]:
+                  - link "Changelog" [ref=f15e741] [cursor=pointer]:
+                    - /url: /changelog
+                - listitem [ref=f15e742]:
+                  - link "Feedback" [ref=f15e743] [cursor=pointer]:
+                    - /url: mailto:team@webhound.ai?subject=Webhound%20Feedback
+            - generic [ref=f15e744]:
+              - paragraph [ref=f15e745]: Legal
+              - list [ref=f15e746]:
+                - listitem [ref=f15e747]:
+                  - link "Terms of Service" [ref=f15e748] [cursor=pointer]:
+                    - /url: /terms-and-conditions
+                - listitem [ref=f15e749]:
+                  - link "Privacy Policy" [ref=f15e750] [cursor=pointer]:
+                    - /url: /privacy
+          - generic [ref=f15e751]:
+            - generic [ref=f15e752]: © 2026 Webhound. All rights reserved.
+            - generic [ref=f15e753]:
+              - link "Discord" [ref=f15e754] [cursor=pointer]:
+                - /url: https://discord.gg/jKfBsTjtZR
+              - generic [ref=f15e755]:
+                - text: Backed by
+                - img "Y Combinator" [ref=f15e756]

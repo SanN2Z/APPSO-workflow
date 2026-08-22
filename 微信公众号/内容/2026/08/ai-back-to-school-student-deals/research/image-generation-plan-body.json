@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "template_only": false,
+  "updated": "2026-08-20",
+  "project_adapter": "generic",
+  "profile_registry": "共享/运营/SOP/生图风格档案.json",
+  "style_policy": {
+    "profile": "generic-direct-v1",
+    "scope": "task",
+    "new_image_strategy": "direct",
+    "allow_final_text_to_image": true
+  },
+  "tasks": [
+    {
+      "id": "daily-ai-study-scene",
+      "visual_type": "general_editorial",
+      "purpose": "把学生用 AI 整理课程大纲、课件和陌生概念的日常场景画出来，为第一节提供生活化配图。",
+      "reference_strategy": "none",
+      "final_stage": {
+        "mode": "text_to_image",
+        "prompt_ref": "generic-direct-v1",
+        "input_assets": [],
+        "output": "assets/daily-ai-study-scene-image2.png",
+        "receipt": "research/image-generation-runs/daily-ai-study-scene-final-preflight.json",
+        "present_to_user": true,
+        "content_prompt": "Use case: stylized-concept. Asset type: horizontal editorial illustration for a Chinese WeChat article about college students using AI at the start of a semester. Scene: an ordinary Chinese university student at a dormitory desk in the evening, sorting a printed course syllabus, several lecture slides, handwritten notes and a weekly paper planner. A laptop beside the papers shows only abstract colored cards and simple geometric blocks, suggesting an AI assistant organizing the material without depicting any real product interface. The student is actively comparing the screen with a notebook, not passively watching. Add a water bottle, desk lamp and one takeout cup for a lived-in but tidy campus feeling. Style: warm contemporary editorial illustration with subtle paper texture, simplified natural proportions, restrained hand-painted shapes and gentle visual humor, clearly an illustration rather than a news photograph. Color palette: warm cream, muted blue, coral orange and dark graphite. Mood: practical, familiar and slightly busy, like the first week of class.",
+        "output_constraints": [
+          "Horizontal 3:2 or 16:9 composition suitable for a WeChat body image",
+          "Keep the student, laptop, syllabus and weekly planner large and readable at phone width",
+          "Keep all essential subjects inside the central 80% crop-safe area",
+          "No readable words, letters, numbers, formulas, captions or watermarks inside the image"
+        ],
+        "avoid": [
+          "Product logos, trademarks, recognizable Doubao or other AI branding, fake screenshots, realistic app interfaces, garbled text, additional people, futuristic robots, cyberpunk lighting, glossy stock-photo styling, exam-cheating cues"
+        ]
+      }
+    },
+    {
+      "id": "ai-tool-habit-paths",
+      "visual_type": "general_editorial",
+      "purpose": "在结尾把聊天、文档、写代码和云算力这些不同入口画成一张日常选择图，对应学生逐渐形成工具习惯。",
+      "reference_strategy": "none",
+      "final_stage": {
+        "mode": "text_to_image",
+        "prompt_ref": "generic-direct-v1",
+        "input_assets": [],
+        "output": "assets/ai-tool-habit-paths-image2.png",
+        "receipt": "research/image-generation-runs/ai-tool-habit-paths-final-preflight.json",
+        "present_to_user": true,
+        "content_prompt": "Use case: stylized-concept. Asset type: horizontal closing editorial illustration for a Chinese WeChat article. Scene: one ordinary Chinese college student sits at a familiar study desk after class. From the laptop, four quiet visual paths spread across the desk and room: a stack of notes and documents, a simple code window represented only by abstract line blocks, a small cloud-computing rack with one glowing GPU card, and a chat bubble made of plain geometric shapes. The paths are connected by charging cables, bookmarks and sticky-note arrows, making the tools feel like habits accumulated over a semester rather than a futuristic control center. The student reaches toward one path while the others remain available. Style: warm contemporary editorial illustration with subtle paper texture, simplified natural proportions, restrained hand-painted shapes and a little visual wit, matching an everyday technology magazine rather than a corporate infographic. Color palette: warm cream, muted blue, coral orange and dark graphite. Mood: reflective, practical and open-ended.",
+        "output_constraints": [
+          "Horizontal 3:2 or 16:9 composition suitable for the final section of a WeChat article",
+          "The student and all four tool paths must remain distinct and readable at phone width",
+          "Keep all essential subjects inside the central 80% crop-safe area",
+          "No readable words, letters, numbers, charts, captions or watermarks inside the image"
+        ],
+        "avoid": [
+          "Product logos, trademarks, recognizable Google, Doubao, GitHub, OpenAI, Alibaba Cloud or Tencent Cloud branding, fake screenshots, garbled text, humanoid robots, dystopian imagery, cyberpunk neon, polished corporate vector infographic, literal company strategy diagram"
+        ]
+      }
+    }
+  ]
+}

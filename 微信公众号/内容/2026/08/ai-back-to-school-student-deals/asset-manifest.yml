@@ -1,0 +1,301 @@
+version: 2
+updated: "2026-08-20"
+assets:
+  - file: "assets/ai-back-to-school-cover-image2-v02.png"
+    use: "wechat_cover"
+    used_in_draft: true
+    used_as_cover: true
+    dimensions: "1923x818"
+    source_type: "ai_generated"
+    source: "Codex built-in image_gen task wechat-cover-student-library, based on the registered Unsplash photograph"
+    creator_or_rightsholder: "Ashutosh Gupta / This project (AI-assisted aspect-ratio edit)"
+    obtained_on: "2026-08-20"
+    modifications: "V01 was rejected because it outpainted the library background. V02 was selected after a constrained aspect-ratio edit, original-size review, and mobile-cover review."
+    rights_status: "licensed"
+    rights_basis: "The source photograph is covered by the Unsplash License, which permits commercial use and modification. The user selected this photograph for the current WeChat cover on 2026-08-20."
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "照片：Ashutosh Gupta / Unsplash；AI 调整画幅"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "referenced_edit"
+    prompt_ref: "generic-edit-v1"
+    prompt_sha256: "320479f83953c4122a550096eaaf138ad395bbb7b2871c5c515f40ba2d4b5982"
+    invocation_prompt_sha256: "320479f83953c4122a550096eaaf138ad395bbb7b2871c5c515f40ba2d4b5982"
+    generation_constraints: "Approximately 2.35:1 WeChat cover; preserve the same student, face, pose, writing hand, notebook, laptop, lamp, table and warm library setting; no text, watermark, outpainting, restyling or new objects"
+    input_assets: ["research/source-assets/cover-unsplash-ashutosh-gupta.jpg"]
+    generated_on: "2026-08-20"
+    preflight_receipt: "research/image-generation-runs/wechat-cover-student-library-v02-final-preflight.json"
+    output_sha256: "1ca1ccc331304bdb6f44c0e3dc4747a3759f895ca5a2b7e69b81ee906686ca58"
+    editorial_note: "This is an AI-assisted aspect-ratio edit of a licensed documentary photograph, not a news-scene reconstruction."
+
+  - file: "assets/daily-ai-study-scene-image2.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "1536x1024"
+    source_type: "ai_generated"
+    source: "Codex built-in image_gen task daily-ai-study-scene"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-08-20"
+    modifications: "First generated version selected after original-size and mobile-readability review; no post-generation crop, annotation, text replacement, or retouching"
+    rights_status: "project_owned"
+    rights_basis: "Created for this content package without third-party input assets; the image contains no requested logos, product interfaces, real-person likenesses, or news-scene reconstruction."
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "AI 生成"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "text_to_image"
+    prompt_ref: "generic-direct-v1"
+    prompt_sha256: "42543dc2ff055654f5960e9de506c15ea79bcd737be8cf2e564ae31c1cd556bb"
+    invocation_prompt_sha256: "42543dc2ff055654f5960e9de506c15ea79bcd737be8cf2e564ae31c1cd556bb"
+    generation_constraints: "Horizontal 3:2 or 16:9 WeChat body image; student, laptop, syllabus and weekly planner readable at phone width; central 80% crop-safe area; no readable text, logos, watermarks, product branding or fake interfaces"
+    input_assets: []
+    generated_on: "2026-08-20"
+    preflight_receipt: "research/image-generation-runs/daily-ai-study-scene-final-preflight.json"
+    output_sha256: "dc912a61943ba248bb49792c7bd4b316aafdef8f35c853b30b78a9460a4954a1"
+    editorial_note: "Conceptual editorial illustration for everyday study use; it does not depict the Doubao product or substantiate the student-offer terms."
+
+  - file: "assets/aliyun-university-ai-pass-hero-official.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "900x450"
+    source_type: "official_page_screenshot"
+    source: "https://opc.aliyun.com/summer-2026"
+    source_file: "https://opc.aliyun.com/summer-2026"
+    creator_or_rightsholder: "Alibaba Cloud"
+    obtained_on: "2026-08-20"
+    modifications: "Public official campaign-page hero captured in Chromium at a 900x450 viewport; no crop, annotation, text replacement, or other edit"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "The user requested one or two images for each section and explicitly approved using official-page links or screenshots for this article. Approval is limited to attributed editorial commentary in this WeChat content package."
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "图：阿里云"
+    output_sha256: "2486f29322431f80177ec06cf8f1afb89f28a04822fdddfe8c5cae3d5d4f07dc"
+    editorial_note: "The screenshot records only the official campaign hero as viewed on 2026-08-20 and excludes the unrelated referral-prize module; eligibility details may change."
+
+  - file: "assets/tencent-hai-student-offer-official.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "1200x900"
+    source_type: "official_page_screenshot"
+    source: "https://cloud.tencent.com/act/pro/hai-edu"
+    source_file: "https://cloud.tencent.com/act/pro/hai-edu"
+    creator_or_rightsholder: "Tencent Cloud"
+    obtained_on: "2026-08-20"
+    modifications: "Public official campaign page captured in Chromium at a 1200x900 viewport; no crop, annotation, text replacement, or other edit"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "The user requested one or two images for each section and explicitly approved using official-page links or screenshots for this article. Approval is limited to attributed editorial commentary in this WeChat content package."
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "图：腾讯云"
+    editorial_note: "The screenshot records the public student-coupon page as viewed on 2026-08-20; displayed availability and pricing may change."
+
+  - file: "assets/ai-tool-habit-paths-image2.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "1615x974"
+    source_type: "ai_generated"
+    source: "Codex built-in image_gen task ai-tool-habit-paths"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-08-20"
+    modifications: "First generated version selected after original-size and mobile-readability review; no post-generation crop, annotation, text replacement, or retouching"
+    rights_status: "project_owned"
+    rights_basis: "Created for this content package without third-party input assets; the image contains no requested logos, product interfaces, real-person likenesses, or news-scene reconstruction."
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "AI 生成"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "text_to_image"
+    prompt_ref: "generic-direct-v1"
+    prompt_sha256: "1fb5850e3c02eb50814c16a795d1704daa594a1d9c27887e6ec0321c6000a6d9"
+    invocation_prompt_sha256: "1fb5850e3c02eb50814c16a795d1704daa594a1d9c27887e6ec0321c6000a6d9"
+    generation_constraints: "Horizontal 3:2 or 16:9 WeChat body image; student plus four distinct document, code, cloud-computing and chat paths readable at phone width; central 80% crop-safe area; no readable text, logos, watermarks, product branding or fake interfaces"
+    input_assets: []
+    generated_on: "2026-08-20"
+    preflight_receipt: "research/image-generation-runs/ai-tool-habit-paths-final-preflight.json"
+    output_sha256: "3b6f8542bbb9d3142ec00779a30d40feb1f35b6842d7c65c0de3b768273539c1"
+    editorial_note: "Conceptual closing illustration; it presents categories of tools, not verified product interfaces or a literal strategy diagram."
+
+  - file: "assets/google-study-notebooks-official.webp"
+    used_in_draft: true
+    used_as_cover: false
+    source_type: "official_product_image"
+    source: "https://blog.google/products-and-platforms/products/education/iste-students-2026/"
+    source_file: "https://storage.googleapis.com/gweb-uniblog-publish-prod/images/ISTE_2026_Student_Blog_Header.width-1200.format-webp.webp"
+    creator_or_rightsholder: "Google LLC"
+    obtained_on: "2026-08-20"
+    modifications: "Copied from the registered research source; no crop, annotation, text replacement, or other edit"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "After reviewing the candidate and its source context, the user instructed on 2026-08-20 to proceed with the recommended Google and GitHub body images for this WeChat article. This approval is limited to attributed editorial commentary in this content package and is not a general republication license."
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "图：Google"
+    editorial_note: "The image illustrates Google student-learning features announced on June 25, 2026; the caption does not present it as the August 19 offer announcement."
+
+  - file: "assets/github-copilot-student-official.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "1400x920"
+    source_type: "official_product_image"
+    source: "https://github.com/education/students"
+    source_file: "https://images.ctfassets.net/8aevphvgewt8/5FXSksNqQOzhGd1Tv2QAus/bee077e915644a0ecad27ef9b400298e/copilot__1_.png"
+    creator_or_rightsholder: "GitHub, Inc."
+    obtained_on: "2026-08-20"
+    modifications: "Copied from the registered research source; no crop, annotation, text replacement, or other edit"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "After reviewing the candidate and its source context, the user instructed on 2026-08-20 to proceed with the recommended Google and GitHub body images for this WeChat article. This approval is limited to attributed editorial commentary in this content package and is not a general republication license."
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "图：GitHub"
+
+  - file: "research/source-assets/cover-unsplash-ashutosh-gupta.jpg"
+    use: "research_reference"
+    used_in_draft: false
+    used_as_cover: false
+    source_type: "licensed_stock_photo"
+    source: "https://unsplash.com/photos/focused-student-studying-at-a-library-table-with-a-laptop-NASjMHJ9OhI"
+    source_file: "https://images.unsplash.com/photo-1778735940467-1335c201966d?auto=format&fit=crop&fm=jpg&q=85&w=2400"
+    creator_or_rightsholder: "Ashutosh Gupta"
+    obtained_on: "2026-08-20"
+    modifications: "Downloaded from Unsplash; no crop, text overlay, color adjustment, or other edit"
+    rights_status: "licensed_derivative_use"
+    rights_basis: "The image page identifies the photo as free to use under the Unsplash License; the license permits free commercial and non-commercial use and modification. Attribution retained as editorial practice."
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "照片：Ashutosh Gupta / Unsplash"
+
+  - file: "research/source-assets/cover-pexels-mikhail-nilov.jpg"
+    use: "research_reference"
+    used_in_draft: false
+    used_as_cover: false
+    source_type: "licensed_stock_photo"
+    source: "https://www.pexels.com/photo/college-students-studying-in-a-library-7777713/"
+    source_file: "https://images.pexels.com/photos/7777713/pexels-photo-7777713.jpeg?auto=compress&dpr=1&h=1200&w=1800"
+    creator_or_rightsholder: "Mikhail Nilov"
+    obtained_on: "2026-08-20"
+    modifications: "Downloaded from Pexels; no crop, text overlay, color adjustment, or other edit"
+    rights_status: "licensed"
+    rights_basis: "The image page marks the photo free to use; the Pexels License permits online, blog, social-media and modified use. Attribution retained as editorial practice."
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "照片：Mikhail Nilov / Pexels"
+
+  - file: "research/source-assets/google-study-notebooks-official.webp"
+    use: "research_reference"
+    used_in_draft: false
+    used_as_cover: false
+    source_type: "official_product_image"
+    source: "https://blog.google/products-and-platforms/products/education/iste-students-2026/"
+    source_file: "https://storage.googleapis.com/gweb-uniblog-publish-prod/images/ISTE_2026_Student_Blog_Header.width-1200.format-webp.webp"
+    creator_or_rightsholder: "Google LLC"
+    obtained_on: "2026-08-20"
+    modifications: "Downloaded from the official Google Blog image host; no edits"
+    rights_status: "needs_review"
+    rights_basis: "Official product illustration found on a Google Blog post; no standalone republication license was confirmed during this search."
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "图：Google"
+    editorial_note: "The image illustrates Google student-learning features announced on June 25, 2026; it is not a visual announcement of the August 19 student offer."
+
+  - file: "research/source-assets/aliyun-university-ai-pass-official.jpg"
+    use: "research_reference"
+    used_in_draft: false
+    used_as_cover: false
+    source_type: "official_campaign_image"
+    source: "https://opc.aliyun.com/summer-2026"
+    source_file: "https://img.alicdn.com/imgextra/i2/O1CN01FjM6t51aZbahtRhNB_%21%216000000003344-0-tps-4165-1156.jpg"
+    creator_or_rightsholder: "Alibaba Cloud"
+    obtained_on: "2026-08-20"
+    modifications: "Downloaded from Alibaba's official image host; no edits"
+    rights_status: "needs_review"
+    rights_basis: "Official campaign artwork found on the Alibaba Cloud campaign page; no standalone republication license was confirmed during this search."
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "图：阿里云"
+    editorial_note: "Very wide campaign artwork; the students become too small at normal mobile width unless the image is cropped."
+
+  - file: "research/source-assets/aliyun-university-ai-pass-page-official.png"
+    use: "research_reference"
+    used_in_draft: false
+    used_as_cover: false
+    dimensions: "900x820"
+    source_type: "official_page_screenshot"
+    source: "https://opc.aliyun.com/summer-2026"
+    source_file: "https://opc.aliyun.com/summer-2026"
+    creator_or_rightsholder: "Alibaba Cloud"
+    obtained_on: "2026-08-20"
+    modifications: "Public official campaign page captured in Chromium at a 900x820 viewport; no edits"
+    rights_status: "needs_review"
+    rights_basis: "Research copy of the official campaign-page screenshot; the release copy has separate user-confirmed editorial-commentary clearance."
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "图：阿里云"
+
+  - file: "research/source-assets/aliyun-university-ai-pass-hero-official.png"
+    use: "research_reference"
+    used_in_draft: false
+    used_as_cover: false
+    dimensions: "900x450"
+    source_type: "official_page_screenshot"
+    source: "https://opc.aliyun.com/summer-2026"
+    source_file: "https://opc.aliyun.com/summer-2026"
+    creator_or_rightsholder: "Alibaba Cloud"
+    obtained_on: "2026-08-20"
+    modifications: "Public official campaign-page hero captured in Chromium at a 900x450 viewport; no edits"
+    rights_status: "needs_review"
+    rights_basis: "Research copy of the selected official campaign-page hero screenshot; the release copy has separate user-confirmed editorial-commentary clearance."
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "图：阿里云"
+
+  - file: "research/source-assets/aliyun-university-ai-pass-page-official-1200.png"
+    use: "unused"
+    used_in_draft: false
+    used_as_cover: false
+    dimensions: "1200x900"
+    source_type: "official_page_screenshot"
+    source: "https://opc.aliyun.com/summer-2026"
+    source_file: "https://opc.aliyun.com/summer-2026"
+    creator_or_rightsholder: "Alibaba Cloud"
+    obtained_on: "2026-08-20"
+    modifications: "Public official campaign page captured in Chromium at a 1200x900 viewport; no edits"
+    rights_status: "needs_review"
+    rights_basis: "Unused wider screenshot retained as a layout alternative; no standalone republication license was confirmed."
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "图：阿里云"
+
+  - file: "research/source-assets/tencent-hai-student-offer-official.png"
+    use: "research_reference"
+    used_in_draft: false
+    used_as_cover: false
+    dimensions: "1200x900"
+    source_type: "official_page_screenshot"
+    source: "https://cloud.tencent.com/act/pro/hai-edu"
+    source_file: "https://cloud.tencent.com/act/pro/hai-edu"
+    creator_or_rightsholder: "Tencent Cloud"
+    obtained_on: "2026-08-20"
+    modifications: "Public official campaign page captured in Chromium at a 1200x900 viewport; no edits"
+    rights_status: "needs_review"
+    rights_basis: "Research copy of the official campaign-page screenshot; the release copy has separate user-confirmed editorial-commentary clearance."
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "图：腾讯云"
+
+  - file: "research/source-assets/github-copilot-student-official.png"
+    use: "research_reference"
+    used_in_draft: false
+    used_as_cover: false
+    source_type: "official_product_image"
+    source: "https://github.com/education/students"
+    source_file: "https://images.ctfassets.net/8aevphvgewt8/5FXSksNqQOzhGd1Tv2QAus/bee077e915644a0ecad27ef9b400298e/copilot__1_.png"
+    creator_or_rightsholder: "GitHub, Inc."
+    obtained_on: "2026-08-20"
+    modifications: "Downloaded from the image host used by GitHub Education; no edits"
+    rights_status: "needs_review"
+    rights_basis: "Official product illustration found on GitHub Education's student page; no standalone republication license was confirmed during this search."
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "图：GitHub"

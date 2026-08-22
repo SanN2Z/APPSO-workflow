@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "template_only": false,
+  "updated": "2026-08-20",
+  "project_adapter": "generic",
+  "profile_registry": "共享/运营/SOP/生图风格档案.json",
+  "style_policy": {
+    "profile": "generic-edit-v1",
+    "scope": "task",
+    "new_image_strategy": "reference_required",
+    "allow_final_text_to_image": false
+  },
+  "tasks": [
+    {
+      "id": "wechat-cover-student-library",
+      "visual_type": "editorial_cover",
+      "purpose": "把已选图书馆学习照片整理为本文的微信横封面，同时保留真实、日常的开学学习场景。",
+      "reference_strategy": "provided_local",
+      "final_stage": {
+        "mode": "referenced_edit",
+        "prompt_ref": "generic-edit-v1",
+        "input_assets": [
+          "research/source-assets/cover-unsplash-ashutosh-gupta.jpg"
+        ],
+        "output": "assets/ai-back-to-school-cover-image2-v02.png",
+        "receipt": "research/image-generation-runs/wechat-cover-student-library-v02-final-preflight.json",
+        "present_to_user": true,
+        "content_prompt": "Crop the supplied photograph to a wide WeChat article cover. Use only pixels already present in the input photograph. Keep the full original width and remove only top and bottom portions as needed. Do not outpaint, extend, reconstruct, redraw, retouch, enhance or synthesize any part of the image.",
+        "preserve": [
+          "The same student, face, glasses, pose, writing hand, notebook, laptop, desk lamp, table, library interior, warm light, colors and photographic texture",
+          "The student and laptop must both remain recognizable inside the central cover-safe area"
+        ],
+        "output_constraints": [
+          "Wide horizontal WeChat cover composition, approximately 2.35:1",
+          "No text overlay",
+          "Readable at small mobile cover size",
+          "Do not turn the photograph into an illustration or a newly staged scene"
+        ],
+        "avoid": [
+          "Adding, removing, replacing, retouching or restyling people and objects",
+          "Changing identity, facial features, hands, clothing, laptop stickers, lighting or location",
+          "Logos added by the model, watermarks, captions, headlines, garbled text or fake interfaces"
+        ]
+      }
+    }
+  ]
+}

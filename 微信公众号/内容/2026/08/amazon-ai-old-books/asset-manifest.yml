@@ -1,0 +1,353 @@
+version: 2
+updated: "2026-08-18"
+assets:
+  - file: "research/source-assets/visual-001-tracked-book-structure.png"
+    use: "research_reference"
+    used_in_draft: false
+    used_as_cover: false
+    dimensions: "1536x1024"
+    source_type: "ai_generated"
+    source: "Codex built-in image_gen; task visual-001-tracked-book reference stage"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-08-18"
+    modifications: "No post-generation edits; visually reviewed as an internal composition reference and not approved for publication"
+    rights_status: "project_owned"
+    rights_basis: "Generated for this project as an internal structural input"
+    rights_blocker: false
+    allowed_platforms: []
+    attribution: "AI 生成内部构图参考（不发布）"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "text_to_image"
+    prompt_ref: "package-structure-reference-v1"
+    prompt_sha256: "b66b1a28bf87f5a96e3c4c7e5a5a9270af4190700adfcd0560c9627603266af1"
+    invocation_prompt_sha256: "b66b1a28bf87f5a96e3c4c7e5a5a9270af4190700adfcd0560c9627603266af1"
+    generation_constraints: "3:2；单本旧书、隐藏追踪器、包裹、匿名仓库和左至右路径；不得出现真实设施标识"
+    input_assets: []
+    generated_on: "2026-08-18"
+    preflight_receipt: "research/image-generation-runs/visual-001-tracked-book-reference-preflight.json"
+
+  - file: "research/source-assets/visual-002-scan-methods-structure.png"
+    use: "research_reference"
+    used_in_draft: false
+    used_as_cover: false
+    dimensions: "1536x1024"
+    source_type: "ai_generated"
+    source: "Codex built-in image_gen; task visual-002-scan-methods reference stage"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-08-18"
+    modifications: "No post-generation edits; visually reviewed as an internal composition reference and not approved for publication"
+    rights_status: "project_owned"
+    rights_basis: "Generated for this project as an internal structural input"
+    rights_blocker: false
+    allowed_platforms: []
+    attribution: "AI 生成内部构图参考（不发布）"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "text_to_image"
+    prompt_ref: "package-structure-reference-v1"
+    prompt_sha256: "350e34206a45b3c17145c93ac474d1c14b935a6e2d576ea41f703fa3bc112d08"
+    invocation_prompt_sha256: "350e34206a45b3c17145c93ac474d1c14b935a6e2d576ea41f703fa3bc112d08"
+    generation_constraints: "3:2；左侧书托和顶置相机，右侧切脊散页和进纸扫描；不得冒充真实作业现场"
+    input_assets: []
+    generated_on: "2026-08-18"
+    preflight_receipt: "research/image-generation-runs/visual-002-scan-methods-reference-preflight.json"
+
+  - file: "research/source-assets/visual-003-book-to-database-structure.png"
+    use: "research_reference"
+    used_in_draft: false
+    used_as_cover: false
+    dimensions: "1536x1024"
+    source_type: "ai_generated"
+    source: "Codex built-in image_gen; task visual-003-book-to-database reference stage"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-08-18"
+    modifications: "No post-generation edits; visually reviewed as an internal composition reference and not approved for publication"
+    rights_status: "project_owned"
+    rights_basis: "Generated for this project as an internal structural input"
+    rights_blocker: false
+    allowed_platforms: []
+    attribution: "AI 生成内部构图参考（不发布）"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "text_to_image"
+    prompt_ref: "package-structure-reference-v1"
+    prompt_sha256: "4a0469e35b5c125687a5bfbfbd65bfeaa5fd2f8bb1a8eefd2188ec4e9ad09f01"
+    invocation_prompt_sha256: "4a0469e35b5c125687a5bfbfbd65bfeaa5fd2f8bb1a8eefd2188ec4e9ad09f01"
+    generation_constraints: "3:2；购买实体书、拆解扫描、封闭内部资料库三个动作；不暗示普遍合法性"
+    input_assets: []
+    generated_on: "2026-08-18"
+    preflight_receipt: "research/image-generation-runs/visual-003-book-to-database-reference-preflight.json"
+
+  - file: "research/source-assets/visual-004-human-text-loop-structure.png"
+    use: "research_reference"
+    used_in_draft: false
+    used_as_cover: false
+    dimensions: "1536x1024"
+    source_type: "ai_generated"
+    source: "Codex built-in image_gen; task visual-004-human-text-loop reference stage"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-08-18"
+    modifications: "No post-generation edits; visually reviewed as an internal composition reference and not approved for publication"
+    rights_status: "project_owned"
+    rights_basis: "Generated for this project as an internal structural input"
+    rights_blocker: false
+    allowed_platforms: []
+    attribution: "AI 生成内部构图参考（不发布）"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "text_to_image"
+    prompt_ref: "package-structure-reference-v1"
+    prompt_sha256: "8c258aceb498c28062b030d07f91b71331f1327494a80e3e12750223bd199cc8"
+    invocation_prompt_sha256: "8c258aceb498c28062b030d07f91b71331f1327494a80e3e12750223bd199cc8"
+    generation_constraints: "3:2；多样旧书文本与递归网页循环并列；不把所有合成数据写成有害"
+    input_assets: []
+    generated_on: "2026-08-18"
+    preflight_receipt: "research/image-generation-runs/visual-004-human-text-loop-reference-preflight.json"
+
+  - file: "research/source-assets/visual-005-two-identities-structure.png"
+    use: "research_reference"
+    used_in_draft: false
+    used_as_cover: false
+    dimensions: "1536x1024"
+    source_type: "ai_generated"
+    source: "Codex built-in image_gen; task visual-005-two-identities reference stage"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-08-18"
+    modifications: "No post-generation edits; visually reviewed as an internal composition reference and not approved for publication"
+    rights_status: "project_owned"
+    rights_basis: "Generated for this project as an internal structural input"
+    rights_blocker: false
+    allowed_platforms: []
+    attribution: "AI 生成内部构图参考（不发布）"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "text_to_image"
+    prompt_ref: "package-structure-reference-v1"
+    prompt_sha256: "bdb843a7c9d110b81113eee9a23309c5a9f67c3705ebc1589ec5df52a6ad4d10"
+    invocation_prompt_sha256: "bdb843a7c9d110b81113eee9a23309c5a9f67c3705ebc1589ec5df52a6ad4d10"
+    generation_constraints: "3:2；一本旧书分向读者阅读与机器提取两种用途；不含价格或所有权暗示"
+    input_assets: []
+    generated_on: "2026-08-18"
+    preflight_receipt: "research/image-generation-runs/visual-005-two-identities-reference-preflight.json"
+
+  - file: "research/source-assets/visual-006-preservation-choice-structure.png"
+    use: "research_reference"
+    used_in_draft: false
+    used_as_cover: false
+    dimensions: "1536x1024"
+    source_type: "ai_generated"
+    source: "Codex built-in image_gen; task visual-006-preservation-choice reference stage"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-08-18"
+    modifications: "No post-generation edits; visually reviewed as an internal composition reference and not approved for publication"
+    rights_status: "project_owned"
+    rights_basis: "Generated for this project as an internal structural input"
+    rights_blocker: false
+    allowed_platforms: []
+    attribution: "AI 生成内部构图参考（不发布）"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "text_to_image"
+    prompt_ref: "package-structure-reference-v1"
+    prompt_sha256: "a520266ab7132fdecd4ccf8a9ea7d2ee3152072c0bf001c88b434b3b72c2b13a"
+    invocation_prompt_sha256: "a520266ab7132fdecd4ccf8a9ea7d2ee3152072c0bf001c88b434b3b72c2b13a"
+    generation_constraints: "3:2；普通旧书、一个脆弱版本、扫描方式分流；不声称孤本已被毁"
+    input_assets: []
+    generated_on: "2026-08-18"
+    preflight_receipt: "research/image-generation-runs/visual-006-preservation-choice-reference-preflight.json"
+
+  - file: "assets/visual-001-tracked-book-image2.png"
+    used_in_draft: false
+    used_as_cover: false
+    dimensions: "1536x1024"
+    source_type: "ai_generated"
+    source: "Codex built-in image_gen; task visual-001-tracked-book final stage"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-08-18"
+    modifications: "Governed APPSO redraw from the registered structural reference; no post-generation edits; visually reviewed"
+    rights_status: "project_owned"
+    rights_basis: "Generated for this project from a project-owned structural reference"
+    rights_blocker: false
+    allowed_platforms: [wechat]
+    attribution: "AI 生成示意图，不代表 Amazon 或 404 Media 的真实现场"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "referenced_edit"
+    prompt_ref: "appsso-004"
+    prompt_sha256: "6ba5e092a4f8d6fb2bd33602424ba4792715aa59f2bf5f916b90d8bb3f0bbd0a"
+    invocation_prompt_sha256: "3997fb9fde5d351e31290ba0af73d992b9bed2741cdc1d062149b897dedbdb99"
+    generation_constraints: "3:2 白底；单本旧书、隐藏追踪器、匿名仓库和路径；无标识、无可读文字、不冒充新闻现场"
+    input_assets: ["research/source-assets/visual-001-tracked-book-structure.png"]
+    generated_on: "2026-08-18"
+    preflight_receipt: "research/image-generation-runs/visual-001-tracked-book-final-preflight.json"
+
+  - file: "assets/visual-002-scan-methods-image2.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "1536x1024"
+    source_type: "ai_generated"
+    source: "Codex built-in image_gen; task visual-002-scan-methods final stage"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-08-18"
+    modifications: "Governed APPSO redraw from the registered structural reference; no post-generation edits; visually reviewed"
+    rights_status: "project_owned"
+    rights_basis: "Generated for this project from a project-owned structural reference"
+    rights_blocker: false
+    allowed_platforms: [wechat]
+    attribution: "AI 生成示意图"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "referenced_edit"
+    prompt_ref: "appsso-004"
+    prompt_sha256: "6ba5e092a4f8d6fb2bd33602424ba4792715aa59f2bf5f916b90d8bb3f0bbd0a"
+    invocation_prompt_sha256: "bb4aa4c7fdfa8df22d77f134be4cc5d3af57d86b09994c1c58f66844fe2a61cf"
+    generation_constraints: "3:2 白底；左侧书托顶拍，右侧切脊散页进纸；无品牌、无可读文字、不冒充真实设备照片"
+    input_assets: ["research/source-assets/visual-002-scan-methods-structure.png"]
+    generated_on: "2026-08-18"
+    preflight_receipt: "research/image-generation-runs/visual-002-scan-methods-final-preflight.json"
+
+  - file: "assets/visual-003-book-to-database-image2.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "1536x1024"
+    source_type: "ai_generated"
+    source: "Codex built-in image_gen; task visual-003-book-to-database final stage"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-08-18"
+    modifications: "Governed APPSO redraw from the registered structural reference; no post-generation edits; visually reviewed"
+    rights_status: "project_owned"
+    rights_basis: "Generated for this project from a project-owned structural reference"
+    rights_blocker: false
+    allowed_platforms: [wechat]
+    attribution: "AI 生成示意图"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "referenced_edit"
+    prompt_ref: "appsso-004"
+    prompt_sha256: "6ba5e092a4f8d6fb2bd33602424ba4792715aa59f2bf5f916b90d8bb3f0bbd0a"
+    invocation_prompt_sha256: "136825bf9e90e2b0898df8398f162d7ec2219cc9f8349fd89abcaaeb74e7ee60"
+    generation_constraints: "3:2 白底；购买实体书、拆解扫描、封闭内部资料库三步；无公司标识、不暗示普遍合法"
+    input_assets: ["research/source-assets/visual-003-book-to-database-structure.png"]
+    generated_on: "2026-08-18"
+    preflight_receipt: "research/image-generation-runs/visual-003-book-to-database-final-preflight.json"
+
+  - file: "assets/visual-004-human-text-loop-image2.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "1536x1024"
+    source_type: "ai_generated"
+    source: "Codex built-in image_gen; task visual-004-human-text-loop final stage"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-08-18"
+    modifications: "Governed APPSO redraw from the registered structural reference; no post-generation edits; visually reviewed"
+    rights_status: "project_owned"
+    rights_basis: "Generated for this project from a project-owned structural reference"
+    rights_blocker: false
+    allowed_platforms: [wechat]
+    attribution: "AI 生成示意图"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "referenced_edit"
+    prompt_ref: "appsso-004"
+    prompt_sha256: "6ba5e092a4f8d6fb2bd33602424ba4792715aa59f2bf5f916b90d8bb3f0bbd0a"
+    invocation_prompt_sha256: "f7b3f9ff0e5f08952f54737c8205c928e2d1e97a96e22f4cc58ae33fb65ff60c"
+    generation_constraints: "3:2 白底；多样旧书文本与网页递归循环并列；无品牌、无图表数字、不把所有合成数据画成有害"
+    input_assets: ["research/source-assets/visual-004-human-text-loop-structure.png"]
+    generated_on: "2026-08-18"
+    preflight_receipt: "research/image-generation-runs/visual-004-human-text-loop-final-preflight.json"
+
+  - file: "assets/visual-005-two-identities-image2.png"
+    used_in_draft: false
+    used_as_cover: false
+    dimensions: "1536x1024"
+    source_type: "ai_generated"
+    source: "Codex built-in image_gen; task visual-005-two-identities final stage"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-08-18"
+    modifications: "Governed APPSO redraw from the registered structural reference; no post-generation edits; visually reviewed"
+    rights_status: "project_owned"
+    rights_basis: "Generated for this project from a project-owned structural reference"
+    rights_blocker: false
+    allowed_platforms: [wechat]
+    attribution: "AI 生成示意图"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "referenced_edit"
+    prompt_ref: "appsso-004"
+    prompt_sha256: "6ba5e092a4f8d6fb2bd33602424ba4792715aa59f2bf5f916b90d8bb3f0bbd0a"
+    invocation_prompt_sha256: "5ad9a7e073095f4dad70e4790a047da55ad642603dce28f424b1f6c411696ff5"
+    generation_constraints: "3:2 白底；同一本旧书分向读者阅读与机器提取；无价格、所有权或普遍性暗示"
+    input_assets: ["research/source-assets/visual-005-two-identities-structure.png"]
+    generated_on: "2026-08-18"
+    preflight_receipt: "research/image-generation-runs/visual-005-two-identities-final-preflight.json"
+
+  - file: "assets/visual-006-preservation-choice-image2.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "1536x1024"
+    source_type: "ai_generated"
+    source: "Codex built-in image_gen; task visual-006-preservation-choice final stage"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-08-18"
+    modifications: "Second governed APPSO redraw replaced an ambiguous first result; no post-generation edits; visually reviewed"
+    rights_status: "project_owned"
+    rights_basis: "Generated for this project from a project-owned structural reference"
+    rights_blocker: false
+    allowed_platforms: [wechat]
+    attribution: "AI 生成示意图"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "referenced_edit"
+    prompt_ref: "appsso-004"
+    prompt_sha256: "6ba5e092a4f8d6fb2bd33602424ba4792715aa59f2bf5f916b90d8bb3f0bbd0a"
+    invocation_prompt_sha256: "57f510767b39684ca988c63bc7a7ec7e600af4fab85b0789e3f9b361c5342243"
+    generation_constraints: "3:2 白底；普通旧书、一个脆弱版本、散页进纸与书托顶拍两路；不声称孤本已毁"
+    input_assets: ["research/source-assets/visual-006-preservation-choice-structure.png"]
+    generated_on: "2026-08-18"
+    preflight_receipt: "research/image-generation-runs/visual-006-preservation-choice-final-preflight.json"
+
+  - file: "assets/source-001-404media-tracked-books.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "1440x1050"
+    source_type: "webpage_screenshot"
+    source: "https://www.404media.co/we-tracked-a-shipment-of-rare-books-it-ended-at-an-amazon-ai-training-facility/"
+    creator_or_rightsholder: "404 Media / Emanuel Maiberg"
+    obtained_on: "2026-08-18"
+    modifications: "First-viewport screenshot in a fresh logged-out browser context; no page content edits and no full-article capture"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "The user explicitly requested related-report screenshots for attributed editorial commentary in this APPSO article; this does not grant a general republication license"
+    rights_blocker: false
+    allowed_platforms: [wechat]
+    attribution: "页面截图：404 Media，Emanuel Maiberg，2026-08-17"
+
+  - file: "assets/source-002-guardian-booksellers.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "1440x1050"
+    source_type: "webpage_screenshot"
+    source: "https://www.theguardian.com/technology/2026/aug/15/uk-ireland-booksellers-suspect-ai-companies-bulk-orders-data-acquisition"
+    creator_or_rightsholder: "The Guardian webpage; underlying photograph credited as supplied"
+    obtained_on: "2026-08-18"
+    modifications: "Cookie choice dismissed, article heading scrolled into view, and first viewport captured in a fresh logged-out browser context; no page content edits and no full-article capture"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "The user explicitly requested related-report screenshots for attributed editorial commentary in this APPSO article; this does not grant a general republication license"
+    rights_blocker: false
+    allowed_platforms: [wechat]
+    attribution: "页面截图：《卫报》，Dan Milmo；网页原图标注为 supplied，2026-08-15"
+
+  - file: "assets/source-003-atlantic-used-books.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "1440x1050"
+    source_type: "webpage_screenshot"
+    source: "https://www.theatlantic.com/technology/2026/08/ai-companies-buying-used-books-for-data/688167/"
+    creator_or_rightsholder: "The Atlantic; illustration by Alisa Gao"
+    obtained_on: "2026-08-18"
+    modifications: "Subscription overlay dismissed, article heading scrolled into view, and first viewport captured in a fresh logged-out browser context; no page content edits and no full-article capture"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "The user explicitly requested related-report screenshots for attributed editorial commentary in this APPSO article; this does not grant a general republication license"
+    rights_blocker: false
+    allowed_platforms: [wechat]
+    attribution: "页面截图：《The Atlantic》，Alex Reisner；插画 Alisa Gao，2026-08-05"

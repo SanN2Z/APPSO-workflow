@@ -1,0 +1,297 @@
+{
+  "schema_version": 1,
+  "updated": "2026-08-18",
+  "project_adapter": "appsso",
+  "profile_registry": "APPSO-数字资产/04-模板/生图风格档案.json",
+  "style_policy": {
+    "profile": "appsso-004",
+    "scope": "all_ai_generated_editorial_images",
+    "new_image_strategy": "two_stage_reference_then_redraw",
+    "allow_final_text_to_image": false
+  },
+  "tasks": [
+    {
+      "id": "visual-001-tracked-book",
+      "visual_type": "ai_editorial_creative",
+      "purpose": "交代一本旧书从寄出、被追踪到进入匿名仓储扫描链的实体旅程。",
+      "reference_strategy": "generated_base",
+      "reference_stage": {
+        "mode": "text_to_image",
+        "prompt_ref": "package-structure-reference-v1",
+        "output": "research/source-assets/visual-001-tracked-book-structure.png",
+        "receipt": "research/image-generation-runs/visual-001-tracked-book-reference-preflight.json",
+        "present_to_user": false,
+        "content_prompt": "Create a neutral structural reference for a single left-to-right scene. On the left, show one worn but intact old hardcover book inside an open bookseller parcel, with a tiny generic tracking device hidden between the back cover and pages. In the center, show a dotted travel path leading toward an anonymous warehouse entrance with no identifying marks. On the right, show the same book at the threshold of a paper-processing area, with the intact book still clearly recognizable. Keep the three beats connected as one journey, without depicting a real company site.",
+        "output_constraints": [
+          "Landscape 3:2 canvas at 1536 by 1024 pixels with at least 10 percent safe margin on every side",
+          "Show exactly one book, one small tracker, one parcel, one travel path, and one anonymous warehouse",
+          "No written labels; make the reading order unambiguous from left to right"
+        ],
+        "avoid": [
+          "Logos, trademarks, watermarks, fake interfaces, news-scene realism, identifiable facilities, or extra books"
+        ]
+      },
+      "final_stage": {
+        "mode": "referenced_edit",
+        "prompt_ref": "appsso-004",
+        "prompt_sha256": "6ba5e092a4f8d6fb2bd33602424ba4792715aa59f2bf5f916b90d8bb3f0bbd0a",
+        "input_assets": [
+          "research/source-assets/visual-001-tracked-book-structure.png"
+        ],
+        "output": "assets/visual-001-tracked-book-image2.png",
+        "receipt": "research/image-generation-runs/visual-001-tracked-book-final-preflight.json",
+        "present_to_user": true,
+        "preserve": [
+          "The same single old book travels from an open parcel on the left, past a dotted route, to an anonymous warehouse on the right",
+          "The tracker remains tiny and clearly hidden inside the book rather than attached to the warehouse",
+          "The warehouse has no company name, logo, address, or identifying architecture"
+        ],
+        "output_constraints": [
+          "Landscape 3:2 canvas at 1536 by 1024 pixels with at least 10 percent mobile crop-safe margin",
+          "Use a white background",
+          "No written labels; keep the three-step reading order clear on a phone screen"
+        ],
+        "avoid": [
+          "Polished technology-magazine composition, clean vector geometry, cinematic depth, or professional illustration finish",
+          "Logos, trademarks, watermarks, extra text, garbled text, fake interfaces, identifiable facilities, or news-scene realism"
+        ]
+      }
+    },
+    {
+      "id": "visual-002-scan-methods",
+      "visual_type": "qualitative_explainer",
+      "purpose": "对照保留装订的逐页拍摄与切脊后散页连续进纸两种扫描方式。",
+      "reference_strategy": "generated_base",
+      "reference_stage": {
+        "mode": "text_to_image",
+        "prompt_ref": "package-structure-reference-v1",
+        "output": "research/source-assets/visual-002-scan-methods-structure.png",
+        "receipt": "research/image-generation-runs/visual-002-scan-methods-reference-preflight.json",
+        "present_to_user": false,
+        "content_prompt": "Create a neutral structural reference divided into two equal halves. On the left, show one intact open bound book supported in a V-shaped cradle while an overhead camera photographs the pages without touching them. On the right, show one book with its spine removed, a neat stack of loose pages, and those pages feeding continuously through a generic document scanner. The contrast must be understandable through objects and actions alone.",
+        "output_constraints": [
+          "Landscape 3:2 canvas at 1536 by 1024 pixels with at least 10 percent safe margin on every side",
+          "Show exactly one non-destructive setup on the left and one destructive loose-page setup on the right",
+          "No arrows with text and no written labels"
+        ],
+        "avoid": [
+          "Logos, trademarks, watermarks, fake interfaces, people, extra machines, or realistic workplace reconstruction"
+        ]
+      },
+      "final_stage": {
+        "mode": "referenced_edit",
+        "prompt_ref": "appsso-004",
+        "prompt_sha256": "6ba5e092a4f8d6fb2bd33602424ba4792715aa59f2bf5f916b90d8bb3f0bbd0a",
+        "input_assets": [
+          "research/source-assets/visual-002-scan-methods-structure.png"
+        ],
+        "output": "assets/visual-002-scan-methods-image2.png",
+        "receipt": "research/image-generation-runs/visual-002-scan-methods-final-preflight.json",
+        "present_to_user": true,
+        "preserve": [
+          "Left half: an intact open book rests in a V-shaped cradle below a top-mounted camera",
+          "Right half: the spine has been removed and loose pages feed through a document scanner",
+          "The two methods remain visually separate and equally prominent"
+        ],
+        "output_constraints": [
+          "Landscape 3:2 canvas at 1536 by 1024 pixels with at least 10 percent mobile crop-safe margin",
+          "Use a white background",
+          "No written labels; the intact-versus-loose-page contrast must remain readable on a phone screen"
+        ],
+        "avoid": [
+          "Polished technology-magazine composition, clean vector geometry, cinematic depth, or professional illustration finish",
+          "Logos, trademarks, watermarks, extra text, garbled text, fake interfaces, people, or news-scene realism"
+        ]
+      }
+    },
+    {
+      "id": "visual-003-book-to-database",
+      "visual_type": "qualitative_explainer",
+      "purpose": "说明合法购买实体书、破坏性扫描与内部数字副本是三个相连但不同的动作。",
+      "reference_strategy": "generated_base",
+      "reference_stage": {
+        "mode": "text_to_image",
+        "prompt_ref": "package-structure-reference-v1",
+        "output": "research/source-assets/visual-003-book-to-database-structure.png",
+        "receipt": "research/image-generation-runs/visual-003-book-to-database-reference-preflight.json",
+        "present_to_user": false,
+        "content_prompt": "Create a neutral structural reference with three connected stations. First, show one purchased paper book beside a generic sales receipt with no readable words. Second, show the book being disbound into loose pages and scanned. Third, show one digital copy entering a closed internal archive represented by a locked storage cabinet containing simple file shapes. Make the physical book, conversion action, and restricted digital destination visually distinct.",
+        "output_constraints": [
+          "Landscape 3:2 canvas at 1536 by 1024 pixels with at least 10 percent safe margin on every side",
+          "Show exactly one physical book, one receipt, one conversion station, and one closed archive",
+          "No written labels, legal symbols, or company identifiers"
+        ],
+        "avoid": [
+          "Logos, trademarks, watermarks, fake interfaces, courtroom scenes, identifiable companies, or claims of legal approval"
+        ]
+      },
+      "final_stage": {
+        "mode": "referenced_edit",
+        "prompt_ref": "appsso-004",
+        "prompt_sha256": "6ba5e092a4f8d6fb2bd33602424ba4792715aa59f2bf5f916b90d8bb3f0bbd0a",
+        "input_assets": [
+          "research/source-assets/visual-003-book-to-database-structure.png"
+        ],
+        "output": "assets/visual-003-book-to-database-image2.png",
+        "receipt": "research/image-generation-runs/visual-003-book-to-database-final-preflight.json",
+        "present_to_user": true,
+        "preserve": [
+          "Three separate stations remain connected from purchase, to disbinding and scanning, to a closed internal digital archive",
+          "The receipt contains no readable text and indicates only that a physical copy was purchased",
+          "The image does not suggest that purchase automatically grants copyright or legal approval"
+        ],
+        "output_constraints": [
+          "Landscape 3:2 canvas at 1536 by 1024 pixels with at least 10 percent mobile crop-safe margin",
+          "Use a white background",
+          "No written labels; the three actions must be clear as separate steps on a phone screen"
+        ],
+        "avoid": [
+          "Polished technology-magazine composition, clean vector geometry, cinematic depth, or professional illustration finish",
+          "Logos, trademarks, watermarks, extra text, garbled text, fake interfaces, courtroom scenes, or claims of legal approval"
+        ]
+      }
+    },
+    {
+      "id": "visual-004-human-text-loop",
+      "visual_type": "ai_editorial_creative",
+      "purpose": "表现较早纸书的人类来源价值，以及网页内容递归复制后可能趋同的风险。",
+      "reference_strategy": "generated_base",
+      "reference_stage": {
+        "mode": "text_to_image",
+        "prompt_ref": "package-structure-reference-v1",
+        "output": "research/source-assets/visual-004-human-text-loop-structure.png",
+        "receipt": "research/image-generation-runs/visual-004-human-text-loop-reference-preflight.json",
+        "present_to_user": false,
+        "content_prompt": "Create a neutral structural reference with two contrasting flows. On the left, show a small shelf of varied old books made by different human hands, feeding many diverse page shapes and symbols toward a central collection point. On the right, show generic web-page sheets repeatedly copying one another in a circular loop, with the copies gradually becoming fewer and more uniform. Do not show a named model or claim that all synthetic data is harmful.",
+        "output_constraints": [
+          "Landscape 3:2 canvas at 1536 by 1024 pixels with at least 10 percent safe margin on every side",
+          "Keep the diverse-book flow and recursive-web loop visually separate",
+          "No written labels, numbers, charts, or equations"
+        ],
+        "avoid": [
+          "Logos, trademarks, watermarks, fake browser interfaces, named AI products, dramatic collapse imagery, or deterministic causal claims"
+        ]
+      },
+      "final_stage": {
+        "mode": "referenced_edit",
+        "prompt_ref": "appsso-004",
+        "prompt_sha256": "6ba5e092a4f8d6fb2bd33602424ba4792715aa59f2bf5f916b90d8bb3f0bbd0a",
+        "input_assets": [
+          "research/source-assets/visual-004-human-text-loop-structure.png"
+        ],
+        "output": "assets/visual-004-human-text-loop-image2.png",
+        "receipt": "research/image-generation-runs/visual-004-human-text-loop-final-preflight.json",
+        "present_to_user": true,
+        "preserve": [
+          "Left side: varied old books and human hands produce diverse page shapes",
+          "Right side: generic web pages copy around a loop and gradually become more uniform",
+          "The image communicates a possible recursive-training risk without saying all synthetic data is harmful"
+        ],
+        "output_constraints": [
+          "Landscape 3:2 canvas at 1536 by 1024 pixels with at least 10 percent mobile crop-safe margin",
+          "Use a white background",
+          "No written labels, charts, numbers, or equations; preserve a clear two-flow comparison on a phone screen"
+        ],
+        "avoid": [
+          "Polished technology-magazine composition, clean vector geometry, cinematic depth, or professional illustration finish",
+          "Logos, trademarks, watermarks, extra text, garbled text, fake browser interfaces, named AI products, or apocalyptic imagery"
+        ]
+      }
+    },
+    {
+      "id": "visual-005-two-identities",
+      "visual_type": "ai_editorial_creative",
+      "purpose": "把一本旧书同时作为供人阅读的出版物与可提取机器文本的双重身份画出来。",
+      "reference_strategy": "generated_base",
+      "reference_stage": {
+        "mode": "text_to_image",
+        "prompt_ref": "package-structure-reference-v1",
+        "output": "research/source-assets/visual-005-two-identities-structure.png",
+        "receipt": "research/image-generation-runs/visual-005-two-identities-reference-preflight.json",
+        "present_to_user": false,
+        "content_prompt": "Create a neutral structural reference centered on one old book at a fork. The left branch leads to a seated generic reader holding the intact book open. The right branch leads to a simple scanner extracting page shapes into a compact cluster of abstract data blocks. Keep the same single book as the origin of both possible uses, without showing sale prices or ownership claims.",
+        "output_constraints": [
+          "Landscape 3:2 canvas at 1536 by 1024 pixels with at least 10 percent safe margin on every side",
+          "Show one central book, one human-reading branch, and one machine-extraction branch",
+          "No written labels, currency symbols, or readable page text"
+        ],
+        "avoid": [
+          "Logos, trademarks, watermarks, fake interfaces, real people, company identifiers, or claims that every old book will be scanned"
+        ]
+      },
+      "final_stage": {
+        "mode": "referenced_edit",
+        "prompt_ref": "appsso-004",
+        "prompt_sha256": "6ba5e092a4f8d6fb2bd33602424ba4792715aa59f2bf5f916b90d8bb3f0bbd0a",
+        "input_assets": [
+          "research/source-assets/visual-005-two-identities-structure.png"
+        ],
+        "output": "assets/visual-005-two-identities-image2.png",
+        "receipt": "research/image-generation-runs/visual-005-two-identities-final-preflight.json",
+        "present_to_user": true,
+        "preserve": [
+          "One central old book branches toward a person reading an intact copy and toward a machine extracting page content",
+          "The two uses appear as parallel possibilities rather than a forced sequence",
+          "No price, ownership, or universal claim is implied"
+        ],
+        "output_constraints": [
+          "Landscape 3:2 canvas at 1536 by 1024 pixels with at least 10 percent mobile crop-safe margin",
+          "Use a white background",
+          "No written labels or readable page text; keep the fork legible on a phone screen"
+        ],
+        "avoid": [
+          "Polished technology-magazine composition, clean vector geometry, cinematic depth, or professional illustration finish",
+          "Logos, trademarks, watermarks, extra text, garbled text, fake interfaces, real identifiable people, or company identifiers"
+        ]
+      }
+    },
+    {
+      "id": "visual-006-preservation-choice",
+      "visual_type": "ai_editorial_creative",
+      "purpose": "把普通旧书与难替代版本在扫描前需要被区分的保存决策画出来。",
+      "reference_strategy": "generated_base",
+      "reference_stage": {
+        "mode": "text_to_image",
+        "prompt_ref": "package-structure-reference-v1",
+        "output": "research/source-assets/visual-006-preservation-choice-structure.png",
+        "receipt": "research/image-generation-runs/visual-006-preservation-choice-reference-preflight.json",
+        "present_to_user": false,
+        "content_prompt": "Create a neutral structural reference showing a short line of ordinary used books approaching a decision gate. One visibly fragile, unusual old volume is singled out before the gate. One path leads ordinary books toward loose-page scanning; the other path leads the fragile volume toward a protective V-shaped cradle and overhead camera. Leave the selector at the gate visibly undecided, represented by an empty hand-shaped lever with no person attached.",
+        "output_constraints": [
+          "Landscape 3:2 canvas at 1536 by 1024 pixels with at least 10 percent safe margin on every side",
+          "Show several ordinary books, exactly one fragile distinctive volume, one decision gate, and two scanning paths",
+          "No written labels, question marks, rarity stamps, or monetary values"
+        ],
+        "avoid": [
+          "Logos, trademarks, watermarks, fake interfaces, identifiable rare titles, claims that a unique book was destroyed, or news-scene realism"
+        ]
+      },
+      "final_stage": {
+        "mode": "referenced_edit",
+        "prompt_ref": "appsso-004",
+        "prompt_sha256": "6ba5e092a4f8d6fb2bd33602424ba4792715aa59f2bf5f916b90d8bb3f0bbd0a",
+        "input_assets": [
+          "research/source-assets/visual-006-preservation-choice-structure.png"
+        ],
+        "output": "assets/visual-006-preservation-choice-image2.png",
+        "receipt": "research/image-generation-runs/visual-006-preservation-choice-final-preflight.json",
+        "present_to_user": true,
+        "preserve": [
+          "Several ordinary books approach one decision gate while exactly one fragile distinctive volume is singled out",
+          "The upper route must show a stack of fully separated loose pages entering a feeder scanner; no bound or open book may appear on the upper route",
+          "The lower route must show exactly one fragile bound volume open in a protective V-shaped cradle under an overhead camera",
+          "The selector remains unresolved and the image does not claim a unique book was destroyed"
+        ],
+        "output_constraints": [
+          "Landscape 3:2 canvas at 1536 by 1024 pixels with at least 10 percent mobile crop-safe margin",
+          "Use a white background",
+          "No written labels, question marks, rarity stamps, or prices; make the loose-page feeder and the intact-book cradle visibly different on a phone screen"
+        ],
+        "avoid": [
+          "Polished technology-magazine composition, clean vector geometry, cinematic depth, or professional illustration finish",
+          "Logos, trademarks, watermarks, extra text, garbled text, fake interfaces, identifiable rare titles, or news-scene realism"
+        ]
+      }
+    }
+  ]
+}

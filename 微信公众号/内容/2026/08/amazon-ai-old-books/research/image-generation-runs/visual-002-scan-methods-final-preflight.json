@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "status": "pass",
+  "checked_on": "2026-08-18",
+  "task_id": "visual-002-scan-methods",
+  "stage": "final",
+  "project_adapter": "appsso",
+  "visual_type": "qualitative_explainer",
+  "style_override_source": null,
+  "style_profile": "appsso-004",
+  "style_scope": "all_ai_generated_editorial_images",
+  "new_image_strategy": "two_stage_reference_then_redraw",
+  "reference_strategy": "generated_base",
+  "mode": "referenced_edit",
+  "input_binding": "referenced_image_paths",
+  "num_last_images_to_include": null,
+  "conversation_derivative_rights_confirmed": false,
+  "prompt_ref": "appsso-004",
+  "prompt_sha256": "6ba5e092a4f8d6fb2bd33602424ba4792715aa59f2bf5f916b90d8bb3f0bbd0a",
+  "invocation_prompt_sha256": "bb4aa4c7fdfa8df22d77f134be4cc5d3af57d86b09994c1c58f66844fe2a61cf",
+  "input_assets": [
+    "research/source-assets/visual-002-scan-methods-structure.png"
+  ],
+  "input_fingerprints": [
+    {
+      "file": "research/source-assets/visual-002-scan-methods-structure.png",
+      "sha256": "77b1287cc54d7b85fabf0a97a9a91531dae8a85945b11beb281d01e966a9073e",
+      "rights_status": "project_owned"
+    }
+  ],
+  "output": "assets/visual-002-scan-methods-image2.png",
+  "present_to_user": true,
+  "plan": "research/image-generation-plan.json",
+  "plan_sha256": "75742cf10a08f6d48e0ce7e5f7076673e3c98615bc7ffcbfc69128a2609c5900",
+  "profile_registry": "APPSO-数字资产/04-模板/生图风格档案.json",
+  "profile_registry_sha256": "74bea2a4d0367d269a50f5cedcbf5281ba40c9818717e94da1db8ebf4fd41184",
+  "prompt_source": "APPSO-数字资产/01-栏目与品牌/品牌视觉/生图-Prompt/笨拙涂鸦重绘.md",
+  "constraints_sha256": "cffb68aca740945dd8df797681fbcce2df6806da380278b759219278c85e37a1",
+  "receipt": "research/image-generation-runs/visual-002-scan-methods-final-preflight.json"
+}
