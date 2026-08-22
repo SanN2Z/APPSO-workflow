@@ -1,0 +1,265 @@
+{
+  "schema_version": 1,
+  "updated": "2026-08-21",
+  "project_adapter": "appsso",
+  "profile_registry": "APPSO-数字资产/04-模板/生图风格档案.json",
+  "style_policy": {
+    "profile": "appsso-004",
+    "scope": "all_ai_generated_editorial_images",
+    "new_image_strategy": "two_stage_reference_then_redraw",
+    "allow_final_text_to_image": false
+  },
+  "tasks": [
+    {
+      "id": "google-marvell-illustrated-v3",
+      "visual_type": "qualitative_explainer",
+      "purpose": "用具体芯片订单、收入计数器、解锁钥匙与股票购买权插画，解释 Google 与 Marvell 权证不是 122 亿美元现款投资。",
+      "style_override": {
+        "profile": "appsso-hunt-good-illustrated-infographic-v1",
+        "profile_registry": "APPSO-数字资产/04-模板/生图风格档案.json",
+        "source": "explicit_current_task_user",
+        "reason": "用户明确要求按其成功火箭信息图和桌面信息图 Prompt 重做，插画承担主叙事，不能再用纯文字卡。",
+        "confirmed_on": "2026-08-21"
+      },
+      "reference_strategy": "provided_local",
+      "final_stage": {
+        "mode": "referenced_edit",
+        "prompt_ref": "appsso-hunt-good-illustrated-infographic-v1",
+        "prompt_sha256": "f5a11af4fcf522774cd53f5317e5b38f8a0818b657c9a641806edbbd2110d2d3",
+        "input_assets": [
+          "research/source-assets/hunt-good-infographic-style-reference.png",
+          "assets/04-google-marvell-v2.png"
+        ],
+        "output": "assets/04-google-marvell-illustrated-v3-candidate-01.png",
+        "receipt": "research/image-generation-runs/google-marvell-illustrated-v3-final-preflight.json",
+        "present_to_user": true,
+        "preserve": [
+          "Image 1 is the binding visual reference: match its vertical illustrated explainer composition, red numbered path, black-outline object drawings, callout rhythm, and warm background; Image 2 supplies the verified factual relationships only",
+          "Show one central illustrated journey: a Google purchase order and custom chips, a revenue counter reaching 500 million US dollars, one warrant batch unlocking with a key, many batches accumulating, and finally a stock-purchase certificate; the drawings must be larger than the text cards",
+          "Keep the distinction between conditional qualified purchases, warrant unlocks, shares that may be purchased, and potential exercise value"
+        ],
+        "output_constraints": [
+          "Vertical 3:4 infographic, 1080 by 1440 pixels, all important text and objects inside 64-pixel side margins and a 120-pixel quiet footer band",
+          "Use exactly this title: Google 的 122 亿美元，不是一笔投资",
+          "Use exactly this subtitle: 采购达标才解锁，最晚延续到 2033 财年",
+          "Use four red numbered callouts with exactly these headings and short labels: 1 下单定制芯片｜合格采购；2 每 5 亿美元｜解锁 1 批；3 最多 240 批｜对应 1200 亿美元合格采购；4 行使购买权｜5897 万股，206.58 美元/股",
+          "Show one highlighted figure: 全部行权潜在值 ≈ 121.8 亿美元",
+          "Use exactly this bottom process line: Google 下单 → Marvell 确认收入 → 权证分批解锁",
+          "Use exactly this final insight: 不是现款投资，也不是已确认收入。",
+          "Leave the footer band blank; the exact APPSO logo will be composited after generation"
+        ],
+        "avoid": [
+          "Any generated company logo, watermark, fake legal document, stock-photo style, pure text-card layout, abstract dashboard, extra numbers, extra steps, or additional Chinese copy"
+        ]
+      }
+    },
+    {
+      "id": "openai-zdr-illustrated-v3",
+      "visual_type": "qualitative_explainer",
+      "purpose": "用本地服务器、加密云保险库、客户密钥、自动安全扫描器与有限风险信号插画，解释 ZDR 安全方案如何不让员工看见原文。",
+      "style_override": {
+        "profile": "appsso-hunt-good-illustrated-infographic-v1",
+        "profile_registry": "APPSO-数字资产/04-模板/生图风格档案.json",
+        "source": "explicit_current_task_user",
+        "reason": "用户明确要求按其成功火箭信息图和桌面信息图 Prompt 重做，插画承担主叙事，不能再用纯文字卡。",
+        "confirmed_on": "2026-08-21"
+      },
+      "reference_strategy": "provided_local",
+      "final_stage": {
+        "mode": "referenced_edit",
+        "prompt_ref": "appsso-hunt-good-illustrated-infographic-v1",
+        "prompt_sha256": "f5a11af4fcf522774cd53f5317e5b38f8a0818b657c9a641806edbbd2110d2d3",
+        "input_assets": [
+          "research/source-assets/hunt-good-infographic-style-reference.png",
+          "assets/07-openai-zdr-v2.png"
+        ],
+        "output": "assets/07-openai-zdr-illustrated-v3.png",
+        "receipt": "research/image-generation-runs/openai-zdr-illustrated-v3-final-preflight.json",
+        "present_to_user": true,
+        "preserve": [
+          "Image 1 is the binding visual reference: match its vertical illustrated explainer composition, numbered red path, black-outline drawings, callout rhythm, and warm background; Image 2 supplies the verified privacy flow only",
+          "Show two visibly different storage illustrations: a customer building with its own server rack, and an encrypted cloud vault with a large key held by the customer; merge them into one automated scanner that sees abstract interaction patterns, then emit only a small red risk-type signal while a human employee remains unable to see the chat text",
+          "Keep the logic that automated pattern detection may span related interactions while OpenAI personnel do not receive the underlying prompts and responses"
+        ],
+        "output_constraints": [
+          "Vertical 3:4 infographic, 1080 by 1440 pixels, all important text and objects inside 64-pixel side margins and a 120-pixel quiet footer band",
+          "Use exactly this title: OpenAI 想看见风险，不看见原文",
+          "Use exactly this subtitle: Private Safety Processing：两种存储，一种有限信号",
+          "Use four red numbered callouts with exactly these headings and short labels: 1 客户本地保存｜内容留在自己的基础设施；2 加密托管｜放在 OpenAI 侧，密钥由客户持有；3 自动识别模式｜跨相关交互寻找风险组合；4 只回传风险类型｜员工看不到底层提示词和回答",
+          "Use exactly this bottom process line: 客户内容 → 自动系统 → 有限风险信号",
+          "Use exactly this open-question label: 还没公开：检测范围｜误报处理｜客户审计",
+          "Use exactly this final insight: 看见风险，不等于看见原文。",
+          "Leave the footer band blank; the exact APPSO logo will be composited after generation"
+        ],
+        "avoid": [
+          "Any generated company logo, watermark, readable private chat content, surveillance camera scene, fake interface, pure text-card layout, abstract dashboard, extra steps, or additional Chinese copy"
+        ]
+      }
+    },
+    {
+      "id": "chatgpt-ads-illustrated-v3",
+      "visual_type": "qualitative_explainer",
+      "purpose": "用模拟帐号、地点代理、统一提问、广告卡片与分组比较插画，解释 ChatGPT 广告审计的 5 步方法和首次曝光结论。",
+      "style_override": {
+        "profile": "appsso-hunt-good-illustrated-infographic-v1",
+        "profile_registry": "APPSO-数字资产/04-模板/生图风格档案.json",
+        "source": "explicit_current_task_user",
+        "reason": "用户明确要求按其成功火箭信息图和桌面信息图 Prompt 重做，插画承担主叙事，不能再用纯文字卡。",
+        "confirmed_on": "2026-08-21"
+      },
+      "reference_strategy": "provided_local",
+      "final_stage": {
+        "mode": "referenced_edit",
+        "prompt_ref": "appsso-hunt-good-illustrated-infographic-v1",
+        "prompt_sha256": "f5a11af4fcf522774cd53f5317e5b38f8a0818b657c9a641806edbbd2110d2d3",
+        "input_assets": [
+          "research/source-assets/hunt-good-infographic-style-reference.png",
+          "assets/11-chatgpt-ads-method-v2.png"
+        ],
+        "output": "assets/11-chatgpt-ads-illustrated-v3-candidate-01.png",
+        "receipt": "research/image-generation-runs/chatgpt-ads-illustrated-v3-final-preflight.json",
+        "present_to_user": true,
+        "preserve": [
+          "Image 1 is the binding visual reference: match its vertical illustrated explainer composition, red numbered journey, black-outline drawings, callout rhythm, and warm background; Image 2 supplies the verified audit counts and five-stage reading order only",
+          "Show a concrete five-stage illustrated journey: a grid of simulated user portraits and phones, location pins and a proxy route, one shared question sheet entering many chat windows, small clearly separated ad cards being collected, and a researcher comparing two groups with a simple balance scale or chart",
+          "Keep first exposure separate from ad frequency after exposure; use the main drawing and arrows to make that distinction visible"
+        ],
+        "output_constraints": [
+          "Vertical 3:4 infographic, 1080 by 1440 pixels, all important text and objects inside 64-pixel side margins and a 120-pixel quiet footer band",
+          "Use exactly this title: 低收入人设帐号，更容易先等到广告？",
+          "Use exactly this subtitle: 91 个模拟帐号，跑了 5 步审计",
+          "Use five red numbered callouts with exactly these headings and short labels: 1 建立人设｜3 个族裔组 × 3 个收入档；2 放进地点线索｜代理 IP + 带地点提示词；3 统一提问｜共 335 个真实感问题；4 抓取广告｜3000+ 条，186 个广告主；5 分开比较｜先看是否曝光，再看曝光后频率",
+          "Show exactly these two timing notes: 首次曝光中位 14 天；头 7 天：0 个帐号收到广告",
+          "Show exactly this statistical note: 收入每 +1000 美元，至少曝光一次的赔率 ×0.98",
+          "Use exactly this final insight: 邮编只是代理变量，不代表平台直接读取收入。",
+          "Leave the footer band blank; the exact APPSO logo will be composited after generation"
+        ],
+        "avoid": [
+          "Any generated company logo, watermark, real-person likeness, stereotyped demographic depiction, fake ChatGPT interface, pure text-card layout, abstract dashboard, extra statistics, extra steps, or additional Chinese copy"
+        ]
+      }
+    },
+    {
+      "id": "google-marvell-illustrated-v3-fix-01",
+      "visual_type": "qualitative_explainer",
+      "purpose": "只修正已生成 Google–Marvell 插画信息图里的股数、小数点和误生成彩色 Logo，保持全部插画、版式与其余正确文字不变。",
+      "style_override": {
+        "profile": "appsso-hunt-good-illustrated-infographic-v1",
+        "profile_registry": "APPSO-数字资产/04-模板/生图风格档案.json",
+        "source": "explicit_current_task_user",
+        "reason": "用户要求按成功插画信息图风格交付；本轮是对首个候选的定向事实修复。",
+        "confirmed_on": "2026-08-21"
+      },
+      "reference_strategy": "provided_local",
+      "final_stage": {
+        "mode": "image_edit",
+        "prompt_ref": "appsso-hunt-good-illustrated-infographic-v1",
+        "prompt_sha256": "f5a11af4fcf522774cd53f5317e5b38f8a0818b657c9a641806edbbd2110d2d3",
+        "input_assets": [
+          "assets/04-google-marvell-illustrated-v3-candidate-01.png",
+          "assets/04-google-marvell-v2.png"
+        ],
+        "output": "assets/04-google-marvell-illustrated-v3.png",
+        "receipt": "research/image-generation-runs/google-marvell-illustrated-v3-fix-01-final-preflight.json",
+        "present_to_user": true,
+        "preserve": [
+          "Image 1 is the edit target; preserve its complete composition, title, illustrations, numbered callouts, red dashed route, typography, colors, whitespace, and every already-correct label",
+          "Image 2 is the verified factual reference; change only the explicitly listed errors and do not redesign the image"
+        ],
+        "output_constraints": [
+          "Replace every incorrect 59,870,000 or 58,970,000 share count with exactly 58,970,907",
+          "Replace every price written with a comma such as 206,58 with exactly 206.58",
+          "On the warrant certificate use exactly: 可购买股数：58,970,907 股；行权价格：206.58 美元/股",
+          "In the bottom calculation use exactly: 58,970,907 股 × 206.58 美元/股",
+          "Replace the multicolor Google wordmark on the purchase order with plain black text Google; do not generate a logo",
+          "Keep the final insight exactly: 不是现款投资，也不是已确认收入。"
+        ],
+        "avoid": [
+          "Changing any illustration, moving any panel, adding or removing steps, changing the title, changing correct numbers, generated logos, fake seals, or extra text"
+        ]
+      }
+    },
+    {
+      "id": "chatgpt-ads-illustrated-v3-fix-01",
+      "visual_type": "qualitative_explainer",
+      "purpose": "只修正已生成 ChatGPT 广告审计插画信息图里的 91 帐号分配矛盾和曝光后频率误导图表，并把整页重排为更接近 3:4 的移动端构图。",
+      "style_override": {
+        "profile": "appsso-hunt-good-illustrated-infographic-v1",
+        "profile_registry": "APPSO-数字资产/04-模板/生图风格档案.json",
+        "source": "explicit_current_task_user",
+        "reason": "用户要求按成功插画信息图风格交付；本轮是对首个候选的定向事实与比例修复。",
+        "confirmed_on": "2026-08-21"
+      },
+      "reference_strategy": "provided_local",
+      "final_stage": {
+        "mode": "image_edit",
+        "prompt_ref": "appsso-hunt-good-illustrated-infographic-v1",
+        "prompt_sha256": "f5a11af4fcf522774cd53f5317e5b38f8a0818b657c9a641806edbbd2110d2d3",
+        "input_assets": [
+          "assets/11-chatgpt-ads-illustrated-v3-candidate-01.png",
+          "assets/11-chatgpt-ads-method-v2.png"
+        ],
+        "output": "assets/11-chatgpt-ads-illustrated-v3.png",
+        "receipt": "research/image-generation-runs/chatgpt-ads-illustrated-v3-fix-01-final-preflight.json",
+        "present_to_user": true,
+        "preserve": [
+          "Image 1 is the edit target; preserve its title, five-step illustrated route, portraits and phones, proxy-location illustration, question sheet, ad cards, timing strip, statistical note, colors, and final insight",
+          "Image 2 is the verified factual reference; change only the sample-allocation annotation, the exposure-frequency panel, and vertical spacing needed for a 3:4 composition"
+        ],
+        "output_constraints": [
+          "Recompose the whole infographic into a vertical 3:4 layout without cropping any of the five stages or the final insight; tighten empty vertical gaps and keep mobile-readable text",
+          "In the upper-right sample annotation delete 各建 10 个帐号 and use only exactly: 3 × 3 = 9 类人设；共 91 个模拟帐号",
+          "Keep the left Step 5 comparison about whether an account was ever exposed",
+          "Replace the right Step 5 chart that implies a high-income versus low-income frequency gap with a neutral panel headed 再看曝光后频率 and exactly this conclusion: 收入与族裔：未见显著系统关系",
+          "Do not show high-income and low-income bars with visibly different heights in the exposure-frequency panel",
+          "Keep exactly these notes: 首次曝光中位 14 天；头 7 天：0 个帐号收到广告；收入每 +1000 美元，至少曝光一次的赔率 ×0.98",
+          "Keep the final insight exactly: 邮编只是代理变量，不代表平台直接读取收入。"
+        ],
+        "avoid": [
+          "Changing the five-step sequence, inventing account allocation, suggesting exposure frequency differs significantly by income or ethnicity, adding extra statistics, generated logos, extra text, or changing already-correct numbers"
+        ]
+      }
+    },
+    {
+      "id": "google-marvell-illustrated-v4-fix-02",
+      "visual_type": "qualitative_explainer",
+      "purpose": "只修正 Google–Marvell 插画信息图中把 1200 亿美元误换算为 1200B 的单位错误，并在不丢失任何步骤的前提下收紧为接近 3:4 的移动端构图。",
+      "style_override": {
+        "profile": "appsso-hunt-good-illustrated-infographic-v1",
+        "profile_registry": "APPSO-数字资产/04-模板/生图风格档案.json",
+        "source": "explicit_current_task_user",
+        "reason": "用户要求按成功插画信息图风格交付；本轮是视觉终检发现后的单点单位修复。",
+        "confirmed_on": "2026-08-21"
+      },
+      "reference_strategy": "provided_local",
+      "final_stage": {
+        "mode": "image_edit",
+        "prompt_ref": "appsso-hunt-good-illustrated-infographic-v1",
+        "prompt_sha256": "f5a11af4fcf522774cd53f5317e5b38f8a0818b657c9a641806edbbd2110d2d3",
+        "input_assets": [
+          "assets/04-google-marvell-illustrated-v3.png",
+          "assets/04-google-marvell-v2.png"
+        ],
+        "output": "assets/04-google-marvell-illustrated-v4.png",
+        "receipt": "research/image-generation-runs/google-marvell-illustrated-v4-fix-02-final-preflight.json",
+        "present_to_user": true,
+        "preserve": [
+          "Image 1 is the edit target; preserve its title, subtitle, chip-order illustration, cumulative-purchase counter, four numbered callouts, warrant batches, certificate, exact share count and exercise price, bottom calculation, process line, colors, and final insight",
+          "Image 2 is the verified factual reference; change only the one English billion-unit label and spacing needed for a closer 3:4 composition"
+        ],
+        "output_constraints": [
+          "Replace the Step 3 pictogram label $1200B with exactly $120B, because 1200 亿美元 equals 120 billion US dollars",
+          "Keep the Step 3 Chinese label exactly: 最多 240 批｜对应 1200 亿美元合格采购",
+          "Keep exactly: 可购买股数：58,970,907 股；行权价格：206.58 美元/股",
+          "Keep exactly: 58,970,907 股 × 206.58 美元/股",
+          "Keep exactly: 全部行权潜在值 ≈ 121.8 亿美元",
+          "Recompose toward a vertical 3:4 page without cropping, shrinking, or removing any of the four stages, the calculation strip, the process line, or the final insight",
+          "Leave a quiet footer band for deterministic APPSO logo overlay"
+        ],
+        "avoid": [
+          "Any $1200B label, changing any other number, changing the four-step logic, generated company logos, extra text, removing illustrations, or turning the page into text cards"
+        ]
+      }
+    }
+  ]
+}

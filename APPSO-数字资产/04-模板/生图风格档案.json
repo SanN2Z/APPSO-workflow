@@ -1,6 +1,32 @@
 {
   "schema_version": 1,
   "profiles": {
+    "appsso-hunt-good-illustrated-infographic-v1": {
+      "classification": "internal",
+      "prompt_source": "APPSO-数字资产/01-栏目与品牌/品牌视觉/生图-Prompt/Hunt Good 插画信息图.md",
+      "prompt_heading": "## 原始 Prompt",
+      "prompt_sha256": "f5a11af4fcf522774cd53f5317e5b38f8a0818b657c9a641806edbbd2110d2d3",
+      "prompt_characters": 1411,
+      "requires_reference": true,
+      "allowed_final_modes": [
+        "referenced_edit",
+        "image_edit"
+      ],
+      "new_image_strategy": "two_stage_reference_then_redraw",
+      "forbidden_positive_terms": [
+        "纯文字卡片",
+        "text-only card",
+        "generic dashboard",
+        "抽象卡片阵列"
+      ],
+      "forbidden_avoid_terms": [
+        "hand-drawn technical illustration",
+        "warm off-white",
+        "illustrated objects",
+        "插画主体",
+        "暖白背景"
+      ]
+    },
     "appsso-004": {
       "classification": "internal",
       "prompt_source": "APPSO-数字资产/01-栏目与品牌/品牌视觉/生图-Prompt/笨拙涂鸦重绘.md",

@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "status": "pass",
+  "checked_on": "2026-08-21",
+  "task_id": "openai-zdr-illustrated-v3",
+  "stage": "final",
+  "project_adapter": "appsso",
+  "visual_type": "qualitative_explainer",
+  "style_override_source": "explicit_current_task_user",
+  "style_profile": "appsso-hunt-good-illustrated-infographic-v1",
+  "style_scope": "task",
+  "new_image_strategy": "two_stage_reference_then_redraw",
+  "reference_strategy": "provided_local",
+  "mode": "referenced_edit",
+  "input_binding": "referenced_image_paths",
+  "num_last_images_to_include": null,
+  "conversation_derivative_rights_confirmed": false,
+  "prompt_ref": "appsso-hunt-good-illustrated-infographic-v1",
+  "prompt_sha256": "f5a11af4fcf522774cd53f5317e5b38f8a0818b657c9a641806edbbd2110d2d3",
+  "invocation_prompt_sha256": "8280fc19d8538b06c351bd4fae110281cb4fb15822281b51311b751b13d7d7f3",
+  "input_assets": [
+    "research/source-assets/hunt-good-infographic-style-reference.png",
+    "assets/07-openai-zdr-v2.png"
+  ],
+  "input_fingerprints": [
+    {
+      "file": "research/source-assets/hunt-good-infographic-style-reference.png",
+      "sha256": "e2e5405c0f7d486e5b6abd6e4e404968d5f7a65ffad828e9908298758829783f",
+      "rights_status": "user_confirmed_derivative_use"
+    },
+    {
+      "file": "assets/07-openai-zdr-v2.png",
+      "sha256": "aae38325cb02cd3d0ad168e85e87cd1d73d3e4858ec4d32b228e8c69d590d861",
+      "rights_status": "project_owned"
+    }
+  ],
+  "output": "assets/07-openai-zdr-illustrated-v3.png",
+  "present_to_user": true,
+  "plan": "research/image-generation-plan.json",
+  "plan_sha256": "922b19304a88a1ba2d034fbabcb021cd2511b5065b32696f67739166e6863adb",
+  "profile_registry": "APPSO-数字资产/04-模板/生图风格档案.json",
+  "profile_registry_sha256": "375a8bdfd197667a5de557e41ddbff5680a2dfe79b730de9b049739bae0865c7",
+  "prompt_source": "APPSO-数字资产/01-栏目与品牌/品牌视觉/生图-Prompt/Hunt Good 插画信息图.md",
+  "constraints_sha256": "864c8e82d33ba553dbbda17b5f5cd41d32ad5e0ca5db3efe34620df37df90939",
+  "receipt": "research/image-generation-runs/openai-zdr-illustrated-v3-final-preflight.json"
+}

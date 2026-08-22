@@ -19,14 +19,14 @@ assets:
     source: "user_supplied"
     obtained_on: "2026-07-21"
     classification: "restricted"
-    rights_status: "internal_reference"
-    allowed_use: "本地品牌参考；对外使用前确认授权"
+    rights_status: "user_confirmed_company_brand_use"
+    allowed_use: "APPSO 公司稿与 Hunt Good 自制信息图；不得用于个人稿、其他品牌或非 APPSO 项目"
     contains_credentials: false
     format: "PNG"
     dimensions: "1978x634"
     sha256: "8160DB79FC8CAFDD864312B32BB6B01EE4D720187BC4ACC6A875E273EECD04FF"
-    reconfirmed_on: "2026-07-21"
-    notes: "用户再次提供微信临时文件，SHA-256 与已入库原件一致；红底白字，不是透明页脚版本"
+    reconfirmed_on: "2026-08-21"
+    notes: "用户明确要求信息图加入该标识；按原比例作为红色页脚锁定块使用，不抠底、不改色、不拉伸；SHA-256 与桌面提供文件一致"
 
   - id: "appsso-003"
     title: "Markdown 示意图设计系统规范"

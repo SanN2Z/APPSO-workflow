@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "status": "pass",
+  "checked_on": "2026-08-21",
+  "task_id": "google-marvell-illustrated-v3-fix-01",
+  "stage": "final",
+  "project_adapter": "appsso",
+  "visual_type": "qualitative_explainer",
+  "style_override_source": "explicit_current_task_user",
+  "style_profile": "appsso-hunt-good-illustrated-infographic-v1",
+  "style_scope": "task",
+  "new_image_strategy": "two_stage_reference_then_redraw",
+  "reference_strategy": "provided_local",
+  "mode": "image_edit",
+  "input_binding": "referenced_image_paths",
+  "num_last_images_to_include": null,
+  "conversation_derivative_rights_confirmed": false,
+  "prompt_ref": "appsso-hunt-good-illustrated-infographic-v1",
+  "prompt_sha256": "f5a11af4fcf522774cd53f5317e5b38f8a0818b657c9a641806edbbd2110d2d3",
+  "invocation_prompt_sha256": "cc31b19121c42f32f428c20e4a23c2b633efaae0ff35322457fa4cac7739ac14",
+  "input_assets": [
+    "assets/04-google-marvell-illustrated-v3-candidate-01.png",
+    "assets/04-google-marvell-v2.png"
+  ],
+  "input_fingerprints": [
+    {
+      "file": "assets/04-google-marvell-illustrated-v3-candidate-01.png",
+      "sha256": "45897da6f7135ae866512a6b2154ccbd2451bb74cc6b31dd17817d73222cd331",
+      "rights_status": "project_owned"
+    },
+    {
+      "file": "assets/04-google-marvell-v2.png",
+      "sha256": "a2caa0effbaecb82bf8c474078fa7efb4e997324b81825a050c4a6e2902c79d9",
+      "rights_status": "project_owned"
+    }
+  ],
+  "output": "assets/04-google-marvell-illustrated-v3.png",
+  "present_to_user": true,
+  "plan": "research/image-generation-plan.json",
+  "plan_sha256": "922b19304a88a1ba2d034fbabcb021cd2511b5065b32696f67739166e6863adb",
+  "profile_registry": "APPSO-数字资产/04-模板/生图风格档案.json",
+  "profile_registry_sha256": "375a8bdfd197667a5de557e41ddbff5680a2dfe79b730de9b049739bae0865c7",
+  "prompt_source": "APPSO-数字资产/01-栏目与品牌/品牌视觉/生图-Prompt/Hunt Good 插画信息图.md",
+  "constraints_sha256": "ab0f4fb66167db5f35147b09b6f7ae68903a00b24c58e41fd5438d5079864229",
+  "receipt": "research/image-generation-runs/google-marvell-illustrated-v3-fix-01-final-preflight.json"
+}

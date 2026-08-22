@@ -1,0 +1,999 @@
+# 图片资产台账
+# `user_confirmed_editorial_commentary` 表示用户确认将公开第三方图片用于有署名的
+# APPSO 编辑评论，不代表权利人授予通用或商业素材许可。
+version: 2
+updated: "2026-08-21"
+assets:
+  - file: "assets/00-cover-wechat-v2.png"
+    used_in_draft: false
+    used_as_cover: true
+    use: "wechat_cover"
+    dimensions: "1920x818"
+    source_type: "original_editorial_graphic"
+    source: "research/render_visuals_v2.py + registered APPSO logo"
+    creator_or_rightsholder: "APPSO / This project"
+    obtained_on: "2026-08-21"
+    modifications: "Original deterministic editorial layout; registered APPSO logo placed proportionally"
+    rights_status: "user_confirmed_editorial_use"
+    rights_basis: "Original APPSO design; project owner confirmed company use of the registered APPSO logo"
+    rights_blocker: false
+    permission_from_rightsholder: "confirmed_by_project_owner_for_appsso_company_use"
+    allowed_platforms: ["wechat"]
+    attribution: "APPSO"
+    ai_generated: false
+    output_sha256: "0f9f32354f5ca50c8366d8537ad5de13d8b7ba33b7d055a23ea63886aa4b5baf"
+
+  - file: "assets/00-cover-v2.png"
+    used_in_draft: true
+    used_as_cover: false
+    use: "wechat_body_header"
+    dimensions: "1200x720"
+    source_type: "original_editorial_graphic"
+    source: "research/render_visuals_v2.py + registered APPSO logo"
+    creator_or_rightsholder: "APPSO / This project"
+    obtained_on: "2026-08-21"
+    modifications: "Original deterministic editorial layout; registered APPSO logo placed proportionally"
+    rights_status: "user_confirmed_editorial_use"
+    rights_basis: "Original APPSO design; project owner confirmed company use of the registered APPSO logo"
+    rights_blocker: false
+    permission_from_rightsholder: "confirmed_by_project_owner_for_appsso_company_use"
+    allowed_platforms: ["wechat"]
+    attribution: "APPSO"
+    ai_generated: false
+    output_sha256: "2686e81c7dd3cef2933030f2233150075b3f3ba94f204928939167f831674a9a"
+
+  - file: "assets/01-stripe-openrouter-newsroom.png"
+    used_in_draft: true
+    used_as_cover: false
+    use: "wechat_body_header"
+    dimensions: "1200x1200"
+    source_type: "official_page_screenshot"
+    source: "https://stripe.com/newsroom/news/stripe-agrees-to-acquire-openrouter"
+    creator_or_rightsholder: "Stripe"
+    obtained_on: "2026-08-21"
+    modifications: "Full-page screenshot captured via the image.thum.io rendering service; no local content edits"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "Screenshot of Stripe's own public announcement page used as attributed APPSO editorial evidence"
+    rights_blocker: false
+    permission_from_rightsholder: "unconfirmed"
+    allowed_platforms: ["wechat"]
+    attribution: "Stripe Newsroom"
+    ai_generated: false
+    output_sha256: "bc0503f484e2249a4e99669dbde20de5c42b88de6b3114aa0eae62d573cffce8"
+
+  - file: "assets/03b-axios-gop-memo.png"
+    used_in_draft: true
+    used_as_cover: false
+    use: "wechat_body_header"
+    dimensions: "1200x1200"
+    source_type: "official_page_screenshot"
+    source: "https://www.axios.com/2026/08/19/gop-data-center-memo-ai-election"
+    creator_or_rightsholder: "Axios (illustration by Sarah Grillo/Axios)"
+    obtained_on: "2026-08-21"
+    modifications: "Full-page screenshot captured via the image.thum.io rendering service; no local content edits"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "Screenshot of the cited Axios report used as attributed APPSO editorial evidence; the memo itself is not public"
+    rights_blocker: false
+    permission_from_rightsholder: "unconfirmed"
+    allowed_platforms: ["wechat"]
+    attribution: "Axios"
+    ai_generated: false
+    output_sha256: "9e282ef852d7190bfc23a3b8da6c4227d1e2ba0f1e7e7839d81375db3ada3825"
+
+  - file: "assets/04a-marvell-8k-sec.png"
+    used_in_draft: true
+    used_as_cover: false
+    use: "wechat_body_header"
+    dimensions: "1200x1200"
+    source_type: "official_page_screenshot"
+    source: "https://investor.marvell.com/sec-filings/all-sec-filings/content/0001193125-26-356217/d412696d8k.htm"
+    creator_or_rightsholder: "Marvell Technology, Inc."
+    obtained_on: "2026-08-21"
+    modifications: "Full-page screenshot captured via the image.thum.io rendering service; no local content edits"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "Screenshot of a public SEC filing page used as attributed APPSO editorial evidence"
+    rights_blocker: false
+    permission_from_rightsholder: "unconfirmed"
+    allowed_platforms: ["wechat"]
+    attribution: "Marvell Investor Relations"
+    ai_generated: false
+    output_sha256: "80336f2bdefa75d708d14649596040b272eabb1756c5842d9051ceef7719e352"
+
+  - file: "assets/05a-cursor-origin-changelog.png"
+    used_in_draft: true
+    used_as_cover: false
+    use: "wechat_body_header"
+    dimensions: "1200x1200"
+    source_type: "official_page_screenshot"
+    source: "https://cursor.com/changelog/origin-code-hosting"
+    creator_or_rightsholder: "Cursor (Anysphere)"
+    obtained_on: "2026-08-21"
+    modifications: "Full-page screenshot captured via the image.thum.io rendering service; no local content edits"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "Screenshot of Cursor's own public changelog used as attributed APPSO editorial evidence"
+    rights_blocker: false
+    permission_from_rightsholder: "unconfirmed"
+    allowed_platforms: ["wechat"]
+    attribution: "Cursor"
+    ai_generated: false
+    output_sha256: "abc48d8a1e2da4fbdae338c364361cf2bd23734f2a7a662277ff551b514b8b4f"
+
+  - file: "assets/10-kitbitz-home.png"
+    used_in_draft: true
+    used_as_cover: false
+    use: "wechat_body_header"
+    dimensions: "1200x1200"
+    source_type: "official_page_screenshot"
+    source: "https://kitbitz.art/"
+    creator_or_rightsholder: "Kitbitz"
+    obtained_on: "2026-08-21"
+    modifications: "Full-page screenshot captured via the image.thum.io rendering service; no local content edits"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "Screenshot of the tool's own public homepage used as attributed APPSO editorial evidence; the illustrations shown are released under CC0 1.0 by the site"
+    rights_blocker: false
+    permission_from_rightsholder: "unconfirmed"
+    allowed_platforms: ["wechat"]
+    attribution: "Kitbitz"
+    ai_generated: false
+    output_sha256: "87a3e64206e96f3be5815461203df5d973da53ee3ad35abbb7e0916faf52bf67"
+
+  - file: "assets/11-chatgpt-ads-arxiv.png"
+    used_in_draft: true
+    used_as_cover: false
+    use: "wechat_body_header"
+    dimensions: "1200x1200"
+    source_type: "official_page_screenshot"
+    source: "https://arxiv.org/abs/2608.05008"
+    creator_or_rightsholder: "arXiv / Lurie et al."
+    obtained_on: "2026-08-21"
+    modifications: "Full-page screenshot captured via the image.thum.io rendering service; no local content edits"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "Screenshot of a public arXiv abstract page used as attributed APPSO editorial evidence"
+    rights_blocker: false
+    permission_from_rightsholder: "unconfirmed"
+    allowed_platforms: ["wechat"]
+    attribution: "arXiv:2608.05008"
+    ai_generated: false
+    output_sha256: "37c0b2c0a4ed32e91bb391785d248d5dcd777431cc8a0d3b323bd776bfea8e77"
+
+  - file: "assets/12a-model-hypnosis-arxiv.png"
+    used_in_draft: true
+    used_as_cover: false
+    use: "wechat_body_header"
+    dimensions: "1200x1200"
+    source_type: "official_page_screenshot"
+    source: "https://arxiv.org/abs/2608.16834"
+    creator_or_rightsholder: "arXiv / Boix-Adserà, Tessler"
+    obtained_on: "2026-08-21"
+    modifications: "Full-page screenshot captured via the image.thum.io rendering service; no local content edits"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "Screenshot of a public arXiv abstract page used as attributed APPSO editorial evidence"
+    rights_blocker: false
+    permission_from_rightsholder: "unconfirmed"
+    allowed_platforms: ["wechat"]
+    attribution: "arXiv:2608.16834"
+    ai_generated: false
+    output_sha256: "6811ce41b63986ec3b27e63224185751ce3c7141a063a31e0a4e548ded06ffed"
+
+  - file: "assets/14a-cuda-island-challenge.png"
+    used_in_draft: true
+    used_as_cover: false
+    use: "wechat_body_header"
+    dimensions: "1200x1200"
+    source_type: "official_page_screenshot"
+    source: "https://yassa9.github.io/osint/gralhix-004/"
+    creator_or_rightsholder: "yassa9 (page); challenge photo from Gralhix OSINT Exercise #004"
+    obtained_on: "2026-08-21"
+    modifications: "Full-page screenshot captured via the image.thum.io rendering service; no local content edits"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "Screenshot of the author's own public write-up used as attributed APPSO editorial evidence; the embedded challenge photo originates from the Gralhix exercise the write-up cites"
+    rights_blocker: false
+    permission_from_rightsholder: "unconfirmed"
+    allowed_platforms: ["wechat"]
+    attribution: "yassa9 / Gralhix"
+    ai_generated: false
+    output_sha256: "e5a2febeadc7c917e66a626fb5d39c709ede89904071f66b3661627bb575691f"
+
+  - file: "assets/01-stripe-openrouter-official.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "unused"
+    dimensions: "2048x1024"
+    source_type: "official_acquisition_lockup"
+    source: "https://stripe.com/newsroom/news/stripe-agrees-to-acquire-openrouter"
+    creator_or_rightsholder: "Stripe / OpenRouter"
+    obtained_on: "2026-08-21"
+    modifications: "Downloaded from the official Stripe image host; no local content edits"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "Official announcement image used as attributed APPSO editorial evidence"
+    rights_blocker: false
+    permission_from_rightsholder: "unconfirmed"
+    allowed_platforms: ["wechat"]
+    attribution: "Stripe"
+    ai_generated: false
+    output_sha256: "242fc82f00a5ba001b299f95b0c41ccdf1891421594dc710eccf88008182ac3e"
+
+  - file: "assets/02-amazon-prime-air-official.jpg"
+    used_in_draft: true
+    used_as_cover: false
+    use: "wechat_body_header"
+    dimensions: "1200x600"
+    source_type: "official_product_photo"
+    source: "https://www.aboutamazon.com/news/policy-news-views/amazon-drone-regulation-comments"
+    creator_or_rightsholder: "Amazon"
+    obtained_on: "2026-08-21"
+    modifications: "Downloaded official derivative; no local content edits"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "Official product photo used as attributed context; caption limits what the image proves"
+    rights_blocker: false
+    permission_from_rightsholder: "unconfirmed"
+    allowed_platforms: ["wechat"]
+    attribution: "Amazon"
+    ai_generated: false
+    output_sha256: "38e1957480584dc904098e35b718e4cbcaf4cbea77ff3fc3292e953d57c3ac7e"
+
+  - file: "assets/03-pa-data-center-commonwealth.jpg"
+    used_in_draft: true
+    used_as_cover: false
+    use: "wechat_body_header"
+    dimensions: "880x587"
+    source_type: "news_photo"
+    source: "https://radio.wpsu.org/2026-05-27/breaking-gov-josh-shapiro-announces-finalized-standards-for-data-center-developments-in-pa"
+    creator_or_rightsholder: "Commonwealth Media Services / WPSU"
+    obtained_on: "2026-08-21"
+    modifications: "Downloaded from the WPSU image host; no local content edits"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "Attributed public news photo; caption distinguishes the May event from the August order"
+    rights_blocker: false
+    permission_from_rightsholder: "unconfirmed"
+    allowed_platforms: ["wechat"]
+    attribution: "Commonwealth Media Services / WPSU"
+    ai_generated: false
+    output_sha256: "7eaca723e7da67b0761a4626da618d306abaa8a8c8b895d364aa25ac89f3a94c"
+
+  - file: "assets/04-google-marvell-v2.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "wechat_body_header"
+    dimensions: "1200x720"
+    source_type: "original_explanatory_graphic"
+    source: "research/render_visuals_v2.py + Marvell 8-K terms + registered APPSO logo"
+    creator_or_rightsholder: "APPSO / This project"
+    obtained_on: "2026-08-21"
+    modifications: "Original redraw of purchase-triggered warrant mechanics; no filing screenshot copied"
+    rights_status: "project_owned"
+    rights_basis: "Original APPSO editorial design based on verified public facts"
+    rights_blocker: false
+    permission_from_rightsholder: "confirmed_by_project_owner_for_appsso_company_use"
+    allowed_platforms: ["wechat"]
+    attribution: "APPSO"
+    ai_generated: false
+    output_sha256: "a2caa0effbaecb82bf8c474078fa7efb4e997324b81825a050c4a6e2902c79d9"
+    editorial_note: "$12.18B is potential exercise value; $120B is conditional qualified purchase revenue."
+
+  - file: "assets/05-cursor-origin-official-v2.png"
+    used_in_draft: true
+    used_as_cover: false
+    use: "wechat_body_header"
+    dimensions: "1600x900"
+    source_type: "official_product_screenshot"
+    source: "https://cursor.com/changelog/origin-code-hosting"
+    creator_or_rightsholder: "Cursor / Anysphere"
+    obtained_on: "2026-08-21"
+    modifications: "Extracted official inline screenshot; cropped and resized without altering interface content"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "Official public product screenshot used as attributed APPSO editorial evidence"
+    rights_blocker: false
+    permission_from_rightsholder: "unconfirmed"
+    allowed_platforms: ["wechat"]
+    attribution: "Cursor"
+    ai_generated: false
+    output_sha256: "c785c54b2063425b72554afb8d8dd490e339fed26855dd62dc652d38174eb045"
+
+  - file: "assets/05b-cursor-origin-apps-official.png"
+    used_in_draft: true
+    used_as_cover: false
+    use: "wechat_body_header"
+    dimensions: "1600x900"
+    source_type: "official_product_screenshot"
+    source: "https://cursor.com/changelog/origin-code-hosting"
+    creator_or_rightsholder: "Cursor / Anysphere"
+    obtained_on: "2026-08-21"
+    modifications: "Extracted official inline screenshot; cropped and resized without altering interface content"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "Official public product screenshot used as attributed APPSO editorial evidence"
+    rights_blocker: false
+    permission_from_rightsholder: "unconfirmed"
+    allowed_platforms: ["wechat"]
+    attribution: "Cursor"
+    ai_generated: false
+    output_sha256: "7abe9645c51ce8bc1ab52e5dd4f323ca29dfb4363c4c4f8c24c66718e103f265"
+
+  - file: "assets/06-chatgpt-teens-official.png"
+    used_in_draft: true
+    used_as_cover: false
+    use: "wechat_body_header"
+    dimensions: "1600x900"
+    source_type: "official_topic_graphic"
+    source: "https://openai.com/index/teen-safety-policies-gpt-oss-safeguard/"
+    creator_or_rightsholder: "OpenAI"
+    obtained_on: "2026-08-21"
+    modifications: "Downloaded from OpenAI official asset host; no local content edits"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "Official teen-safety graphic used as attributed related context; caption states it is not the product interface"
+    rights_blocker: false
+    permission_from_rightsholder: "unconfirmed"
+    allowed_platforms: ["wechat"]
+    attribution: "OpenAI"
+    ai_generated: false
+    output_sha256: "9dac86524d85b6d2b51dcc08f78cf4773217857b6ffe82338e9ad2fc64d14a32"
+
+  - file: "assets/07-openai-zdr-v2.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "wechat_body_header"
+    dimensions: "1200x720"
+    source_type: "original_explanatory_graphic"
+    source: "research/render_visuals_v2.py + OpenAI public description + registered APPSO logo"
+    creator_or_rightsholder: "APPSO / This project"
+    obtained_on: "2026-08-21"
+    modifications: "Original privacy-flow redraw; no product interface copied"
+    rights_status: "project_owned"
+    rights_basis: "Original APPSO editorial design based on verified public facts"
+    rights_blocker: false
+    permission_from_rightsholder: "confirmed_by_project_owner_for_appsso_company_use"
+    allowed_platforms: ["wechat"]
+    attribution: "APPSO"
+    ai_generated: false
+    output_sha256: "aae38325cb02cd3d0ad168e85e87cd1d73d3e4858ec4d32b228e8c69d590d861"
+
+  - file: "assets/08-gemini-37-flash-official.png"
+    used_in_draft: true
+    used_as_cover: false
+    use: "wechat_body_header"
+    dimensions: "1440x640"
+    source_type: "official_page_screenshot"
+    source: "https://deepmind.google/models/model-cards/gemini-3-7-flash/"
+    creator_or_rightsholder: "Google DeepMind"
+    obtained_on: "2026-08-21"
+    modifications: "Official page screenshot; cropped only to remove the cookie banner"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "Public official model-card page used as attributed evidence"
+    rights_blocker: false
+    permission_from_rightsholder: "unconfirmed"
+    allowed_platforms: ["wechat"]
+    attribution: "Google DeepMind"
+    ai_generated: false
+    output_sha256: "cfad9c76f759cbdb5c5c1cd085e7a36bc95d84d1959937e708d2229c40ff48f2"
+
+  - file: "assets/09-openmotion-official.png"
+    used_in_draft: true
+    used_as_cover: false
+    use: "wechat_body_header"
+    dimensions: "2732x1320"
+    source_type: "official_product_preview"
+    source: "https://openmotion.design/"
+    creator_or_rightsholder: "OpenMotion"
+    obtained_on: "2026-08-21"
+    modifications: "Downloaded from official product site; no local content edits"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "Official preview used as attributed context; article states the product was not tested"
+    rights_blocker: false
+    permission_from_rightsholder: "unconfirmed"
+    allowed_platforms: ["wechat"]
+    attribution: "OpenMotion"
+    ai_generated: false
+    output_sha256: "bd3a892ef054417edfe14734c7ce1301964b68d4c03041137527aad07925f2a1"
+
+  - file: "assets/10-kitbitz-official.webp"
+    used_in_draft: false
+    used_as_cover: false
+    use: "unused"
+    dimensions: "1200x630"
+    source_type: "official_product_preview"
+    source: "https://kitbitz.art/"
+    creator_or_rightsholder: "Kitbitz / Capt Excellent"
+    obtained_on: "2026-08-21"
+    modifications: "Downloaded from official product site; no local content edits"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "Official preview used as attributed context; underlying library CC0 status is separately sourced"
+    rights_blocker: false
+    permission_from_rightsholder: "unconfirmed"
+    allowed_platforms: ["wechat"]
+    attribution: "Kitbitz"
+    ai_generated: false
+    output_sha256: "84d6516759d65f3bd4ab1c0231d33019ad37bcca96279e33e8e9654bf5974436"
+
+  - file: "assets/11-chatgpt-ads-method-v2.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "wechat_body_header"
+    dimensions: "1200x720"
+    source_type: "original_explanatory_graphic"
+    source: "research/render_visuals_v2.py + arXiv:2608.05008 study design + registered APPSO logo"
+    creator_or_rightsholder: "APPSO / This project"
+    obtained_on: "2026-08-21"
+    modifications: "Original five-stage study-design redraw; no paper figure copied"
+    rights_status: "project_owned"
+    rights_basis: "Original APPSO editorial design based on verified public facts"
+    rights_blocker: false
+    permission_from_rightsholder: "confirmed_by_project_owner_for_appsso_company_use"
+    allowed_platforms: ["wechat"]
+    attribution: "APPSO"
+    ai_generated: false
+    output_sha256: "aa6544f79084e1fbab67dec829e2ab0f1c950db9f38af3b29336dda2e04bd51f"
+
+  - file: "assets/11b-chatgpt-ads-income-paper.png"
+    used_in_draft: true
+    used_as_cover: false
+    use: "wechat_body_header"
+    dimensions: "1365x755"
+    source_type: "paper_figure_excerpt"
+    source: "https://arxiv.org/abs/2608.05008"
+    creator_or_rightsholder: "Emma Lurie et al. / paper rights holder"
+    obtained_on: "2026-08-21"
+    modifications: "Cropped Figure 6 and its immediate caption from the public PDF; no chart data altered"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "Short attributed figure excerpt used to report and critique the paper's result"
+    rights_blocker: false
+    permission_from_rightsholder: "unconfirmed"
+    allowed_platforms: ["wechat"]
+    attribution: "Lurie et al., arXiv:2608.05008"
+    ai_generated: false
+    output_sha256: "0202e0264651018989408884a03fb85fda4af715c2b239293e8943aa8a2c168b"
+
+  - file: "assets/12-model-hypnosis-paper-fig1.png"
+    used_in_draft: true
+    used_as_cover: false
+    use: "wechat_body_header"
+    dimensions: "1245x460"
+    source_type: "paper_figure_excerpt"
+    source: "https://arxiv.org/abs/2608.16834"
+    creator_or_rightsholder: "Boix-Adsera / Tessler"
+    obtained_on: "2026-08-21"
+    modifications: "Cropped Figure 1 from the public PDF; no prompt or result altered"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "Short attributed figure excerpt used to explain and critique the paper's central example"
+    rights_blocker: false
+    permission_from_rightsholder: "unconfirmed"
+    allowed_platforms: ["wechat"]
+    attribution: "Boix-Adsera and Tessler, arXiv:2608.16834"
+    ai_generated: false
+    output_sha256: "98596c3eb472785d14d81b1fb54ddeb762c8c4d489bc9c21f6c824b6a64272a7"
+
+  - file: "assets/13-agent-coordination-paper-fig1.png"
+    used_in_draft: true
+    used_as_cover: false
+    use: "wechat_body_header"
+    dimensions: "890x375"
+    source_type: "paper_figure_excerpt"
+    source: "https://arxiv.org/abs/2608.16801"
+    creator_or_rightsholder: "Destefanis / Aste"
+    obtained_on: "2026-08-21"
+    modifications: "Cropped Figure 1 from the public PDF; no diagram content altered"
+    rights_status: "licensed"
+    rights_basis: "Paper is CC BY 4.0; excerpt retains attribution"
+    rights_blocker: false
+    permission_from_rightsholder: "granted_by_cc_by_4_0"
+    allowed_platforms: ["wechat"]
+    attribution: "Destefanis and Aste, arXiv:2608.16801, CC BY 4.0"
+    ai_generated: false
+    output_sha256: "532eb42f266b25ab61f5795590bd05410c2bd27de2b1fe8a8b35b0ad423a30f0"
+
+  - file: "assets/13b-agent-coordination-paper-fig8.png"
+    used_in_draft: true
+    used_as_cover: false
+    use: "wechat_body_header"
+    dimensions: "1185x755"
+    source_type: "paper_figure_excerpt"
+    source: "https://arxiv.org/abs/2608.16801"
+    creator_or_rightsholder: "Destefanis / Aste"
+    obtained_on: "2026-08-21"
+    modifications: "Cropped Figure 8 from the public PDF; no chart data altered"
+    rights_status: "licensed"
+    rights_basis: "Paper is CC BY 4.0; excerpt retains attribution"
+    rights_blocker: false
+    permission_from_rightsholder: "granted_by_cc_by_4_0"
+    allowed_platforms: ["wechat"]
+    attribution: "Destefanis and Aste, arXiv:2608.16801, CC BY 4.0"
+    ai_generated: false
+    output_sha256: "1be87720c68ccb3d5fbc4d1a4d1e3dae08b0933f4152313fe7e45d174715306d"
+
+  - file: "assets/14-cuda-island-author.jpg"
+    used_in_draft: true
+    used_as_cover: false
+    use: "wechat_body_header"
+    dimensions: "2400x1200"
+    source_type: "creator_original_figure"
+    source: "https://yassa9.github.io/osint/gralhix-004/"
+    creator_or_rightsholder: "yassa9"
+    obtained_on: "2026-08-21"
+    modifications: "Downloaded the author's candidate-distribution figure; no local content edits"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "Attributed author-created process figure; the original challenge photo is not reproduced"
+    rights_blocker: false
+    permission_from_rightsholder: "unconfirmed"
+    allowed_platforms: ["wechat"]
+    attribution: "yassa9"
+    ai_generated: false
+    output_sha256: "727ee1baebc1a93a54ac12673c388358e939163a89d9fe4263d2de4c0387a8ad"
+
+  - file: "assets/15-egg-v2.png"
+    used_in_draft: true
+    used_as_cover: false
+    use: "wechat_body_footer"
+    dimensions: "1200x675"
+    source_type: "original_editorial_graphic"
+    source: "research/render_visuals_v2.py + registered APPSO logo"
+    creator_or_rightsholder: "APPSO / This project"
+    obtained_on: "2026-08-21"
+    modifications: "Original deterministic editorial layout; registered APPSO logo placed proportionally"
+    rights_status: "user_confirmed_editorial_use"
+    rights_basis: "Original APPSO design based on this issue's verified editorial theme"
+    rights_blocker: false
+    permission_from_rightsholder: "confirmed_by_project_owner_for_appsso_company_use"
+    allowed_platforms: ["wechat"]
+    attribution: "APPSO"
+    ai_generated: false
+    output_sha256: "1a1796dd4092d11d0d087276b71fb5a49fc9aaf0e8689334d0c3b1615a2f1ddd"
+
+  # 以下为已判废的首版输出，仅保留复盘与回归用途。
+  - file: "assets/00-cover-wechat.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "unused"
+    source_type: "rejected_original_graphic"
+    source: "research/render_cards.py + registered APPSO logo"
+    creator_or_rightsholder: "APPSO / This project"
+    obtained_on: "2026-08-21"
+    modifications: "Rejected v1 deterministic layout; retained only for visual-failure audit"
+    rights_status: "project_owned"
+    allowed_platforms: ["research"]
+    attribution: "APPSO"
+
+  - file: "assets/00-cover.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "unused"
+    source_type: "rejected_original_graphic"
+    source: "research/render_cards.py + registered APPSO logo"
+    creator_or_rightsholder: "APPSO / This project"
+    obtained_on: "2026-08-21"
+    modifications: "Rejected v1 deterministic layout; retained only for visual-failure audit"
+    rights_status: "project_owned"
+    allowed_platforms: ["research"]
+    attribution: "APPSO"
+
+  - file: "assets/04-google-marvell.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "unused"
+    source_type: "rejected_original_graphic"
+    source: "research/render_cards.py + Marvell public filing"
+    creator_or_rightsholder: "APPSO / This project"
+    obtained_on: "2026-08-21"
+    modifications: "Rejected sparse v1 information card"
+    rights_status: "project_owned"
+    allowed_platforms: ["research"]
+    attribution: "APPSO"
+
+  - file: "assets/05-cursor-origin-official.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "unused"
+    source_type: "rejected_official_changelog_image"
+    source: "https://cursor.com/changelog/origin-code-hosting"
+    creator_or_rightsholder: "Cursor / Anysphere"
+    obtained_on: "2026-08-21"
+    modifications: "Official Open Graph image rejected because the real interface was too small"
+    rights_status: "user_confirmed_editorial_commentary"
+    allowed_platforms: ["research"]
+    attribution: "Cursor"
+
+  - file: "assets/07-openai-zdr.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "unused"
+    source_type: "rejected_original_graphic"
+    source: "research/render_cards.py + OpenAI public description"
+    creator_or_rightsholder: "APPSO / This project"
+    obtained_on: "2026-08-21"
+    modifications: "Rejected sparse v1 information card"
+    rights_status: "project_owned"
+    allowed_platforms: ["research"]
+    attribution: "APPSO"
+
+  - file: "assets/11-chatgpt-ads-method-paper.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "unused"
+    source_type: "rejected_paper_excerpt"
+    source: "https://arxiv.org/abs/2608.05008"
+    creator_or_rightsholder: "Emma Lurie et al. / paper rights holder"
+    obtained_on: "2026-08-21"
+    modifications: "Intermediate paper crop rejected in favor of the v2 method graphic"
+    rights_status: "research_reference_only"
+    allowed_platforms: ["research"]
+    attribution: "Lurie et al., arXiv:2608.05008"
+
+  - file: "assets/11-chatgpt-ads.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "unused"
+    source_type: "rejected_original_graphic"
+    source: "research/render_cards.py + arXiv:2608.05008"
+    creator_or_rightsholder: "APPSO / This project"
+    obtained_on: "2026-08-21"
+    modifications: "Rejected sparse v1 information card"
+    rights_status: "project_owned"
+    allowed_platforms: ["research"]
+    attribution: "APPSO"
+
+  - file: "assets/12-model-hypnosis.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "unused"
+    source_type: "rejected_original_graphic"
+    source: "research/render_cards.py + arXiv:2608.16834"
+    creator_or_rightsholder: "APPSO / This project"
+    obtained_on: "2026-08-21"
+    modifications: "Rejected v1 card; replaced by the paper's Figure 1"
+    rights_status: "project_owned"
+    allowed_platforms: ["research"]
+    attribution: "APPSO"
+
+  - file: "assets/13-agent-coordination.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "unused"
+    source_type: "rejected_original_graphic"
+    source: "research/render_cards.py + arXiv:2608.16801"
+    creator_or_rightsholder: "APPSO / This project"
+    obtained_on: "2026-08-21"
+    modifications: "Rejected v1 card; replaced by paper Figures 1 and 8"
+    rights_status: "project_owned"
+    allowed_platforms: ["research"]
+    attribution: "APPSO"
+
+  - file: "assets/15-egg.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "unused"
+    source_type: "rejected_original_graphic"
+    source: "research/render_cards.py + registered APPSO logo"
+    creator_or_rightsholder: "APPSO / This project"
+    obtained_on: "2026-08-21"
+    modifications: "Rejected v1 deterministic layout; retained only for visual-failure audit"
+    rights_status: "project_owned"
+    allowed_platforms: ["research"]
+    attribution: "APPSO"
+
+  # 下列文件记录插画信息图的候选、修订链与最终发布资产。
+  - file: "assets/04-google-marvell-illustrated-v3-candidate-01.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "research_reference"
+    dimensions: "1024x1536"
+    source_type: "ai_generated"
+    source: "Image2 task google-marvell-illustrated-v3; candidate retained for fact-correction iteration"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-08-21"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "referenced_edit"
+    prompt_ref: "appsso-hunt-good-illustrated-infographic-v1"
+    prompt_sha256: "f5a11af4fcf522774cd53f5317e5b38f8a0818b657c9a641806edbbd2110d2d3"
+    preflight_receipt: "research/image-generation-runs/google-marvell-illustrated-v3-final-preflight.json"
+    invocation_prompt_sha256: "a3601696b60d35a090b76e5ea137a7d35119d2c6478d31c72971d391643a62e4"
+    generation_constraints: "Vertical illustrated APPSO explainer using the user reference and verified v2 fact card; candidate contains fact-typography errors and is not release-bound"
+    input_assets: ["research/source-assets/hunt-good-infographic-style-reference.png", "assets/04-google-marvell-v2.png"]
+    generated_on: "2026-08-21"
+    modifications: "Copied unchanged from the built-in image generation output"
+    rights_status: "project_owned"
+    rights_blocker: false
+    allowed_platforms: ["research"]
+    attribution: "AI 生成"
+    output_sha256: "45897da6f7135ae866512a6b2154ccbd2451bb74cc6b31dd17817d73222cd331"
+
+  - file: "assets/07-openai-zdr-illustrated-v3.png"
+    used_in_draft: true
+    used_as_cover: false
+    use: "wechat_body_header"
+    dimensions: "1080x1440"
+    source_type: "ai_generated"
+    source: "Image2 task openai-zdr-illustrated-v3; selected release asset"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-08-21"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "referenced_edit"
+    prompt_ref: "appsso-hunt-good-illustrated-infographic-v1"
+    prompt_sha256: "f5a11af4fcf522774cd53f5317e5b38f8a0818b657c9a641806edbbd2110d2d3"
+    preflight_receipt: "research/image-generation-runs/openai-zdr-illustrated-v3-final-preflight.json"
+    invocation_prompt_sha256: "8280fc19d8538b06c351bd4fae110281cb4fb15822281b51311b751b13d7d7f3"
+    generation_constraints: "Vertical illustrated APPSO privacy-flow explainer using the user reference and verified v2 fact card"
+    input_assets: ["research/source-assets/hunt-good-infographic-style-reference.png", "assets/07-openai-zdr-v2.png"]
+    generated_on: "2026-08-21"
+    modifications: "Deterministically fitted to a 1080x1440 warm-white canvas and composited with the exact registered APPSO logo; no semantic content changed"
+    rights_status: "project_owned"
+    rights_blocker: false
+    allowed_platforms: ["wechat", "research"]
+    attribution: "AI 生成插画信息图，APPSO 编辑"
+    output_sha256: "c1dab133532fc678a2f3f4e497d6df10e938260880257e9c2fb6ca3abc8a1a45"
+
+  - file: "assets/04-google-marvell-illustrated-v3.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "research_reference"
+    dimensions: "864x1821"
+    source_type: "ai_generated"
+    source: "Image2 task google-marvell-illustrated-v3-fix-01; corrected candidate retained for final unit-correction iteration"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-08-21"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "image_edit"
+    prompt_ref: "appsso-hunt-good-illustrated-infographic-v1"
+    prompt_sha256: "f5a11af4fcf522774cd53f5317e5b38f8a0818b657c9a641806edbbd2110d2d3"
+    preflight_receipt: "research/image-generation-runs/google-marvell-illustrated-v3-fix-01-final-preflight.json"
+    invocation_prompt_sha256: "cc31b19121c42f32f428c20e4a23c2b633efaae0ff35322457fa4cac7739ac14"
+    generation_constraints: "Preserve the illustrated explainer while correcting the exact share count, exercise price, certificate calculation, and generated company wordmark; retained as an intermediate because the $1200B unit label still required correction"
+    input_assets: ["assets/04-google-marvell-illustrated-v3-candidate-01.png", "assets/04-google-marvell-v2.png"]
+    generated_on: "2026-08-21"
+    modifications: "Copied unchanged from the built-in image edit output"
+    rights_status: "project_owned"
+    rights_blocker: false
+    allowed_platforms: ["research"]
+    attribution: "AI 生成"
+    output_sha256: "74c80371d980568f1c447ee29312c07f095f3cd65b1a9e013d242b95637163b8"
+
+  - file: "assets/04-google-marvell-illustrated-v4.png"
+    used_in_draft: true
+    used_as_cover: false
+    use: "wechat_body_header"
+    dimensions: "1080x1440"
+    source_type: "ai_generated"
+    source: "Image2 task google-marvell-illustrated-v4-fix-02; selected release asset"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-08-21"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "image_edit"
+    prompt_ref: "appsso-hunt-good-illustrated-infographic-v1"
+    prompt_sha256: "f5a11af4fcf522774cd53f5317e5b38f8a0818b657c9a641806edbbd2110d2d3"
+    preflight_receipt: "research/image-generation-runs/google-marvell-illustrated-v4-fix-02-final-preflight.json"
+    invocation_prompt_sha256: "90353e1bef5fcc565c732dc1dbb932b73a4deec0d7c73a38d5a66cecb82ee1aa"
+    generation_constraints: "Preserve the illustrated four-stage warrant explainer while correcting the English billion-unit label to $120B and tightening the page composition"
+    input_assets: ["assets/04-google-marvell-illustrated-v3.png", "assets/04-google-marvell-v2.png"]
+    generated_on: "2026-08-21"
+    modifications: "Deterministically fitted to a 1080x1440 warm-white canvas and composited with the exact registered APPSO logo after the governed image edit; no semantic content changed after generation"
+    rights_status: "project_owned"
+    rights_blocker: false
+    allowed_platforms: ["wechat", "research"]
+    attribution: "AI 生成插画信息图，APPSO 编辑"
+    output_sha256: "71d0dc8c41d02b7b83386d4ee395419670407dcad7267ed0b39a4aadb3b5bf21"
+
+  - file: "assets/11-chatgpt-ads-illustrated-v3-candidate-01.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "research_reference"
+    dimensions: "916x1717"
+    source_type: "ai_generated"
+    source: "Image2 task chatgpt-ads-illustrated-v3; candidate retained for fact-correction iteration"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-08-21"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "referenced_edit"
+    prompt_ref: "appsso-hunt-good-illustrated-infographic-v1"
+    prompt_sha256: "f5a11af4fcf522774cd53f5317e5b38f8a0818b657c9a641806edbbd2110d2d3"
+    preflight_receipt: "research/image-generation-runs/chatgpt-ads-illustrated-v3-final-preflight.json"
+    invocation_prompt_sha256: "2c225df0a500f76c8661a7c64a26fe16bf06b3fb9081df305bbc91f1ec6eb53e"
+    generation_constraints: "Vertical illustrated APPSO audit-method explainer using the user reference and verified v2 fact card; candidate contains sample-allocation and chart-semantics errors and is not release-bound"
+    input_assets: ["research/source-assets/hunt-good-infographic-style-reference.png", "assets/11-chatgpt-ads-method-v2.png"]
+    generated_on: "2026-08-21"
+    modifications: "Copied unchanged from the built-in image generation output"
+    rights_status: "project_owned"
+    rights_blocker: false
+    allowed_platforms: ["research"]
+    attribution: "AI 生成"
+    output_sha256: "b42f436ff8fc550344be875e299400a4436e0bace88151569274597f8a0ff5df"
+
+  - file: "assets/11-chatgpt-ads-illustrated-v3.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "unused"
+    dimensions: "1080x1440"
+    source_type: "ai_generated"
+    source: "Image2 task chatgpt-ads-illustrated-v3-fix-01; selected release asset"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-08-21"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "image_edit"
+    prompt_ref: "appsso-hunt-good-illustrated-infographic-v1"
+    prompt_sha256: "f5a11af4fcf522774cd53f5317e5b38f8a0818b657c9a641806edbbd2110d2d3"
+    preflight_receipt: "research/image-generation-runs/chatgpt-ads-illustrated-v3-fix-01-final-preflight.json"
+    invocation_prompt_sha256: "c26e6368a4ce159fb3f09ca0bd94377377a1c36fa64a99452301fc74cb5093b8"
+    generation_constraints: "Preserve the five-stage illustrated audit journey while correcting the 91-account allocation, removing the misleading income-frequency chart, and restoring the paper's non-significant frequency result"
+    input_assets: ["assets/11-chatgpt-ads-illustrated-v3-candidate-01.png", "assets/11-chatgpt-ads-method-v2.png"]
+    generated_on: "2026-08-21"
+    modifications: "Deterministically fitted to a 1080x1440 warm-white canvas and composited with the exact registered APPSO logo after the governed image edit; no semantic content changed after generation"
+    rights_status: "project_owned"
+    rights_blocker: false
+    allowed_platforms: ["wechat", "research"]
+    attribution: "AI 生成插画信息图，APPSO 编辑"
+    output_sha256: "835c230842fd5e37bc379bc2c0163a113299496c5ebcd914338bfef16ce66c3e"
+
+  - file: "research/source-assets/google-marvell-illustrated-v3-candidate-01.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "research_reference"
+    dimensions: "1024x1536"
+    source_type: "project_owned_working_copy"
+    source: "Exact research working copy of the governed Image2 output registered as assets/04-google-marvell-illustrated-v3-candidate-01.png"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-08-21"
+    modifications: "Copied unchanged before fact-correction iterations"
+    rights_status: "project_owned"
+    rights_blocker: false
+    allowed_platforms: ["research"]
+    attribution: "AI 生成"
+    ai_generated: true
+    output_sha256: "45897da6f7135ae866512a6b2154ccbd2451bb74cc6b31dd17817d73222cd331"
+
+  - file: "research/source-assets/openai-zdr-illustrated-v3-candidate-01.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "research_reference"
+    dimensions: "1024x1536"
+    source_type: "project_owned_working_copy"
+    source: "Raw research working copy of the governed Image2 output before deterministic 1080x1440 fitting and APPSO logo compositing"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-08-21"
+    modifications: "Copied unchanged before brand-safe deterministic finalization"
+    rights_status: "project_owned"
+    rights_blocker: false
+    allowed_platforms: ["research"]
+    attribution: "AI 生成"
+    ai_generated: true
+    output_sha256: "8bb4889b0e7b0a8d14b0397dc074695c0771006199c47768c3702a30a5be91d5"
+
+  - file: "research/source-assets/chatgpt-ads-illustrated-v3-candidate-01.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "research_reference"
+    dimensions: "916x1717"
+    source_type: "project_owned_working_copy"
+    source: "Exact research working copy of the governed Image2 output registered as assets/11-chatgpt-ads-illustrated-v3-candidate-01.png"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-08-21"
+    modifications: "Copied unchanged before sample-allocation and chart-semantics corrections"
+    rights_status: "project_owned"
+    rights_blocker: false
+    allowed_platforms: ["research"]
+    attribution: "AI 生成"
+    ai_generated: true
+    output_sha256: "b42f436ff8fc550344be875e299400a4436e0bace88151569274597f8a0ff5df"
+
+  - file: "research/source-assets/hunt-good-infographic-style-reference.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "research_reference"
+    source_type: "user_supplied_style_reference"
+    source: "User-supplied successful APPSO infographic in the current 2026-08-21 task"
+    creator_or_rightsholder: "User / APPSO project"
+    obtained_on: "2026-08-21"
+    modifications: "Copied unchanged from the current user attachment for governed reference-led redraw"
+    rights_status: "user_confirmed_derivative_use"
+    rights_basis: "The project owner explicitly supplied this image and instructed the assistant to use it as the current infographic style reference"
+    rights_blocker: false
+    permission_from_rightsholder: "confirmed_by_project_owner_for_current_appsso_task"
+    allowed_platforms: ["research", "wechat"]
+    attribution: "User-provided APPSO style reference"
+    ai_generated: false
+    output_sha256: "e2e5405c0f7d486e5b6abd6e4e404968d5f7a65ffad828e9908298758829783f"
+
+  - file: "research/source-assets/ads-p03-03.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "research_reference"
+    source_type: "rendered_paper_page"
+    source: "https://arxiv.org/abs/2608.05008"
+    creator_or_rightsholder: "Emma Lurie et al. / paper rights holder"
+    obtained_on: "2026-08-21"
+    modifications: "Rendered page 3 from the public PDF for local visual review"
+    rights_status: "research_reference_only"
+    allowed_platforms: ["research"]
+    attribution: "Lurie et al."
+
+  - file: "research/source-assets/ads-p06-06.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "research_reference"
+    source_type: "rendered_paper_page"
+    source: "https://arxiv.org/abs/2608.05008"
+    creator_or_rightsholder: "Emma Lurie et al. / paper rights holder"
+    obtained_on: "2026-08-21"
+    modifications: "Rendered page 6 from the public PDF for local visual review"
+    rights_status: "research_reference_only"
+    allowed_platforms: ["research"]
+    attribution: "Lurie et al."
+
+  - file: "research/source-assets/hypnosis-p02-02.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "research_reference"
+    source_type: "rendered_paper_page"
+    source: "https://arxiv.org/abs/2608.16834"
+    creator_or_rightsholder: "Boix-Adsera / Tessler"
+    obtained_on: "2026-08-21"
+    modifications: "Rendered page 2 from the public PDF for local visual review"
+    rights_status: "research_reference_only"
+    allowed_platforms: ["research"]
+    attribution: "Boix-Adsera and Tessler"
+
+  - file: "research/source-assets/coord-p03-03.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "research_reference"
+    source_type: "rendered_paper_page"
+    source: "https://arxiv.org/abs/2608.16801"
+    creator_or_rightsholder: "Destefanis / Aste"
+    obtained_on: "2026-08-21"
+    modifications: "Rendered page 3 from the CC BY 4.0 paper for local visual review"
+    rights_status: "licensed"
+    allowed_platforms: ["research"]
+    attribution: "Destefanis and Aste, CC BY 4.0"
+
+  - file: "research/source-assets/coord-p12-12.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "research_reference"
+    source_type: "rendered_paper_page"
+    source: "https://arxiv.org/abs/2608.16801"
+    creator_or_rightsholder: "Destefanis / Aste"
+    obtained_on: "2026-08-21"
+    modifications: "Rendered page 12 from the CC BY 4.0 paper for local visual review"
+    rights_status: "licensed"
+    allowed_platforms: ["research"]
+    attribution: "Destefanis and Aste, CC BY 4.0"
+
+  - file: "research/source-assets/coord-p13-13.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "research_reference"
+    source_type: "rendered_paper_page"
+    source: "https://arxiv.org/abs/2608.16801"
+    creator_or_rightsholder: "Destefanis / Aste"
+    obtained_on: "2026-08-21"
+    modifications: "Rendered page 13 from the CC BY 4.0 paper for local visual review"
+    rights_status: "licensed"
+    allowed_platforms: ["research"]
+    attribution: "Destefanis and Aste, CC BY 4.0"
+
+  - file: "research/source-assets/cursor-origin-settings.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "research_reference"
+    source_type: "official_product_screenshot_source"
+    source: "https://cursor.com/changelog/origin-code-hosting"
+    creator_or_rightsholder: "Cursor / Anysphere"
+    obtained_on: "2026-08-21"
+    modifications: "Downloaded official inline screenshot before publication crop"
+    rights_status: "research_reference_only"
+    allowed_platforms: ["research"]
+    attribution: "Cursor"
+
+  - file: "research/source-assets/cursor-origin-apps.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "research_reference"
+    source_type: "official_product_screenshot_source"
+    source: "https://cursor.com/changelog/origin-code-hosting"
+    creator_or_rightsholder: "Cursor / Anysphere"
+    obtained_on: "2026-08-21"
+    modifications: "Downloaded official inline screenshot before publication crop"
+    rights_status: "research_reference_only"
+    allowed_platforms: ["research"]
+    attribution: "Cursor"
