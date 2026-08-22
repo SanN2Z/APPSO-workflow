@@ -16,6 +16,8 @@ description: Start and coordinate the lightweight company-content path from a lo
 5. 优先执行 `next_action.command`。若只有 `command_template`，只补 `required_inputs`，不要猜 tenant、目录或账号。
 6. `handler` 指向其他 Skill 时转入对应 Skill。任何 `conflict`、`result_unknown`、过期哈希、未知路径或 journal 异常都停止自动推进。
 
+首次 clone 必须先运行 `tools/bootstrap.ps1 -FullTest`。公司 Agent host 只通过 `tools/workflow.ps1 codex-company` 或 `codex-company-feishu` 启动，以使用 clone 内锁定的 Codex 和独立 `CODEX_HOME`；不要回退到全局 CLI 或个人配置目录。
+
 ```powershell
 $repoRoot = git rev-parse --show-toplevel
 powershell -NoProfile -ExecutionPolicy Bypass -File "$repoRoot/tools/workflow.ps1" company status <内容包> --json

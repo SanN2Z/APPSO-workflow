@@ -1,3 +1,4 @@
+import argparse
 import os
 import sys
 from pathlib import Path
@@ -13,6 +14,7 @@ REQUIRED_KEYS = [
     "X_ACCESS_TOKEN",
     "X_ACCESS_TOKEN_SECRET",
 ]
+X_ROOT = Path(__file__).resolve().parents[1]
 
 
 def load_dotenv(path: Path) -> None:
@@ -42,7 +44,10 @@ def is_placeholder(value: str) -> bool:
 
 
 def main() -> None:
-    load_dotenv(Path(".env"))
+    argparse.ArgumentParser(
+        description="Check local X API settings without making a network request."
+    ).parse_args()
+    load_dotenv(X_ROOT / ".env")
 
     missing = []
     for key in REQUIRED_KEYS:

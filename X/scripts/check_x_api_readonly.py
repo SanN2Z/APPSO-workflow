@@ -1,3 +1,4 @@
+import argparse
 import base64
 import hashlib
 import hmac
@@ -14,6 +15,7 @@ from urllib.request import Request, urlopen
 
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+X_ROOT = Path(__file__).resolve().parents[1]
 
 
 def load_dotenv(path: Path) -> None:
@@ -139,7 +141,10 @@ def check_user_context() -> bool:
 
 
 def main() -> None:
-    load_dotenv(Path(".env"))
+    argparse.ArgumentParser(
+        description="Validate X API read access without performing a write."
+    ).parse_args()
+    load_dotenv(X_ROOT / ".env")
     bearer_ok = check_bearer()
     user_ok = check_user_context()
 

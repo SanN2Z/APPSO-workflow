@@ -4,6 +4,7 @@
 -r .agents/skills/self-media-ops/requirements.txt
 -r .agents/skills/insight-to-asset/requirements.txt
 -r tools/derived_corpus/requirements.txt
+-r X/requirements.txt
 
 # Repository-wide verification and document tooling.
 PyMuPDF==1.27.2.2

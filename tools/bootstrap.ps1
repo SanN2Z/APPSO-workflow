@@ -12,8 +12,8 @@ $manifest = Get-Content -LiteralPath $manifestPath -Raw -Encoding UTF8 | Convert
 $venvRoot = Join-Path $repoRoot ".venv"
 $venvPython = Join-Path $venvRoot "Scripts\python.exe"
 $verifier = Join-Path $PSScriptRoot "verify_clone_ready.py"
+$capabilityManager = Join-Path $repoRoot $manifest.entrypoints.capabilities
 $requirements = Join-Path $repoRoot $manifest.python.requirements_file
-$nodeRoot = Join-Path $repoRoot $manifest.node.package_root
 
 function Invoke-Checked {
     param(
@@ -50,8 +50,14 @@ try {
         if (-not $npmCommand) {
             throw "npm was not found. Install the Node version recorded in .nvmrc, then retry."
         }
-        Write-Output "[bootstrap] Installing locked Node dependencies with npm ci..."
-        Invoke-Checked $npmCommand.Source @("--prefix", $nodeRoot, "ci", "--no-audit", "--no-fund")
+        foreach ($installation in $manifest.node.installations) {
+            $nodeRoot = Join-Path $repoRoot $installation.package_root
+            Write-Output "[bootstrap] Installing locked Node dependencies: $($installation.id)..."
+            Invoke-Checked $npmCommand.Source @("--prefix", $nodeRoot, "ci", "--no-audit", "--no-fund")
+        }
+
+        Write-Output "[bootstrap] Preparing all clone-local capability configuration slots..."
+        Invoke-Checked $venvPython @($capabilityManager, "prepare")
     }
 
     if (-not (Test-Path -LiteralPath $venvPython -PathType Leaf)) {
@@ -67,7 +73,7 @@ try {
         Invoke-Checked $venvPython $testArgs
     }
 
-    Write-Output "[bootstrap] Ready. Use tools/workflow.ps1 for clone-local commands."
+    Write-Output "[bootstrap] Ready. All adapters are packaged; use tools/workflow.ps1 capabilities doctor for local inputs."
 }
 finally {
     Pop-Location

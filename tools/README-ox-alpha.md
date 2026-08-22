@@ -3,7 +3,7 @@
 这 3 个脚本只用于公开材料上的模型试验，不属于公众号发布链路：
 
 - `set_openrouter_key.ps1`：交互式把 `OPENROUTER_API_KEY` 写入仓库根目录的本地 `.env`；输入不回显，`.env` 已被 Git 忽略。
-- `claude-ox.ps1`：在仓库外的独立目录启动 Claude Code，并把当前进程临时指向 OpenRouter 的 Anthropic 兼容端点；建议使用 `-Isolated`。
+- `claude-ox.ps1`：在仓库外的独立目录启动 clone 内锁定的 Claude Code，并把当前进程临时指向 OpenRouter 的 Anthropic 兼容端点；建议使用 `-Isolated`。
 - `openrouter_chat.py`：以 OpenRouter Chat Completions 接口做单轮测试。仓库内文件默认拒绝读取；只有确认材料可公开时才可显式增加 `--allow-repository-file`。
 
 硬边界：
@@ -16,7 +16,10 @@
 最短用法：
 
 ```powershell
-.\tools\set_openrouter_key.ps1
-.\tools\claude-ox.ps1 -Isolated
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/bootstrap.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/workflow.ps1 set-openrouter-key
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/workflow.ps1 claude-ox -Isolated
 powershell -NoProfile -ExecutionPolicy Bypass -File tools/workflow.ps1 openrouter "只包含公开信息的测试问题"
 ```
+
+Claude Code 的精确版本由 `tools/agent-runtime/package-lock.json` 恢复，不要求另一台机器预装全局 `claude`。OpenRouter key、模型可用性与网络仍在启动时检查。

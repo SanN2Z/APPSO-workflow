@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""Verify that a fresh clone contains and can run the local workflow toolchain.
+"""Verify that a fresh clone contains every workflow capability adapter.
 
-This verifier deliberately separates clone-local capabilities from credentials,
-browser state, remote connectors, and user authorization.
+Executable adapters, pinned dependencies, templates, and versioned company tools
+must be clone-local. Secret values, browser sessions, and governed source assets
+remain local runtime inputs and are reported separately from bundle completeness.
 """
 
 from __future__ import annotations
@@ -68,6 +69,15 @@ def version_tuple(value: str) -> tuple[int, int, int]:
 
 def make_check(name: str, ok: bool, detail: str) -> dict[str, Any]:
     return {"name": name, "ok": ok, "detail": detail}
+
+
+def node_installations(manifest: dict[str, Any]) -> list[dict[str, Any]]:
+    installations = manifest.get("node", {}).get("installations")
+    if not isinstance(installations, list) or not installations:
+        raise ValueError("node.installations must be a non-empty list")
+    if not all(isinstance(item, dict) for item in installations):
+        raise ValueError("every node installation must be an object")
+    return installations
 
 
 def parse_git_nul_paths(output: str) -> set[str]:
@@ -181,37 +191,44 @@ def check_requirements(manifest: dict[str, Any]) -> dict[str, Any]:
 
 def check_node_lock(manifest: dict[str, Any]) -> dict[str, Any]:
     try:
-        package = read_json(REPO_ROOT / manifest["node"]["package_file"])
-        lock = read_json(REPO_ROOT / manifest["node"]["lock_file"])
-        expected_packages = {
-            str(name): str(version)
-            for name, version in manifest["node"]["packages"].items()
-        }
-        expected_overrides = {
-            str(name): str(version)
-            for name, version in manifest["node"]["overrides"].items()
-        }
-        package_dependencies = package.get("dependencies", {})
-        package_overrides = package.get("overrides", {})
-        lock_root = lock.get("packages", {}).get("", {})
-        lock_dependencies = lock_root.get("dependencies", {})
         problems: list[str] = []
-        if package_dependencies != expected_packages:
-            problems.append(f"package.json dependencies={package_dependencies}")
-        if package_overrides != expected_overrides:
-            problems.append(f"package.json overrides={package_overrides}")
-        if lock.get("lockfileVersion") != 3:
-            problems.append(f"lockfileVersion={lock.get('lockfileVersion')}")
-        if lock_dependencies != expected_packages:
-            problems.append(f"lock root dependencies={lock_dependencies}")
-        for name, version in expected_packages.items():
-            locked = lock.get("packages", {}).get(f"node_modules/{name}", {}).get("version")
-            if locked != version:
-                problems.append(f"{name} locked={locked!r}; expected={version!r}")
+        installations = node_installations(manifest)
+        for installation in installations:
+            label = str(installation["id"])
+            package = read_json(REPO_ROOT / installation["package_file"])
+            lock = read_json(REPO_ROOT / installation["lock_file"])
+            expected_packages = {
+                str(name): str(version)
+                for name, version in installation["packages"].items()
+            }
+            expected_overrides = {
+                str(name): str(version)
+                for name, version in installation.get("overrides", {}).items()
+            }
+            package_dependencies = package.get("dependencies", {})
+            package_overrides = package.get("overrides", {})
+            lock_root = lock.get("packages", {}).get("", {})
+            lock_dependencies = lock_root.get("dependencies", {})
+            if package_dependencies != expected_packages:
+                problems.append(f"{label} package dependencies={package_dependencies}")
+            if package_overrides != expected_overrides:
+                problems.append(f"{label} package overrides={package_overrides}")
+            if lock.get("lockfileVersion") != 3:
+                problems.append(f"{label} lockfileVersion={lock.get('lockfileVersion')}")
+            if lock_dependencies != expected_packages:
+                problems.append(f"{label} lock root dependencies={lock_dependencies}")
+            for name, version in expected_packages.items():
+                locked = lock.get("packages", {}).get(f"node_modules/{name}", {}).get("version")
+                if locked != version:
+                    problems.append(
+                        f"{label} {name} locked={locked!r}; expected={version!r}"
+                    )
         return make_check(
             "source.node_lock",
             not problems,
-            "; ".join(problems) if problems else "package.json and lockfile pins agree",
+            "; ".join(problems)
+            if problems
+            else f"{len(installations)} package.json / lockfile pairs agree",
         )
     except Exception as exc:  # noqa: BLE001
         return make_check("source.node_lock", False, str(exc))
@@ -244,17 +261,31 @@ def check_required_tracked(manifest: dict[str, Any]) -> dict[str, Any]:
         str(item).replace("\\", "/") for item in manifest["entrypoints"].values()
     )
     required_set.update(
+        str(item).replace("\\", "/")
+        for item in manifest["powershell_entrypoints"].values()
+    )
+    required_set.update(
         str(item).replace("\\", "/") for item in manifest["portable_docs"]
     )
     required_set.update(
         str(item).replace("\\", "/") for item in manifest["python"]["requirement_sources"]
     )
+    for installation in node_installations(manifest):
+        required_set.update(
+            {
+                str(installation["package_file"]).replace("\\", "/"),
+                str(installation["lock_file"]).replace("\\", "/"),
+            }
+        )
     required_set.update(
-        {
-            str(manifest["node"]["package_file"]).replace("\\", "/"),
-            str(manifest["node"]["lock_file"]).replace("\\", "/"),
-        }
+        str(item["template"]).replace("\\", "/")
+        for item in manifest["local_config_templates"]
     )
+    for capability in manifest["capability_bundles"]:
+        required_set.update(
+            str(item).replace("\\", "/")
+            for item in capability.get("tracked_paths", [])
+        )
     required = sorted(required_set)
     missing_disk = [item for item in required if not (REPO_ROOT / item).is_file()]
     tracked, error = git_tracked_paths(required)
@@ -478,24 +509,93 @@ def check_node_runtime(manifest: dict[str, Any]) -> dict[str, Any]:
 
 
 def check_installed_node_packages(manifest: dict[str, Any]) -> dict[str, Any]:
-    package_root = REPO_ROOT / manifest["node"]["package_root"]
     problems: list[str] = []
-    for name, expected in manifest["node"]["packages"].items():
-        package_file = package_root / "node_modules" / name / "package.json"
-        if not package_file.is_file():
-            problems.append(f"{name}=missing (run npm ci)")
-            continue
-        try:
-            actual = read_json(package_file).get("version")
-        except Exception as exc:  # noqa: BLE001
-            problems.append(f"{name}: {exc}")
-            continue
-        if actual != str(expected):
-            problems.append(f"{name}={actual!r} (expected {expected!r})")
+    package_count = 0
+    installations = node_installations(manifest)
+    for installation in installations:
+        package_root = REPO_ROOT / installation["package_root"]
+        for name, expected in installation["packages"].items():
+            package_count += 1
+            package_file = package_root / "node_modules" / name / "package.json"
+            if not package_file.is_file():
+                problems.append(f"{installation['id']}:{name}=missing (run npm ci)")
+                continue
+            try:
+                actual = read_json(package_file).get("version")
+            except Exception as exc:  # noqa: BLE001
+                problems.append(f"{installation['id']}:{name}: {exc}")
+                continue
+            if actual != str(expected):
+                problems.append(
+                    f"{installation['id']}:{name}={actual!r} (expected {expected!r})"
+                )
     return make_check(
         "runtime.node_packages",
         not problems,
-        "; ".join(problems) if problems else "locked Wenyan package installed",
+        "; ".join(problems)
+        if problems
+        else f"{package_count} direct packages installed across {len(installations)} runtimes",
+    )
+
+
+def check_capability_contract(manifest: dict[str, Any]) -> dict[str, Any]:
+    problems: list[str] = []
+    entrypoints = set(manifest["entrypoints"]) | set(manifest["powershell_entrypoints"])
+
+    def unique_ids(items: list[dict[str, Any]], label: str) -> set[str]:
+        values = [str(item.get("id", "")) for item in items]
+        if any(not value for value in values):
+            problems.append(f"{label} contains an empty id")
+        if len(values) != len(set(values)):
+            problems.append(f"{label} contains duplicate ids")
+        return set(values)
+
+    config_ids = unique_ids(manifest["local_config_templates"], "local_config_templates")
+    private_ids = unique_ids(manifest["private_assets"], "private_assets")
+    host_ids = unique_ids(manifest["host_tools"], "host_tools")
+    capabilities = manifest["capability_bundles"]
+    unique_ids(capabilities, "capability_bundles")
+
+    for capability in capabilities:
+        label = str(capability.get("id", "unknown"))
+        if capability.get("bundle_status") != "complete":
+            problems.append(f"{label} bundle_status is not complete")
+        unknown_entrypoints = sorted(
+            set(capability.get("entrypoints", [])) - entrypoints
+        )
+        if unknown_entrypoints:
+            problems.append(f"{label} unknown entrypoints={unknown_entrypoints}")
+        unknown_configs = sorted(
+            {
+                str(item.get("id"))
+                for item in capability.get("config_requirements", [])
+            }
+            - config_ids
+        )
+        if unknown_configs:
+            problems.append(f"{label} unknown configs={unknown_configs}")
+        unknown_private = sorted(
+            set(capability.get("private_asset_ids", [])) - private_ids
+        )
+        if unknown_private:
+            problems.append(f"{label} unknown private assets={unknown_private}")
+        unknown_hosts = sorted(set(capability.get("host_tool_ids", [])) - host_ids)
+        if unknown_hosts:
+            problems.append(f"{label} unknown host tools={unknown_hosts}")
+
+    unpackaged_gates = [
+        str(item.get("id"))
+        for item in manifest["external_gates"]
+        if item.get("adapter_packaged") is not True
+    ]
+    if unpackaged_gates:
+        problems.append(f"external adapters not packaged={unpackaged_gates}")
+    return make_check(
+        "source.capability_contract",
+        not problems,
+        "; ".join(problems)
+        if problems
+        else f"{len(capabilities)} capability bundles and {len(manifest['external_gates'])} runtime gates registered",
     )
 
 
@@ -538,6 +638,7 @@ def source_checks(manifest: dict[str, Any]) -> list[dict[str, Any]]:
         check_python_runtime(manifest),
         check_requirements(manifest),
         check_node_lock(manifest),
+        check_capability_contract(manifest),
         check_required_tracked(manifest),
         check_line_endings(manifest),
         check_python_sources(manifest),
@@ -561,6 +662,16 @@ def runtime_checks(manifest: dict[str, Any]) -> list[dict[str, Any]]:
             "runtime.company_doctor",
             [sys.executable, str(REPO_ROOT / entrypoints["company"]), "doctor", "--json"],
         ),
+        json_probe(
+            "runtime.capability_bundle",
+            [
+                sys.executable,
+                str(REPO_ROOT / entrypoints["capabilities"]),
+                "doctor",
+                "--bundle-only",
+                "--json",
+            ],
+        ),
     ]
 
 
@@ -569,11 +680,15 @@ def build_report(manifest: dict[str, Any], *, source_only: bool) -> dict[str, An
     if not source_only:
         checks.extend(runtime_checks(manifest))
     return {
-        "schema_version": 1,
+        "schema_version": 2,
         "contract_id": manifest["contract_id"],
         "mode": "source-only" if source_only else "runtime",
         "ok": all(item["ok"] for item in checks),
         "checks": checks,
+        "capability_bundles": [
+            {"id": item["id"], "bundle_status": item["bundle_status"]}
+            for item in manifest["capability_bundles"]
+        ],
         "external_gates": manifest["external_gates"],
     }
 
@@ -582,7 +697,10 @@ def print_text_report(report: dict[str, Any]) -> None:
     for item in report["checks"]:
         label = "PASS" if item["ok"] else "FAIL"
         print(f"[{label}] {item['name']}: {item['detail']}")
-    print("External gates (reported, never auto-installed or auto-authorized):")
+    print("Packaged capability bundles:")
+    for capability in report["capability_bundles"]:
+        print(f"  - {capability['id']}: {capability['bundle_status']}")
+    print("Local runtime inputs (adapters are packaged; values and sessions stay local):")
     for gate in report["external_gates"]:
         print(f"  - {gate['id']}: {gate['required_for']}")
     if report["ok"]:
@@ -609,16 +727,17 @@ def main(argv: list[str] | None = None) -> int:
     args = parse_args(argv)
     try:
         manifest = read_json(MANIFEST_PATH)
-        if manifest.get("schema_version") != 1:
+        if manifest.get("schema_version") != 2:
             raise ValueError("unsupported workflow-toolchain schema_version")
         report = build_report(manifest, source_only=args.source_only)
     except Exception as exc:  # noqa: BLE001
         report = {
-            "schema_version": 1,
+            "schema_version": 2,
             "contract_id": "CORE-PORTABILITY-001",
             "mode": "source-only" if args.source_only else "runtime",
             "ok": False,
             "checks": [make_check("manifest", False, str(exc))],
+            "capability_bundles": [],
             "external_gates": [],
         }
     if args.json:

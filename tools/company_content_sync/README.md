@@ -7,7 +7,7 @@
 ## 唯一入口
 
 - Agent：使用 `$company-content-sync`。
-- 人：首次 clone 先运行 `tools/bootstrap.ps1`，之后从仓库根目录运行 `powershell -NoProfile -ExecutionPolicy Bypass -File tools/workflow.ps1 company status <内容包> --json`。
+- 人：首次 clone 先运行 `tools/bootstrap.ps1 -FullTest`；它会安装 clone 内 Codex 并生成独立公司配置槽。之后从仓库根目录运行 `powershell -NoProfile -ExecutionPolicy Bypass -File tools/workflow.ps1 company status <内容包> --json`。
 
 `status` 是只读操作，并且只返回一个 `next_action`：
 
@@ -104,12 +104,14 @@ http_headers = { "X-Lark-MCP-Allowed-Tools" = "create-doc,fetch-doc" }
 env_http_headers = { "X-Lark-MCP-UAT" = "FEISHU_MCP_UAT" }
 ```
 
-UAT 只放在本机进程环境变量 `FEISHU_MCP_UAT`，不要写入仓库、配置文件、聊天或日志。应在启动公司 Codex 的同一个 PowerShell 窗口中设置它；配置完成后重启 Agent host，再运行：
+UAT 只放在本机进程环境变量 `FEISHU_MCP_UAT` 或被 Git 忽略的根 `.env`，不要写入跟踪文件、`config.toml`、聊天或日志。应在启动公司 Codex 的同一个 PowerShell 窗口中设置它；配置完成后重启 Agent host，再运行：
 
 ```powershell
 $env:FEISHU_MCP_UAT = "<从飞书开放平台取得的 UAT>"
-.\tools\codex-company.cmd
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/workflow.ps1 codex-company
 ```
+
+也可把 UAT 放入被 Git 忽略的根 `.env`，再运行 `tools/workflow.ps1 codex-company-feishu`；该入口只调用 `tools/agent-runtime` 中锁定的 Codex，并使用 `.local-capabilities/codex-company/config.toml`，不依赖全局 Codex 或个人 home 下的旧配置。`tools/capability-templates/codex-company.config.toml` 只包含 `create-doc`／`fetch-doc` 最小 allowlist，不含 UAT。
 
 新会话中再运行：
 

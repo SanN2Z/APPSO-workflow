@@ -23,6 +23,7 @@ REQUIRED_KEYS = [
     "X_ACCESS_TOKEN",
     "X_ACCESS_TOKEN_SECRET",
 ]
+X_ROOT = Path(__file__).resolve().parents[1]
 
 
 def load_dotenv(path: Path) -> None:
@@ -146,7 +147,7 @@ def main() -> None:
         print("[fail] --text cannot be empty.")
         raise SystemExit(1)
 
-    load_dotenv(Path(".env"))
+    load_dotenv(X_ROOT / ".env")
     require_env()
 
     print("[info] Prepared X post:")

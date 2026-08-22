@@ -1,14 +1,12 @@
 @echo off
 setlocal
 
-rem Keep the company Codex account, configuration, sessions, and MCPs isolated.
-set "CODEX_HOME=%USERPROFILE%\.codex-company"
-
-if not exist "%CODEX_HOME%" (
-    mkdir "%CODEX_HOME%" || exit /b 1
+rem Delegate to the clone-local PowerShell launcher and pinned Codex runtime.
+if "%~1"=="" (
+  powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0codex-company.ps1"
+) else (
+  powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0codex-company.ps1" -CodexArgs %*
 )
-
-call "%APPDATA%\npm\codex.cmd" %*
 set "CODEX_COMPANY_EXIT_CODE=%ERRORLEVEL%"
 
 endlocal & exit /b %CODEX_COMPANY_EXIT_CODE%

@@ -54,7 +54,7 @@ APPSO／公司稿由 Agent 处理时，默认预览交付为飞书在线文档�
 powershell -NoProfile -ExecutionPolicy Bypass -File tools/bootstrap.ps1
 ```
 
-该命令安装并核验整个仓库工作流，不创建账号配置。只有实际执行微信草稿时，才把 `.env.example` 复制为本地 `.env` 并填写凭证；凭证不要发到聊天中。
+该命令安装并核验整个仓库工作流，并从 `.env.example` 创建缺失的本地配置槽，但不写入真实账号值，也不覆盖已有 `.env`。只有实际执行微信草稿时才在本机填写凭证；凭证不要发到聊天中。完整能力清单和迁移说明见 [`tools/README-capabilities.md`](../tools/README-capabilities.md)。
 
 以下命令也从仓库根目录运行：
 

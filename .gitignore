@@ -22,6 +22,7 @@ Thumbs.db
 # Local agent, browser, and scratch artifacts
 /.playwright-mcp/
 /.company-content-sync/
+/.local-capabilities/
 /.tmp/
 /.tmp-*/
 /.pytest_cache/

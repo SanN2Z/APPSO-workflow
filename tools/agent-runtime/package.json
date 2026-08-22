@@ -1,0 +1,11 @@
+{
+  "name": "self-media-agent-runtime",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Pinned clone-local Codex and Claude Code launchers for the self-media workflow.",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@anthropic-ai/claude-code": "2.1.239",
+    "@openai/codex": "0.149.0"
+  }
+}

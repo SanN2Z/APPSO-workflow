@@ -1,5 +1,5 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "contract_id": "CORE-PORTABILITY-001",
   "python": {
     "minimum": "3.11.0",
@@ -10,7 +10,8 @@
       "微信公众号/requirements.txt",
       ".agents/skills/self-media-ops/requirements.txt",
       ".agents/skills/insight-to-asset/requirements.txt",
-      "tools/derived_corpus/requirements.txt"
+      "tools/derived_corpus/requirements.txt",
+      "X/requirements.txt"
     ],
     "packages": {
       "markdown-it-py": "4.0.0",
@@ -19,23 +20,41 @@
       "PyMuPDF": "1.27.2.2",
       "pytest": "9.0.3",
       "PyYAML": "6.0.2",
-      "tinycss2": "1.5.1"
+      "tinycss2": "1.5.1",
+      "tzdata": "2026.3"
     }
   },
   "node": {
-    "minimum": "20.0.0",
+    "minimum": "22.0.0",
     "tested": "24.13.0",
-    "package_root": "微信公众号",
-    "package_file": "微信公众号/package.json",
-    "lock_file": "微信公众号/package-lock.json",
-    "packages": {
-      "@wenyan-md/cli": "2.0.11"
-    },
-    "overrides": {
-      "mermaid": "11.16.0"
-    }
+    "installations": [
+      {
+        "id": "wechat_rendering",
+        "package_root": "微信公众号",
+        "package_file": "微信公众号/package.json",
+        "lock_file": "微信公众号/package-lock.json",
+        "packages": {
+          "@wenyan-md/cli": "2.0.11"
+        },
+        "overrides": {
+          "mermaid": "11.16.0"
+        }
+      },
+      {
+        "id": "agent_runtime",
+        "package_root": "tools/agent-runtime",
+        "package_file": "tools/agent-runtime/package.json",
+        "lock_file": "tools/agent-runtime/package-lock.json",
+        "packages": {
+          "@anthropic-ai/claude-code": "2.1.239",
+          "@openai/codex": "0.149.0"
+        },
+        "overrides": {}
+      }
+    ]
   },
   "entrypoints": {
+    "capabilities": "tools/capability_bundle.py",
     "validate": ".agents/skills/self-media-ops/scripts/validate_content_package.py",
     "image-preflight": ".agents/skills/self-media-ops/scripts/preflight_image_generation.py",
     "opening-check": ".agents/skills/self-media-ops/scripts/check_wechat_opening.py",
@@ -48,28 +67,55 @@
     "pdf-render": "tools/render_pdf_pages.py",
     "crop-image": "tools/crop_image_region.py",
     "normalize-text": "tools/normalize_text_whitespace.py",
-    "openrouter": "tools/openrouter_chat.py"
+    "openrouter": "tools/openrouter_chat.py",
+    "x-env": "X/scripts/check_x_env.py",
+    "x-readonly": "X/scripts/check_x_api_readonly.py",
+    "x-visibility": "X/scripts/check_x_visibility.py",
+    "x-post": "X/scripts/post_x.py",
+    "x-publish-queue": "X/scripts/publish_daily_queue.py",
+    "x-trend-scan": "X/scripts/trend_scan.py"
+  },
+  "powershell_entrypoints": {
+    "repo-preflight": "tools/repository_preflight.ps1",
+    "codex-company": "tools/codex-company.ps1",
+    "codex-company-feishu": "tools/codex-company-feishu.ps1",
+    "claude-ox": "tools/claude-ox.ps1",
+    "set-openrouter-key": "tools/set_openrouter_key.ps1"
   },
   "required_tracked_paths": [
+    ".env.example",
     ".python-version",
     ".nvmrc",
     ".gitattributes",
     "requirements-workflow.txt",
+    "skills-lock.json",
     "tools/workflow-toolchain.json",
     "tools/verify_clone_ready.py",
+    "tools/capability_bundle.py",
     "tools/bootstrap.ps1",
     "tools/workflow.ps1",
-    "tools/openrouter_chat.py",
-    "tools/claude-ox.ps1",
-    "tools/set_openrouter_key.ps1",
+    "tools/codex-company.cmd",
+    "tools/agent-runtime/package.json",
+    "tools/agent-runtime/package-lock.json",
+    "tools/capability-templates/codex-company.config.toml",
+    "微信公众号/.env.example",
     "微信公众号/package.json",
     "微信公众号/package-lock.json",
     "微信公众号/requirements.txt",
+    "X/.env.example",
+    "X/requirements.txt",
+    "X/scripts/check_x_env.py",
+    "X/scripts/check_x_api_readonly.py",
+    "X/scripts/check_x_visibility.py",
+    "X/scripts/post_x.py",
+    "X/scripts/publish_daily_queue.py",
+    "X/scripts/trend_scan.py",
     ".agents/skills/self-media-ops/requirements.txt",
     ".agents/skills/insight-to-asset/requirements.txt",
     "tools/derived_corpus/requirements.txt",
     "tools/company_content_sync/profile.json",
     "tools/company_content_sync/render_with_extension.js",
+    ".claude/skills/qu-ai-wei/SKILL.md",
     "共享/运营/SOP/内容工作流.md",
     ".agents/skills/self-media-ops/references/wechat-publishing.md",
     "APPSO-数字资产/03-SOP/公司飞书到公众号浏览器排版 SOP.md"
@@ -77,7 +123,8 @@
   "python_compile_roots": [
     ".agents/skills",
     "tools",
-    "微信公众号/tools"
+    "微信公众号/tools",
+    "X/scripts"
   ],
   "line_endings": {
     "tools/company_content_sync/render_with_extension.js": {
@@ -95,9 +142,11 @@
     ".agents/skills/insight-to-asset/SKILL.md",
     ".agents/skills/content-retrospective/SKILL.md",
     "微信公众号/README.md",
+    "X/README.md",
     "APPSO-数字资产/03-SOP/公司飞书到公众号浏览器排版 SOP.md",
     "共享/运营/SOP/Image2 生图工作流.md",
     "共享/运营/SOP/Git 提交与仓库整理 SOP.md",
+    "tools/README-capabilities.md",
     "tools/company_content_sync/README.md",
     "tools/company/ifanr-feishu-wechat-layout/README.md",
     "tools/derived_corpus/README.md",
@@ -105,8 +154,225 @@
     "tools/claude-ox.ps1",
     "tools/set_openrouter_key.ps1"
   ],
+  "local_config_templates": [
+    {
+      "id": "root_services",
+      "format": "dotenv",
+      "template": ".env.example",
+      "destination": ".env",
+      "required_keys": [
+        "OPENROUTER_API_KEY",
+        "FEISHU_MCP_UAT"
+      ]
+    },
+    {
+      "id": "wechat_api",
+      "format": "dotenv",
+      "template": "微信公众号/.env.example",
+      "destination": "微信公众号/.env",
+      "required_keys": [
+        "WECHAT_APP_ID",
+        "WECHAT_APP_SECRET"
+      ]
+    },
+    {
+      "id": "x_api",
+      "format": "dotenv",
+      "template": "X/.env.example",
+      "destination": "X/.env",
+      "required_keys": [
+        "X_API_KEY",
+        "X_API_KEY_SECRET",
+        "X_ACCESS_TOKEN",
+        "X_ACCESS_TOKEN_SECRET"
+      ]
+    },
+    {
+      "id": "codex_company",
+      "format": "toml",
+      "template": "tools/capability-templates/codex-company.config.toml",
+      "destination": ".local-capabilities/codex-company/config.toml",
+      "required_keys": []
+    }
+  ],
+  "private_assets": [
+    {
+      "id": "appsso-hunt-good-illustration-prompt",
+      "source_filename": "Hunt Good 插画信息图.md",
+      "destination": "APPSO-数字资产/01-栏目与品牌/品牌视觉/生图-Prompt/Hunt Good 插画信息图.md",
+      "prompt_heading": "## 原始 Prompt",
+      "prompt_sha256": "f5a11af4fcf522774cd53f5317e5b38f8a0818b657c9a641806edbbd2110d2d3"
+    },
+    {
+      "id": "appsso-004",
+      "source_filename": "笨拙涂鸦重绘.md",
+      "destination": "APPSO-数字资产/01-栏目与品牌/品牌视觉/生图-Prompt/笨拙涂鸦重绘.md",
+      "prompt_heading": "## 原始 Prompt",
+      "prompt_sha256": "6ba5e092a4f8d6fb2bd33602424ba4792715aa59f2bf5f916b90d8bb3f0bbd0a"
+    }
+  ],
+  "host_tools": [
+    {
+      "id": "codex_cli",
+      "kind": "local_binary",
+      "path": "tools/agent-runtime/node_modules/.bin/codex.cmd",
+      "version": "0.149.0"
+    },
+    {
+      "id": "claude_cli",
+      "kind": "local_binary",
+      "path": "tools/agent-runtime/node_modules/.bin/claude.cmd",
+      "version": "2.1.239"
+    },
+    {
+      "id": "company_browser",
+      "kind": "windows_browser",
+      "version": null
+    },
+    {
+      "id": "image_gen",
+      "kind": "agent_capability",
+      "version": "gpt-image-2"
+    }
+  ],
+  "capability_bundles": [
+    {
+      "id": "content_core",
+      "bundle_status": "complete",
+      "entrypoints": [
+        "validate",
+        "opening-check",
+        "insight",
+        "retrospective-init",
+        "retrospective-audit",
+        "corpus",
+        "pdf-render",
+        "crop-image",
+        "normalize-text",
+        "repo-preflight"
+      ],
+      "tracked_paths": [
+        ".agents/skills/self-media-ops/SKILL.md",
+        ".agents/skills/content-retrospective/SKILL.md",
+        ".agents/skills/insight-to-asset/SKILL.md"
+      ],
+      "config_requirements": [],
+      "private_asset_ids": [],
+      "host_tool_ids": []
+    },
+    {
+      "id": "wechat",
+      "bundle_status": "complete",
+      "entrypoints": ["wechat"],
+      "tracked_paths": [
+        "微信公众号/.env.example",
+        "微信公众号/themes/appsso-article-v1.css"
+      ],
+      "config_requirements": [
+        {"id": "wechat_api", "keys": ["WECHAT_APP_ID", "WECHAT_APP_SECRET"]}
+      ],
+      "private_asset_ids": [],
+      "host_tool_ids": []
+    },
+    {
+      "id": "x",
+      "bundle_status": "complete",
+      "entrypoints": [
+        "x-env",
+        "x-readonly",
+        "x-visibility",
+        "x-post",
+        "x-publish-queue",
+        "x-trend-scan"
+      ],
+      "tracked_paths": ["X/.env.example", "X/AGENTS.md", "X/README.md"],
+      "config_requirements": [
+        {"id": "x_api", "keys": ["X_API_KEY", "X_API_KEY_SECRET", "X_ACCESS_TOKEN", "X_ACCESS_TOKEN_SECRET"]}
+      ],
+      "private_asset_ids": [],
+      "host_tool_ids": []
+    },
+    {
+      "id": "company_feishu",
+      "bundle_status": "complete",
+      "entrypoints": ["company", "codex-company", "codex-company-feishu"],
+      "tracked_paths": [
+        "tools/company_content_sync/README.md",
+        "tools/capability-templates/codex-company.config.toml"
+      ],
+      "config_requirements": [
+        {"id": "root_services", "keys": ["FEISHU_MCP_UAT"]},
+        {"id": "codex_company", "keys": []}
+      ],
+      "private_asset_ids": [],
+      "host_tool_ids": ["codex_cli"]
+    },
+    {
+      "id": "company_browser",
+      "bundle_status": "complete",
+      "entrypoints": ["company", "capabilities"],
+      "tracked_paths": [
+        "tools/company/ifanr-feishu-wechat-layout/v1.10.0/extension/manifest.json",
+        "tools/company/ifanr-feishu-wechat-layout/v1.10.0/README.md"
+      ],
+      "config_requirements": [],
+      "private_asset_ids": [],
+      "host_tool_ids": ["company_browser"]
+    },
+    {
+      "id": "image_generation",
+      "bundle_status": "complete",
+      "entrypoints": ["image-preflight"],
+      "tracked_paths": [
+        "共享/运营/SOP/Image2 生图工作流.md",
+        "共享/运营/SOP/生图风格档案.json"
+      ],
+      "config_requirements": [],
+      "private_asset_ids": [],
+      "host_tool_ids": ["image_gen"]
+    },
+    {
+      "id": "appsso_visual_profiles",
+      "bundle_status": "complete",
+      "entrypoints": ["image-preflight", "capabilities"],
+      "tracked_paths": [
+        "APPSO-数字资产/04-模板/生图风格档案.json",
+        "APPSO-数字资产/00-治理/资产台账.yml"
+      ],
+      "config_requirements": [],
+      "private_asset_ids": [
+        "appsso-hunt-good-illustration-prompt",
+        "appsso-004"
+      ],
+      "host_tool_ids": ["image_gen"]
+    },
+    {
+      "id": "openrouter_ox",
+      "bundle_status": "complete",
+      "entrypoints": ["openrouter", "set-openrouter-key", "claude-ox"],
+      "tracked_paths": [".env.example", "tools/README-ox-alpha.md"],
+      "config_requirements": [
+        {"id": "root_services", "keys": ["OPENROUTER_API_KEY"]}
+      ],
+      "private_asset_ids": [],
+      "host_tool_ids": ["claude_cli"]
+    },
+    {
+      "id": "writing_skill_assets",
+      "bundle_status": "complete",
+      "entrypoints": [],
+      "tracked_paths": [
+        ".claude/skills/qu-ai-wei/SKILL.md",
+        "skills-lock.json"
+      ],
+      "config_requirements": [],
+      "private_asset_ids": [],
+      "host_tool_ids": []
+    }
+  ],
   "company_extension": {
     "root": "tools/company/ifanr-feishu-wechat-layout/v1.10.0",
+    "load_path": "tools/company/ifanr-feishu-wechat-layout/v1.10.0/extension",
     "manifest": "tools/company/ifanr-feishu-wechat-layout/v1.10.0/extension/manifest.json",
     "file_count": 22,
     "total_bytes": 3347963,
@@ -119,44 +385,51 @@
     "微信公众号/tools/tests",
     "tools/company_content_sync/tests",
     "tools/derived_corpus/tests",
-    "tools/tests"
+    "tools/tests",
+    "X/tests"
   ],
   "external_gates": [
     {
       "id": "wechat_credentials_and_egress",
       "required_for": "wechat draft --execute",
-      "clone_installed": false,
-      "reason": "Requires the target account credentials, IP allowlist, and current-task authorization."
+      "adapter_packaged": true,
+      "runtime_inputs": ["WECHAT_APP_ID", "WECHAT_APP_SECRET", "network"]
+    },
+    {
+      "id": "x_credentials_and_egress",
+      "required_for": "X read, trend scan, visibility checks, and posting",
+      "adapter_packaged": true,
+      "runtime_inputs": ["X API credentials", "network"]
     },
     {
       "id": "feishu_remote_mcp",
       "required_for": "company Feishu create/fetch",
-      "clone_installed": false,
-      "reason": "Requires a local UAT, host tool attestation, target folder, and current-task authorization."
+      "adapter_packaged": true,
+      "runtime_inputs": ["FEISHU_MCP_UAT", "Codex login", "network"]
     },
     {
       "id": "chrome_company_extension",
       "required_for": "company_browser execution",
-      "clone_installed": false,
-      "reason": "Source is versioned, but Chrome must load it manually in an authorized company profile."
+      "adapter_packaged": true,
+      "runtime_inputs": ["Chrome or Edge", "authorized browser profile"]
     },
     {
       "id": "image_generation_provider",
       "required_for": "AI image generation or editing",
-      "clone_installed": false,
-      "reason": "The repository provides planning and preflight; generation is a host capability."
+      "adapter_packaged": true,
+      "runtime_inputs": ["image_gen host capability"]
     },
     {
       "id": "appsso_restricted_prompt_asset",
-      "required_for": "APPSO appsso-004 image preflight",
-      "clone_installed": false,
-      "reason": "The clone carries the registry and prompt hash, while the governed prompt source remains restricted and local-only by policy."
+      "required_for": "APPSO controlled visual profiles",
+      "adapter_packaged": true,
+      "runtime_inputs": ["hash-verified local-only prompt source"]
     },
     {
       "id": "openrouter_account_and_model",
       "required_for": "Ox Alpha external model experiments",
-      "clone_installed": false,
-      "reason": "Requires a local API key, a currently available model ID, network access, and permission to send the selected public material."
+      "adapter_packaged": true,
+      "runtime_inputs": ["OPENROUTER_API_KEY", "available model ID", "network"]
     }
   ]
 }

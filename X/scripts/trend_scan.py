@@ -11,6 +11,7 @@ from urllib.request import Request, urlopen
 
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+X_ROOT = Path(__file__).resolve().parents[1]
 
 
 PRESETS = {
@@ -212,7 +213,7 @@ def main() -> None:
         print("[fail] --hours must be between 1 and 168.")
         raise SystemExit(1)
 
-    load_dotenv(Path(".env"))
+    load_dotenv(X_ROOT / ".env")
 
     if args.mode == "trends":
         run_trends(args)

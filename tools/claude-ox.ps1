@@ -30,6 +30,7 @@ chcp 65001 > $null
 $ErrorActionPreference = 'Stop'
 
 $repoRoot = Split-Path -Parent $PSScriptRoot
+$claudeCommand = Join-Path $repoRoot 'tools\agent-runtime\node_modules\.bin\claude.cmd'
 if ([string]::IsNullOrWhiteSpace($WorkDir)) {
     $WorkDir = Join-Path ([System.IO.Path]::GetTempPath()) "ox-alpha-lab"
 }
@@ -52,9 +53,8 @@ if ([string]::IsNullOrWhiteSpace($key)) {
     exit 1
 }
 
-$claudeCmd = Get-Command claude -ErrorAction SilentlyContinue
-if ($null -eq $claudeCmd) {
-    Write-Host "[fail] PATH 里没有 claude 命令。" -ForegroundColor Red
+if (-not (Test-Path -LiteralPath $claudeCommand -PathType Leaf)) {
+    Write-Host "[fail] clone 内没有 Claude Code，请先运行 tools/bootstrap.ps1。" -ForegroundColor Red
     exit 1
 }
 
@@ -150,9 +150,9 @@ Write-Host ""
 Push-Location $WorkDir
 try {
     if ($ClaudeArgs -and $ClaudeArgs.Count -gt 0) {
-        & claude @ClaudeArgs
+        & $claudeCommand @ClaudeArgs
     } else {
-        & claude
+        & $claudeCommand
     }
 } finally {
     Pop-Location

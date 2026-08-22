@@ -11,6 +11,7 @@ from post_x import load_dotenv, post_to_x, require_env
 
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+X_ROOT = Path(__file__).resolve().parents[1]
 
 
 def today_jst() -> str:
@@ -18,11 +19,11 @@ def today_jst() -> str:
 
 
 def queue_path_for(date_value: str) -> Path:
-    return Path("content") / f"{date_value}_daily_viral_queue.md"
+    return X_ROOT / "content" / f"{date_value}_daily_viral_queue.md"
 
 
 def log_path_for(date_value: str) -> Path:
-    return Path("content") / f"{date_value}_auto_publish_log.json"
+    return X_ROOT / "content" / f"{date_value}_auto_publish_log.json"
 
 
 def load_log(path: Path) -> dict:
@@ -72,7 +73,7 @@ def validate_text(text: str) -> None:
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Publish one draft from today's daily viral queue.")
-    parser.add_argument("--date", default=today_jst(), help="Queue date in YYYY-MM-DD, defaults to Asia/Tokyo today.")
+    parser.add_argument("--date", help="Queue date in YYYY-MM-DD, defaults to Asia/Tokyo today.")
     parser.add_argument("--draft", type=int, required=True, help="Draft number to publish.")
     parser.add_argument("--confirm", action="store_true", help="Actually publish. Without this flag, dry-run only.")
     return parser
@@ -80,6 +81,7 @@ def build_parser() -> argparse.ArgumentParser:
 
 def main() -> None:
     args = build_parser().parse_args()
+    args.date = args.date or today_jst()
     queue_path = queue_path_for(args.date)
     log_path = log_path_for(args.date)
 
@@ -113,7 +115,7 @@ def main() -> None:
         print("[dry-run] Add --confirm to publish this exact draft.")
         return
 
-    load_dotenv(Path(".env"))
+    load_dotenv(X_ROOT / ".env")
     require_env()
     data = post_to_x(text)
     post_data = data.get("data", {})

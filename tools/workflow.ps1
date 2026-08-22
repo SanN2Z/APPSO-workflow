@@ -2,10 +2,12 @@
 param(
     [Parameter(Mandatory = $true, Position = 0)]
     [ValidateSet(
-        "verify", "test", "repo-preflight", "validate", "image-preflight",
+        "verify", "test", "repo-preflight", "capabilities", "validate", "image-preflight",
         "opening-check", "wechat", "company", "insight", "retrospective-init",
         "retrospective-audit", "corpus", "pdf-render", "crop-image", "normalize-text",
-        "openrouter"
+        "openrouter", "x-env", "x-readonly", "x-visibility", "x-post",
+        "x-publish-queue", "x-trend-scan", "codex-company",
+        "codex-company-feishu", "claude-ox", "set-openrouter-key"
     )]
     [string]$Command,
 
@@ -54,8 +56,23 @@ try {
         exit 0
     }
 
-    if ($Command -eq "repo-preflight") {
-        & (Join-Path $PSScriptRoot "repository_preflight.ps1") @remainingArgs
+    if ($Command -in @("codex-company", "codex-company-feishu")) {
+        $launcher = Join-Path $repoRoot $manifest.powershell_entrypoints.PSObject.Properties[$Command].Value
+        if ($remainingArgs.Count -gt 0) {
+            & $launcher -CodexArgs $remainingArgs
+        }
+        else {
+            & $launcher
+        }
+        if ($LASTEXITCODE -ne 0) {
+            exit $LASTEXITCODE
+        }
+        exit 0
+    }
+
+    $powershellProperty = $manifest.powershell_entrypoints.PSObject.Properties[$Command]
+    if ($null -ne $powershellProperty) {
+        & (Join-Path $repoRoot $powershellProperty.Value) @remainingArgs
         if ($LASTEXITCODE -ne 0) {
             exit $LASTEXITCODE
         }

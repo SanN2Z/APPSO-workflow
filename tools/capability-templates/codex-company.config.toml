@@ -1,0 +1,10 @@
+[mcp_servers.feishu_docs]
+url = "https://mcp.feishu.cn/mcp"
+enabled = true
+required = false
+enabled_tools = ["create-doc", "fetch-doc"]
+default_tools_approval_mode = "prompt"
+startup_timeout_sec = 20
+tool_timeout_sec = 120
+http_headers = { "X-Lark-MCP-Allowed-Tools" = "create-doc,fetch-doc" }
+env_http_headers = { "X-Lark-MCP-UAT" = "FEISHU_MCP_UAT" }

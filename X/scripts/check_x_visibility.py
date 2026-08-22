@@ -10,6 +10,7 @@ from urllib.request import Request, urlopen
 
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+X_ROOT = Path(__file__).resolve().parents[1]
 
 
 def load_dotenv(path: Path) -> None:
@@ -120,7 +121,7 @@ def build_parser() -> argparse.ArgumentParser:
 
 def main() -> None:
     args = build_parser().parse_args()
-    load_dotenv(Path(".env"))
+    load_dotenv(X_ROOT / ".env")
     print_user(args.username)
     print_posts(args.post_id)
     print_search(args.username)
