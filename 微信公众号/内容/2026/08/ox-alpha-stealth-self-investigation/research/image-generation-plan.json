@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "updated": "2026-08-22",
+  "project_adapter": "appsso",
+  "profile_registry": "APPSO-数字资产/04-模板/生图风格档案.json",
+  "style_policy": {
+    "profile": "appsso-004",
+    "scope": "all_ai_generated_editorial_images",
+    "new_image_strategy": "two_stage_reference_then_redraw",
+    "allow_final_text_to_image": false
+  },
+  "tasks": [
+    {
+      "id": "ox-self-detective",
+      "visual_type": "ai_editorial_creative",
+      "purpose": "用一头调查自己身份牌的匿名牛说明：模型能整理外部线索，却不能从内部知道开发者是谁。",
+      "reference_strategy": "generated_base",
+      "reference_stage": {
+        "mode": "text_to_image",
+        "prompt_ref": "package-structure-reference-v1",
+        "output": "research/source-assets/ox-self-detective-structure.png",
+        "receipt": "research/image-generation-runs/ox-self-detective-reference-preflight.json",
+        "present_to_user": false,
+        "content_prompt": "Create a neutral structural reference for a landscape editorial illustration. Show exactly one generic cartoon ox wearing a simple detective hat and holding one magnifying glass. The ox is closely inspecting one hanging blank identity badge that contains only one large question mark. The ox should look puzzled, because it is investigating its own unknown identity. Keep the relationship immediately readable and leave generous white space. No other characters and no readable words.",
+        "output_constraints": [
+          "Landscape 3:2 composition with the ox, magnifying glass, and identity badge inside the central 80 percent mobile crop-safe area",
+          "Exactly one ox, one detective hat, one magnifying glass, one hanging identity badge, and one question mark",
+          "No readable words"
+        ],
+        "avoid": [
+          "Logos, trademarks, watermarks, extra animals, people, fake interfaces, news-scene realism, laboratory branding, or readable words"
+        ]
+      },
+      "final_stage": {
+        "mode": "referenced_edit",
+        "prompt_ref": "appsso-004",
+        "prompt_sha256": "6ba5e092a4f8d6fb2bd33602424ba4792715aa59f2bf5f916b90d8bb3f0bbd0a",
+        "input_assets": [
+          "research/source-assets/ox-self-detective-structure.png"
+        ],
+        "output": "assets/ox-self-detective-image2.png",
+        "receipt": "research/image-generation-runs/ox-self-detective-final-preflight.json",
+        "present_to_user": true,
+        "preserve": [
+          "Preserve exactly one ox wearing one detective hat, holding one magnifying glass, and inspecting one hanging blank identity badge with one question mark",
+          "Preserve the puzzled self-investigation relationship and generous empty space"
+        ],
+        "output_constraints": [
+          "Landscape 3:2 composition with all key elements inside the central 80 percent mobile crop-safe area",
+          "Use a white background",
+          "No readable words"
+        ],
+        "avoid": [
+          "Polished technology-magazine composition, clean vector geometry, cinematic depth, or professional illustration finish",
+          "Logos, trademarks, watermarks, extra animals, people, extra text, garbled text, fake interfaces, news-scene realism, or laboratory branding"
+        ]
+      }
+    }
+  ]
+}

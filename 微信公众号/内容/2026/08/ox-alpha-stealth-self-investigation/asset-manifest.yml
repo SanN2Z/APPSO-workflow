@@ -1,0 +1,233 @@
+version: 2
+updated: "2026-08-22"
+assets:
+  - file: "research/source-assets/ox-self-detective-structure.png"
+    use: "research_reference"
+    used_in_draft: false
+    used_as_cover: false
+    dimensions: "1536x1024"
+    source_type: "ai_generated"
+    source: "Codex built-in image_gen; task ox-self-detective reference stage"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-08-22"
+    modifications: "No post-generation edits; visually reviewed as an internal composition reference and not approved for publication"
+    rights_status: "project_owned"
+    rights_basis: "Generated for this project as an internal structural input"
+    rights_blocker: false
+    allowed_platforms: []
+    attribution: "AI 生成内部构图参考（不发布）"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "text_to_image"
+    prompt_ref: "package-structure-reference-v1"
+    prompt_sha256: "b825de5e31fe8eb0d97de923ede61db55fc9386cf6789d3ce0d4b319d38f64d6"
+    invocation_prompt_sha256: "b825de5e31fe8eb0d97de923ede61db55fc9386cf6789d3ce0d4b319d38f64d6"
+    generation_constraints: "3:2；一头戴侦探帽的卡通牛，用一个放大镜查看带问号的空白身份牌；纯白背景；无品牌和额外角色"
+    input_assets: []
+    generated_on: "2026-08-22"
+    preflight_receipt: "research/image-generation-runs/ox-self-detective-reference-preflight.json"
+
+  - file: "assets/01-openrouter-launch.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "1197x1110"
+    source_type: "user_supplied_official_social_screenshot"
+    source: "https://x.com/OpenRouter/status/2090544970923184269"
+    source_file: "User-provided screenshot in the current task"
+    creator_or_rightsholder: "OpenRouter / X; screenshot supplied by user"
+    obtained_on: "2026-08-22"
+    modifications: "Exact project copy; no crop, annotation, text replacement, or content edit"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "用户在当前任务中明确确认资料包图片可用于本稿；该截图仅作为带出处的公开帖资讯评论引用，不构成通用转载授权"
+    rights_blocker: false
+    allowed_platforms: [wechat]
+    attribution: "截图：OpenRouter / X"
+
+  - file: "assets/02-opencode-free-week.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "1188x519"
+    source_type: "user_supplied_official_social_screenshot"
+    source: "https://x.com/opencode/status/2090544355824038300"
+    source_file: "User-provided screenshot in the current task"
+    creator_or_rightsholder: "OpenCode / X; screenshot supplied by user"
+    obtained_on: "2026-08-22"
+    modifications: "Exact project copy; no crop, annotation, text replacement, or content edit"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "用户在当前任务中明确确认资料包图片可用于本稿；该截图仅作为带出处的公开帖资讯评论引用，不构成通用转载授权"
+    rights_blocker: false
+    allowed_platforms: [wechat]
+    attribution: "截图：OpenCode / X"
+
+  - file: "assets/03-ox-alpha-self-analysis.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "1200x1600"
+    source_type: "user_supplied_session_artifact_screenshot"
+    source: "User-provided local Ox Alpha self-analysis HTML; see sources.md S6"
+    source_file: "C:\\Users\\USER\\Desktop\\ox-alpha-self-analysis.html"
+    creator_or_rightsholder: "User-provided Ox Alpha session output; screenshot rendered by this project"
+    obtained_on: "2026-08-22"
+    modifications: "First 1200x1600 viewport rendered from the local HTML; no page content edits"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "用户在当前任务中提供该会话产物并明确确认相关图片可用于本稿；完整 HTML 不入库"
+    rights_blocker: false
+    allowed_platforms: [wechat]
+    attribution: "截图：Ox Alpha 自我调查页（用户提供）"
+
+  - file: "research/source-assets/ox-alpha-self-analysis-full-render.png"
+    use: "research_reference"
+    used_in_draft: false
+    used_as_cover: false
+    dimensions: "1200x9000"
+    source_type: "user_supplied_session_artifact_screenshot"
+    source: "User-provided local Ox Alpha self-analysis HTML; see sources.md S6"
+    source_file: "C:\\Users\\USER\\Desktop\\ox-alpha-self-analysis.html"
+    creator_or_rightsholder: "User-provided Ox Alpha session output; full-page screenshot rendered by this project"
+    obtained_on: "2026-08-22"
+    modifications: "Full local HTML rendered at 1200x9000 for deterministic cropping; page content itself was not edited"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "用户在当前任务中提供该会话产物并明确确认相关图片可用于本稿；此文件仅作为纵向滑动切片的内部来源"
+    rights_blocker: false
+    allowed_platforms: []
+    attribution: "内部渲染源，不直接发布"
+
+  - file: "assets/03-ox-alpha-self-analysis-scroll-01.png"
+    use: "wechat_body_interactive"
+    used_in_draft: false
+    used_as_cover: false
+    dimensions: "1200x1382"
+    source_type: "project_derived_session_artifact_screenshot"
+    source: "research/source-assets/ox-alpha-self-analysis-full-render.png"
+    source_file: "C:\\Users\\USER\\Desktop\\ox-alpha-self-analysis.html"
+    creator_or_rightsholder: "User-provided Ox Alpha session output; derived screenshot by this project"
+    obtained_on: "2026-08-22"
+    modifications: "Rows 0-1381 cropped from the registered full-page render; no page content edits"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "用户在当前任务中提供该会话产物并明确确认相关图片可用于本稿；用于公众号纵向滑动组件候选"
+    rights_blocker: false
+    allowed_platforms: [wechat]
+    attribution: "截图：Ox Alpha 自我调查页（用户提供）"
+
+  - file: "assets/03-ox-alpha-self-analysis-scroll-02.png"
+    use: "wechat_body_interactive"
+    used_in_draft: false
+    used_as_cover: false
+    dimensions: "1200x1382"
+    source_type: "project_derived_session_artifact_screenshot"
+    source: "research/source-assets/ox-alpha-self-analysis-full-render.png"
+    source_file: "C:\\Users\\USER\\Desktop\\ox-alpha-self-analysis.html"
+    creator_or_rightsholder: "User-provided Ox Alpha session output; derived screenshot by this project"
+    obtained_on: "2026-08-22"
+    modifications: "Rows 1382-2763 cropped from the registered full-page render; no page content edits"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "用户在当前任务中提供该会话产物并明确确认相关图片可用于本稿；用于公众号纵向滑动组件候选"
+    rights_blocker: false
+    allowed_platforms: [wechat]
+    attribution: "截图：Ox Alpha 自我调查页（用户提供）"
+
+  - file: "assets/03-ox-alpha-self-analysis-scroll-03.png"
+    use: "wechat_body_interactive"
+    used_in_draft: false
+    used_as_cover: false
+    dimensions: "1200x1803"
+    source_type: "project_derived_session_artifact_screenshot"
+    source: "research/source-assets/ox-alpha-self-analysis-full-render.png"
+    source_file: "C:\\Users\\USER\\Desktop\\ox-alpha-self-analysis.html"
+    creator_or_rightsholder: "User-provided Ox Alpha session output; derived screenshot by this project"
+    obtained_on: "2026-08-22"
+    modifications: "Rows 2764-4566 cropped from the registered full-page render; no page content edits"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "用户在当前任务中提供该会话产物并明确确认相关图片可用于本稿；用于公众号纵向滑动组件候选"
+    rights_blocker: false
+    allowed_platforms: [wechat]
+    attribution: "截图：Ox Alpha 自我调查页（用户提供）"
+
+  - file: "assets/04-math-boundary-case.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "1200x760"
+    source_type: "project_generated_data_visualization"
+    source: "Ox Alpha self-analysis page and independent integer recomputation; see sources.md S6 and S12"
+    creator_or_rightsholder: "This project"
+    obtained_on: "2026-08-22"
+    modifications: "Original 1200x760 infographic rendered from research/render-math-boundary-card.html"
+    rights_status: "project_owned"
+    rights_basis: "Original project layout using independently checked numeric results"
+    rights_blocker: false
+    allowed_platforms: [wechat]
+    attribution: "图：作者根据 Ox Alpha 解题过程整理"
+
+  - file: "assets/05-ben-davis-deepswe-sample.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "1192x1494"
+    source_type: "user_supplied_public_post_screenshot"
+    source: "https://x.com/davis7/status/2090655207831298095"
+    source_file: "User-provided screenshot in the current task"
+    creator_or_rightsholder: "Ben Davis / X; screenshot supplied by user"
+    obtained_on: "2026-08-22"
+    modifications: "Exact project copy; no crop, annotation, text replacement, or content edit"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "用户在当前任务中明确确认资料包图片可用于本稿；该截图仅作为带出处的第三方小样本结果引用，不构成通用转载授权"
+    rights_blocker: false
+    allowed_platforms: [wechat]
+    attribution: "截图：Ben Davis / X"
+
+  - file: "assets/06-hermes-frogger-demo.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "1192x1206"
+    source_type: "user_supplied_public_post_screenshot"
+    source: "https://x.com/ivanfioravanti/status/2090718197561372808"
+    source_file: "User-provided screenshot in the current task"
+    creator_or_rightsholder: "Ivan Fioravanti / X; screenshot supplied by user"
+    obtained_on: "2026-08-22"
+    modifications: "Exact project copy; no crop, annotation, text replacement, or content edit"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "用户在当前任务中明确确认资料包图片可用于本稿；该截图仅作为带出处的公开演示引用，不构成通用转载授权"
+    rights_blocker: false
+    allowed_platforms: [wechat]
+    attribution: "截图：Ivan Fioravanti / X"
+
+  - file: "assets/07-ox-meme.png"
+    used_in_draft: false
+    used_as_cover: false
+    dimensions: "1192x1202"
+    source_type: "user_supplied_public_post_screenshot"
+    source: "https://x.com/ivanfioravanti/status/2090725391388361040"
+    source_file: "User-provided screenshot in the current task"
+    creator_or_rightsholder: "Ivan Fioravanti / X; screenshot supplied by user"
+    obtained_on: "2026-08-22"
+    modifications: "Exact project copy; no crop, annotation, text replacement, or content edit"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "用户在当前任务中明确确认资料包图片可用于本稿；当前不进入正文，保留为候选素材"
+    rights_blocker: false
+    allowed_platforms: [wechat]
+    attribution: "截图：Ivan Fioravanti / X"
+
+  - file: "assets/ox-self-detective-image2.png"
+    use: "wechat_body_header"
+    used_in_draft: false
+    used_as_cover: true
+    dimensions: "1536x1024"
+    source_type: "ai_generated"
+    source: "Codex built-in image_gen; task ox-self-detective final stage"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-08-22"
+    modifications: "Governed APPSO redraw from the registered structural reference; no post-generation edits; visually reviewed"
+    rights_status: "project_owned"
+    rights_basis: "Generated for this project from a project-owned structural reference"
+    rights_blocker: false
+    allowed_platforms: [wechat]
+    attribution: "AI 生成示意图"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "referenced_edit"
+    prompt_ref: "appsso-004"
+    prompt_sha256: "6ba5e092a4f8d6fb2bd33602424ba4792715aa59f2bf5f916b90d8bb3f0bbd0a"
+    invocation_prompt_sha256: "4add3ba1f4777f50c0c876931076cf0cee6536f5f5bb4678d64fa85a7277acf2"
+    generation_constraints: "3:2 白底；一头戴侦探帽的卡通牛，用一个放大镜查看带问号的空白身份牌；笨拙像素化鼠绘风；无品牌和额外角色"
+    input_assets: ["research/source-assets/ox-self-detective-structure.png"]
+    generated_on: "2026-08-22"
+    preflight_receipt: "research/image-generation-runs/ox-self-detective-final-preflight.json"

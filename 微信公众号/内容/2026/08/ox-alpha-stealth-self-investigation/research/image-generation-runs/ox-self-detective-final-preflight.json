@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "status": "pass",
+  "checked_on": "2026-08-22",
+  "task_id": "ox-self-detective",
+  "stage": "final",
+  "project_adapter": "appsso",
+  "visual_type": "ai_editorial_creative",
+  "style_override_source": null,
+  "style_profile": "appsso-004",
+  "style_scope": "all_ai_generated_editorial_images",
+  "new_image_strategy": "two_stage_reference_then_redraw",
+  "reference_strategy": "generated_base",
+  "mode": "referenced_edit",
+  "input_binding": "referenced_image_paths",
+  "num_last_images_to_include": null,
+  "conversation_derivative_rights_confirmed": false,
+  "prompt_ref": "appsso-004",
+  "prompt_sha256": "6ba5e092a4f8d6fb2bd33602424ba4792715aa59f2bf5f916b90d8bb3f0bbd0a",
+  "invocation_prompt_sha256": "4add3ba1f4777f50c0c876931076cf0cee6536f5f5bb4678d64fa85a7277acf2",
+  "input_assets": [
+    "research/source-assets/ox-self-detective-structure.png"
+  ],
+  "input_fingerprints": [
+    {
+      "file": "research/source-assets/ox-self-detective-structure.png",
+      "sha256": "c6f12a9947906a9435c7c434e5536d2e75465198245a9dc7510f1d9267f07786",
+      "rights_status": "project_owned"
+    }
+  ],
+  "output": "assets/ox-self-detective-image2.png",
+  "present_to_user": true,
+  "plan": "research/image-generation-plan.json",
+  "plan_sha256": "1516bd1d23d4e8a2efae6379f371cf53059881e26e65b988e4bbce4ff070db79",
+  "profile_registry": "APPSO-数字资产/04-模板/生图风格档案.json",
+  "profile_registry_sha256": "375a8bdfd197667a5de557e41ddbff5680a2dfe79b730de9b049739bae0865c7",
+  "prompt_source": "APPSO-数字资产/01-栏目与品牌/品牌视觉/生图-Prompt/笨拙涂鸦重绘.md",
+  "constraints_sha256": "be9532099bdcf14f53162ccc7c1d56515d1882803712f43e98c29d53ee37d251",
+  "receipt": "research/image-generation-runs/ox-self-detective-final-preflight.json"
+}

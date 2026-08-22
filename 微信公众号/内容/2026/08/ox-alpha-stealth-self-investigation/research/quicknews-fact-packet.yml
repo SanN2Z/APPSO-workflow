@@ -1,0 +1,123 @@
+schema_version: 1
+rule_id: PROJECT-WECHAT-QUICKNEWS-001
+platform: 微信公众号
+reader: 对 AI 与科技行业感兴趣的中文读者
+verified_at: "2026-08-22T10:46:28+09:00"
+timezone: Asia/Tokyo
+event: "匿名第三方模型 Ox Alpha 于 2026 年 8 月 20 日上线 OpenRouter，并以限时免费形式进入 OpenCode Zen；用户另提供了一份该模型在 Claude Code 会话中生成的自我调查页。"
+sources:
+  - source_id: S1
+    tier: primary
+    publisher: OpenRouter
+    title: Ox Alpha - API Pricing & Providers
+    url: https://openrouter.ai/stealth/ox-alpha
+    accessed_at: "2026-08-22T10:46:28+09:00"
+  - source_id: S2
+    tier: primary
+    publisher: OpenRouter
+    title: Models API
+    url: https://openrouter.ai/api/v1/models
+    accessed_at: "2026-08-22T10:46:28+09:00"
+  - source_id: S3
+    tier: primary
+    publisher: OpenCode
+    title: Zen
+    url: https://opencode.ai/docs/zen/
+    accessed_at: "2026-08-22T10:46:28+09:00"
+  - source_id: S4
+    tier: primary
+    publisher: OpenCode
+    title: Ox Alpha free-week announcement
+    url: https://x.com/opencode/status/2090544355824038300
+    accessed_at: "2026-08-22T10:46:28+09:00"
+  - source_id: S5
+    tier: primary
+    publisher: DeepSWE
+    title: DeepSWE v1.1
+    url: https://deepswe.datacurve.ai/
+    accessed_at: "2026-08-22T10:46:28+09:00"
+  - source_id: S6
+    tier: user_provided_artifact
+    publisher: Ox Alpha session output
+    title: ox-alpha · 自我数据解读
+    local_only: true
+claims:
+  - claim_id: F1
+    text: "Ox Alpha 于 2026 年 8 月 20 日上线 OpenRouter，模型 ID 为 stealth/ox-alpha。"
+    type: verified_fact
+    source_id: S1
+    as_of: "2026-08-22T10:46:28+09:00"
+    limitation: ""
+  - claim_id: F2
+    text: "OpenRouter 当前将 Ox Alpha 的输入和输出价格均列为 0 美元。"
+    type: verified_fact
+    source_id: S1
+    as_of: "2026-08-22T10:46:28+09:00"
+    limitation: "免费状态可能随预览期结束而改变。"
+  - claim_id: F3
+    text: "Ox Alpha 支持 1,048,576 token 上下文、131,072 token 最大输出、文本／图片／视频输入和工具调用。"
+    type: verified_fact
+    source_id: S2
+    as_of: "2026-08-22T10:46:28+09:00"
+    limitation: "公开规格不等于独立能力测评。"
+  - claim_id: F4
+    text: "Ox Alpha 由选择匿名的第三方开发和运营，OpenRouter 只负责路由。"
+    type: verified_fact
+    source_id: S1
+    as_of: "2026-08-22T10:46:28+09:00"
+    limitation: "开发者身份未知。"
+  - claim_id: F5
+    text: "OpenCode Zen 当前列有 Ox Alpha Free，模型 ID 为 x-preview-f-free；官方公告称其一周免费并准备了每天 100T token 服务容量。"
+    type: vendor_claim
+    source_id: S4
+    as_of: "2026-08-22T10:46:28+09:00"
+    limitation: "100T 指服务容量，不是参数量；免费状态有时效。"
+  - claim_id: F6
+    text: "OpenRouter 与 OpenCode Zen 对 Ox Alpha 路径给出了不同的数据留存说明。"
+    type: verified_fact
+    source_id: S1
+    as_of: "2026-08-22T10:46:28+09:00"
+    limitation: "OpenRouter 会保留输入输出但不用于训练；OpenCode Zen 写明零留存且不用于训练。"
+  - claim_id: F7
+    text: "用户提供的页面是 Ox Alpha 在 Claude Code harness 中生成的 7 章自我调查页。"
+    type: verified_artifact
+    source_id: S6
+    as_of: "2026-08-22T10:46:28+09:00"
+    limitation: "会话产物，不是 OpenRouter 官方报告。"
+  - claim_id: F8
+    text: "自拟数论题的第 32 对仍满足 x+y≤10¹⁸，第 33 对越界，结论 32 经独立复算。"
+    type: derived_check
+    source_id: S6
+    as_of: "2026-08-22T10:46:28+09:00"
+    limitation: "单题案例；不声称模型未调用工具。"
+  - claim_id: F9
+    text: "Ben Davis 在 10 道 DeepSWE 小样本中报告 Ox Alpha 为 80%，并提示结果可能高方差；完整 v1.1 有 113 道任务。"
+    type: third_party_result
+    source_id: S5
+    as_of: "2026-08-22T10:46:28+09:00"
+    limitation: "不是完整官方榜单结果；原帖来源详见 sources.md。"
+uncertainties:
+  - "开发者身份、架构、参数量、训练方法均未公开。"
+  - "免费期结束日期与后续正式价格未确定。"
+  - "社区指纹分析和身份猜测未获官方确认。"
+reader_consequence: "读者可以在免费窗口内用公开、非敏感任务试用 Ox Alpha，但应按入口理解数据留存差异，并避免提交公司代码、客户资料和凭据。"
+do_not_write:
+  - "任何确定的开发团队归属"
+  - "Ox Alpha 已经超过 Fable 5 或 GPT-5.6"
+  - "OpenRouter 路径零数据留存"
+  - "永久免费、真正无限额度或无速率限制"
+  - "自我调查页等同官方报告"
+image_assets:
+  - assets/01-openrouter-launch.png
+  - assets/02-opencode-free-week.png
+  - assets/03-ox-alpha-self-analysis.png
+  - assets/ox-self-detective-image2.png
+  - assets/04-math-boundary-case.png
+  - assets/05-ben-davis-deepswe-sample.png
+  - assets/06-hermes-frogger-demo.png
+target_length: shortest_complete
+tone: lively_restrained
+title_constraints:
+  - "保留匿名反差"
+  - "不暗示已经确认厂商"
+  - "正文兑现自我调查页面和自拟案例"

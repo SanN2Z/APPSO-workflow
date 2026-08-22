@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=1200, initial-scale=1">
+  <title>Ox Alpha 数论案例边界卡</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; width: 1200px; height: 760px; overflow: hidden; }
+    body {
+      color: #151515;
+      background: #f6f5f0;
+      font-family: "Microsoft YaHei", "Noto Sans CJK SC", system-ui, sans-serif;
+    }
+    .frame {
+      position: relative;
+      width: 1200px;
+      height: 760px;
+      padding: 58px 68px 50px;
+      background:
+        radial-gradient(circle at 93% 8%, rgba(255, 184, 76, .18), transparent 22%),
+        linear-gradient(#f9f8f4, #f2f0e8);
+    }
+    .kicker { font-size: 22px; font-weight: 700; letter-spacing: .08em; color: #68655e; }
+    h1 { margin: 12px 0 12px; font-size: 51px; line-height: 1.16; letter-spacing: -.03em; }
+    .equation {
+      display: inline-block;
+      padding: 8px 18px 10px;
+      border: 3px solid #1a1a1a;
+      border-radius: 12px;
+      background: #fff;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      font-weight: 700;
+      transform: rotate(-1deg);
+    }
+    .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 34px; }
+    .card {
+      position: relative;
+      min-height: 268px;
+      padding: 28px 30px;
+      border: 4px solid #171717;
+      border-radius: 20px;
+      background: #fff;
+      box-shadow: 9px 9px 0 #171717;
+    }
+    .card.ok { border-color: #187650; box-shadow: 9px 9px 0 #187650; transform: rotate(.4deg); }
+    .card.no { border-color: #d85b29; box-shadow: 9px 9px 0 #d85b29; transform: rotate(-.4deg); }
+    .tag { font-size: 27px; font-weight: 900; }
+    .ok .tag { color: #187650; }
+    .no .tag { color: #d85b29; }
+    .sum-label { margin-top: 25px; color: #6c6963; font-size: 19px; }
+    .sum { margin-top: 4px; font-family: Consolas, monospace; font-size: 27px; font-weight: 800; letter-spacing: -.04em; }
+    .compare { margin-top: 18px; font-size: 31px; font-weight: 900; }
+    .footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 22px;
+      margin-top: 38px;
+      padding: 0 4px;
+      font-size: 21px;
+    }
+    .recurrence { font-family: Georgia, "Times New Roman", serif; font-weight: 700; }
+    .answer { font-size: 29px; font-weight: 900; }
+    .answer span { padding: 4px 12px 6px; color: #fff; background: #151515; border-radius: 8px; }
+    .note { position: absolute; right: 70px; bottom: 20px; color: #7e7a72; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <main class="frame">
+    <div class="kicker">OX ALPHA · 自拟数论题</div>
+    <h1>第 32 对还在，第 33 对越界</h1>
+    <div class="equation">x² + y² + 2 = 4xy，x + y ≤ 10¹⁸</div>
+
+    <section class="cards">
+      <article class="card ok">
+        <div class="tag">✓ 第 32 对</div>
+        <div class="sum-label">x + y</div>
+        <div class="sum">537,494,436,773,078,404</div>
+        <div class="compare">≤ 10¹⁸</div>
+      </article>
+      <article class="card no">
+        <div class="tag">× 第 33 对</div>
+        <div class="sum-label">x + y</div>
+        <div class="sum">2,005,956,546,822,746,114</div>
+        <div class="compare">&gt; 10¹⁸</div>
+      </article>
+    </section>
+
+    <div class="footer">
+      <div class="recurrence">a₁ = 1，a₂ = 1，aₙ₊₂ = 4aₙ₊₁ − aₙ</div>
+      <div class="answer">满足条件的解共有 <span>32 对</span></div>
+    </div>
+    <div class="note">题目为自拟；边界数值已独立复算</div>
+  </main>
+</body>
+</html>
