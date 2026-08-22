@@ -1,7 +1,7 @@
 ---
 title: 公司飞书到公众号浏览器排版 SOP
-version: "1.1"
-updated: "2026-07-23"
+version: "1.2"
+updated: "2026-08-22"
 classification: internal
 status: active
 format_source: "爱范儿一键排版 Chrome 扩展 v1.10.0"
@@ -27,7 +27,7 @@ runtime_qualification: "本地 buildFixture 排版预演已通过；首次真实
 
 - 仓库规范入口：`tools/company/ifanr-feishu-wechat-layout/README.md`
 - v1.10.0 源码目录：`tools/company/ifanr-feishu-wechat-layout/v1.10.0`
-- Chrome 应加载目录：`D:\projects\自媒体运营\tools\company\ifanr-feishu-wechat-layout\v1.10.0\extension`
+- Chrome 应加载目录：先在仓库根目录运行 `$repoRoot = git rev-parse --show-toplevel`，再使用 `Join-Path $repoRoot 'tools/company/ifanr-feishu-wechat-layout/v1.10.0/extension'` 得到当前 clone 的绝对路径
 - 扩展版本：`1.10.0`
 - `manifest.json` SHA-256：`AA4E61E879FDE34DDB09383F51AB0B99DB373BEACB89EEC456D4CFAF4F635396`
 - 原始 22 文件树指纹：`50E9DE945BECBCAE5EAA1A068A4E3CEE63EB5CCAF3F983E40150877C07068862`

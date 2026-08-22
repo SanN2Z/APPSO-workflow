@@ -1,0 +1,10 @@
+# -*- coding: utf-8 -*-
+# Clone-local workflow dependencies. Component pins remain in their owning files.
+-r 微信公众号/requirements.txt
+-r .agents/skills/self-media-ops/requirements.txt
+-r .agents/skills/insight-to-asset/requirements.txt
+-r tools/derived_corpus/requirements.txt
+
+# Repository-wide verification and document tooling.
+PyMuPDF==1.27.2.2
+pytest==9.0.3

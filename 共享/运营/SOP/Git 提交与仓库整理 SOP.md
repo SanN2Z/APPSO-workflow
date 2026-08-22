@@ -86,7 +86,7 @@ git diff --check
 历史基线或外部抽取文本出现纯行尾空格时，先检查影响范围，再按需执行：
 
 ```powershell
-python tools/normalize_text_whitespace.py --staged --fix
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/workflow.ps1 normalize-text --staged --fix
 git add --all
 ```
 

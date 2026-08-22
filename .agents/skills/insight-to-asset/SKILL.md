@@ -41,16 +41,16 @@ Convert an idea into evidence and an artifact. Keep the claim narrower than the 
 
 ## Use the deterministic entry
 
-Run from the repository root. Install the pinned parser once in a fresh checkout:
+Run from the repository root. Initialize all pinned workflow dependencies once in a fresh checkout:
 
 ```powershell
-python -m pip install -r .agents/skills/insight-to-asset/requirements.txt
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/bootstrap.ps1
 ```
 
 Create a record without overwriting an existing insight:
 
 ```powershell
-python .agents/skills/insight-to-asset/scripts/insight_loop.py new `
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/workflow.ps1 insight new `
   --id INSIGHT-002 `
   --slug concise-slug `
   --title "洞察标题" `
@@ -63,8 +63,8 @@ python .agents/skills/insight-to-asset/scripts/insight_loop.py new `
 Inspect before writing with `--dry-run`. Validate records and show due reviews with:
 
 ```powershell
-python .agents/skills/insight-to-asset/scripts/insight_loop.py validate
-python .agents/skills/insight-to-asset/scripts/insight_loop.py status --as-of 2026-07-22
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/workflow.ps1 insight validate
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/workflow.ps1 insight status --as-of 2026-07-22
 ```
 
 The script scaffolds and validates structure; it never invents evidence, evaluates a result, changes an SOP, publishes content, or sends an external message.

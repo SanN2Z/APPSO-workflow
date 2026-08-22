@@ -14,6 +14,7 @@ Route the task once, load only the triggered module, and use [the core workflow]
 3. Read only the target platform `AGENTS.md` / `CONTEXT.md`, target package, and directly triggered references.
 4. Read `上下文/当前重点.md` only for a new task, cross-package switch, planning, or repository cleanup.
 5. For analysis, pass `CORE-VALUE-001`; do not manufacture value with style, structure, or length.
+6. When changing an SOP, Skill, dependency, workflow entry, or versioned tool, apply `CORE-PORTABILITY-001`; use the clone-local bootstrap and runner instead of relying on global packages or machine paths.
 
 ## Choose the lowest safe lane
 
@@ -59,7 +60,7 @@ Choose by uncertainty and change scope, not length. Dense facts, complex rights,
 Before `ready`, run:
 
 ```powershell
-python .agents/skills/self-media-ops/scripts/validate_content_package.py <content-package>
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/workflow.ps1 validate <content-package>
 ```
 
-Keep `draft.md` canonical. Delivery routes are `company_browser`, `manual_editor`, and `sealed_draft`; load the publishing reference before choosing. Local research, writing, organization, preview, and dry-run are allowed. Publishing, messaging, scheduling, browser overwrite, API draft creation, or any external account change requires current-task authorization.
+On a fresh clone, run `tools/bootstrap.ps1` once before the command above. Keep `draft.md` canonical. Delivery routes are `company_browser`, `manual_editor`, and `sealed_draft`; load the publishing reference before choosing. Local research, writing, organization, preview, and dry-run are allowed. Publishing, messaging, scheduling, browser overwrite, API draft creation, or any external account change requires current-task authorization.

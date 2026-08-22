@@ -1,0 +1,162 @@
+{
+  "schema_version": 1,
+  "contract_id": "CORE-PORTABILITY-001",
+  "python": {
+    "minimum": "3.11.0",
+    "tested": "3.12.10",
+    "requirements_file": "requirements-workflow.txt",
+    "requirement_sources": [
+      "requirements-workflow.txt",
+      "微信公众号/requirements.txt",
+      ".agents/skills/self-media-ops/requirements.txt",
+      ".agents/skills/insight-to-asset/requirements.txt",
+      "tools/derived_corpus/requirements.txt"
+    ],
+    "packages": {
+      "markdown-it-py": "4.0.0",
+      "mdurl": "0.1.2",
+      "Pillow": "11.3.0",
+      "PyMuPDF": "1.27.2.2",
+      "pytest": "9.0.3",
+      "PyYAML": "6.0.2",
+      "tinycss2": "1.5.1"
+    }
+  },
+  "node": {
+    "minimum": "20.0.0",
+    "tested": "24.13.0",
+    "package_root": "微信公众号",
+    "package_file": "微信公众号/package.json",
+    "lock_file": "微信公众号/package-lock.json",
+    "packages": {
+      "@wenyan-md/cli": "2.0.11"
+    },
+    "overrides": {
+      "mermaid": "11.16.0"
+    }
+  },
+  "entrypoints": {
+    "validate": ".agents/skills/self-media-ops/scripts/validate_content_package.py",
+    "image-preflight": ".agents/skills/self-media-ops/scripts/preflight_image_generation.py",
+    "opening-check": ".agents/skills/self-media-ops/scripts/check_wechat_opening.py",
+    "wechat": "微信公众号/tools/wechat_publish.py",
+    "company": "tools/company_content_sync/company_content_sync.py",
+    "insight": ".agents/skills/insight-to-asset/scripts/insight_loop.py",
+    "retrospective-init": ".agents/skills/content-retrospective/scripts/init_retrospective.py",
+    "retrospective-audit": ".agents/skills/content-retrospective/scripts/audit_retrospectives.py",
+    "corpus": "tools/derived_corpus/derived_corpus.py",
+    "pdf-render": "tools/render_pdf_pages.py",
+    "crop-image": "tools/crop_image_region.py",
+    "normalize-text": "tools/normalize_text_whitespace.py",
+    "openrouter": "tools/openrouter_chat.py"
+  },
+  "required_tracked_paths": [
+    ".python-version",
+    ".nvmrc",
+    ".gitattributes",
+    "requirements-workflow.txt",
+    "tools/workflow-toolchain.json",
+    "tools/verify_clone_ready.py",
+    "tools/bootstrap.ps1",
+    "tools/workflow.ps1",
+    "tools/openrouter_chat.py",
+    "tools/claude-ox.ps1",
+    "tools/set_openrouter_key.ps1",
+    "微信公众号/package.json",
+    "微信公众号/package-lock.json",
+    "微信公众号/requirements.txt",
+    ".agents/skills/self-media-ops/requirements.txt",
+    ".agents/skills/insight-to-asset/requirements.txt",
+    "tools/derived_corpus/requirements.txt",
+    "tools/company_content_sync/profile.json",
+    "tools/company_content_sync/render_with_extension.js",
+    "共享/运营/SOP/内容工作流.md",
+    ".agents/skills/self-media-ops/references/wechat-publishing.md",
+    "APPSO-数字资产/03-SOP/公司飞书到公众号浏览器排版 SOP.md"
+  ],
+  "python_compile_roots": [
+    ".agents/skills",
+    "tools",
+    "微信公众号/tools"
+  ],
+  "line_endings": {
+    "tools/company_content_sync/render_with_extension.js": {
+      "text": "set",
+      "eol": "lf"
+    }
+  },
+  "portable_docs": [
+    "README.md",
+    "共享/运营/SOP/内容工作流.md",
+    ".agents/skills/self-media-ops/SKILL.md",
+    ".agents/skills/self-media-ops/references/wechat-publishing.md",
+    ".agents/skills/self-media-ops/references/wechat-copyedit-pass.md",
+    ".agents/skills/company-content-sync/SKILL.md",
+    ".agents/skills/insight-to-asset/SKILL.md",
+    ".agents/skills/content-retrospective/SKILL.md",
+    "微信公众号/README.md",
+    "APPSO-数字资产/03-SOP/公司飞书到公众号浏览器排版 SOP.md",
+    "共享/运营/SOP/Image2 生图工作流.md",
+    "共享/运营/SOP/Git 提交与仓库整理 SOP.md",
+    "tools/company_content_sync/README.md",
+    "tools/company/ifanr-feishu-wechat-layout/README.md",
+    "tools/derived_corpus/README.md",
+    "tools/README-ox-alpha.md",
+    "tools/claude-ox.ps1",
+    "tools/set_openrouter_key.ps1"
+  ],
+  "company_extension": {
+    "root": "tools/company/ifanr-feishu-wechat-layout/v1.10.0",
+    "manifest": "tools/company/ifanr-feishu-wechat-layout/v1.10.0/extension/manifest.json",
+    "file_count": 22,
+    "total_bytes": 3347963,
+    "tree_sha256": "50E9DE945BECBCAE5EAA1A068A4E3CEE63EB5CCAF3F983E40150877C07068862",
+    "manifest_sha256": "AA4E61E879FDE34DDB09383F51AB0B99DB373BEACB89EEC456D4CFAF4F635396"
+  },
+  "test_paths": [
+    ".agents/skills/self-media-ops/tests",
+    ".agents/skills/insight-to-asset/tests",
+    "微信公众号/tools/tests",
+    "tools/company_content_sync/tests",
+    "tools/derived_corpus/tests",
+    "tools/tests"
+  ],
+  "external_gates": [
+    {
+      "id": "wechat_credentials_and_egress",
+      "required_for": "wechat draft --execute",
+      "clone_installed": false,
+      "reason": "Requires the target account credentials, IP allowlist, and current-task authorization."
+    },
+    {
+      "id": "feishu_remote_mcp",
+      "required_for": "company Feishu create/fetch",
+      "clone_installed": false,
+      "reason": "Requires a local UAT, host tool attestation, target folder, and current-task authorization."
+    },
+    {
+      "id": "chrome_company_extension",
+      "required_for": "company_browser execution",
+      "clone_installed": false,
+      "reason": "Source is versioned, but Chrome must load it manually in an authorized company profile."
+    },
+    {
+      "id": "image_generation_provider",
+      "required_for": "AI image generation or editing",
+      "clone_installed": false,
+      "reason": "The repository provides planning and preflight; generation is a host capability."
+    },
+    {
+      "id": "appsso_restricted_prompt_asset",
+      "required_for": "APPSO appsso-004 image preflight",
+      "clone_installed": false,
+      "reason": "The clone carries the registry and prompt hash, while the governed prompt source remains restricted and local-only by policy."
+    },
+    {
+      "id": "openrouter_account_and_model",
+      "required_for": "Ox Alpha external model experiments",
+      "clone_installed": false,
+      "reason": "Requires a local API key, a currently available model ID, network access, and permission to send the selected public material."
+    }
+  ]
+}

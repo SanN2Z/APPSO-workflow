@@ -18,5 +18,5 @@
 ```powershell
 .\tools\set_openrouter_key.ps1
 .\tools\claude-ox.ps1 -Isolated
-python tools/openrouter_chat.py "只包含公开信息的测试问题"
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/workflow.ps1 openrouter "只包含公开信息的测试问题"
 ```

@@ -1,5 +1,5 @@
 schema_version: 1
-updated_on: "2026-08-21"
+updated_on: "2026-08-22"
 
 changes:
   - id: "SOP-CHANGE-20260721-001"
@@ -1223,4 +1223,41 @@ changes:
       - "实际公众号后台粘贴、保存、重开与手机预览仍待当前账号授权，构建回执固定记录为 pending"
     promoted_rules:
       - "PROJECT-WECHAT-VERTICAL-SCROLL-HANDOFF-001 (owner-binding E0 local handoff configuration; WeChat backend effectiveness pending)"
+    next_review_on: "2026-09-22"
+
+  - id: "SOP-CHANGE-20260822-002"
+    date: "2026-08-22"
+    change: "按主理人明确要求，把 SOP 与 workflow 的依赖、入口和版本化工具从当前机器可用升级为全新 clone 可复现：新增统一 Python 聚合清单、Python／Node 版本提示、npm lock 恢复、一键 bootstrap、clone 内命令调度器、source／runtime 自检，并把账号凭据、飞书 UAT、Chrome、ImageGen 与受限 local-only 公司 Prompt 明确分离为外部门"
+    source_cases:
+      - "user-feedback:2026-08-22-clone-ready-sop-workflow-toolchain"
+      - "workspace-consolidation:2026-08-22"
+    affected_sources:
+      - "requirements-workflow.txt"
+      - ".python-version"
+      - ".nvmrc"
+      - "tools/workflow-toolchain.json"
+      - "tools/bootstrap.ps1"
+      - "tools/workflow.ps1"
+      - "tools/verify_clone_ready.py"
+      - "tools/tests/test_verify_clone_ready.py"
+      - "共享/运营/SOP/内容工作流.md"
+      - ".agents/skills/self-media-ops/SKILL.md"
+      - ".agents/skills/self-media-ops/references/wechat-publishing.md"
+      - ".agents/skills/company-content-sync/SKILL.md"
+      - ".agents/skills/insight-to-asset/SKILL.md"
+      - "APPSO-数字资产/03-SOP/公司飞书到公众号浏览器排版 SOP.md"
+      - "微信公众号/README.md"
+      - "tools/company_content_sync/README.md"
+      - "tools/README-ox-alpha.md"
+      - "共享/运营/复盘/SOP 变更台账.yml"
+    classification: "owner_binding_repository_portability_contract"
+    validation:
+      - "source-only 自检通过：7 个精确 Python pin 来自 5 份跟踪清单，47 个必要文件均已进入 Git，1 个哈希绑定脚本强制 LF checkout，27 个 Python 文件内存编译通过，18 份操作文档无机器绝对路径"
+      - "公司扩展 v1.10.0 的 22 文件、3,347,963 bytes、manifest 与整树 SHA-256 均和登记值一致；12 个 JavaScript 文件通过 node --check"
+      - "当前工作树实际运行 tools/bootstrap.ps1 -FullTest：创建 clone-local .venv、npm ci 安装 269 个锁定包，304 项测试通过、1 项跳过、319 个子测试通过"
+      - "tools/workflow.ps1 verify、wechat capability --json 与 company doctor --json 均返回成功；所有探针保持无网络业务调用和零外部写入"
+      - "从本次提交建立不共享工作树文件的全新 clone 后，tools/bootstrap.ps1 -FullTest 与 tools/workflow.ps1 verify 再次通过：305 项测试通过、2 项按设计跳过、319 个子测试通过；跳过项分别是 Windows 当前权限不允许符号链接，以及治理规则要求 local-only 的 APPSO 受限 Prompt 不进入 clone"
+      - "最终 main 工作树全量回归为 306 项测试通过、1 项按环境跳过、319 个子测试通过；唯一跳过项是 Windows 当前权限不允许创建符号链接"
+    promoted_rules:
+      - "CORE-PORTABILITY-001 (owner-binding E0 clone-local operability contract; external account readiness explicitly excluded)"
     next_review_on: "2026-09-22"

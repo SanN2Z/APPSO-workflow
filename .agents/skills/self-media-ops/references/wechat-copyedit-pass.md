@@ -13,7 +13,7 @@ Run this gate after the argument and facts are stable, and before the release au
 7. After a pass, print the exact body hash:
 
    ```powershell
-   python .agents/skills/self-media-ops/scripts/validate_content_package.py <content-package-path> --print-copyedit-hash
+   powershell -NoProfile -ExecutionPolicy Bypass -File tools/workflow.ps1 validate <content-package-path> --print-copyedit-hash
    ```
 
 8. Put the same hash in `copyedit.md` and `draft.md`, set `copyedit_checked: true`, then run the normal package validator.

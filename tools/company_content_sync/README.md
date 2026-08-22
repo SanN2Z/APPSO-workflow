@@ -7,7 +7,7 @@
 ## 唯一入口
 
 - Agent：使用 `$company-content-sync`。
-- 人：从仓库根目录运行 `python tools/company_content_sync/company_content_sync.py status <内容包> --json`。
+- 人：首次 clone 先运行 `tools/bootstrap.ps1`，之后从仓库根目录运行 `powershell -NoProfile -ExecutionPolicy Bypass -File tools/workflow.ps1 company status <内容包> --json`。
 
 `status` 是只读操作，并且只返回一个 `next_action`：
 
@@ -17,9 +17,9 @@
 - `operational_ok` 只表示 CLI 可运行，不等于 `workflow_ready`。
 
 ```powershell
-python tools/company_content_sync/company_content_sync.py doctor --json
-python tools/company_content_sync/company_content_sync.py connector-doctor --json
-python tools/company_content_sync/company_content_sync.py status "微信公众号/内容/2026/07/<slug>" --json
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/workflow.ps1 company doctor --json
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/workflow.ps1 company connector-doctor --json
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/workflow.ps1 company status "微信公众号/内容/2026/07/<slug>" --json
 ```
 
 ## 最短流程
@@ -70,7 +70,7 @@ status
 旧公司稿可先运行：
 
 ```powershell
-python tools/company_content_sync/company_content_sync.py configure-company <内容包> --json
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/workflow.ps1 company configure-company <内容包> --json
 ```
 
 它不会把稿件切到公众号 API 路线，也不会覆盖已有冲突值。
@@ -78,7 +78,7 @@ python tools/company_content_sync/company_content_sync.py configure-company <内
 准备新建飞书文档需要两个非凭据输入：
 
 ```powershell
-python tools/company_content_sync/company_content_sync.py feishu-prepare-push `
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/workflow.ps1 company feishu-prepare-push `
   <内容包> `
   --tenant-fingerprint "<64 位小写 SHA-256>" `
   --parent-id "<公司飞书文件夹不透明 ID>" `
@@ -114,7 +114,7 @@ $env:FEISHU_MCP_UAT = "<从飞书开放平台取得的 UAT>"
 新会话中再运行：
 
 ```powershell
-python tools/company_content_sync/company_content_sync.py connector-doctor --json
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/workflow.ps1 company connector-doctor --json
 ```
 
 配置有效只代表 connector 可开始握手，不代表已取得本次写入授权，也不代表可信执行器可用。只有 host 对实际 `create-doc`／`fetch-doc` 工具完成证明，并能把当前会话的一次性授权与 claim 原子绑定时，`trusted_executor_available` 才能变为 true。
@@ -123,7 +123,7 @@ host 在当前会话确实发现了精确的 `create-doc`、`fetch-doc` 两项�
 
 ```powershell
 $env:FEISHU_MCP_HOST_TOOLS_ATTESTED = "create-doc,fetch-doc"
-python tools/company_content_sync/company_content_sync.py connector-doctor --json
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/workflow.ps1 company connector-doctor --json
 ```
 
 该变量不是 Token，也不是用户授权；工具未实际加载时不得伪造。会话结束后移除它。实际 begin 仍需当前任务对精确 tenant、文件夹、正文、图片和「新建 1 份文档」的明确授权。
@@ -222,8 +222,8 @@ Markdown 入口故意严格：正文只允许 H2／H3；H3 必须已有 H2；相
 现有发布器已经提供两个无外部写入的探针：
 
 ```powershell
-python "微信公众号/tools/wechat_publish.py" capability --json
-python "微信公众号/tools/wechat_publish.py" sealed-draft-dry-run `
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/workflow.ps1 wechat capability --json
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/workflow.ps1 wechat sealed-draft-dry-run `
   <内容包> `
   --build <内容包>/dist/content-sync/build.json `
   --json

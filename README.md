@@ -4,6 +4,35 @@
 
 > 仓库含 `internal` 与受限索引，只能保持 Private。公开前必须逐项脱敏和核权。
 
+## 全新 clone 的唯一初始化入口
+
+先安装 Git、Python 3.11 或更高版本、Node.js 20 或更高版本；仓库当前验证版本分别记录在 `.python-version` 与 `.nvmrc`。随后从私有远端 clone，并在仓库根目录运行：
+
+```powershell
+git clone PRIVATE_REPOSITORY_URL self-media-ops
+Set-Location self-media-ops
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/bootstrap.ps1 -FullTest
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/workflow.ps1 verify
+```
+
+`bootstrap.ps1` 会创建被 Git 忽略的 `.venv`，按统一清单安装精确 Python 依赖，以 `npm ci` 恢复锁定的 Wenyan 工具，再验证公司扩展文件树、脚本语法和两个核心本地 doctor。它不会创建 `.env`、读取或写入账号，也不会替用户安装 Chrome 扩展、飞书 UAT、ImageGen 或按治理规则保持 `local-only` 的 APPSO 受限 Prompt；这些外部条件只在对应执行动作前单独检查。
+
+初始化后不必激活虚拟环境，统一用 clone 内入口：
+
+```powershell
+# 仅读自检
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/workflow.ps1 verify
+
+# 校验一个内容包
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/workflow.ps1 validate <内容包路径>
+
+# 查看公众号或公司同步能力，不联网、不写外部系统
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/workflow.ps1 wechat capability --json
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/workflow.ps1 company doctor --json
+```
+
+依赖、入口与外部门的机器可读真源是 [`tools/workflow-toolchain.json`](tools/workflow-toolchain.json)；详细可移植合同只在核心工作流的 `CORE-PORTABILITY-001` 维护。
+
 ## 三步开始
 
 1. 读根 [`AGENTS.md`](AGENTS.md)，确定安全规则和任务类型。

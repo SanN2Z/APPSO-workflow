@@ -44,34 +44,32 @@
 
 用户只需选择 `company_browser`、`manual_editor` 或 `sealed_draft`。工具内部继续保留品牌、交付方式和视觉主题字段做严格校验。命令与失败处理见 [wechat-publishing.md](../.agents/skills/self-media-ops/references/wechat-publishing.md)，主题能力见 [themes/README.md](themes/README.md)。
 
-APPSO／公司稿由 Agent 处理时，默认预览交付为飞书在线文档：从仓库根目录运行 `python tools/company_content_sync/company_content_sync.py status <内容包路径> --json`，按返回的唯一下一步先完成锁定排版校验，再新建并读回飞书文档。成功回执中的 `document_url` 才是在线预览链接；本地 HTML 保留为精确微信样式凭据。个人稿或用户明确接受的离线回退，才直接打开本机预览。
+APPSO／公司稿由 Agent 处理时，默认预览交付为飞书在线文档：从仓库根目录运行 `powershell -NoProfile -ExecutionPolicy Bypass -File tools/workflow.ps1 company status <内容包路径> --json`，按返回的唯一下一步先完成锁定排版校验，再新建并读回飞书文档。成功回执中的 `document_url` 才是在线预览链接；本地 HTML 保留为精确微信样式凭据。个人稿或用户明确接受的离线回退，才直接打开本机预览。
 
 当前固定版本会把正文图片作为永久图片素材上传并缓存重复素材；自定义摘要暂不随 API 提交，需在公众号后台检查微信自动生成的摘要。`draft --execute` 只接受显式 `.env` 作为凭证真源并显示非敏感账号指纹；上传和建草稿不是原子事务，执行期失败后必须先检查目标账号后台和素材库，再决定是否重试。其余已知限制记录在发布参考文档中。
 
 首次安装（从仓库根目录运行）：
 
 ```powershell
-python -m pip install -r 微信公众号/requirements.txt
-npm.cmd --prefix 微信公众号 install
-Copy-Item 微信公众号/.env.example 微信公众号/.env
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/bootstrap.ps1
 ```
 
-凭证只在本机填写到 `.env`，不要发到聊天中。
+该命令安装并核验整个仓库工作流，不创建账号配置。只有实际执行微信草稿时，才把 `.env.example` 复制为本地 `.env` 并填写凭证；凭证不要发到聊天中。
 
 以下命令也从仓库根目录运行：
 
 ```powershell
 # 本机手机宽诊断预览或明确接受的离线回退，不上传
-python 微信公众号/tools/wechat_publish.py preview <内容包路径> --open
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/workflow.ps1 wechat preview <内容包路径> --open
 
 # 人工编辑交接，不上传；生成版本化复制页
-python 微信公众号/tools/wechat_publish.py handoff <内容包路径> --open
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/workflow.ps1 wechat handoff <内容包路径> --open
 
 # 草稿箱预检，默认 dry-run
-python 微信公众号/tools/wechat_publish.py draft <内容包路径>
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/workflow.ps1 wechat draft <内容包路径>
 
 # 明确授权后：自动上传图片并创建一条公众号草稿
-python 微信公众号/tools/wechat_publish.py draft <内容包路径> --execute
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/workflow.ps1 wechat draft <内容包路径> --execute
 ```
 
 详细门禁和开发者配置见 [wechat-publishing.md](../.agents/skills/self-media-ops/references/wechat-publishing.md)。

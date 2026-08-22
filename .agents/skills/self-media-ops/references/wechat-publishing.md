@@ -24,12 +24,10 @@ APPSO／公司稿的 Agent 默认预览交付面是飞书在线文档，统一�
 From the repository root:
 
 ```powershell
-python -m pip install -r 微信公众号/requirements.txt
-npm.cmd --prefix 微信公众号 install
-Copy-Item 微信公众号/.env.example 微信公众号/.env
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/bootstrap.ps1
 ```
 
-Fill `WECHAT_APP_ID` and `WECHAT_APP_SECRET` in the local `.env`. `draft --execute` rejects a missing or ambiguous credential file, removes ambient WeChat credentials and Node injection variables from the child process, and prints only a 12-character SHA-256 fingerprint of the selected AppID. Confirm that non-secret fingerprint against the intended account before proceeding. Never paste the secret into chat, a draft, logs, or committed files. `.env`, Wenyan token/material caches, and generated preview artifacts are ignored by Git.
+The bootstrap creates a clone-local `.venv`, restores exact Python pins, and runs `npm ci` against the tracked lockfile. It does not create credentials. Only when the current task actually needs `draft --execute`, copy `微信公众号/.env.example` to `微信公众号/.env` locally and fill `WECHAT_APP_ID` and `WECHAT_APP_SECRET`. `draft --execute` rejects a missing or ambiguous credential file, removes ambient WeChat credentials and Node injection variables from the child process, and prints only a 12-character SHA-256 fingerprint of the selected AppID. Confirm that non-secret fingerprint against the intended account before proceeding. Never paste the secret into chat, a draft, logs, or committed files. `.env`, Wenyan token/material caches, and generated preview artifacts are ignored by Git.
 
 The WeChat account must expose the required material and draft APIs. The machine's public egress IP must be allowed in the Official Account developer configuration, unless a separately reviewed fixed-egress deployment is used.
 
@@ -87,7 +85,7 @@ Wenyan 仍负责 Markdown 与本地图片渲染。适配器先在 Markdown token
 `PROJECT-WECHAT-VERTICAL-SCROLL-HANDOFF-001`：当在线转换器不可用，或编辑明确要求把一组连续长图做成公众号内的上下滑动窗口时，使用仓库现有发布适配器生成，不在内容包里保留一次性 HTML 构建器。图片必须位于内容包 `assets/`，按展示顺序逐张登记为 `use: "wechat_body_interactive"`，允许 `wechat`，且权利状态已经解决。
 
 ```powershell
-python 微信公众号/tools/wechat_publish.py scroll-handoff <content-package> `
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/workflow.ps1 wechat scroll-handoff <content-package> `
   --image "assets/scroll-01.png" `
   --image "assets/scroll-02.png" `
   --image "assets/scroll-03.png" `
@@ -167,13 +165,13 @@ Run all commands below from the repository root.
 Local diagnostic preview or explicitly accepted fallback; no network or external write:
 
 ```powershell
-python 微信公众号/tools/wechat_publish.py preview <content-package> --open
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/workflow.ps1 wechat preview <content-package> --open
 ```
 
 Editable handoff; no network or external write:
 
 ```powershell
-python 微信公众号/tools/wechat_publish.py handoff <content-package> --open
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/workflow.ps1 wechat handoff <content-package> --open
 ```
 
 预览默认使用 390 px 内容宽度，并提供 375 px / 390 px 切换按钮；两档都要检查溢出、正文缩进、全宽头图和尾图位置。
@@ -181,13 +179,13 @@ python 微信公众号/tools/wechat_publish.py handoff <content-package> --open
 Draft preflight; still no network or external write:
 
 ```powershell
-python 微信公众号/tools/wechat_publish.py draft <content-package>
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/workflow.ps1 wechat draft <content-package>
 ```
 
 Create exactly one draft after explicit current-task authorization:
 
 ```powershell
-python 微信公众号/tools/wechat_publish.py draft <content-package> --execute
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/workflow.ps1 wechat draft <content-package> --execute
 ```
 
 `--execute` delegates rendering, image uploads, cover material upload, and draft creation to `@wenyan-md/cli`. It does not publish or mass-send. The local result receipt records the same non-secret account fingerprint. After success, a human still checks the actual draft in the Official Account backend.

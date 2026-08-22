@@ -9,13 +9,13 @@
     工作目录默认是仓库外的独立沙盒，隐身模型看不到自媒体运营仓库的任何内容。
 .EXAMPLE
     .\tools\claude-ox.ps1
-    .\tools\claude-ox.ps1 -WorkDir "D:\tmp\myplayground"
+    .\tools\claude-ox.ps1 -WorkDir (Join-Path $env:TEMP "myplayground")
     .\tools\claude-ox.ps1 -Isolated                 # 连全局 CLAUDE.md / skills 也不加载
     .\tools\claude-ox.ps1 -ClaudeArgs @('-p','写个快排')   # 透传参数给 claude（headless）
 #>
 [CmdletBinding()]
 param(
-    [string]$WorkDir = "D:\projects\ox-alpha-lab",
+    [string]$WorkDir = "",
     [string]$Model = "stealth/ox-alpha",
     [switch]$Isolated,
     [switch]$SkipCheck,
@@ -30,6 +30,9 @@ chcp 65001 > $null
 $ErrorActionPreference = 'Stop'
 
 $repoRoot = Split-Path -Parent $PSScriptRoot
+if ([string]::IsNullOrWhiteSpace($WorkDir)) {
+    $WorkDir = Join-Path ([System.IO.Path]::GetTempPath()) "ox-alpha-lab"
+}
 
 # ---------- 1. 取 key（只从仓库 .env 读，key 不会发给模型） ----------
 $key = $env:OPENROUTER_API_KEY

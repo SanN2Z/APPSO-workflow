@@ -7,6 +7,12 @@ $ErrorActionPreference = 'Stop'
 
 $repoRoot = Split-Path -Parent $PSScriptRoot
 $envPath = Join-Path $repoRoot '.env'
+$workflowRunner = Join-Path $repoRoot 'tools\workflow.ps1'
+$venvPython = Join-Path $repoRoot '.venv\Scripts\python.exe'
+
+if (-not (Test-Path -LiteralPath $venvPython -PathType Leaf)) {
+    throw 'Clone-local tooling is not initialized. Run tools/bootstrap.ps1 first.'
+}
 
 Write-Host ""
 Write-Host "把 OpenRouter API key 粘贴到下面，然后回车（输入不回显，看不见是正常的）:" -ForegroundColor Cyan
@@ -75,11 +81,12 @@ Write-Host ""
 Write-Host "[info] 自检 key 中..." -ForegroundColor Cyan
 Push-Location $repoRoot
 try {
-    python tools/openrouter_chat.py --check
+    & $workflowRunner openrouter --check
+    if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 } finally {
     Pop-Location
 }
 
 Write-Host ""
 Write-Host "接着可以直接试模型:" -ForegroundColor Cyan
-Write-Host '  python tools/openrouter_chat.py "用一句话说说你是什么模型"' -ForegroundColor White
+Write-Host '  powershell -NoProfile -ExecutionPolicy Bypass -File tools/workflow.ps1 openrouter "用一句话说说你是什么模型"' -ForegroundColor White

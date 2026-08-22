@@ -14,7 +14,7 @@
 ## 安装
 
 ```powershell
-python -m pip install -r tools/derived_corpus/requirements.txt
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/bootstrap.ps1
 ```
 
 正式依赖只有固定版本的 `PyYAML`；HTTP、robots 和 HTML 流式解析使用 Python 标准库。
@@ -69,7 +69,7 @@ APPSO 公开媒体研究的当前实例位于：
 先做零网络计划：
 
 ```powershell
-python tools/derived_corpus/derived_corpus.py plan `
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/workflow.ps1 corpus plan `
   --config 共享/研究/衍生语料/科技媒体/policy.yml `
   --input 共享/研究/衍生语料/科技媒体/urls.txt
 ```
@@ -77,7 +77,7 @@ python tools/derived_corpus/derived_corpus.py plan `
 `collect` 默认仍是零网络 dry-run，也不会创建输出文件：
 
 ```powershell
-python tools/derived_corpus/derived_corpus.py collect `
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/workflow.ps1 corpus collect `
   --config 共享/研究/衍生语料/科技媒体/policy.yml `
   --input 共享/研究/衍生语料/科技媒体/urls.txt `
   --output 共享/研究/衍生语料/科技媒体/records.jsonl
@@ -86,7 +86,7 @@ python tools/derived_corpus/derived_corpus.py collect `
 只有显式提供 `--execute` 才会发起 GET 请求并在全部 URL 成功后原子替换输出：
 
 ```powershell
-python tools/derived_corpus/derived_corpus.py collect `
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/workflow.ps1 corpus collect `
   --config 共享/研究/衍生语料/科技媒体/policy.yml `
   --input 共享/研究/衍生语料/科技媒体/urls.txt `
   --output 共享/研究/衍生语料/科技媒体/records.jsonl `
@@ -96,7 +96,7 @@ python tools/derived_corpus/derived_corpus.py collect `
 校验已有 corpus：
 
 ```powershell
-python tools/derived_corpus/derived_corpus.py validate `
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/workflow.ps1 corpus validate `
   --corpus 共享/研究/衍生语料/科技媒体/records.jsonl
 ```
 
@@ -144,7 +144,7 @@ structure
 ## 测试
 
 ```powershell
-python -m unittest tools/derived_corpus/tests/test_derived_corpus.py -v
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/workflow.ps1 test tools/derived_corpus/tests/test_derived_corpus.py
 ```
 
 测试全部使用人工合成 HTML 和可注入的假 HTTP 响应，不访问互联网，也不会把第三方 HTML 带进仓库。

@@ -18,7 +18,7 @@ description: Start and coordinate the lightweight company-content path from a lo
 
 ```powershell
 $repoRoot = git rev-parse --show-toplevel
-python "$repoRoot/tools/company_content_sync/company_content_sync.py" status <内容包> --json
+powershell -NoProfile -ExecutionPolicy Bypass -File "$repoRoot/tools/workflow.ps1" company status <内容包> --json
 ```
 
 Windows PowerShell 读取中文 Markdown 时显式使用 `-Encoding UTF8`。
@@ -26,7 +26,7 @@ Windows PowerShell 读取中文 Markdown 时显式使用 `-Encoding UTF8`。
 当 `next_action.id` 是 `integrate_trusted_feishu_executor` 时，先运行只读诊断，不要尝试 begin：
 
 ```powershell
-python "$repoRoot/tools/company_content_sync/company_content_sync.py" connector-doctor --json
+powershell -NoProfile -ExecutionPolicy Bypass -File "$repoRoot/tools/workflow.ps1" company connector-doctor --json
 ```
 
 `connector-doctor` 只报告当前 `CODEX_HOME` 的非敏感配置状态以及环境变量名是否存在；不得读取、输出或代填 Token 值。
@@ -48,7 +48,7 @@ python "$repoRoot/tools/company_content_sync/company_content_sync.py" connector-
 当下一动作是 `run_local_build` 时执行返回命令。仅当用户明确要求本机诊断预览或同意连接器失败后的临时回退时，才直接运行：
 
 ```powershell
-python "$repoRoot/tools/company_content_sync/company_content_sync.py" build <内容包> --json
+powershell -NoProfile -ExecutionPolicy Bypass -File "$repoRoot/tools/workflow.ps1" company build <内容包> --json
 ```
 
 `build` 只写内容包下已忽略的 `dist/content-sync/`。源 Markdown 始终是 `draft.md`。不得静默改用 `wechat_publish.py preview --open` 冒充飞书上传成功；连接器未就绪时应停在明确 gate，并报告缺失条件。
@@ -135,8 +135,8 @@ python "$repoRoot/tools/company_content_sync/company_content_sync.py" build <内
 进入微信阶段时先运行纯本地探针：
 
 ```powershell
-python "$repoRoot/微信公众号/tools/wechat_publish.py" capability --json
-python "$repoRoot/微信公众号/tools/wechat_publish.py" sealed-draft-dry-run `
+powershell -NoProfile -ExecutionPolicy Bypass -File "$repoRoot/tools/workflow.ps1" wechat capability --json
+powershell -NoProfile -ExecutionPolicy Bypass -File "$repoRoot/tools/workflow.ps1" wechat sealed-draft-dry-run `
   <内容包> `
   --build <内容包>/dist/content-sync/build.json `
   --json

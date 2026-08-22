@@ -64,7 +64,7 @@
 每次工具调用前执行：
 
 ```powershell
-python .agents/skills/self-media-ops/scripts/preflight_image_generation.py `
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/workflow.ps1 image-preflight `
   <content-package-path> --task <task-id> --stage <reference|final> `
   --include-prompt --write-receipt
 ```
