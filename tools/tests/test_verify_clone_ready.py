@@ -66,7 +66,7 @@ def test_absolute_path_scan_flags_machine_paths_only() -> None:
             "Use tools/workflow.ps1 or https://example.com/path.\n", encoding="utf-8"
         )
         bad.write_text(
-            "Do not pin C:\\Users\\USER\\repo or /home/name/repo.\n", encoding="utf-8"
+            "Do not pin C:\\Users\\name\\repo or /home/name/repo.\n", encoding="utf-8"
         )
 
         assert MODULE.absolute_path_findings(root, ["good.md"]) == []

@@ -50,3 +50,13 @@ APPSO-数字资产/90-受限资料/*
 
 # Restricted editorial-diff evidence: local archive only
 微信公众号/知识库/反馈库/附件/*.png
+
+# Local credentials, personal settings, and database backups
+.env
+.env.local
+.env.*.local
+**/.claude/settings.local.json
+*.db
+*.db.*
+*.sqlite
+*.sqlite3
