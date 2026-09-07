@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=1080, initial-scale=1">
+  <title>三家 AI 记忆地图</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; width: 1080px; height: 1980px; overflow: hidden; }
+    body {
+      color: #171717;
+      background: #f5f2ea;
+      font-family: "Microsoft YaHei", "Noto Sans CJK SC", system-ui, sans-serif;
+    }
+    .frame {
+      width: 1080px;
+      height: 1980px;
+      padding: 64px 58px 48px;
+      background:
+        radial-gradient(circle at 92% 4%, rgba(209, 93, 52, .12), transparent 19%),
+        radial-gradient(circle at 6% 96%, rgba(44, 116, 152, .10), transparent 21%),
+        #f5f2ea;
+    }
+    .kicker {
+      color: #716e66;
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: .11em;
+    }
+    h1 {
+      margin: 12px 0 10px;
+      font-size: 62px;
+      line-height: 1.12;
+      letter-spacing: -.035em;
+    }
+    .subtitle {
+      margin-bottom: 34px;
+      color: #5e5b54;
+      font-size: 28px;
+      line-height: 1.55;
+    }
+    .stack { display: grid; gap: 24px; }
+    .card {
+      position: relative;
+      min-height: 438px;
+      padding: 30px 32px 28px;
+      border: 3px solid #1b1b1b;
+      border-radius: 26px;
+      box-shadow: 8px 8px 0 #1b1b1b;
+      overflow: hidden;
+    }
+    .claude { background: #f6dfcd; }
+    .chatgpt { background: #dcecdf; }
+    .gemini { background: #dceaf3; }
+    .head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 22px;
+    }
+    .name {
+      font-size: 45px;
+      font-weight: 950;
+      line-height: 1;
+      letter-spacing: -.025em;
+    }
+    .route {
+      max-width: 560px;
+      padding: 7px 16px 9px;
+      border: 2px solid #1b1b1b;
+      border-radius: 999px;
+      background: rgba(255,255,255,.62);
+      font-size: 27px;
+      font-weight: 850;
+      line-height: 1.25;
+      text-align: right;
+    }
+    .nodes {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 14px;
+    }
+    .node {
+      grid-column: span 2;
+      min-height: 118px;
+      padding: 15px 14px 14px;
+      border: 2px solid rgba(23,23,23,.65);
+      border-radius: 18px;
+      background: rgba(255,255,255,.78);
+    }
+    .node:nth-child(4) { grid-column: 2 / span 2; }
+    .node:nth-child(5) { grid-column: 4 / span 2; }
+    .axis {
+      margin-bottom: 5px;
+      color: #68645c;
+      font-size: 24px;
+      font-weight: 900;
+      letter-spacing: .08em;
+    }
+    .value {
+      font-size: 31px;
+      font-weight: 900;
+      line-height: 1.28;
+      letter-spacing: -.02em;
+    }
+    .verdict {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      margin-top: 20px;
+      font-size: 29px;
+      font-weight: 900;
+    }
+    .verdict::before {
+      content: "";
+      width: 44px;
+      height: 8px;
+      border-radius: 8px;
+      background: #1b1b1b;
+    }
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 30px;
+      margin-top: 33px;
+      color: #625f58;
+      font-size: 21px;
+      line-height: 1.55;
+    }
+    .footer strong { color: #202020; }
+  </style>
+</head>
+<body>
+  <main class="frame">
+    <div class="kicker">MEMORY MAP · 不是总分榜</div>
+    <h1>三家 AI 记忆地图</h1>
+    <div class="subtitle">同看 5 件事：记成什么、能否看见、流向哪里、如何搬走、怎样隔离。</div>
+
+    <section class="stack">
+      <article class="card claude">
+        <div class="head">
+          <div class="name">Claude</div>
+          <div class="route">主题文件可维护，开始进入执行场景</div>
+        </div>
+        <div class="nodes">
+          <div class="node"><div class="axis">形态</div><div class="value">Profile<br>偏好与 Topics</div></div>
+          <div class="node"><div class="axis">可见</div><div class="value">逐项读、改、删</div></div>
+          <div class="node"><div class="axis">场景</div><div class="value">Chat ↔ Cowork</div></div>
+          <div class="node"><div class="axis">迁移</div><div class="value">导入记忆摘要</div></div>
+          <div class="node"><div class="axis">隔离</div><div class="value">隐身模式<br>敏感开关</div></div>
+        </div>
+        <div class="verdict">强项：可维护主题 + 任务执行</div>
+      </article>
+
+      <article class="card chatgpt">
+        <div class="head">
+          <div class="name">ChatGPT</div>
+          <div class="route">自动更新记忆，项目边界更成熟</div>
+        </div>
+        <div class="nodes">
+          <div class="node"><div class="axis">形态</div><div class="value">自动更新记忆</div></div>
+          <div class="node"><div class="axis">可见</div><div class="value">摘要 + 来源</div></div>
+          <div class="node"><div class="axis">场景</div><div class="value">Chat + Projects</div></div>
+          <div class="node"><div class="axis">迁移</div><div class="value">账号数据导出</div></div>
+          <div class="node"><div class="axis">隔离</div><div class="value">临时聊天<br>project-only</div></div>
+        </div>
+        <div class="verdict">强项：来源可见 + 项目隔离</div>
+      </article>
+
+      <article class="card gemini">
+        <div class="head">
+          <div class="name">Gemini</div>
+          <div class="route">完整历史迁移，连接 Google 数据</div>
+        </div>
+        <div class="nodes">
+          <div class="node"><div class="axis">形态</div><div class="value">过去聊天<br>+ Google 数据</div></div>
+          <div class="node"><div class="axis">可见</div><div class="value">可询问和纠正</div></div>
+          <div class="node"><div class="axis">场景</div><div class="value">Web + Mobile</div></div>
+          <div class="node"><div class="axis">迁移</div><div class="value">完整历史 ZIP</div></div>
+          <div class="node"><div class="axis">隔离</div><div class="value">临时聊天<br>连接控制</div></div>
+        </div>
+        <div class="verdict">强项：完整历史迁移 + 数据连接</div>
+      </article>
+    </section>
+
+    <footer class="footer">
+      <div><strong>截至 2026-08-26</strong><br>能力会随套餐、地区与 rollout 变化</div>
+      <div>来源：Anthropic、OpenAI、Google 官方帮助文档<br>图：作者整理</div>
+    </footer>
+  </main>
+</body>
+</html>

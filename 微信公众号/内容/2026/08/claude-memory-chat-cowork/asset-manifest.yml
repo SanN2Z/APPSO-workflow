@@ -1,0 +1,184 @@
+version: 3
+updated: "2026-08-26"
+assets:
+  - file: "assets/claude-memory-official-cover.jpg"
+    used_in_draft: true
+    use: "wechat_body_header"
+    visual_route: "source_original"
+    source_original_kind: "official_original"
+    original_pixels_preserved: true
+    source_type: "official_material"
+    source: "Claude official blog hero image"
+    source_url: "https://cdn.prod.website-files.com/68a44d4040f98a4adf2207b6/6a8dcb60a9e2ed84590a8b9e_og_claudes-memory-works-everywhere-and-you-decide-whats-in-it.jpg"
+    creator_or_rightsholder: "Anthropic PBC"
+    obtained_on: "2026-08-26"
+    modifications: "none"
+    rights_status: "pending_manual_editorial_review"
+    allowed_platforms: []
+    attribution: "图源：Anthropic 官方博客"
+  - file: "assets/claude-memory-chat-cowork-official.png"
+    used_in_draft: true
+    use: "wechat_body_interactive"
+    visual_route: "source_original"
+    source_original_kind: "official_original"
+    original_pixels_preserved: true
+    source_type: "official_material"
+    source: "Claude Memory settings overview from official blog"
+    source_url: "https://cdn.prod.website-files.com/68a44d4040f98a4adf2207b6/6a8cc19ec0d328f3250d2a32_3bc1dbe9.png"
+    creator_or_rightsholder: "Anthropic PBC"
+    obtained_on: "2026-08-26"
+    modifications: "none"
+    rights_status: "pending_manual_editorial_review"
+    allowed_platforms: []
+    attribution: "图源：Anthropic 官方博客"
+  - file: "assets/claude-memory-topics-official-01.png"
+    used_in_draft: false
+    use: "research_reference"
+    visual_route: "source_original"
+    source_original_kind: "official_original"
+    original_pixels_preserved: true
+    source_type: "official_material"
+    source: "Claude Memory topics list close-up from official blog"
+    source_url: "https://cdn.prod.website-files.com/68a44d4040f98a4adf2207b6/6a8cc19ec0d328f3250d2a35_6e1ba645.png"
+    creator_or_rightsholder: "Anthropic PBC"
+    obtained_on: "2026-08-26"
+    modifications: "none"
+    rights_status: "pending_manual_editorial_review"
+    allowed_platforms: []
+    attribution: "图源：Anthropic 官方博客"
+  - file: "assets/claude-memory-topics-official-02.png"
+    used_in_draft: true
+    use: "wechat_body_interactive"
+    visual_route: "source_original"
+    source_original_kind: "official_original"
+    original_pixels_preserved: true
+    source_type: "official_material"
+    source: "Claude single memory topic detail from official blog"
+    source_url: "https://cdn.prod.website-files.com/68a44d4040f98a4adf2207b6/6a8cc19ec0d328f3250d2a3d_e61d20fd.png"
+    creator_or_rightsholder: "Anthropic PBC"
+    obtained_on: "2026-08-26"
+    modifications: "none"
+    rights_status: "pending_manual_editorial_review"
+    allowed_platforms: []
+    attribution: "图源：Anthropic 官方博客"
+
+  - file: "assets/community-linkedin-chat-cowork-handoff-101-reactions.png"
+    used_in_draft: true
+    used_as_cover: false
+    use: "wechat_body_interactive"
+    dimensions: "984x232"
+    visual_route: "source_original"
+    source_original_kind: "community_screenshot"
+    original_pixels_preserved: true
+    source_type: "public_social_media_screenshot"
+    source: "Public LinkedIn comment by Dave Hawkins on Claude's Managed Agents Memory post"
+    source_url: "https://www.linkedin.com/posts/claude_memory-on-claude-managed-agents-is-now-in-activity-7453187579774009345-rAbh"
+    retrieval_url: "https://www.linkedin.com/posts/claude_memory-on-claude-managed-agents-is-now-in-activity-7453187579774009345-rAbh"
+    creator_or_rightsholder: "Dave Hawkins / LinkedIn"
+    obtained_on: "2026-08-26"
+    modifications: "Captured from the public page in a responsive layout; the comment body was line-clamped to a short verbatim excerpt; author, age and visible reaction count were preserved; no text replacement"
+    privacy_handling: "Public author identity retained for attribution; no unrelated profile details or private information included"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "The user explicitly requested relevant community discussion visuals for this article; this short attributed excerpt is used for news analysis and does not grant general republication rights"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "截图：Dave Hawkins / LinkedIn"
+    ai_generated: false
+    output_sha256: "c9de1e38782230ab3b3329437b37606bf566480e6d4000bb1710e82def1e7b73"
+
+  - file: "assets/community-linkedin-memory-drift-7-reactions.png"
+    used_in_draft: true
+    used_as_cover: false
+    use: "wechat_body_interactive"
+    dimensions: "984x232"
+    visual_route: "source_original"
+    source_original_kind: "community_screenshot"
+    original_pixels_preserved: true
+    source_type: "public_social_media_screenshot"
+    source: "Public LinkedIn comment by David Malovecky on Claude's Managed Agents Memory post"
+    source_url: "https://www.linkedin.com/posts/claude_memory-on-claude-managed-agents-is-now-in-activity-7453187579774009345-rAbh"
+    retrieval_url: "https://www.linkedin.com/posts/claude_memory-on-claude-managed-agents-is-now-in-activity-7453187579774009345-rAbh"
+    creator_or_rightsholder: "David Malovecky / LinkedIn"
+    obtained_on: "2026-08-26"
+    modifications: "Captured from the public page in a responsive layout; the comment body was line-clamped to a short verbatim excerpt; author, age and visible reaction count were preserved; no text replacement"
+    privacy_handling: "Public author identity retained for attribution; no unrelated profile details or private information included"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "The user explicitly requested discussion-generating community visuals, including posts that are not the highest-volume item; this short attributed excerpt is used for news analysis"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "截图：David Malovecky / LinkedIn"
+    ai_generated: false
+    output_sha256: "c3effe222ceb56d622760ca364c27b1612d1c010c2c2d604a16034d6cdaf32ff"
+
+  - file: "assets/community-linkedin-history-as-mirror-10-reactions.png"
+    used_in_draft: true
+    used_as_cover: false
+    use: "wechat_body_interactive"
+    dimensions: "984x272"
+    visual_route: "source_original"
+    source_original_kind: "community_screenshot"
+    original_pixels_preserved: true
+    source_type: "public_social_media_screenshot"
+    source: "Public LinkedIn comment by Lalit Agrawal on Ruben Hassid's ChatGPT-to-Claude migration post"
+    source_url: "https://www.linkedin.com/posts/ruben-hassid_how-to-import-your-entire-chatgpt-to-claude-activity-7438464104786190336-HFtU"
+    retrieval_url: "https://www.linkedin.com/posts/ruben-hassid_how-to-import-your-entire-chatgpt-to-claude-activity-7438464104786190336-HFtU"
+    creator_or_rightsholder: "Lalit Agrawal / LinkedIn"
+    obtained_on: "2026-08-26"
+    modifications: "Captured from the public page in a responsive layout; the comment body was line-clamped to a short verbatim excerpt; author, age and visible reaction count were preserved; no text replacement"
+    privacy_handling: "Public author identity retained for attribution; no unrelated profile details or private information included"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "The user explicitly requested community visuals with surprising discussion angles; this short attributed excerpt is used for news analysis and does not grant general republication rights"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "截图：Lalit Agrawal / LinkedIn"
+    ai_generated: false
+    output_sha256: "8f2361f9ad51806fa331b563e026d9026bca9214730e65d47e716ef35ecdd6f1"
+
+  - file: "assets/three-ai-memory-map.png"
+    used_in_draft: true
+    used_as_cover: false
+    use: "wechat_body_interactive"
+    dimensions: "1080x1980"
+    visual_route: "infographic"
+    source_type: "project_generated_data_visualization"
+    source: "research/feature-comparison.md and official Anthropic, OpenAI and Google help documentation listed in sources.md"
+    creator_or_rightsholder: "This project"
+    obtained_on: "2026-08-26"
+    modifications: "Original stacked-card infographic rendered from research/render-memory-map.html; comparison is expressed as three vertical memory cards rather than a row-column table"
+    rights_status: "project_owned"
+    rights_basis: "Project-authored layout and wording based on attributed product facts from official documentation"
+    rights_blocker: false
+    allowed_platforms: ["wechat", "research"]
+    attribution: "图：作者根据三家官方帮助文档整理"
+    ai_generated: false
+    output_sha256: "c96c9340942562dcec9d77a32952bf5cc74225b08c22d4d24648736786b87a82"
+
+  - file: "assets/memory-cache-vs-source-of-truth-doodle.png"
+    used_in_draft: true
+    used_as_cover: false
+    use: "wechat_body_interactive"
+    dimensions: "1672x941"
+    visual_route: "clumsy_doodle"
+    source_type: "ai_generated"
+    source: "Codex built-in image_gen; governed task memory-cache-vs-source-of-truth"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-08-26"
+    modifications: "Exact package copy of the selected generated output; no post-generation crop, text overlay, retouching or other edit"
+    rights_status: "project_owned"
+    rights_basis: "Created for this content package without third-party input assets; no logos, interfaces, real-person likenesses or reconstructed news scene"
+    rights_blocker: false
+    allowed_platforms: ["wechat", "research"]
+    attribution: "AI 生成笨拙涂鸦"
+    ai_generated: true
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "text_to_image"
+    prompt_ref: "clumsy-doodle-v1"
+    prompt_sha256: "e4160da75ebd48f1e8625b61eb840195a66c833dd8373ac61155159826cc2a65"
+    invocation_prompt_sha256: "170a50325927c5b5dcce0fce9f5cdef68c76f08238721d9461bc37a117912489"
+    generation_constraints: "16:9 white-background clumsy pixel doodle; a leaky temporary pocket is connected to a thick user-locked binder; no text, logo, product UI, real person or news-scene reconstruction"
+    input_assets: []
+    generated_on: "2026-08-26"
+    preflight_receipt: "research/image-generation-runs/memory-cache-vs-source-of-truth-final-preflight.json"
+    output_sha256: "31d62cc206cf06db5198c9947eccb9d91082e0f2da22071c992c808409d20578"
+    editorial_note: "Illustrates the article's judgment that platform memory is a cache while user-controlled files remain the source of truth"
