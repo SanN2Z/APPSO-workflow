@@ -1,0 +1,297 @@
+{
+  "checked_on": "2026-09-05",
+  "classification": "internal",
+  "scope": "local draft.md metadata only",
+  "count": 40,
+  "states": {
+    "draft": 16,
+    "editorial_review": 10,
+    "ready": 7,
+    "archived": 2,
+    "未登记": 1,
+    "fact_checked": 2,
+    "research": 2
+  },
+  "documents": [
+    {
+      "path": "微信公众号/内容/2026/07/agent-identity-code/draft.md",
+      "title": "AI Agent 开始拿钱包了，中国先给它办「身份证」",
+      "status": "draft",
+      "published_url": "",
+      "note": ""
+    },
+    {
+      "path": "微信公众号/内容/2026/07/ai-agents-real-world-loss/draft.md",
+      "title": "不要只向 AI 索取答案，带它去撞一次现实",
+      "status": "editorial_review",
+      "published_url": "",
+      "note": ""
+    },
+    {
+      "path": "微信公众号/内容/2026/07/ai-epanorthosis/draft.md",
+      "title": "为什么 AI 总爱写「不是……而是……」？",
+      "status": "draft",
+      "published_url": "",
+      "note": ""
+    },
+    {
+      "path": "微信公众号/内容/2026/07/amazon-agi-ai-hiring-signals/draft.md",
+      "title": "做 AI 的人也被裁了：公司还会不会招「第二个人」？",
+      "status": "draft",
+      "published_url": "",
+      "note": ""
+    },
+    {
+      "path": "微信公众号/内容/2026/07/apple-intelligence-china-filing/draft.md",
+      "title": "Apple 智能过备案了，为什么国行 iPhone 还是没有？",
+      "status": "ready",
+      "published_url": "",
+      "note": ""
+    },
+    {
+      "path": "微信公众号/内容/2026/07/apple-m7-ultra-local-ai-memory/draft.md",
+      "title": "彭博记者爆料：M7 Ultra 设计上最高支持 1.5TB，本地 AI 先要装得下",
+      "status": "archived",
+      "published_url": "",
+      "note": ""
+    },
+    {
+      "path": "微信公众号/内容/2026/07/b-spline-policy-night-read/draft.md",
+      "title": "机器人不是不会干，是干得太慢：一条曲线如何给操作策略加速",
+      "status": "editorial_review",
+      "published_url": "",
+      "note": ""
+    },
+    {
+      "path": "微信公众号/内容/2026/07/claude-cowork-record-a-skill/draft.md",
+      "title": "Claude 新增「Record a skill」：你做一遍，它自动生成 Skill",
+      "status": "draft",
+      "published_url": "",
+      "note": ""
+    },
+    {
+      "path": "微信公众号/内容/2026/07/claude-openai-quota-reset/draft.md",
+      "title": "Claude刚续杯，OpenAI 16分钟后跟上",
+      "status": "ready",
+      "published_url": "",
+      "note": ""
+    },
+    {
+      "path": "微信公众号/内容/2026/07/gpt-red-agent-security/draft.md",
+      "title": "OpenAI 养了一个专门黑自家 AI 的模型",
+      "status": "ready",
+      "published_url": "",
+      "note": ""
+    },
+    {
+      "path": "微信公众号/内容/2026/07/llm-judge-reward-hacking-night-read/draft.md",
+      "title": "Judge 模型给出 94% 通过率，真实正确率只有 20%：高分是怎么“练”出来的？",
+      "status": "ready",
+      "published_url": "",
+      "note": ""
+    },
+    {
+      "path": "微信公众号/内容/2026/07/open-weight-policy-boundary/draft.md",
+      "title": "黄仁勋力挺开放权重，OpenAI 也在争模型「学习权」",
+      "status": "draft",
+      "published_url": "",
+      "note": ""
+    },
+    {
+      "path": "微信公众号/内容/2026/07/openai-long-horizon-safety/draft.md",
+      "title": "OpenAI 模型黑进 Hugging Face，谁来盯着它？",
+      "status": "editorial_review",
+      "published_url": "",
+      "note": ""
+    },
+    {
+      "path": "微信公众号/内容/2026/07/patreon-ai-work-reorganization/draft.md",
+      "title": "Patreon 裁掉 93 人，却说 AI 没有替代人",
+      "status": "archived",
+      "published_url": "",
+      "note": ""
+    },
+    {
+      "path": "微信公众号/内容/2026/07/press-fleet-manifesto/draft.md",
+      "title": "这个号的编辑部全是 AI，今天我把它开源了",
+      "status": "draft",
+      "published_url": "",
+      "note": ""
+    },
+    {
+      "path": "微信公众号/内容/2026/07/qwenwork-hands-on/draft.md",
+      "title": "千问办公体验：我把一项编辑部调研交给它以后",
+      "status": "draft",
+      "published_url": "",
+      "note": ""
+    },
+    {
+      "path": "微信公众号/内容/2026/07/spain-opta-world-cup-prediction/draft.md",
+      "title": "spain-opta-world-cup-prediction",
+      "status": "未登记",
+      "published_url": "",
+      "note": "无 frontmatter，标题暂用目录名"
+    },
+    {
+      "path": "微信公众号/内容/2026/07/ssi-continuous-learning/draft.md",
+      "title": "英伟达押注 SSI：Ilya 想造一个会长大的 AI",
+      "status": "editorial_review",
+      "published_url": "",
+      "note": ""
+    },
+    {
+      "path": "微信公众号/内容/2026/07/step-edge-local-agent/draft.md",
+      "title": "AI 手机的下一仗：让 Agent 留在本地",
+      "status": "ready",
+      "published_url": "",
+      "note": ""
+    },
+    {
+      "path": "微信公众号/内容/2026/07/stepx-agent-terminal-launch/draft.md",
+      "title": "阶跃为什么要亲自做一台 Agent 手机？",
+      "status": "ready",
+      "published_url": "",
+      "note": ""
+    },
+    {
+      "path": "微信公众号/内容/2026/07/tibo-gpt56-quota/draft.md",
+      "title": "AI 模型再聪明，用到一半没额度也白搭",
+      "status": "editorial_review",
+      "published_url": "",
+      "note": ""
+    },
+    {
+      "path": "微信公众号/内容/2026/07/world-cup-16-percent-favorite/draft.md",
+      "title": "西班牙夺冠后，最容易被读错的是 16.1%",
+      "status": "editorial_review",
+      "published_url": "",
+      "note": ""
+    },
+    {
+      "path": "微信公众号/内容/2026/07/xiaozhe-antenna-manifesto/draft.md",
+      "title": "扇小喆：我把天线伸远了一点",
+      "status": "draft",
+      "published_url": "",
+      "note": ""
+    },
+    {
+      "path": "微信公众号/内容/2026/08/ai-back-to-school-student-deals/draft.md",
+      "title": "大学生的 AI 开学薅羊毛清单来了：有人送会员，有人直接送算力",
+      "status": "fact_checked",
+      "published_url": "",
+      "note": ""
+    },
+    {
+      "path": "微信公众号/内容/2026/08/ai-next-wang-conjecture/draft.md",
+      "title": "AI 提不出下一个「王的猜想」",
+      "status": "draft",
+      "published_url": "",
+      "note": ""
+    },
+    {
+      "path": "微信公众号/内容/2026/08/amazon-ai-old-books/draft.md",
+      "title": "一本旧书被装上追踪器，最后追到了亚马逊的 AI 设施",
+      "status": "draft",
+      "published_url": "",
+      "note": ""
+    },
+    {
+      "path": "微信公众号/内容/2026/08/amazon-fire-tablet-ai-root-ownership/draft.md",
+      "title": "花 266 美元请 4 个 AI，夺回一台 114 美元的平板",
+      "status": "fact_checked",
+      "published_url": "",
+      "note": ""
+    },
+    {
+      "path": "微信公众号/内容/2026/08/astra-pause-trillion-param-myth/draft.md",
+      "title": "两个「10 万亿参数」撞在一起，但它们可能不是同一种模型",
+      "status": "editorial_review",
+      "published_url": "",
+      "note": ""
+    },
+    {
+      "path": "微信公众号/内容/2026/08/claude-memory-chat-cowork/draft.md",
+      "title": "Claude 的记忆开始跟着任务走了，但还没真正属于你",
+      "status": "draft",
+      "published_url": "",
+      "note": ""
+    },
+    {
+      "path": "微信公众号/内容/2026/08/deepseek-harness-internal-test/draft.md",
+      "title": "DeepSeek Harness 开内测，Fable 5 现搭一个还来得及吗？",
+      "status": "draft",
+      "published_url": "",
+      "note": ""
+    },
+    {
+      "path": "微信公众号/内容/2026/08/hubspot-ai-outcome-pricing/draft.md",
+      "title": "HubSpot 的 AI 销售员「干完活才收费」，可客户还没回信",
+      "status": "editorial_review",
+      "published_url": "",
+      "note": ""
+    },
+    {
+      "path": "微信公众号/内容/2026/08/hunt-good-2026-08-07/draft.md",
+      "title": "Claude 黑进 3 家真公司/AI 女主代言美瞳被问「你哪来的眼睛」/一道几何题卡了 DeepSeek 22 小时｜Hunt Good 周报",
+      "status": "draft",
+      "published_url": "",
+      "note": ""
+    },
+    {
+      "path": "微信公众号/内容/2026/08/hunt-good-2026-08-21/draft.md",
+      "title": "Stripe 要买 OpenRouter，数据中心走进选举｜周报",
+      "status": "editorial_review",
+      "published_url": "",
+      "note": ""
+    },
+    {
+      "path": "微信公众号/内容/2026/08/ioai-ai-model-track/draft.md",
+      "title": "AI 也进了奥赛考场，人类只准说「开始」和「继续」",
+      "status": "research",
+      "published_url": "",
+      "note": ""
+    },
+    {
+      "path": "微信公众号/内容/2026/08/ox-alpha-stealth-self-investigation/draft.md",
+      "title": "谁家的模型先保密，Ox Alpha 先把自己调查了一遍",
+      "status": "ready",
+      "published_url": "",
+      "note": ""
+    },
+    {
+      "path": "微信公众号/内容/2026/08/qwen38max-ecommerce-365-days/draft.md",
+      "title": "Qwen3.8-Max 开了一年网店，把 10 万滚到了 41 万",
+      "status": "research",
+      "published_url": "",
+      "note": ""
+    },
+    {
+      "path": "微信公众号/内容/2026/08/tibo-codex-recursive-self-improvement/draft.md",
+      "title": "Codex 两三个月后会显得原始？AI 正在怎样改进自己",
+      "status": "editorial_review",
+      "published_url": "",
+      "note": ""
+    },
+    {
+      "path": "微信公众号/内容/2026/08/zhuque-3-downrange-landing/draft.md",
+      "title": "朱雀三号落在 300 公里外，火箭也开始有「车站」了",
+      "status": "draft",
+      "published_url": "",
+      "note": ""
+    },
+    {
+      "path": "微信公众号/内容/2026/09/astra-cli-review/draft.md",
+      "title": "Astra 实测：开唱片店、做小游戏，顺手改了 APPSO",
+      "status": "draft",
+      "published_url": "",
+      "note": ""
+    },
+    {
+      "path": "微信公众号/内容/2026/09/claude-fable-51-usage-burn/draft.md",
+      "title": "Fable 5.1 还没开工，5 小时额度先没了",
+      "status": "draft",
+      "published_url": "",
+      "note": ""
+    }
+  ]
+}

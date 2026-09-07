@@ -1,8 +1,8 @@
 # Image2 生图工作流
 
-版本：1.3
+版本：1.4
 
-更新日期：2026 年 7 月 25 日
+更新日期：2026 年 8 月 25 日
 
 资料属性：internal
 
@@ -49,7 +49,7 @@
 
 ## 路由与调用前硬门
 
-需要 AI 新图、重绘或编辑的内容包，先创建 `research/image-generation-plan.json`。计划声明 `project_adapter`、每项 `visual_type`、风格档案引用、参考策略、输出约束和文件路径，不复制 `local-only` Prompt 原文。通用新图从 `共享/模板/生图计划/通用直出计划模板.json` 创建，明确选择「笨拙涂鸦」时从 `共享/模板/生图计划/笨拙涂鸦直出计划模板.json` 创建，通用参考图编辑从 `共享/模板/生图计划/通用参考图编辑计划模板.json` 创建；APPSO 任务使用自己的 adapter 模板。计划的 `project_adapter` 必须与 `publish.yml` 的独立声明一致；`appsso-article-v1` 仍作为额外反查，不能作为 Hunt Good 等其他 APPSO 稿型的唯一品牌证据。
+需要 AI 新图、重绘或编辑的内容包，先创建 `research/image-generation-plan.json`。计划声明 `project_adapter`、每项 `visual_type`、`visual_route`、风格档案引用、参考策略、输出约束和文件路径，不复制 `local-only` Prompt 原文。发布文章的 AI 任务只允许 `clumsy_doodle` 或 `infographic`；网上社区讨论截图、X 截图和官方原图属于 `source_original`，保留原图像素并登记来源，不进入生图计划。明确选择「笨拙涂鸦」时从 `共享/模板/生图计划/笨拙涂鸦直出计划模板.json` 创建；APPSO 任务使用自己的 adapter 模板，其中信息图任务必须走 `appsso-infographic-v1`。计划的 `project_adapter` 必须与 `publish.yml` 的独立声明一致；`appsso-article-v1` 仍作为额外反查，不能作为 Hunt Good 等其他 APPSO 稿型的唯一品牌证据。通用直出与通用参考编辑模板只用于不受三路线文章合同约束的研究资产或用户明确的非文章任务，不能作为微信公众号发布图的默认路线。
 
 路由优先级从高到低为：
 
@@ -57,7 +57,7 @@
 2. `publish.yml` 声明的项目或品牌 adapter，以及它固化到内容包根 `style_policy` 的默认风格。
 3. 没有品牌 adapter 时使用的通用 profile。
 
-根 `style_policy` 是 adapter 解析后的执行记录，不是独立授权源，不能自行压过品牌默认。APPSO 编辑创意图选择非默认 profile 时，只有对应任务可以保存 `explicit_current_task_user` 覆盖、原因与确认日期；覆盖不得扩散到其他任务。固定风格不能与「高质量科技媒体」「干净矢量」「电影感」等相反的正向风格要求同时存在；若确需改变风格，先修改内容包任务并重新预检，不能在工具调用时临时拼接。
+根 `style_policy` 是 adapter 解析后的执行记录，不是独立授权源，不能自行压过品牌默认。APPSO 编辑创意图默认使用 `appsso-004`；固定的信息图路线用任务级 `project_visual_route` 绑定 `appsso-infographic-v1`，不属于临时风格发挥。除此之外，只有用户在当前任务明确要求的单项覆盖可以保存 `explicit_current_task_user`、原因与确认日期；覆盖不得扩散到其他任务。固定风格不能与「高质量科技媒体」「干净矢量」「电影感」等相反的正向风格要求同时存在；若确需改变风格，先修改内容包任务并重新预检，不能在工具调用时临时拼接。
 
 确定性 preflight 只能检查结构化合同，不能理解自然语言中的语义矛盾。对本地参考图先做原图检查，逐项对齐参考图的对象数量、顺序、标签与关系，以及计划中的 `purpose`、`preserve` 和 `output_constraints`。例如参考图有 5 个节点而约束写「4 步」，即使脚本通过也必须停止并修正计划。
 
@@ -101,9 +101,9 @@ Codex CLI 的人工入口可以用自然语言或 `$imagegen`，参考图可通�
 
 - 通用 profile 真源为 `共享/运营/SOP/生图风格档案.json`；品牌固定 profile 由对应项目 adapter 的独立 registry 提供。核心层不复制品牌 Prompt 路径、哈希或视觉特征。
 - 笨拙涂鸦使用独立 registry `共享/运营/SOP/笨拙涂鸦风格档案.json`，避免新增 profile 改变通用 registry 哈希并让历史生图回执整体失效。
-- profile 选中受控 Prompt 时，预检从 registry 读取真源路径、标题、字符数、哈希、允许模式和冲突词，并校验本地原文；调用时逐字使用，不润色、不翻译、不做同义改写。
+- profile 选中受控 Prompt 时，预检从 registry 读取真源路径、格式、哈希、允许模式和冲突词，并校验本地原文。短 Prompt 使用登记标题下的单行原文；完整设计规范使用 `prompt_format: "full_file"`，逐字把整个 UTF-8 文件作为 Prompt 基底交给 Image2。两种格式都不得润色、翻译、摘要或按记忆重写。
 - 比例、用途、裁切安全区、精确文字和禁用元素作为独立的 `Output constraints` / `Preserve` / `Avoid` 追加，不改写风格基底。
-- `local-only` Prompt 原文不进入 Git、计划或 receipt；项目映射与可观察验收标准只写在项目 adapter。
+- 已由主理人于 2026-09-07 授权打包的 Prompt、规范与 Logo 随私有仓库保存，清单见 `tools/workflow-source-assets.json`；不再要求换机另行导入。计划和 receipt 继续只保留引用与哈希，避免同一原文多处漂移。
 
 ### 笨拙涂鸦 profile
 
@@ -111,6 +111,13 @@ Codex CLI 的人工入口可以用自然语言或 `$imagegen`，参考图可通�
 - 常规公众号长稿的正文图片总量默认 6–10 张，官方资料图、截图、图表和笨拙涂鸦合计计算。先覆盖关键转折、核心机制、作者经验和结尾判断，不按段落平均配图；已有官方图时相应减少涂鸦。
 - 该 profile 只用于明确选中的正文解释图，不自动覆盖品牌 adapter、官方资料图、数据图表、真实界面截图或封面要求。品牌任务需要使用它时，按单项显式用户覆盖记录，不扩散到其他任务。
 - 生成后先做原尺寸与手机宽度检查；失败时只修一个主要问题。选中版本后必须在同一交付单元同步 `draft.md`、`asset-manifest.yml` 和最新预览，只生成文件不算交付。
+
+### APPSO 信息图 profile
+
+- `appsso-infographic-v1` 的 Prompt 真源是 `APPSO-数字资产/01-栏目与品牌/品牌视觉/原始资料/Markdown 示意图设计系统规范.md`，按 `full_file` 读取；不得只读速查后自行用 HTML、CSS 或通用科技风重做。
+- 每次最终调用都把已登记的「APPSO Logo 红底白字 PNG」作为 `referenced_image_paths` 输入，同时发送完整规范和本图的事实、节点、顺序、数字、来源与限定。Logo 保持原比例和完整红底白字，不抠底、不改色、不拉伸。
+- 未另指定尺寸时输出为 1080 × 1440 px 竖图，遵守安全区、6 栏网格、暖白背景、品牌色和页脚。手机显示字号按 APPSO 速查换算并追加到 Output constraints；不能把画布上的 12 px 当作手机上的 12 px。内容超载先拆图。
+- 该 profile 只用于 APPSO 公司稿与获授权的 Hunt Good 信息图；个人稿、其他品牌和普通研究资产不得引用公司 Prompt 或 Logo。
 
 ## 质量迭代
 
@@ -140,11 +147,12 @@ Codex CLI 的人工入口可以用自然语言或 `$imagegen`，参考图可通�
 AI 生成项至少登记：
 
 ```yaml
-version: 2
+version: 3
 updated: "YYYY-MM-DD"
 assets:
   - file: "assets/<name>.png"
     used_in_draft: true
+    visual_route: "clumsy_doodle | infographic"
     source_type: "ai_generated"
     source: "<generation task and provenance>"
     creator_or_rightsholder: "This project / AI-generated"
@@ -167,11 +175,11 @@ assets:
 
 `prompt_sha256` 校验 `prompt_ref` 指向的治理 Prompt，并与所选 registry 一致；比例、保留元素、禁用元素、文字和裁切要求单独写入 `generation_constraints`，不能混进风格 Prompt。参考图必须在进入 `ready` 前落到 `research/source-assets/` 并作为独立资产登记；`referenced_edit`、`image_edit` 和任何声明 `requires_reference: true` 的 profile 禁止使用空 `input_assets`。
 
-每个 version 2 AI 资产都应在 `research/image-generation-runs/` 保存对应阶段的 preflight receipt，并在 manifest 引用它、记录 `invocation_prompt_sha256`。发布校验会复算计划、profile registry 与本地输入文件哈希，并核对输入权利和顺序；Prompt、计划、registry、模式、约束、输入内容或输出任一变化，都必须重新预检并废弃旧 receipt，最小手写记录不能替代真实 preflight。
+每个 version 3 AI 资产都应在 `research/image-generation-runs/` 保存对应阶段的 preflight receipt，并在 manifest 引用它、记录 `visual_route` 与 `invocation_prompt_sha256`。发布校验会复算计划、profile registry 与本地输入文件哈希，并核对输入权利和顺序；Prompt、计划、registry、模式、约束、输入内容或输出任一变化，都必须重新预检并废弃旧 receipt，最小手写记录不能替代真实 preflight。
 
 参考图的 `rights_status` 必须明确允许制作衍生图，例如 `project_owned`、`user_confirmed_derivative_use`、`licensed_derivative_use`、`cc0_verified` 或 `public_domain_verified`。`user_supplied` 只说明文件从哪里来，`research_reference` 只允许内部核对，两者都不自动授予改编权。只存在于对话中的 `conversation:` / `user_attachment:` 引用可以在草稿阶段保留为警告，但到 `ready` 前必须持久化并登记。输入依赖必须无环；成品不能把自己、自己的路径别名或下游派生图伪装成参考输入。
 
-正文只使用相对路径，并在图片附近保留必要图注。新建或实质编辑的清单使用 `version: 2`：validator 会把正文真实引用与 `used_in_draft` 交叉核对，并对发布权利使用 allowlist；在 `draft` / `editorial_review` 阶段，缺项会产生可见警告；发布绑定图片到 `ready` / `published` 时，缺生成记录、权利未清或平台不匹配会直接失败。旧版清单保持只读兼容，并在下次实质编辑时迁移。
+正文只使用相对路径，并在图片附近保留必要图注。新建或实质编辑的清单使用 `version: 3`：validator 会把正文真实引用与 `used_in_draft`、`visual_route` 交叉核对，并对发布权利使用 allowlist；在 `draft` / `editorial_review` 阶段，缺项会产生可见警告；发布绑定图片到 `ready` / `published` 时，缺生成记录、权利未清、平台不匹配、路线合同错误或微信公众号文章不足 2 类视觉路线都会直接失败。旧版清单保持只读兼容，并在下次实质编辑时迁移。
 
 ## 降级顺序
 
@@ -193,7 +201,9 @@ source_cases:
   - "user-feedback:2026-07-21-image2-direct-generation"
   - "user-feedback:2026-07-21-image2-codex-owned-workflow"
   - "user-feedback:2026-07-22-governed-style-routing-regression"
-regression_check: "正例检查固定风格无参考图时先生成内部结构参考再重绘；反例检查通用无参考图不注入 appsso-004、冲突风格词与未授权参考图均在调用前失败"
+  - "hunt-good-2026-08-21:FB-006"
+  - "tibo-codex-recursive-self-improvement:FB-005"
+regression_check: "正例检查笨拙涂鸦按固定风格生成、APPSO 信息图把完整规范与登记 Logo 同时传入 Image2；反例检查通用科技 3D、只读规范不进工具输入、缺 Logo、冲突风格词与未授权参考图均在调用前或 ready 门失败"
 classification: "internal"
 owner: "visual_rights_editor"
 introduced_on: "2026-07-21"

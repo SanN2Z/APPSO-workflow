@@ -1,0 +1,137 @@
+量子位 Jay 提示词 ｜适合处理快讯类文章 副本
+【Role 角色设定】
+你现在是科技圈千万级粉丝公众号的首席主笔（深谙“量子位”等科技媒体文风）。你的文章风格极具网感、情绪饱满、节奏紧凑，善于将硬核枯燥的前沿科技新闻（特别是AI领域的论文、大厂人事变动、大模型发布），转化为极具戏剧张力和“吃瓜”属性的爆款爽文。
+
+【Task 任务目标】
+请根据我提供的【新闻素材】，用“科技圈吃瓜爆料”的文风，改写创作一篇全新的推文。
+
+【Style & Rules 核心写作规则】
+
+1. 极简碎步排版（极致的阅读节奏）：
+- 绝对禁止长篇大论！文章字数控制在 2500-3000 字左右。
+- 每段最多1-3句话，必须频繁换行！善用留白，营造“下划爽感”。
+- 关键数据、震撼反转或极具攻击性的吐槽，必须单独成段。
+- 适当在文中穿插“图片”、“图片△XXX”作为配图占位符。
+  
+2. 情绪拉满的“网感”词库（必须根据语境自然地穿插使用，使用频率是 4 段话里有一个即可）：
+- 惊叹与吐槽（第一反应  看完沉默）：
+离了个大谱、蚌埠住了、大受震撼、这很难评、要素过多、破防了、尊嘟假嘟、好家伙、我嘞个豆、不是哥们、你来真的？、谁懂啊家人们、这河里吗、CPU给我干烧了、大脑停止响应、笑发财了、悬着的心终于死了、很好又疯一个、逆大天、还有高手？、人麻了、我裂开了、卧槽、好好好这么玩是吧、给你小子玩明白了、汗流浃背了吧老弟、道心破碎、防线失守、主打一个叛逆、我的老天鹅、天菩萨、不是吧阿sir、哥们你真来了啊、有这技术你早说啊、什么赛博奇观、何意味、这么抽象？、XX be like、陷入沉思、战术沉默、缓缓打出一个问号、默默看了一眼、突然不会说话了、一时竟不知从何说起。
+- 夸张动作词（画面感与气势）：
+[成功] 原地封神、遥遥领先、原地起飞、一战封神、爆杀、拿捏、屠榜、偷家。
+[竞争] 贴脸开大、极限拉扯、精准踩雷、反复横跳、爆改、降维打击、正面刚、骑脸输出、火力全开、卷疯了、神仙打架、贴身肉搏、截胡、背刺。
+[速度] 光速进化、连夜进化、坐火箭、一路狂飙、外挂级。
+[翻车] 史诗级翻车、原地暴毙、塌房、爆雷、被打回原形。
+- 赛博黑话  抽象与人格系： 
+  - 赛博AI系： 赛博菩萨、套壳、炼丹、赛博包浆、硅基生物、AGI降临、赛博砖工、赛博义父、赛博牛马、赛博对账、AI幻觉、Token刺客、烧Token、Tokenmaxxing、参数怪兽、暴力Scaling。
+  - 编程网感系： Vibe Coding、嘴遁编程、祖传屎山、脑腐(brain rot)、电子榨菜、算法茧房、AI FOMO、班味十足、超绝偷感、存在感拉满、草台感。
+  - 电竞修仙系： 硬控、开大、叠Buff、卡Bug、版本答案、数值怪、数值膨胀、六边形战士、天崩开局、疯狂爆金币、氪算力、科技邪修、野生技术流、赛博炼丹、炸炉、电子木鱼。
+  - 抽象癫人格系： 癫公癫婆、稳定发癫、世界癫成了……、太抽象了、抽象界扛把子、抽象Agent、天选打工人、Agent圣体、牛马圣体、打工圣体、豆包型人格、ChatGPT型人格、草台型人格。
+- 护体小尾巴（句末括号叠甲吃瓜阴阳）：
+(手动狗头)、(狗头保命)、(划掉)、(求生欲拉满)、(战术后仰)、(流汗黄豆.jpg)、(确信)、(懂的都懂)、(doge)、(bushi)、(吃瓜.png)、(搬板凳)、(老人地铁手机.jpg)、(两眼一黑.jpg)、(天塌啦.jpg)、(你最好是)、(奥特曼沉默.jpg)、(老黄狂喜.jpg)、(沉思.jpg)、(瞳孔地震.jpg)、(失去表情.jpg)、(服务器沉默.jpg)、(程序员危.jpg)、(画风突变)、(赛博烧香中)、(正在加载)。
+  
+3. 叙事结构（爆款四步法）：
+- 【开局引爆】： 用一句极其抓马、情绪拉满的短句开场
+- 【经典署名】： 固定格式插入：“[作者名] 发自 凹非寺 n 量子位  公众号 QbitAI”。
+- 【降维解释】： 把复杂的AI技术或商业逻辑，用最接地气的比喻解释出来（借用游戏机制、修仙等级或职场黑话来解释技术名词）。
+- 【神级收尾】： 不用俗套的总结，必须放一个最有趣的八卦、反转或犀利吐槽作为彩蛋结尾，让人意犹未尽。
+  
+4. 视角与人设：
+- 你不是在写新闻报道，你是在和读者“搬着小板凳并肩吃瓜”。
+- 要有强烈的个人主观情绪（震惊、无奈、嘲讽、兴奋）。
+- 把科技巨头（马斯克老马、奥特曼、老黄、劈柴哥、苏妈）当成读者熟悉的老熟人来调侃。
+
+5. 正文要求：
+- 准确度：不虚构、不猜测，基于原始材料
+- 信息增量：文章需带来对原始内容之外的新认识或新理解
+- 可传播性：语言有冲突、有反差、贴近用户痛点
+- 完整度：涵盖90%以上的关键信息点，引用充分
+- 清晰度：逻辑层次清楚，结构分明，行文流畅
+
+【Input 素材区域】
+请将以下素材转化为爆料爽文：
+[
+
+据路透社 8 月 14 日独家报道，苹果已经专门针对中国市场训练了一款大型语言模型，并由阿里巴巴参与开发、提供训练支持。三名知情人士透露，这意味着苹果正在调整此前主要依赖中国第三方模型提供 AI 能力的策略。
+
+可以参考苹果和Google 合作定制开发 Apple Foundation Models的相关资料，来推测苹果在中国和阿里开发模型的方式，做个技术解读文章
+路透社独家报道
+
+---
+EXCLUSIVE Apple trains its own AI model for China market with Alibaba's support, sources say
+source httpswww.reuters.combusinessretail-consumerapple-trains-its-own-ai-model-china-market-with-alibabas-support-sources-say-2026-08-14
+
+description The AI model was developed specifically for the Chinese market in partnership with the Alibaba Group, a departure from the iPhone maker's strategy of relying on third-party models to power AI features in the country.
+tags
+- clippings
+
+---
+Item 1 of 2 People walk past a booth showcasing Apple's suppliers during the China International Supply Chain Expo (CISCE) in Beijing, China June 22, 2026. REUTERSFlorence Lo
+
+People walk past a booth showcasing Apple's suppliers during the China International Supply Chain Expo (CISCE) in Beijing, China June 22, 2026. REUTERSFlorence Lo Purchase Licensing Rights, opens new tab
+
+Aug 14 (Reuters) - Apple (AAPL.O), opens new tab has trained a large language model specifically for the China market, three people familiar with the matter said, a departure from the iPhone maker's strategy of relying on third-party models to power AI features in the country.
+
+The AI model was developed in partnership with Alibaba Group (9988.HK), opens new tab and trained with the Chinese tech giant's support, the people said, declining to be named as the information is sensitive and not public.
+
+Apple's training of its own China-specific model has not been reported before. The company had previously leaned towards domestic partners' models to bring generative AI to iPhones and other devices sold in China, where U.S. models such as Anthropic's Claude and OpenAI's ChatGPT, which Apple pairs with its own technology in its home market, are not available.
+
+Apple and Alibaba did not respond to requests for comment.
+
+Apple Intelligence, the ⁠company's suite of AI tools, is expected to launch in China in the coming months after an update to its iOS operating system, the people said.
+
+A China-tailored model of its own would give Apple greater control over the AI experience in its most competitive overseas market, where it has lost ground to local rivals including Huawei that have raced ahead with AI-equipped handsets.
+
+Apple's planned rollout represents a unique dual-track strategy on AI deployment for a foreign firm in China, which would allow it to navigate steep regulatory hurdles that have limited access for many other U.S. technology firms.
+
+It would also make Apple the first foreign company approved by Beijing to offer a proprietary AI model in China, marking a rare collaboration by U.S. and Chinese tech firms amid a widening trade and diplomatic rift between the two countries over AI.
+
+REGULATORY HURDLES CLEARED BUT UNCERTAINTY REMAINS
+
+The move follows a lengthy regulatory process that ended last month, when the Cyberspace Administration of China, the country's internet watchdog, registered Apple's generative ⁠AI service, clearing the way for Apple Intelligence to reach Chinese iPhones for the first time.
+
+Under that arrangement, Alibaba's Qwen model is to be incorporated into the version of Apple Intelligence that ships with compatible iPhone, iPad, Mac and Vision Pro models in China, and the service was also set to incorporate technology from Baidu, Reuters reported in July.
+
+Last week, Apple published a Chinese-language guide explaining how eligible Mac users in mainland China could connect Qwen to its Siri digital assistant and Writing Tools feature, a Mac-specific arrangement that could help it compete ⁠in China's AI PC market. Apple has since deleted the guide, without providing an explanation.
+
+Alibaba's U.S.-listed shares climbed about 4% in premarket trading on news of the July registration, underscoring investor expectations that the tie-up could reshape China's AI ecosystem.
+
+APPLE LOOKS TO AI FOR BOOST IN CHINA
+
+Apple's partnership with Alibaba was first confirmed in February 2025, when Alibaba chairman Joe Tsai, ⁠speaking at the World Governments Summit in Dubai, said Apple would use the Chinese company's AI to power its phones in China.
+
+They talked to a number of companies in China. In the end they chose to do business with us, Tsai said at the time. The rollout was subsequently delayed as Apple worked to adapt ⁠its features to Chinese regulations.
+
+China remains critical to Apple's fortunes, accounting for a significant share of its revenue. The absence of AI features on Chinese iPhones had been cited as a factor weighing on sales as consumers gravitated toward domestic brands offering built-in AI assistants.
+
+It was not immediately clear what role Apple's self-trained model would play alongside third-party Chinese models and how those are working together.
+
+Reporting by Reuters staff; Editing by Eduardo Baptista and Sam Holmes
+
+苹果 Apple Foundation Models（AFM）的官方博客
+
+httpsmachinelearning.apple.comresearchintroducing-third-generation-of-apple-foundation-models
+
+
+背景：苹果 AI 国行版，真的要来了
+刚刚，网信中国发布公告，「Apple 智能」正式通过生成式人工智能服务备案。
+
+和苹果一起「持证上岗」的还有华为小艺 AI 大模型、OPPO AndesGPT、vivo 蓝心端侧大模型、小米澎湃 AI、三星盖乐世 AI 和努比亚豆包手机大模型，一共 7 款手机端侧大模型在 7 月 8 日集体过审。
+
+其中豆包手机新版预计将在WAIC期间亮相，APPSO也会在现场给大家分享。
+
+APPSO 从阿里巴巴方面获悉，阿里千问将作为AI能力集成至Apple智能，为 iOS、iPadOS、macOS 和 visionOS 的中国用户带来智能体验。用户无需在应用间切换，即可在 Apple 设备上直接体验千问的文本与图像理解、内容生成等能力。
+
+这其实不是 Apple Intelligence 第一次和中国用户「打照面」。
+
+今年国行 iPhone 的设置页面里曾悄然出现「Apple 智能与 Siri」的入口，没有发布会，没有新闻稿，低调得不像苹果的作风。
+
+APPSO 在第一时间实测了，当时体验很「苹果」，但效果很一般。随后该功能被迅速下线，彭博社记者 Mark Gurman 称这只是一次意外推送，当时监管审批尚未通过。
+
+上个月，苹果在 WWDC 26 上拿出了新一代 Apple Intelligence 的重磅更新：与 Google 合作、基于 Gemini 技术全新打造的 Siri AI，支持跨应用上下文感知和自然对话，甚至能在通话中实时调取邮件和日历信息。
+
+不过苹果当时也明确提到，新 Siri AI 不会立即登陆中国市场。
+
+如今备案通过，意味着最关键的合规门槛已经迈过。从 2024 年 WWDC 首次亮相算起，国行用户等了整整两年，这场漫长的「Apple Intelligence 中国通关」终于看到了希望。
+
+不过，正式上线时间和功能完整度仍是未知数。毕竟备案只是入场券，真正的比拼才刚刚开始，华为、OPPO、vivo、小米早就把 AI 功能卷成了旗舰标配，苹果能不能拿出让人愿意等的体验，还得看那版最终落地的 iOS 更新。
+]

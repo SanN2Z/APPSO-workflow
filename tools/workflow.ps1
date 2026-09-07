@@ -45,11 +45,11 @@ try {
     }
 
     if ($Command -eq "test") {
-        $selectedTests = if ($remainingArgs.Count -gt 0) {
+        $selectedTests = if ($remainingArgs.Count -gt 0 -and -not $remainingArgs[0].StartsWith('-')) {
             $remainingArgs
         }
         else {
-            @($manifest.test_paths)
+            @($manifest.test_paths) + $remainingArgs
         }
         $testArgs = @("-m", "pytest", "-q") + $selectedTests
         Invoke-Checked $python $testArgs

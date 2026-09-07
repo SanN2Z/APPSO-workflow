@@ -1,0 +1,7 @@
+# Hunt Good 插画信息图重绘
+
+来源：用户于 2026 年 8 月 21 日明确指定 `Markdown 示意图设计系统规范.md` 与既有火箭信息图为当前任务参考。本 Prompt 只用于显式选择该风格的单项任务。
+
+## 原始 Prompt
+
+> Redraw the supplied factual content as a vertical APPSO explanatory infographic, using the supplied successful infographic as the binding visual-style and composition reference and following the registered Markdown infographic design system. Use a warm off-white background, black primary text, vivid APPSO red and a small amount of orange, a large Chinese headline with selective red emphasis, and one clear top-to-bottom reading path. The core explanation must be carried by recognizable hand-drawn technical illustrations with black outlines and restrained light-gray shading—not by text cards alone. Attach concise numbered callouts, arrows, dashed routes, brackets, and local zoom details directly to the illustrated objects. Use rounded white explanation panels only as secondary annotations. Keep one primary logic, a six-column grid, generous 64-pixel side safety margins, comfortable mobile-readable type, and clear visual hierarchy. Every major step must contain a concrete illustrated subject appropriate to the facts. Leave a quiet footer band for the exact APPSO logo to be added later; do not generate any logo or watermark. Avoid text-only layouts, generic dashboards, rows of abstract cards, stock icon grids, glossy 3D rendering, photorealism, fake product interfaces, ornamental gradients, or extra invented facts. Reproduce only the exact wording and numbers supplied in the task constraints.

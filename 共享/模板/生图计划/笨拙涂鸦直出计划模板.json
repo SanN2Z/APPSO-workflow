@@ -1,5 +1,5 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "template_only": true,
   "updated": "2026-07-25",
   "project_adapter": "generic",
@@ -19,6 +19,7 @@
     {
       "id": "doodle-01",
       "visual_type": "general_editorial",
+      "visual_route": "clumsy_doodle",
       "purpose": "填写这张图在正文中承担的唯一判断。",
       "reference_strategy": "none",
       "final_stage": {

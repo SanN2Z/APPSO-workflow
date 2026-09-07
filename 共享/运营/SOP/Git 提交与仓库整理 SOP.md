@@ -1,8 +1,8 @@
 # Git 提交与仓库整理 SOP
 
-版本：1.1
+版本：1.2
 
-更新日期：2026 年 7 月 23 日
+更新日期：2026 年 9 月 7 日
 
 ## 目标
 
@@ -15,6 +15,7 @@
 - `restricted` 内容优先只建索引；原始文件、后台数据和授权凭证留在 Git 忽略区。
 - 窄例外：用户或权利人明确授权、远端 Private 已核、且凭据与运行态审计通过的公司内部工具，可以按版本进入 `tools/company/`。这个例外不覆盖公司终稿、后台数据、授权凭证、浏览器 Profile、缓存或会话导出。
 - `.env`、Cookie、Token、API Key、AppSecret、验证码、登录态和完整请求头永不提交。
+- 用户已在 2026-09-07 明确授权本批流程、Prompt、设计规范和 Logo 统一进入当前私有仓库，精确文件与哈希见 `tools/workflow-source-assets.json`。对应忽略规则只对登记文件放行，不再重复请求分级确认。新增或修改输入时同步清单与使用入口，预检会核对原件哈希；不使用 `git add -f` 绕过规则。
 - `output/`、`临时素材/`、`dist/`、浏览器记录、依赖目录和缓存不提交。
 
 ## 提交粒度
@@ -87,7 +88,7 @@ git diff --check
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File tools/workflow.ps1 normalize-text --staged --fix
-git add --all
+git add -- <本次修复的文件>
 ```
 
 该脚本只处理 `git diff --cached --check` 已报告的 UTF-8 文本，不修改文字内容。修复后仍需重跑预检。

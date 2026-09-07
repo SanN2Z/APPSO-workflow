@@ -17,7 +17,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools/workflow.ps1 verify
 
 `bootstrap.ps1` 会创建被 Git 忽略的 `.venv`，按统一清单安装精确 Python 依赖，以 `npm ci` 恢复锁定的 Wenyan、Codex 和 Claude Code，并从模板创建缺失的本地配置槽。它随后验证公司扩展文件树、脚本语法、9 个能力包和核心 doctor；已有配置永不覆盖，模板也不含真实凭据。
 
-可分发的适配器、依赖、Skill、SOP、公司扩展源码和配置模板全部随 clone 到达。账号值、浏览器登录态、远端 `image_gen` 能力以及受治理的 `local-only` APPSO Prompt 通过固定入口在本机接线，不进 Git。完整清单与迁移方法见 [`tools/README-capabilities.md`](tools/README-capabilities.md)。
+可分发的适配器、依赖、Skill、SOP、公司扩展源码和配置模板全部随 clone 到达。账号值、浏览器登录态、远端 `image_gen` 能力通过固定入口在本机接线，不进 Git。2026-09-07 获授权的 APPSO Prompt、设计规范和 Logo 已随私有仓库保存，并校验原文哈希。完整清单与迁移方法见 [`tools/README-capabilities.md`](tools/README-capabilities.md)。
 
 初始化后不必激活虚拟环境，统一用 clone 内入口：
 
@@ -38,6 +38,8 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools/workflow.ps1 company d
 ```
 
 依赖、入口、能力包与本机运行输入的机器可读真源是 [`tools/workflow-toolchain.json`](tools/workflow-toolchain.json)；详细可移植合同只在核心工作流的 `CORE-PORTABILITY-001` 维护。
+
+日常写作、生图和排版可直接查[工作流使用入口](共享/运营/SOP/工作流使用入口.md)。桌面材料的归位与原文入口也在其中。
 
 ## 三步开始
 

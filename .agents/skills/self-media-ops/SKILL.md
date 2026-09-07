@@ -40,10 +40,11 @@ Choose by uncertainty and change scope, not length. Dense facts, complex rights,
 | Voice repair after the value gate | [wechat-human-voice-pass.md](references/wechat-human-voice-pass.md) and [wechat-ai-pattern-pass.md](references/wechat-ai-pattern-pass.md) |
 | Final WeChat review | [wechat-editorial-gates.md](references/wechat-editorial-gates.md) and [wechat-copyedit-pass.md](references/wechat-copyedit-pass.md) |
 | X final review | [review-checklist.md](references/review-checklist.md) |
-| AI image generation or editing | [Image2 workflow](<../../../共享/运营/SOP/Image2 生图工作流.md>) |
+| First WeChat visual task, AI image generation, or image editing | `PROJECT-WECHAT-VISUAL-ROUTES-001`, [content-package.md](references/content-package.md), then [Image2 workflow](<../../../共享/运营/SOP/Image2 生图工作流.md>) for AI routes |
 | WeChat preview, handoff, or draft | [wechat-publishing.md](references/wechat-publishing.md) |
 | APPSO, Hunt Good, company visual, or company draft | `APPSO-数字资产/README.md`, confidentiality rules, and one relevant adapter |
 | Material feedback, delivery, or publication | [content-retrospective](../content-retrospective/SKILL.md) |
+| Owner-binding future preference, recurring rework, or workflow/prompt migration | [feedback-to-system](../feedback-to-system/SKILL.md) |
 | Turn a long-term claim into an experiment | [insight-to-asset](../insight-to-asset/SKILL.md) |
 
 ## Common gates
@@ -52,6 +53,7 @@ Choose by uncertainty and change scope, not length. Dense facts, complex rights,
 - Keep facts, vendor self-report, third-party results, author judgment, inference, and jokes distinguishable.
 - Apply `CORE-EVIDENCE-SEAM-001`: keep source strength, verification reasoning, and claim mapping in internal records; ordinary public copy keeps only normal attribution and uncertainty that changes factual meaning.
 - L2 and L3 record irreversible decisions, unit contracts, voice anchors, accepted or reopened units, issue-first cold read, local patches, chain mapping, and concrete-detail deletions. L3 additionally records the human-selected route card. Explicit multi-version delivery remains user-selected and is never merged or AI-voted.
+- WeChat release visuals use only `source_original`, `clumsy_doodle`, or `infographic`; a new or materially edited article must cover at least two routes before `ready`. Online discussion, X, and official images stay original; do not redraw them merely to unify style.
 - At `editorial_review`, run one full rhythm / pragmatic / human-voice diagnosis on the canonical draft, then apply the authoritative `PROJECT-WECHAT-EXPLANATION-001` as a separate deletion-led over-explanation pass and recheck only repaired points. Do not use that pass for general rewriting or semantic compression. Before `ready`, run the project lexicon appendix once, exact-body copyedit, rights, privacy, credential, platform, state, and authorization checks.
 - Images may begin source and rights research early; expensive generation waits for a stable L2 contract or a user-selected L3 route unless the image changes the topic decision.
 

@@ -23,3 +23,8 @@ tools/company/*/v*/** -text -whitespace
 
 # The vendored qu-ai-wei fixtures intentionally use Markdown hard-break spaces.
 .claude/skills/qu-ai-wei/** -whitespace
+
+# Authorized source inputs retain exact bytes; no desktop copy is silently normalized.
+"APPSO-数字资产/01-栏目与品牌/品牌视觉/原始资料/*" -text -whitespace
+"APPSO-数字资产/01-栏目与品牌/品牌视觉/生图-Prompt/*" -text -whitespace
+"共享/参考/桌面公众号流程/*.txt" -text -whitespace

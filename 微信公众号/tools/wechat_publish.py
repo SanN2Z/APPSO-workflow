@@ -3047,18 +3047,22 @@ def handoff_document(
 <script nonce="{nonce}">(function(){{var button=document.getElementById('copy-article');var article=document.getElementById('wechat-handoff-content');var status=document.getElementById('copy-status');if(!button||button.disabled)return;button.addEventListener('click',function(){{var onCopy=function(event){{event.clipboardData.setData('text/html',article.innerHTML);event.clipboardData.setData('text/plain',article.innerText);event.preventDefault();}};document.addEventListener('copy',onCopy,{{once:true}});var copied=document.execCommand('copy');status.textContent=copied?'正文已复制；请粘贴到公众号后台并完成编辑检查。':'浏览器未允许自动复制；请只选中正文区域手动复制。';}});}})();</script></body></html>"""
 
 
-def vertical_scroll_fragment(image_paths: list[str]) -> str:
+def vertical_scroll_fragment(image_paths: list[str], height_px: int = 300) -> str:
+    if type(height_px) is not int or not 120 <= height_px <= 600:
+        raise WorkflowError("vertical-scroll height must be an integer between 120 and 600 px")
     images = "".join(
         (
             f'<img src="{html.escape(path, quote=True)}" '
             f'alt="纵向滑动长图，第 {index} 段" '
-            'style="display:block;width:100%;height:auto;">'
+            'style="display:block;width:100%;max-width:100%;height:auto;margin:0;border:0;">'
         )
         for index, path in enumerate(image_paths, start=1)
     )
     return (
-        '<section style="width:100%;height:300px;overflow:hidden;">'
-        '<section style="display:flex;flex-direction:column;height:100%;overflow-y:auto;">'
+        '<section style="margin:0;padding:0;width:100%;overflow:hidden;">'
+        '<section style="margin:0;padding:0;display:block;width:100%;'
+        f'height:{height_px}px;overflow-x:hidden;overflow-y:scroll;'
+        '-webkit-overflow-scrolling:touch;">'
         f"{images}"
         "</section>"
         "</section>"
@@ -3138,7 +3142,7 @@ def validate_scroll_handoff_assets(
 
 
 def build_scroll_handoff(
-    package_arg: str | Path, raw_paths: list[str], title: str
+    package_arg: str | Path, raw_paths: list[str], title: str, height_px: int = 300
 ) -> ScrollHandoffBuild:
     package = Path(package_arg).resolve()
     if not package.is_dir():
@@ -3162,7 +3166,7 @@ def build_scroll_handoff(
         )
 
     image_paths, entries = validate_scroll_handoff_assets(package, raw_paths)
-    graph = prepare_inline_image_graph(vertical_scroll_fragment(image_paths), package)
+    graph = prepare_inline_image_graph(vertical_scroll_fragment(image_paths, height_px), package)
     if graph.image_order != image_paths:
         raise WorkflowError("vertical-scroll image order changed during inline preparation")
 
@@ -3174,7 +3178,7 @@ def build_scroll_handoff(
     component_sha256 = file_sha256(component_path)
     local_report = (
         "内容包、图片登记、权利与资源门禁已通过；"
-        f"纵向滑动图片 {len(image_paths)} 张，组件固定高度 300 px，"
+        f"纵向滑动图片 {len(image_paths)} 张，组件高度 {height_px} px，"
         f"复制载荷 {graph.projected_copy_payload_bytes} 字节。"
     )
     document = handoff_document(
@@ -3194,7 +3198,7 @@ def build_scroll_handoff(
         "created_at": datetime.now(EDITORIAL_TIMEZONE).isoformat(),
         "package": package.name,
         "title": title,
-        "fixed_height_px": 300,
+        "fixed_height_px": height_px,
         "image_count": len(image_paths),
         "image_order": image_paths,
         "images": {
@@ -3305,7 +3309,18 @@ def preview_document(
 <aside class="gate"><strong>{html.escape(status)}</strong>{blocker_box}<details><summary>查看 Wenyan 版本说明</summary><ul>{notes}</ul></details><details><summary>查看校验输出</summary><pre>{html.escape(report)}</pre></details></aside>
 <nav class="viewport" aria-label="预览宽度"><button type="button" data-width="375">375 px</button><button type="button" data-width="390">390 px</button></nav>
 <main class="phone" id="phone-preview" data-preview-width="390"><h1 class="title">{html.escape(title)}</h1>{fragment}</main>
-<script nonce="{nonce}">(function(){{var phone=document.getElementById('phone-preview');function setWidth(width){{if(width!=='375'&&width!=='390')return;phone.style.width=width+'px';phone.setAttribute('data-preview-width',width);}}document.querySelectorAll('[data-width]').forEach(function(button){{button.addEventListener('click',function(){{setWidth(button.getAttribute('data-width'));}});}});setWidth(new URLSearchParams(window.location.search).get('width'));}})();</script></body></html>"""
+<script nonce="{nonce}">(function(){{var phone=document.getElementById('phone-preview');function setWidth(width){{if(width!=='375'&&width!=='390')return;phone.style.width=width+'px';phone.setAttribute('data-preview-width',width);}}document.querySelectorAll('[data-width]').forEach(function(button){{button.addEventListener('click',function(){{setWidth(button.getAttribute('data-width'));}});}});setWidth(new URLSearchParams(window.location.search).get('width'));
+// Explicit Markdown alt marker affects this local preview only. Export gates stay unchanged.
+phone.querySelectorAll('img[alt^="上下滑动："]').forEach(function(img){{
+  var box=document.createElement('div');box.className='preview-vertical-scroll';
+  box.setAttribute('role','region');box.setAttribute('aria-label',img.alt);box.tabIndex=0;
+  box.style.cssText='height:300px;overflow-y:auto;overscroll-behavior:contain;width:100%;border:1px solid #ddd;';
+  img.parentNode.insertBefore(box,img);box.appendChild(img);img.style.width='100%';img.style.height='auto';
+  var hint=document.createElement('span');hint.textContent='上下滑动查看更多内容 ↓';
+  hint.style.cssText='display:block;text-align:center;font-size:12px;color:#777;margin-top:6px;';
+  box.insertAdjacentElement('afterend',hint);
+}});
+}})();</script></body></html>"""
 
 
 def build_preview(package_arg: str | Path) -> PreviewBuild:
@@ -4558,7 +4573,7 @@ def command_handoff(args: argparse.Namespace) -> int:
 
 
 def command_scroll_handoff(args: argparse.Namespace) -> int:
-    build = build_scroll_handoff(args.package, args.image, args.title)
+    build = build_scroll_handoff(args.package, args.image, args.title, args.height)
     print(f"[scroll handoff ready] {build.handoff_path}")
     print(
         f"[scroll component] images={len(build.image_order)}; "
@@ -4723,6 +4738,10 @@ def make_parser() -> argparse.ArgumentParser:
     )
     scroll_handoff.add_argument(
         "--title", default="公众号纵向滑动组件", help="handoff page title"
+    )
+    scroll_handoff.add_argument(
+        "--height", type=int, default=300,
+        help="scroll viewport height in px (120-600); choose by image aspect ratio",
     )
     scroll_handoff.add_argument(
         "--open",

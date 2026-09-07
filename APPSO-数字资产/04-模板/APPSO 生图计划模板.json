@@ -1,5 +1,5 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "template_only": true,
   "updated": "YYYY-MM-DD",
   "project_adapter": "appsso",
@@ -14,6 +14,7 @@
     {
       "id": "visual-001",
       "visual_type": "ai_editorial_creative",
+      "visual_route": "clumsy_doodle",
       "purpose": "填写这张编辑创意图在文章中承担的唯一任务。",
       "reference_strategy": "generated_base",
       "reference_stage": {
@@ -52,6 +53,44 @@
         "avoid": [
           "Polished technology-magazine composition, clean vector geometry, cinematic depth, or professional illustration finish",
           "Logos, trademarks, watermarks, extra text, garbled text, fake interfaces, or news-scene realism"
+        ]
+      }
+    },
+    {
+      "id": "infographic-001",
+      "visual_type": "qualitative_explainer",
+      "visual_route": "infographic",
+      "purpose": "填写这张信息图在文章中承担的唯一关系、流程或比较任务。",
+      "style_override": {
+        "profile": "appsso-infographic-v1",
+        "profile_registry": "APPSO-数字资产/04-模板/生图风格档案.json",
+        "source": "project_visual_route",
+        "reason": "PROJECT-WECHAT-VISUAL-ROUTES-001 固定的信息图路线",
+        "confirmed_on": "2026-08-25"
+      },
+      "reference_strategy": "provided_local",
+      "final_stage": {
+        "mode": "referenced_edit",
+        "prompt_ref": "appsso-infographic-v1",
+        "prompt_sha256": "c8c191665a99da9af14f8ba84b0f7ef769cbadefe347f5d197635264b024c043",
+        "input_assets": [
+          "research/source-assets/appsso-logo-red-background.png"
+        ],
+        "output": "assets/infographic-001-image2.png",
+        "receipt": "research/image-generation-runs/infographic-001-final-preflight.json",
+        "present_to_user": true,
+        "preserve": [
+          "填写必须准确保留的节点、顺序、数字、标签、关系、来源与限定"
+        ],
+        "output_constraints": [
+          "1080 x 1440 px vertical canvas with the safe areas, six-column grid, typography floors, color ratios, and footer rules from the governed specification",
+          "One visual logic only; split the graphic instead of shrinking text below the specification floors",
+          "Use the provided APPSO red-background white-wordmark image unchanged and proportionally in the footer lockup",
+          "Keep the core relationship readable at mobile width",
+          "At 360 px displayed width, body text must remain at least 12 px (prefer 14 px), and essential source notes at least 10 px; on a 1080 px canvas use at least 36/42/30 px respectively. Recalculate for narrower display widths. Split pages if needed."
+        ],
+        "avoid": [
+          "Unsupported facts, invented numbers, garbled Chinese, extra trademarks, fake interfaces, news-scene realism, stretched branding, or a large red background"
         ]
       }
     }

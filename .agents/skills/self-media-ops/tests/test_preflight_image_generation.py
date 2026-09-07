@@ -142,9 +142,14 @@ class ImageGenerationPreflightTests(unittest.TestCase):
         )
 
     @staticmethod
-    def write_manifest(package: Path, *, rights_status: str) -> None:
+    def write_manifest(
+        package: Path,
+        *,
+        rights_status: str,
+        version: int = 2,
+    ) -> None:
         (package / "asset-manifest.yml").write_text(
-            """version: 2
+            """version: %d
 assets:
   - file: "research/source-assets/reference.png"
     used_in_draft: false
@@ -166,7 +171,7 @@ assets:
     allowed_platforms: []
     attribution: "AI generated test"
 """
-            % rights_status,
+            % (version, rights_status),
             encoding="utf-8",
         )
 
@@ -295,6 +300,24 @@ assets:
             self.write_manifest(package, rights_status="user_supplied")
             with self.assertRaisesRegex(PREFLIGHT.ContractError, "not cleared for derivative"):
                 PREFLIGHT.build_request(package, "cover", "final")
+
+    def test_version_3_manifest_allows_registered_reference_inputs(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            package, _ = self.make_workspace(Path(temp_dir))
+            (package / "research" / "source-assets" / "reference.png").write_bytes(
+                b"reference"
+            )
+            self.write_manifest(
+                package,
+                rights_status="project_owned",
+                version=3,
+            )
+            receipt, _, _ = PREFLIGHT.build_request(package, "cover", "final")
+            self.assertEqual("pass", receipt["status"])
+            self.assertEqual(
+                "referenced_image_paths",
+                receipt["input_binding"],
+            )
 
     def test_final_output_cannot_overwrite_or_alias_local_input(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
@@ -542,6 +565,136 @@ assets:
             )
             with self.assertRaisesRegex(PREFLIGHT.ContractError, "independent package"):
                 PREFLIGHT.build_request(package, "cover", "reference")
+
+    def test_schema_v2_requires_a_generated_visual_route(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            package, plan = self.make_workspace(Path(temp_dir))
+            blocked = copy.deepcopy(plan)
+            blocked["schema_version"] = 2
+            self.write_plan(package, blocked)
+            with self.assertRaisesRegex(PREFLIGHT.ContractError, "visual_route"):
+                PREFLIGHT.build_request(package, "cover", "reference")
+
+    def test_appsso_infographic_uses_full_spec_and_registered_reference(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            package, plan = self.make_workspace(root)
+            full_spec = (
+                "# APPSO infographic specification\r\n\r\n"
+                "Use a 1080 x 1440 vertical canvas and the supplied logo.\r\n"
+            )
+            spec_path = root / "internal" / "infographic.md"
+            spec_path.write_bytes(full_spec.encode("utf-8"))
+            spec_hash = hashlib.sha256(full_spec.encode("utf-8")).hexdigest()
+
+            registry_path = root / "config" / "profiles.json"
+            registry = json.loads(registry_path.read_text(encoding="utf-8"))
+            registry["profiles"]["appsso-infographic-v1"] = {
+                "classification": "restricted",
+                "prompt_source": "internal/infographic.md",
+                "prompt_format": "full_file",
+                "prompt_sha256": spec_hash,
+                "requires_reference": True,
+                "allowed_final_modes": ["referenced_edit", "image_edit"],
+                "new_image_strategy": "reference_required",
+                "forbidden_positive_terms": ["cinematic"],
+                "forbidden_avoid_terms": ["vertical canvas"],
+            }
+            registry_path.write_text(
+                json.dumps(registry, ensure_ascii=False, indent=2) + "\n",
+                encoding="utf-8",
+            )
+
+            appsso = copy.deepcopy(plan)
+            appsso["schema_version"] = 2
+            appsso["project_adapter"] = "appsso"
+            appsso["style_policy"]["profile"] = "appsso-004"
+            task = appsso["tasks"][0]
+            task["visual_type"] = "qualitative_explainer"
+            task["visual_route"] = "infographic"
+            task["style_override"] = {
+                "profile": "appsso-infographic-v1",
+                "profile_registry": "config/profiles.json",
+                "source": "project_visual_route",
+                "reason": "Fixed APPSO infographic route",
+                "confirmed_on": "2026-08-25",
+            }
+            task["reference_strategy"] = "provided_local"
+            task.pop("reference_stage")
+            task["final_stage"] = {
+                "mode": "referenced_edit",
+                "prompt_ref": "appsso-infographic-v1",
+                "prompt_sha256": spec_hash,
+                "input_assets": ["research/source-assets/reference.png"],
+                "output": "assets/infographic.png",
+                "receipt": "research/image-generation-runs/infographic-final.json",
+                "present_to_user": True,
+                "preserve": ["three verified nodes and their order"],
+                "output_constraints": ["1080 x 1440 mobile-readable graphic"],
+                "avoid": ["invented numbers"],
+            }
+            (package / "publish.yml").write_text(
+                'project_adapter: "appsso"\nlayout_profile: "default"\n',
+                encoding="utf-8",
+            )
+            (package / "research" / "source-assets" / "reference.png").write_bytes(
+                b"registered-logo-reference"
+            )
+            self.write_plan(package, appsso)
+
+            receipt, prompt, _ = PREFLIGHT.build_request(
+                package, "cover", "final"
+            )
+            self.assertEqual("infographic", receipt["visual_route"])
+            self.assertEqual("appsso-infographic-v1", receipt["style_profile"])
+            self.assertEqual("project_visual_route", receipt["style_override_source"])
+            self.assertEqual("referenced_image_paths", receipt["input_binding"])
+            self.assertTrue(prompt.startswith(full_spec))
+
+    def test_project_visual_route_cannot_select_an_unrelated_profile(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            package, plan = self.make_workspace(root)
+            appsso = copy.deepcopy(plan)
+            appsso["schema_version"] = 2
+            appsso["project_adapter"] = "appsso"
+            appsso["style_policy"]["profile"] = "appsso-004"
+            task = appsso["tasks"][0]
+            task["visual_type"] = "qualitative_explainer"
+            task["visual_route"] = "infographic"
+            task["style_override"] = {
+                "profile": "generic-edit",
+                "profile_registry": "config/profiles.json",
+                "source": "project_visual_route",
+                "reason": "Invalid route mapping",
+                "confirmed_on": "2026-08-25",
+            }
+            task["reference_strategy"] = "provided_local"
+            task.pop("reference_stage")
+            task["final_stage"] = {
+                "mode": "referenced_edit",
+                "prompt_ref": "generic-edit",
+                "input_assets": ["research/source-assets/reference.png"],
+                "output": "assets/invalid.png",
+                "receipt": "research/image-generation-runs/invalid-final.json",
+                "present_to_user": True,
+                "content_prompt": "Edit the reference.",
+                "preserve": ["subject"],
+                "output_constraints": ["vertical"],
+                "avoid": ["logos"],
+            }
+            (package / "publish.yml").write_text(
+                'project_adapter: "appsso"\nlayout_profile: "default"\n',
+                encoding="utf-8",
+            )
+            (package / "research" / "source-assets" / "reference.png").write_bytes(
+                b"reference"
+            )
+            self.write_plan(package, appsso)
+            with self.assertRaisesRegex(
+                PREFLIGHT.ContractError, "reserved for the APPSO infographic route"
+            ):
+                PREFLIGHT.build_request(package, "cover", "final")
 
     def test_windows_unsafe_ads_path_is_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:

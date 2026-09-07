@@ -40,8 +40,13 @@ Thumbs.db
 **/private-data/
 
 # Company-supplied APPSO source assets: local archive only
-APPSO-数字资产/01-栏目与品牌/品牌视觉/原始资料/
-APPSO-数字资产/01-栏目与品牌/品牌视觉/生图-Prompt/
+APPSO-数字资产/01-栏目与品牌/品牌视觉/原始资料/*
+APPSO-数字资产/01-栏目与品牌/品牌视觉/生图-Prompt/*
+# Explicitly approved workflow inputs, 2026-09-07; hashes in tools/workflow-source-assets.json.
+!APPSO-数字资产/01-栏目与品牌/品牌视觉/原始资料/APPSO Logo 红底白字.png
+!APPSO-数字资产/01-栏目与品牌/品牌视觉/原始资料/Markdown 示意图设计系统规范.md
+!APPSO-数字资产/01-栏目与品牌/品牌视觉/生图-Prompt/Hunt Good 插画信息图.md
+!APPSO-数字资产/01-栏目与品牌/品牌视觉/生图-Prompt/笨拙涂鸦重绘.md
 APPSO-数字资产/90-受限资料/*
 !APPSO-数字资产/90-受限资料/README.md
 

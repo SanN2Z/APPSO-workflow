@@ -18,6 +18,7 @@
 | 生图或图片编辑 | `共享/运营/SOP/Image2 生图工作流.md` |
 | 预览、排版、草稿交接 | `wechat-publishing.md` 或公司浏览器排版 SOP |
 | 收到实质修改意见、交付或发布 | `.agents/skills/content-retrospective/SKILL.md` |
+| 用户要求今后沿用某项反馈、出现重复返工或流程缺口，或准备把案例固化进规则、Skill、模板或工具 | `.agents/skills/feedback-to-system/SKILL.md` |
 | 把长期判断做成实验 | `.agents/skills/insight-to-asset/SKILL.md` |
 | 整理或提交 Git | `共享/运营/SOP/Git 提交与仓库整理 SOP.md` |
 

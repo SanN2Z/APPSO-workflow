@@ -76,6 +76,38 @@
         "白色背景",
         "低像素"
       ]
+    },
+    "appsso-infographic-v1": {
+      "classification": "restricted",
+      "prompt_source": "APPSO-数字资产/01-栏目与品牌/品牌视觉/原始资料/Markdown 示意图设计系统规范.md",
+      "prompt_format": "full_file",
+      "prompt_sha256": "c8c191665a99da9af14f8ba84b0f7ef769cbadefe347f5d197635264b024c043",
+      "requires_reference": true,
+      "allowed_final_modes": [
+        "referenced_edit",
+        "image_edit"
+      ],
+      "new_image_strategy": "reference_required",
+      "forbidden_positive_terms": [
+        "16:9",
+        "landscape",
+        "横版",
+        "dark graphite",
+        "deep navy",
+        "cinematic",
+        "3D",
+        "大面积红底",
+        "full red background",
+        "cyberpunk"
+      ],
+      "forbidden_avoid_terms": [
+        "warm white",
+        "OPPO Sans",
+        "1080 × 1440",
+        "APPSO Logo",
+        "暖白背景",
+        "品牌红"
+      ]
     }
   }
 }

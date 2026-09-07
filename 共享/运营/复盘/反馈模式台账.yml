@@ -1,5 +1,5 @@
 schema_version: 1
-updated_on: "2026-08-21"
+updated_on: "2026-08-26"
 
 # 原始反馈留在内容包或受限反馈库；这里只保存脱敏后的跨案例模式。
 patterns:
@@ -217,14 +217,14 @@ patterns:
     disposition: "project_adapter"
     rule_source: "共享/运营/SOP/Image2 生图工作流.md"
     trigger: "任务需要 AI 新图、参考图重绘或图片编辑"
-    action: "参考图可访问时由 Codex 内置 gpt-image-2 直接生成；固定风格 Prompt 逐字调用，原尺寸复检后做单变量迭代，并用 manifest version 2 回填内容包"
-    pass_condition: "成品进入 assets，正文使用相对路径，Prompt 引用与哈希、生成模式、执行约束、输入图改编权、模型、迭代和允许平台均进入 manifest version 2；正文引用交叉核对、版权 allowlist 与 validator 通过"
+    action: "参考图可访问时由 Codex 内置 gpt-image-2 直接生成；固定风格 Prompt 逐字调用，原尺寸复检后做单变量迭代，并用 manifest version 3 回填内容包"
+    pass_condition: "成品进入 assets，正文使用相对路径，visual_route、Prompt 引用与哈希、生成模式、执行约束、输入图改编权、模型、迭代和允许平台均进入 manifest version 3；正文引用交叉核对、版权 allowlist 与 validator 通过"
     failure_signal: "让用户手动复制 Prompt、凭描述伪造参考输入、未做原尺寸复检、只留临时文件或漏记权利"
     scope: "本项目视觉 adapter"
     owner: "visual_rights_editor"
     classification: "internal"
     introduced_on: "2026-07-21"
-    regression_check: "下一次含参考图的 Image2 任务核对运行时、Prompt 哈希、原尺寸复检、迭代记录、路径和 manifest version 2，并运行 validator 反例门禁"
+    regression_check: "下一次含参考图的 Image2 任务核对运行时、visual_route、Prompt 哈希、原尺寸复检、迭代记录、路径和 manifest version 3，并运行 validator 反例门禁"
     next_review_on: "2026-08-21"
 
   - id: "PROJECT-APPSO-AI-STYLE-001"
@@ -596,3 +596,38 @@ patterns:
     introduced_on: "2026-08-22"
     regression_check: "运行 source-only、capabilities doctor --bundle-only、全量测试、仓库 preflight；从精确提交建立不共享文件的 --no-local 冷 clone，执行 bootstrap -FullTest、workflow verify、clone 内 CLI 版本与无写入入口冒烟"
     next_review_on: "2026-09-22"
+
+  - id: "PROJECT-WECHAT-VISUAL-ROUTES-001"
+    pattern: "把配图数量和统一视觉误当成质量，会把原帖／官方原图重画成失真卡片，把笨拙涂鸦替换成通用 3D，并让信息图只读规范却不把 Prompt 与 Logo 真正送进 Image2"
+    evidence_level: "E0"
+    effectiveness_status: "unverified_but_owner_binding"
+    source_cases: ["hunt-good-2026-08-21:FB-006", "tibo-codex-recursive-self-improvement:FB-005"]
+    disposition: "project_workflow_adapter"
+    default_status: "active_wechat_visual_gate"
+    rule_source: "共享/运营/SOP/内容工作流.md#project-wechat-visual-routes-001三条视觉路线与至少两类硬门主理人绑定项目配置"
+    trigger: "微信公众号文章首次规划、实质修改发布图片或准备进入 ready"
+    action: "逐图选择 source_original、clumsy_doodle、infographic；原图保留像素，笨拙涂鸦走项目固定 profile，APPSO 信息图把完整设计规范和登记 Logo 同时交给 Image2；全篇至少覆盖两类"
+    pass_condition: "manifest v3 中所有发布图路线合法，原图未 AI 重画，Image2 plan／receipt／输入哈希匹配，正文与封面实际使用图片至少覆盖两类，原尺寸与手机宽度已查看"
+    failure_signal: "只有一种图片类型；出现通用 3D 第四路线；原帖／X／官方图被重画；笨拙涂鸦变成精致科技图；APPSO 信息图缺完整 Prompt 或登记 Logo；拿 warnings=0 代替视觉验收"
+    scope: "新建或实质改图的微信公众号文章；X 单帖、研究中间图和历史只读包不执行至少两类"
+    owner: "project_owner_managing_editor_and_visual_editor"
+    classification: "internal"
+    introduced_on: "2026-08-25"
+    regression_check: "validator 覆盖三组两类正例与单类／第四路线／原图 AI 重画／APPSO 信息图缺 Prompt 或 Logo 反例；preflight 校验 full-file Prompt 和 referenced_image_paths"
+    next_review_on: "2026-09-25"
+
+  - id: "PROJECT-TOPIC-INVENTORY-001"
+    pattern: "选题扫描只检索本地内容包和选题池时，仓库外已经完成但尚未回填的题目仍可能被误判为新题"
+    evidence_level: "E1"
+    source_cases: ["topic-radar-2026-08-26:user-feedback-001"]
+    disposition: "watch"
+    trigger: "用户确认推荐题已经做过，但本地内容包检索没有命中"
+    action: "立即以用户确认更新选题池为 archived，并修订当前雷达；观察是否再次发生，再决定是否建立独立已做题目索引或扩展扫描入口"
+    pass_condition: "相同题目不再被后续雷达当作新题；仓库内已完成但主题相近、判断实质不同的追更题仍可进入评估"
+    failure_signal: "同一已做题再次被主推，或为防重复而把所有相邻主题一概拦截"
+    scope: "本仓库个人微信公众号与 X 的选题扫描；不把公司稿或 restricted 资料反向导入个人内容库存"
+    owner: "managing_editor"
+    classification: "internal"
+    introduced_on: "2026-08-26"
+    regression_check: "后续扫描 Jalapeño 必须命中 archived；出现同为芯片但对象、事实增量和中心判断均不同的候选时仍允许进入 CORE-VALUE-001 评估"
+    next_review_on: "2026-09-09"

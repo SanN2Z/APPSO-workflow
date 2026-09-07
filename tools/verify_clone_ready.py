@@ -2,8 +2,8 @@
 """Verify that a fresh clone contains every workflow capability adapter.
 
 Executable adapters, pinned dependencies, templates, and versioned company tools
-must be clone-local. Secret values, browser sessions, and governed source assets
-remain local runtime inputs and are reported separately from bundle completeness.
+must be clone-local. Secret values and browser sessions remain local inputs.
+Owner-approved workflow source assets are bundled and checked byte-for-byte.
 """
 
 from __future__ import annotations
@@ -633,6 +633,37 @@ def json_probe(name: str, command: list[str]) -> dict[str, Any]:
         return make_check(name, False, str(exc))
 
 
+def check_workflow_sources(root: Path | None = None) -> dict[str, Any]:
+    root = (root or REPO_ROOT).resolve()
+    config_path = root / "tools/workflow-source-assets.json"
+    problems = []
+    try:
+        config = json.loads(config_path.read_text(encoding="utf-8"))
+        assets = config["assets"]
+        if config.get("schema_version") != 1 or not isinstance(assets, list) or not assets:
+            raise ValueError("invalid or empty workflow source manifest")
+        seen = set()
+        for asset in assets:
+            relative = asset["path"]
+            target = (root / relative).resolve()
+            if target == root or not target.is_relative_to(root):
+                problems.append("source path escapes workspace")
+                continue
+            if relative in seen:
+                problems.append(f"duplicate source: {relative}")
+            seen.add(relative)
+            if not target.is_file():
+                problems.append(f"missing source: {relative}")
+            elif hashlib.sha256(target.read_bytes()).hexdigest().lower() != str(asset["sha256"]).lower():
+                problems.append(f"source hash mismatch: {relative}")
+            elif target.stat().st_size != asset["bytes"]:
+                problems.append(f"source size mismatch: {relative}")
+        detail = "; ".join(problems) if problems else f"{len(assets)} approved workflow inputs verified"
+        return make_check("source.workflow_inputs", not problems, detail)
+    except (OSError, ValueError, KeyError, TypeError) as exc:
+        return make_check("source.workflow_inputs", False, f"workflow source manifest: {exc}")
+
+
 def source_checks(manifest: dict[str, Any]) -> list[dict[str, Any]]:
     return [
         check_python_runtime(manifest),
@@ -644,6 +675,7 @@ def source_checks(manifest: dict[str, Any]) -> list[dict[str, Any]]:
         check_python_sources(manifest),
         check_portable_docs(manifest),
         check_company_extension(manifest),
+        check_workflow_sources(),
     ]
 
 

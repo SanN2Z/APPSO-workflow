@@ -1109,7 +1109,7 @@ theme: "default"
             self.assertIn("scroll-handoffs", build.handoff_path.parts)
             component = build.component_path.read_text(encoding="utf-8")
             self.assertIn("height:300px", component)
-            self.assertIn("overflow-y:auto", component)
+            self.assertIn("overflow-y:scroll", component)
             self.assertIn("上下滑动查看更多内容", component)
             self.assertEqual(component.count("data:image/png;base64,"), 3)
             handoff = build.handoff_path.read_text(encoding="utf-8")
@@ -1138,6 +1138,23 @@ theme: "default"
                 MODULE.validate_scroll_handoff_assets(package, one * 10)
             with self.assertRaisesRegex(MODULE.WorkflowError, "duplicates"):
                 MODULE.validate_scroll_handoff_assets(package, one * 2)
+
+    def test_scroll_handoff_custom_height_survives_export_and_receipt(self) -> None:
+        with tempfile.TemporaryDirectory() as temp:
+            package = self.make_package(Path(temp))
+            paths = self.register_scroll_images(package, ("scroll.png",))
+            with mock.patch.object(MODULE, "validator_report", return_value=(True, "ok")):
+                build = MODULE.build_scroll_handoff(package, paths, "长图", height_px=260)
+            component = build.component_path.read_text(encoding="utf-8")
+            self.assertIn("height:260px", component)
+            self.assertNotIn("display:flex", component)
+            receipt = json.loads(build.receipt_path.read_text(encoding="utf-8"))
+            self.assertEqual(receipt["fixed_height_px"], 260)
+            self.assertEqual(receipt["wechat_backend_roundtrip"], "pending")
+            MODULE.verify_scroll_handoff_artifact(build)
+        for height in (119, 601, 260.5, "260", True):
+            with self.subTest(height=height), self.assertRaises(MODULE.WorkflowError):
+                MODULE.vertical_scroll_fragment(["assets/test.png"], height)
 
     def test_scroll_handoff_rejects_non_asset_and_unapproved_manifest_use(self) -> None:
         with tempfile.TemporaryDirectory() as temp:

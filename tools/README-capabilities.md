@@ -1,6 +1,6 @@
 # 全能力打包与本机接线
 
-本仓库把内容生产所需的可分发部分统一打包：脚本、Skill、SOP、精确依赖、公司扩展源码、配置模板和本地导入器都随私有 Git clone 到达。账号凭据、浏览器登录态、远端服务和按治理规则保持 `local-only` 的原件不进 Git，但每一项都有固定的本机接线入口和只读体检。
+本仓库把内容生产所需的可分发部分统一打包：脚本、Skill、SOP、精确依赖、公司扩展源码、配置模板和本地导入器都随私有 Git clone 到达。账号凭据、浏览器登录态和远端服务在本机接线。2026-09-07 主理人授权的工作流原件已随私有仓库保存，清单为 `tools/workflow-source-assets.json`。
 
 ## 一次安装
 
@@ -30,9 +30,9 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools/workflow.ps1 verify
 | `wechat` | 预览、交接、纵向滑动页、密封草稿与微信适配器 | 执行草稿时填写微信凭据并联网 |
 | `x` | 环境检查、只读检查、可见性、趋势扫描、队列和发布脚本 | X 凭据、网络；发布仍需本次授权 |
 | `company_feishu` | 公司同步状态机、锁定排版、飞书配置模板、clone 内 Codex | 飞书 UAT、Codex 登录、网络与精确写入授权 |
-| `company_browser` | 爱范儿一键排版扩展 v1.10.0 的完整 22 文件源码树 | Chrome／Edge、公司专用 Profile、人工加载与本次覆盖授权 |
+| `company_browser` | 已登记的 v1.10.0 基线、v1.10.1—1.10.3 修复候选及本地回归脚本 | Chrome／Edge、公司专用 Profile、明确选择版本与本次覆盖授权 |
 | `image_generation` | Image2 SOP、风格档案、生成前检查与回执合同 | Agent host 提供 `image_gen` |
-| `appsso_visual_profiles` | APPSO 风格档案、台账和受限 Prompt 的哈希导入器 | 从受控本地原件目录导入 |
+| `appsso_visual_profiles` | 风格档案、完整设计规范、Logo、原始 Prompt 与哈希检查 | 无需额外导入；实际生图需 host 工具 |
 | `openrouter_ox` | OpenRouter 客户端、密钥录入器、clone 内 Claude | OpenRouter key、可用模型 ID 与网络 |
 | `writing_skill_assets` | 自媒体 Skills 与 `qu-ai-wei` 完整版本化资产 | 无 |
 
@@ -99,13 +99,13 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools/workflow.ps1 capabilit
 
 ## APPSO 受限视觉 Prompt
 
-受限 Prompt 的适配器、目标位置、标题和 SHA-256 已进入 manifest，原文仍按治理规则保留在受控本地目录。迁移到获授权机器时运行：
+当前私有 clone 已包含登记的原文、完整设计规范与 Logo，正常安装不需要导入。以下命令只供恢复旧版缺失文件时使用：
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File tools/workflow.ps1 capabilities import-private-assets --source-root <受控原件目录>
 ```
 
-工具递归定位登记文件，提取登记标题下的 Prompt，逐字核对哈希后才复制到被 Git 忽略的目标目录。来源不唯一、内容漂移或目标已有不同版本时硬失败，不覆盖。
+工具递归定位登记文件，提取登记标题下的 Prompt，逐字核对哈希后才复制到登记目标目录。来源不唯一、内容漂移或目标已有不同版本时硬失败，不覆盖。
 
 ## 常用入口
 

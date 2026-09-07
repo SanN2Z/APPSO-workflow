@@ -134,32 +134,45 @@ Record sentence defects as `COPY-*` items below the frontmatter. See [wechat-cop
 
 ## Asset manifest
 
-Create `asset-manifest.yml` when the first image enters the package. New or materially edited packages use `version: 2`.
+Create `asset-manifest.yml` when the first image enters the package. New or materially edited packages use `version: 3`.
 
 ```yaml
-version: 2
-updated: "2026-07-21"
+version: 3
+updated: "2026-08-25"
 assets:
   - file: "assets/example.png"
     used_in_draft: true
-    source_type: "project_generated"
-    source: "creation or source URL"
-    creator_or_rightsholder: "This project"
+    visual_route: "source_original"
+    source_original_kind: "official_original"
+    original_pixels_preserved: true
+    source_type: "official_material"
+    source: "official image"
+    source_url: "https://example.com/official-image"
+    creator_or_rightsholder: "Original rightsholder"
     obtained_on: "2026-07-10"
-    modifications: "Original chart"
-    rights_status: "project_owned"
+    modifications: "Proportional resize only"
+    rights_status: "licensed"
     allowed_platforms: ["wechat", "x"]
     attribution: "Cite underlying data"
 ```
 
 Use package-relative paths. A user-supplied file is not automatically cleared for publication or derivative work.
 
+Publication-bound WeChat images use exactly one `visual_route`:
+
+- `source_original`: community discussion screenshot, X screenshot, or official original. Also set `source_original_kind`, `source_url`, and `original_pixels_preserved: true`; do not AI-redraw or visually restyle it.
+- `clumsy_doodle`: governed clumsy-doodle AI image. The manifest `prompt_ref`, generation mode, reference inputs, and receipt must match the selected project adapter.
+- `infographic`: a diagram explaining one relationship, process, or comparison. APPSO infographics must use Image2 with `appsso-infographic-v1` and the registered APPSO Logo input.
+
+A WeChat article cannot enter `ready` or `published` unless its release-bound images cover at least two distinct routes. Version 1–2 manifests remain readable only as historical contracts; the next substantive visual edit migrates them to v3.
+
 For `source_type: "ai_generated"`, also record:
 
 ```yaml
     generator: "Codex built-in image_gen"
     model: "gpt-image-2"
-    generation_mode: "text_to_image"
+    visual_route: "clumsy_doodle | infographic"
+    generation_mode: "text_to_image | referenced_edit | image_edit"
     prompt_ref: "governed prompt ID"
     prompt_sha256: "64-lowercase-hex-characters"
     generation_constraints: "ratio, preserved elements, and exclusions"

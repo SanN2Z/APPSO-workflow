@@ -178,7 +178,7 @@ CSS_RESOURCE_FUNCTIONS = {
     "paint",
     "url",
 }
-SUPPORTED_MANIFEST_VERSION = 2
+SUPPORTED_MANIFEST_VERSION = 3
 MANIFEST_V2_REQUIRED_FIELDS = (
     "file",
     "used_in_draft",
@@ -190,6 +190,18 @@ MANIFEST_V2_REQUIRED_FIELDS = (
     "rights_status",
     "allowed_platforms",
     "attribution",
+)
+VISUAL_ROUTES = {"source_original", "clumsy_doodle", "infographic"}
+SOURCE_ORIGINAL_KINDS = {
+    "community_screenshot",
+    "official_original",
+    "x_screenshot",
+}
+APPSO_CLUMSY_PROMPT_REF = "appsso-004"
+GENERIC_CLUMSY_PROMPT_REF = "clumsy-doodle-v1"
+APPSO_INFOGRAPHIC_PROMPT_REF = "appsso-infographic-v1"
+APPSO_LOGO_SHA256 = (
+    "8160db79fc8cafdd864312b32bb6b01ee4d720187bc4acc6a875e273eecd04ff"
 )
 AI_GENERATED_REQUIRED_FIELDS = (
     "generator",
@@ -232,6 +244,7 @@ DERIVATIVE_INPUT_RIGHTS_STATUSES = {
     "project_owned_with_cc0_component",
     "public_domain_verified",
     "user_confirmed_derivative_use",
+    "user_confirmed_company_brand_use",
 }
 SECRET_PATTERNS = (
     re.compile(r"\bsk-[A-Za-z0-9_-]{16,}\b"),
@@ -944,8 +957,11 @@ def validate_ai_preflight_receipt(
             issues.append(f"manifest {label} {plan_error}")
 
     if plan is not None:
-        if plan.get("schema_version") != 1:
-            issues.append(f"manifest {label} image-generation plan schema_version must be 1")
+        plan_schema_version = plan.get("schema_version")
+        if plan_schema_version not in {1, 2}:
+            issues.append(
+                f"manifest {label} image-generation plan schema_version must be 1 or 2"
+            )
         if plan.get("project_adapter") != receipt_adapter:
             issues.append(
                 f"manifest {label} preflight_receipt project_adapter does not match plan"
@@ -1022,6 +1038,16 @@ def validate_ai_preflight_receipt(
                 issues.append(
                     f"manifest {label} preflight_receipt visual_type does not match plan"
                 )
+            if plan_schema_version == 2:
+                task_visual_route = task.get("visual_route")
+                if task_visual_route != receipt.get("visual_route"):
+                    issues.append(
+                        f"manifest {label} preflight_receipt visual_route does not match plan"
+                    )
+                if task_visual_route != asset.get("visual_route"):
+                    issues.append(
+                        f"manifest {label} visual_route does not match image-generation plan"
+                    )
             if task.get("reference_strategy", "none") != receipt.get(
                 "reference_strategy"
             ):
@@ -1202,6 +1228,7 @@ def validate_manifest_assets(
     warnings: list[str] = []
     strict = version >= 2
     assets_by_file: dict[str, dict[str, object]] = {}
+    release_visual_routes: set[str] = set()
 
     for asset in assets:
         raw_file = asset.get("file")
@@ -1282,6 +1309,25 @@ def validate_manifest_assets(
             )
         )
         binding_unknown = is_missing_value(used_in_draft)
+
+        visual_route = asset.get("visual_route")
+        if version >= 3 and release_bound:
+            if not isinstance(visual_route, str) or visual_route not in VISUAL_ROUTES:
+                add_contract_issue(
+                    f"manifest {label} visual_route must be one of: "
+                    f"{', '.join(sorted(VISUAL_ROUTES))}",
+                    True,
+                )
+            else:
+                release_visual_routes.add(visual_route)
+        elif not is_missing_value(visual_route) and (
+            not isinstance(visual_route, str) or visual_route not in VISUAL_ROUTES
+        ):
+            add_contract_issue(
+                f"manifest {label} visual_route must be one of: "
+                f"{', '.join(sorted(VISUAL_ROUTES))}",
+                release_bound,
+            )
 
         if strict and not is_missing_value(declared_use) and (
             not isinstance(declared_use, str)
@@ -1380,6 +1426,102 @@ def validate_manifest_assets(
             isinstance(source_type, str)
             and source_type.strip().casefold().startswith("ai_generated")
         )
+
+        if visual_route == "source_original":
+            source_original_kind = asset.get("source_original_kind")
+            if source_original_kind not in SOURCE_ORIGINAL_KINDS:
+                add_contract_issue(
+                    f"manifest {label} source_original_kind must be one of: "
+                    f"{', '.join(sorted(SOURCE_ORIGINAL_KINDS))}",
+                    release_bound,
+                )
+            if asset.get("original_pixels_preserved") is not True:
+                add_contract_issue(
+                    f"manifest {label} source_original requires "
+                    "original_pixels_preserved: true",
+                    release_bound,
+                )
+            source_url = asset.get("source_url")
+            if not isinstance(source_url, str) or not re.match(
+                r"^https?://", source_url.strip(), re.IGNORECASE
+            ):
+                add_contract_issue(
+                    f"manifest {label} source_original requires an http(s) source_url",
+                    release_bound,
+                )
+            if ai_generated_like:
+                add_contract_issue(
+                    f"manifest {label} source_original cannot be AI-generated or redrawn",
+                    release_bound,
+                )
+
+        if visual_route == "clumsy_doodle":
+            if not ai_generated_like:
+                add_contract_issue(
+                    f"manifest {label} clumsy_doodle must use source_type: ai_generated",
+                    release_bound,
+                )
+            expected_prompt_ref = (
+                APPSO_CLUMSY_PROMPT_REF
+                if publish_project_adapter == "appsso"
+                else GENERIC_CLUMSY_PROMPT_REF
+            )
+            if asset.get("prompt_ref") != expected_prompt_ref:
+                add_contract_issue(
+                    f"manifest {label} clumsy_doodle must use prompt_ref: "
+                    f"{expected_prompt_ref}",
+                    release_bound,
+                )
+            if publish_project_adapter == "appsso" and asset.get(
+                "generation_mode"
+            ) not in REFERENCE_GENERATION_MODES:
+                add_contract_issue(
+                    f"manifest {label} APPSO clumsy_doodle must use a referenced edit",
+                    release_bound,
+                )
+
+        if visual_route == "infographic" and publish_project_adapter == "appsso":
+            if not ai_generated_like:
+                add_contract_issue(
+                    f"manifest {label} APPSO infographic must use Image2 with "
+                    "source_type: ai_generated",
+                    release_bound,
+                )
+            if asset.get("prompt_ref") != APPSO_INFOGRAPHIC_PROMPT_REF:
+                add_contract_issue(
+                    f"manifest {label} APPSO infographic must use prompt_ref: "
+                    f"{APPSO_INFOGRAPHIC_PROMPT_REF}",
+                    release_bound,
+                )
+            if asset.get("generation_mode") not in REFERENCE_GENERATION_MODES:
+                add_contract_issue(
+                    f"manifest {label} APPSO infographic must use a referenced edit",
+                    release_bound,
+                )
+            infographic_inputs = asset.get("input_assets")
+            has_registered_logo = False
+            if isinstance(infographic_inputs, list):
+                for input_asset in infographic_inputs:
+                    if not isinstance(input_asset, str):
+                        continue
+                    input_key = canonical_package_key(package, input_asset)
+                    input_record = assets_by_file.get(input_key) if input_key else None
+                    input_path = (package / input_asset).resolve()
+                    if (
+                        input_record is not None
+                        and input_path.is_file()
+                        and input_path.is_relative_to(package)
+                        and file_sha256(input_path) == APPSO_LOGO_SHA256
+                    ):
+                        has_registered_logo = True
+                        break
+            if not has_registered_logo:
+                add_contract_issue(
+                    f"manifest {label} APPSO infographic must reference the registered "
+                    "APPSO Logo red-background PNG",
+                    release_bound,
+                )
+
         if not ai_generated_like:
             continue
         if source_type != "ai_generated":
@@ -1507,6 +1649,13 @@ def validate_manifest_assets(
                 f"manifest {label} generated_on must be an ISO date (YYYY-MM-DD)",
                 release_bound,
             )
+
+    if version >= 3 and platform == "wechat" and len(release_visual_routes) < 2:
+        add_contract_issue(
+            "WeChat article requires at least two distinct visual_route values among "
+            "release-bound images: source_original, clumsy_doodle, infographic",
+            True,
+        )
 
     return errors, warnings
 

@@ -33,7 +33,7 @@ SHA256_PATTERN = re.compile(r"^[0-9a-f]{64}$")
 ISO_DATE_PATTERN = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 WINDOWS_ABSOLUTE_PATTERN = re.compile(r"^[A-Za-z]:[\\/]")
 URL_SCHEME_PATTERN = re.compile(r"^[A-Za-z][A-Za-z0-9+.-]*:")
-SUPPORTED_PLAN_VERSION = 1
+SUPPORTED_PLAN_VERSIONS = {1, 2}
 SUPPORTED_PROFILE_REGISTRY_VERSION = 1
 STYLE_SCOPES = {"task", "all_ai_generated_editorial_images"}
 NEW_IMAGE_STRATEGIES = {
@@ -46,6 +46,8 @@ INPUT_BINDINGS = {"none", "referenced_image_paths", "num_last_images_to_include"
 STAGE_KEYS = {"reference": "reference_stage", "final": "final_stage"}
 PROJECT_ADAPTERS = {"appsso", "generic"}
 APPSO_DEFAULT_STYLE_PROFILE = "appsso-004"
+APPSO_INFOGRAPHIC_STYLE_PROFILE = "appsso-infographic-v1"
+GENERATED_VISUAL_ROUTES = {"clumsy_doodle", "infographic"}
 APPSO_GENERATABLE_VISUAL_TYPES = {
     "ai_editorial_creative",
     "qualitative_explainer",
@@ -140,14 +142,16 @@ def declared_publish_value(package: Path, key: str) -> str | None:
     return None
 
 
-def validate_explicit_user_override(style_policy: dict[str, Any]) -> None:
+def validate_style_override(style_policy: dict[str, Any]) -> str:
     override = require_mapping(
         style_policy.get("user_override"),
         "style_policy user_override",
     )
-    if override.get("source") != "explicit_current_task_user":
+    source = override.get("source")
+    if source not in {"explicit_current_task_user", "project_visual_route"}:
         raise ContractError(
-            "APPSO style override source must be explicit_current_task_user"
+            "APPSO style override source must be explicit_current_task_user "
+            "or project_visual_route"
         )
     require_nonempty_string(override.get("reason"), "style_policy user_override reason")
     confirmed_on = require_nonempty_string(
@@ -164,6 +168,7 @@ def validate_explicit_user_override(style_policy: dict[str, Any]) -> None:
         raise ContractError(
             "style_policy user_override confirmed_on must be an ISO date"
         ) from exc
+    return str(source)
 
 
 def require_mapping(value: object, label: str) -> dict[str, Any]:
@@ -297,33 +302,49 @@ def extract_governed_prompt(
         raise ContractError(
             f"governed prompt source is unavailable for {profile_id}: {prompt_relative}"
         )
-    heading = require_nonempty_string(
-        profile.get("prompt_heading"),
-        f"profile {profile_id} prompt_heading",
-    )
-    lines = prompt_path.read_text(encoding="utf-8").splitlines()
-    try:
-        heading_index = next(index for index, line in enumerate(lines) if line.strip() == heading)
-    except StopIteration as exc:
-        raise ContractError(
-            f"governed prompt heading not found for {profile_id}: {heading}"
-        ) from exc
-    prompt_line = next(
-        (line for line in lines[heading_index + 1 :] if line.strip()),
-        "",
-    )
-    if not prompt_line.startswith("> "):
-        raise ContractError(
-            f"governed prompt for {profile_id} must be one Markdown quote line"
+    prompt_format = profile.get("prompt_format", "quoted_line")
+    if prompt_format == "full_file":
+        try:
+            prompt = prompt_path.read_bytes().decode("utf-8")
+        except UnicodeDecodeError as exc:
+            raise ContractError(
+                f"governed full-file prompt for {profile_id} must be UTF-8"
+            ) from exc
+        actual_hash = sha256_file(prompt_path)
+    elif prompt_format == "quoted_line":
+        heading = require_nonempty_string(
+            profile.get("prompt_heading"),
+            f"profile {profile_id} prompt_heading",
         )
-    prompt = prompt_line[2:]
+        lines = prompt_path.read_text(encoding="utf-8").splitlines()
+        try:
+            heading_index = next(
+                index for index, line in enumerate(lines) if line.strip() == heading
+            )
+        except StopIteration as exc:
+            raise ContractError(
+                f"governed prompt heading not found for {profile_id}: {heading}"
+            ) from exc
+        prompt_line = next(
+            (line for line in lines[heading_index + 1 :] if line.strip()),
+            "",
+        )
+        if not prompt_line.startswith("> "):
+            raise ContractError(
+                f"governed prompt for {profile_id} must be one Markdown quote line"
+            )
+        prompt = prompt_line[2:]
+        actual_hash = sha256_text(prompt)
+    else:
+        raise ContractError(
+            f"unsupported governed prompt format for {profile_id}: {prompt_format}"
+        )
     expected_hash = require_nonempty_string(
         profile.get("prompt_sha256"),
         f"profile {profile_id} prompt_sha256",
     )
     if not SHA256_PATTERN.fullmatch(expected_hash):
         raise ContractError(f"profile {profile_id} prompt_sha256 is invalid")
-    actual_hash = sha256_text(prompt)
     if actual_hash != expected_hash:
         raise ContractError(
             f"governed prompt hash mismatch for {profile_id}: "
@@ -381,7 +402,7 @@ def compose_prompt(
     preserve: list[str],
     avoid: list[str],
 ) -> str:
-    sections = [base.strip()]
+    sections = [base]
     for heading, items in (
         ("Output constraints", output_constraints),
         ("Preserve", preserve),
@@ -399,9 +420,10 @@ def load_manifest_records(package: Path) -> dict[str, dict[str, object]]:
     except FileNotFoundError as exc:
         raise ContractError(f"asset manifest not found: {manifest_path}") from exc
     version, assets, issues = parse_asset_manifest(text)
-    if version != 2:
+    if version not in {2, 3}:
         raise ContractError(
-            f"image-generation preflight requires asset-manifest.yml version 2, got {version}"
+            "image-generation preflight requires asset-manifest.yml version 2 or 3, "
+            f"got {version}"
         )
     if issues:
         raise ContractError("invalid asset manifest: " + "; ".join(issues))
@@ -466,9 +488,10 @@ def build_request(
     except ValueError as exc:
         raise ContractError("image-generation plan must be inside the content package") from exc
     plan = load_json_object(selected_plan_path, "image-generation plan")
-    if plan.get("schema_version") != SUPPORTED_PLAN_VERSION:
+    plan_schema_version = plan.get("schema_version")
+    if plan_schema_version not in SUPPORTED_PLAN_VERSIONS:
         raise ContractError(
-            f"unsupported image-generation plan schema_version: {plan.get('schema_version')}"
+            f"unsupported image-generation plan schema_version: {plan_schema_version}"
         )
     if plan.get("template_only") is True:
         raise ContractError(
@@ -604,13 +627,25 @@ def build_request(
     if selected_task is None:
         raise ContractError(f"image-generation task not found: {task_id}")
 
+    visual_route: str | None = None
+    if plan_schema_version == 2:
+        visual_route = require_nonempty_string(
+            selected_task.get("visual_route"),
+            f"task {task_id} visual_route",
+        )
+        if visual_route not in GENERATED_VISUAL_ROUTES:
+            raise ContractError(
+                f"task {task_id} image generation visual_route must be one of: "
+                f"{', '.join(sorted(GENERATED_VISUAL_ROUTES))}"
+            )
+
     style_override_source: str | None = None
     raw_style_override = selected_task.get("style_override")
     if raw_style_override is not None:
         if project_adapter != "appsso":
             raise ContractError("task style_override is only supported by the appsso adapter")
         override = require_mapping(raw_style_override, f"task {task_id} style_override")
-        validate_explicit_user_override({"user_override": override})
+        override_source = validate_style_override({"user_override": override})
         override_profile_id = require_nonempty_string(
             override.get("profile"),
             f"task {task_id} style_override profile",
@@ -642,7 +677,28 @@ def build_request(
         )
         allow_final_text_to_image = "text_to_image" in override_modes
         scope = "task"
-        style_override_source = str(override.get("source"))
+        style_override_source = override_source
+        if style_override_source == "project_visual_route" and (
+            plan_schema_version != 2
+            or visual_route != "infographic"
+            or profile_id != APPSO_INFOGRAPHIC_STYLE_PROFILE
+        ):
+            raise ContractError(
+                "project_visual_route override is reserved for the APPSO infographic route"
+            )
+
+    if plan_schema_version == 2 and project_adapter == "appsso":
+        if visual_route == "clumsy_doodle" and style_override_source is None:
+            if profile_id != APPSO_DEFAULT_STYLE_PROFILE:
+                raise ContractError("APPSO clumsy_doodle route must use appsso-004")
+        elif visual_route == "infographic" and (
+            style_override_source != "project_visual_route"
+            or profile_id != APPSO_INFOGRAPHIC_STYLE_PROFILE
+        ):
+            raise ContractError(
+                "APPSO infographic route must use the appsso-infographic-v1 "
+                "project_visual_route profile"
+            )
 
     purpose = require_nonempty_string(selected_task.get("purpose"), f"task {task_id} purpose")
     visual_type = (
@@ -914,6 +970,7 @@ def build_request(
         "stage": stage_name,
         "project_adapter": project_adapter,
         "visual_type": visual_type,
+        "visual_route": visual_route,
         "style_override_source": style_override_source,
         "style_profile": profile_id,
         "style_scope": scope,

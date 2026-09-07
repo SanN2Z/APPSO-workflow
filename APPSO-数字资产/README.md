@@ -6,6 +6,9 @@
 
 ## 快速入口
 
+- [工作流使用入口：写作、图片、排版与桌面材料](<../共享/运营/SOP/工作流使用入口.md>)
+
+- [工作档案：稿件索引、项目记录与可复用经验](<05-案例/工作档案/README.md>)
 - [Hunt Good 周报保姆级指南](<01-栏目与品牌/Hunt-Good/Hunt Good 周报保姆级指南.md>)
 - [APPSO 内容生产 adapter](<03-SOP/APPSO 内容生产 SOP.md>)
 - [中文科技稿表达观察库](<../.agents/skills/self-media-ops/references/wechat-expression-library.yml>)
@@ -46,6 +49,7 @@
 5. 公司稿与个人稿只共享已核事实，不共享成稿表达、图片、独特结构和结尾。
 6. 密码、Cookie、Token、API Key、验证码、登录态和完整请求头永不入库。
 7. 经明确授权、Private 远端已核且凭据与运行态审计通过的公司内部工具，以 `tools/company/<tool>/<version>/` 为唯一 Git 真源；这项例外不覆盖公司终稿、后台数据或浏览器会话。
+8. 2026-09-07 主理人明确授权将本次流程、写作 Prompt、信息图规范、笨拙涂鸦 Prompt、Logo 与排版工具统一提交到当前私有仓库。本批输入以 `tools/workflow-source-assets.json` 为清单，随 clone 提供，不再逐项发起分级确认；历史文件中的 local-only 表述对该清单不再生效。账号凭据、登录态和缓存仍不入库。
 
 ## 使用原则
 

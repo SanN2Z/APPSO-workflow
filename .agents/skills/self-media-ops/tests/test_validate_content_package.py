@@ -1248,8 +1248,162 @@ file: "assets/output.png"
             errors, _, _ = VALIDATOR.validate(package)
         self.assertTrue(any("image is not registered" in item for item in errors))
 
-    def test_future_manifest_version_is_blocked(self) -> None:
+    def test_v3_ready_wechat_requires_two_visual_routes(self) -> None:
         manifest = """version: 3
+assets:
+  - file: "assets/output.png"
+    used_in_draft: true
+    visual_route: "source_original"
+    source_original_kind: "official_original"
+    original_pixels_preserved: true
+    source_type: "official_material"
+    source: "Official image"
+    source_url: "https://example.com/official.png"
+    creator_or_rightsholder: "Example"
+    obtained_on: "2026-08-25"
+    modifications: "Proportional resize only"
+    rights_status: "licensed"
+    allowed_platforms: ["wechat"]
+    attribution: "Example"
+"""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            package = self.make_package(Path(temp_dir), manifest)
+            errors, _, _ = VALIDATOR.validate(package)
+        self.assertTrue(any("at least two distinct visual_route" in item for item in errors))
+
+    def test_v3_draft_visual_mix_gap_is_warning(self) -> None:
+        manifest = """version: 3
+assets:
+  - file: "assets/output.png"
+    used_in_draft: true
+    visual_route: "source_original"
+    source_original_kind: "x_screenshot"
+    original_pixels_preserved: true
+    source_type: "platform_screenshot"
+    source: "X post screenshot"
+    source_url: "https://x.com/example/status/1"
+    creator_or_rightsholder: "Original poster"
+    obtained_on: "2026-08-25"
+    modifications: "Crop only"
+    rights_status: "user_confirmed_editorial_commentary"
+    allowed_platforms: ["wechat"]
+    attribution: "X / original poster"
+"""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            package = self.make_package(Path(temp_dir), manifest, status="draft")
+            errors, warnings, _ = VALIDATOR.validate(package)
+        self.assertEqual([], errors)
+        self.assertTrue(any("at least two distinct visual_route" in item for item in warnings))
+
+    def test_v3_ready_accepts_source_original_plus_generic_infographic(self) -> None:
+        manifest = """version: 3
+assets:
+  - file: "assets/output.png"
+    used_in_draft: true
+    visual_route: "infographic"
+    source_type: "project_generated"
+    source: "Project diagram"
+    creator_or_rightsholder: "This project"
+    obtained_on: "2026-08-25"
+    modifications: "Original diagram"
+    rights_status: "project_owned"
+    allowed_platforms: ["wechat"]
+    attribution: "Author graphic"
+  - file: "research/source-assets/reference.png"
+    used_in_draft: true
+    visual_route: "source_original"
+    source_original_kind: "community_screenshot"
+    original_pixels_preserved: true
+    source_type: "community_screenshot"
+    source: "Community discussion"
+    source_url: "https://example.com/discussion/1"
+    creator_or_rightsholder: "Original poster"
+    obtained_on: "2026-08-25"
+    modifications: "Crop only"
+    rights_status: "user_confirmed_editorial_commentary"
+    allowed_platforms: ["wechat"]
+    attribution: "Original poster"
+"""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            package = self.make_package(Path(temp_dir), manifest)
+            self.set_body(
+                package,
+                "# Test\n\n![Infographic](assets/output.png)\n\n"
+                "![Discussion](research/source-assets/reference.png)\n",
+            )
+            errors, warnings, _ = VALIDATOR.validate(package)
+        self.assertEqual([], errors)
+        self.assertEqual([], warnings)
+
+    def test_v3_source_original_cannot_be_ai_redraw(self) -> None:
+        manifest = """version: 3
+assets:
+  - file: "assets/output.png"
+    used_in_draft: true
+    visual_route: "source_original"
+    source_original_kind: "official_original"
+    original_pixels_preserved: true
+    source_type: "ai_generated"
+    source: "AI redraw"
+    source_url: "https://example.com/official.png"
+    creator_or_rightsholder: "This project"
+    obtained_on: "2026-08-25"
+    modifications: "Redrawn"
+    rights_status: "project_owned"
+    allowed_platforms: ["wechat"]
+    attribution: "AI generated"
+"""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            package = self.make_package(Path(temp_dir), manifest)
+            errors, _, _ = VALIDATOR.validate(package)
+        self.assertTrue(any("cannot be AI-generated or redrawn" in item for item in errors))
+
+    def test_v3_appsso_infographic_requires_image2_profile_and_registered_logo(self) -> None:
+        manifest = """version: 3
+assets:
+  - file: "assets/output.png"
+    used_in_draft: true
+    visual_route: "infographic"
+    source_type: "project_generated"
+    source: "Local HTML rendering"
+    creator_or_rightsholder: "This project"
+    obtained_on: "2026-08-25"
+    modifications: "Rendered locally"
+    rights_status: "project_owned"
+    allowed_platforms: ["wechat"]
+    attribution: "Author graphic"
+"""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            package = self.make_package(
+                Path(temp_dir), manifest, project_adapter="appsso"
+            )
+            errors, _, _ = VALIDATOR.validate(package)
+        self.assertTrue(any("must use Image2" in item for item in errors))
+        self.assertTrue(any("appsso-infographic-v1" in item for item in errors))
+        self.assertTrue(any("registered APPSO Logo" in item for item in errors))
+
+    def test_v3_rejects_unclassified_fourth_visual_route(self) -> None:
+        manifest = """version: 3
+assets:
+  - file: "assets/output.png"
+    used_in_draft: true
+    visual_route: "cinematic_3d"
+    source_type: "project_generated"
+    source: "Generic technology image"
+    creator_or_rightsholder: "This project"
+    obtained_on: "2026-08-25"
+    modifications: "None"
+    rights_status: "project_owned"
+    allowed_platforms: ["wechat"]
+    attribution: "Author graphic"
+"""
+        with tempfile.TemporaryDirectory() as temp_dir:
+            package = self.make_package(Path(temp_dir), manifest)
+            errors, _, _ = VALIDATOR.validate(package)
+        self.assertTrue(any("visual_route must be one of" in item for item in errors))
+
+    def test_future_manifest_version_is_blocked(self) -> None:
+        manifest = """version: 4
 assets: []
 """
         with tempfile.TemporaryDirectory() as temp_dir:
@@ -1259,7 +1413,7 @@ assets: []
                 markdown_image=False,
             )
             errors, _, _ = VALIDATOR.validate(package)
-        self.assertTrue(any("unsupported asset-manifest.yml version: 3" in item for item in errors))
+        self.assertTrue(any("unsupported asset-manifest.yml version: 4" in item for item in errors))
 
     def test_malformed_generation_mode_is_reported_without_crashing(self) -> None:
         manifest = """version: 2

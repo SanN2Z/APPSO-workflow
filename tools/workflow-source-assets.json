@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "authorized_on": "2026-09-07",
+  "authorization": "Owner requested workflow, desktop prompts, visuals and tools be bundled and pushed; no per-file classification approval.",
+  "repository_visibility": "private",
+  "assets": [
+    {
+      "path": "APPSO-数字资产/01-栏目与品牌/品牌视觉/原始资料/APPSO Logo 红底白字.png",
+      "sha256": "8160db79fc8cafdd864312b32bb6b01ee4d720187bc4acc6a875e273eecd04ff",
+      "bytes": 69868
+    },
+    {
+      "path": "APPSO-数字资产/01-栏目与品牌/品牌视觉/原始资料/Markdown 示意图设计系统规范.md",
+      "sha256": "c8c191665a99da9af14f8ba84b0f7ef769cbadefe347f5d197635264b024c043",
+      "bytes": 15162
+    },
+    {
+      "path": "APPSO-数字资产/01-栏目与品牌/品牌视觉/生图-Prompt/笨拙涂鸦重绘.md",
+      "sha256": "971324072b14fb7e1b80238d66843eae72587543aa68ee871d320324c996ca90",
+      "bytes": 2267
+    },
+    {
+      "path": "APPSO-数字资产/01-栏目与品牌/品牌视觉/生图-Prompt/Hunt Good 插画信息图.md",
+      "sha256": "ad1d70ef21c32fcb6f5f34e5f7f38542fe428489fa28ff63d1cb1209298b6dd5",
+      "bytes": 1673
+    },
+    {
+      "path": "共享/参考/桌面公众号流程/去AI味prompt.txt",
+      "sha256": "050b1d9749777645b0410d8fac02a4d6a2f5c5d5b4258ab0dcacf274c241f136",
+      "bytes": 1031
+    },
+    {
+      "path": "共享/参考/桌面公众号流程/快讯提示词原文.txt",
+      "sha256": "d239b46f5576e809b1259086c1eb3de4d851ffd2794c1078085f76b05395c46d",
+      "bytes": 12929
+    }
+  ],
+  "desktop_mappings": [
+    {
+      "source_name": "信息图.md",
+      "destination": "APPSO-数字资产/01-栏目与品牌/品牌视觉/原始资料/Markdown 示意图设计系统规范.md"
+    },
+    {
+      "source_name": "2.png",
+      "destination": "APPSO-数字资产/01-栏目与品牌/品牌视觉/原始资料/APPSO Logo 红底白字.png"
+    },
+    {
+      "source_name": "去AI味prompt.txt",
+      "destination": "共享/参考/桌面公众号流程/去AI味prompt.txt"
+    },
+    {
+      "source_name": "量子位 Jay 提示词 ｜适合处理快讯类文章 副本.txt",
+      "destination": "共享/参考/桌面公众号流程/快讯提示词原文.txt"
+    }
+  ]
+}

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import hashlib
 import importlib.util
+import json
 import tempfile
 from pathlib import Path
 
@@ -11,6 +12,34 @@ SPEC = importlib.util.spec_from_file_location("verify_clone_ready", MODULE_PATH)
 assert SPEC and SPEC.loader
 MODULE = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(MODULE)
+
+
+def test_workflow_source_manifest_preserves_bytes_and_reports_missing_input(tmp_path):
+    (tmp_path / "tools").mkdir()
+    original = tmp_path / "prompt.txt"
+    content = b"original prompt\r\n"
+    original.write_bytes(content)
+    manifest = {"schema_version": 1, "assets": [{
+        "path": "prompt.txt", "bytes": len(content),
+        "sha256": hashlib.sha256(content).hexdigest(),
+    }]}
+    (tmp_path / "tools/workflow-source-assets.json").write_text(json.dumps(manifest), encoding="utf-8")
+    assert MODULE.check_workflow_sources(tmp_path)["ok"]
+    original.write_bytes(b"original prompt\n")
+    assert not MODULE.check_workflow_sources(tmp_path)["ok"]
+    original.unlink()
+    assert not MODULE.check_workflow_sources(tmp_path)["ok"]
+
+
+def test_workflow_source_manifest_rejects_escape_and_empty_list(tmp_path):
+    (tmp_path / "tools").mkdir()
+    manifest = tmp_path / "tools/workflow-source-assets.json"
+    manifest.write_text(json.dumps({"schema_version": 1, "assets": [
+        {"path": "../outside", "bytes": 0, "sha256": "0" * 64}
+    ]}), encoding="utf-8")
+    assert not MODULE.check_workflow_sources(tmp_path)["ok"]
+    manifest.write_text(json.dumps({"schema_version": 1, "assets": []}), encoding="utf-8")
+    assert not MODULE.check_workflow_sources(tmp_path)["ok"]
 
 
 def test_requirements_include_graph_and_duplicate_equal_pins() -> None:

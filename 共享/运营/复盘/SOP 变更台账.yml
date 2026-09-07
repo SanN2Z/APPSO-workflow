@@ -1,7 +1,40 @@
 schema_version: 1
-updated_on: "2026-08-22"
+updated_on: "2026-09-07"
 
 changes:
+  - id: "SOP-CHANGE-20260907-WORKFLOW-PACK"
+    date: "2026-09-07"
+    change: "整理桌面与仓库工作流入口，补齐获授权原始输入，修正文风触发、手机字号、交付载体和测试路径"
+    source_cases: ["user:2026-09-07-workflow-audit-and-push", "user:2026-09-07-direct-workflow-pack"]
+    classification: "project_configuration"
+    evidence_level: "E0 owner binding; source parity and local regression checked"
+    action: "单一入口链接既有真源，六项原件按哈希随私有 clone 提供，保留候选工具的真实验收边界"
+    pass_condition: "原件哈希与 clone 必备路径通过；写作和交付路由无已知冲突；手机字号按显示宽度换算"
+    failure_signal: "新 clone 缺原件、旧参考覆盖执行配置、未经要求自动加载文风实验，或本地验收冒充公众号托管成功"
+    regression_check: "331 tests and 324 subtests passed, 1 skipped; 14 connection and 33 isolated Chrome checks passed"
+    evidence: "共享/运营/复盘/2026-09-07-工作流整理与打包.md"
+    review_on: "2026-09-14"
+  - id: "SOP-CHANGE-20260905-APPSO-VISUAL-QUALITY"
+    date: "2026-09-05"
+    change: "主理人采用图文实测的四步执行顺序，补齐原始配图的用途判断、完整取景和手机视觉检查"
+    source_cases: ["astra-cli-review/FB027", "astra-cli-review/FB028", "astra-cli-review/FB029"]
+    affected_sources: ["APPSO-数字资产/03-SOP/APPSO 内容生产 SOP.md"]
+    classification: "project_configuration"
+    evidence_level: "E0 owner-binding preference; one content case, no measured rework reduction"
+    trigger: "APPSO 图文实测的研究、选图、首稿交付与局部反馈；原始配图要求适用于 APPSO 图文稿"
+    action: "先定区别和新问题，研究同步选图，首稿交实际图文；逐图检查主体、上下文、关键文字、加载与正文用途"
+    pass_condition: "已有 brief 和 visual-notes 可指向入选理由与原图；首稿含真实图片和已选组件；修改落实到指定对象和交付载体"
+    failure_signal: "以下载或加载成功代替视觉判断、用无关案例补结尾、图像缺失或受遮挡、用户须反复说明同一修改"
+    scope: "APPSO 图文生产；普通改字不重启全流程，文字公告和效果展示按用途放行，不强制素材类型配额"
+    owner: "APPSO content adapter"
+    regression_check: "用旧标题条、完整文字公告、城市效果图和专访封面检查采用及拒绝条件；下一篇复核重复提醒、中心重做和载体问题"
+    validation:
+      - "逐张查看旧标题、城市图和最后四张素材，分析及反例见内容包 research/visual-quality-review.md"
+      - "无代码、依赖和模板 schema 变化；不以新工具替代编辑判断"
+      - "source-only 与 bundle-only 检查通过；台账 YAML 解析、变更 ID 唯一性、6 个素材链接和目标文件 diff 空白检查通过"
+    configured_rules: ["APPSO-VISUAL-REVIEW-FLOW-001", "APPSO-SOURCE-VISUAL-QUALITY-001"]
+    promoted_rules: []
+    next_review_on: "2026-09-12"
   - id: "SOP-CHANGE-20260721-001"
     date: "2026-07-21"
     change: "建立 content-retrospective skill、反馈模式台账、发布后 / 周 / 月复盘节奏与 GitHub 到期审计"
@@ -1306,3 +1339,105 @@ changes:
     promoted_rules:
       - "CORE-PORTABILITY-001 / CORE-CAPABILITY-BUNDLE-001 (expanded owner-binding E0 all-capability clone contract; account and host readiness remain local runtime inputs)"
     next_review_on: "2026-09-22"
+
+  - id: "SOP-CHANGE-20260825-001"
+    date: "2026-08-25"
+    change: "主理人否决 RSI 稿的统一深色科技图，并明确把微信公众号发布视觉固定为原图、笨拙涂鸦、信息图三条路线，每篇至少覆盖两类；同时要求 APPSO 信息图把登记 Logo 图片与完整 Markdown 设计规范真实送入 Image2。由此新增 manifest v3 路线合同、ready 多样性硬门、APPSO full-file Prompt profile 与回归测试"
+    source_cases:
+      - "hunt-good-2026-08-21:FB-006"
+      - "tibo-codex-recursive-self-improvement:FB-005"
+      - "user-feedback:2026-08-25-three-visual-routes-and-two-type-minimum"
+    affected_sources:
+      - "共享/运营/SOP/内容工作流.md"
+      - "共享/运营/SOP/Image2 生图工作流.md"
+      - ".agents/skills/self-media-ops/SKILL.md"
+      - ".agents/skills/self-media-ops/references/content-package.md"
+      - ".agents/skills/self-media-ops/scripts/preflight_image_generation.py"
+      - ".agents/skills/self-media-ops/scripts/validate_content_package.py"
+      - ".agents/skills/self-media-ops/tests/test_preflight_image_generation.py"
+      - ".agents/skills/self-media-ops/tests/test_validate_content_package.py"
+      - "共享/模板/微信公众号内容包/asset-manifest.yml"
+      - "共享/模板/微信公众号内容包/research/visual-notes.md"
+      - "共享/模板/生图计划/笨拙涂鸦直出计划模板.json"
+      - "APPSO-数字资产/03-SOP/APPSO 内容生产 SOP.md"
+      - "APPSO-数字资产/02-方法与知识/视觉与排版/APPSO 示意图设计速查.md"
+      - "APPSO-数字资产/04-模板/生图风格档案.json"
+      - "APPSO-数字资产/04-模板/APPSO 生图计划模板.json"
+      - "共享/运营/复盘/反馈模式台账.yml"
+      - "共享/运营/复盘/SOP 变更台账.yml"
+      - "微信公众号/内容/2026/08/tibo-codex-recursive-self-improvement/publish.yml"
+      - "微信公众号/内容/2026/08/tibo-codex-recursive-self-improvement/asset-manifest.yml"
+      - "微信公众号/内容/2026/08/tibo-codex-recursive-self-improvement/research/visual-plan.md"
+      - "微信公众号/内容/2026/08/tibo-codex-recursive-self-improvement/retrospective.md"
+    classification: "owner_binding_wechat_three_route_visual_contract"
+    validation:
+      - "内容包 validator 回归 79 项通过；覆盖 v3 单路线 ready 阻断、draft warning、两路线放行、原图 AI 重画阻断、APPSO 信息图缺 Image2 profile／Logo 阻断与第四路线阻断"
+      - "Image2 preflight 回归 20 项通过；full-file Prompt 保留原文并与 registered reference 一同生成 referenced_image_paths 请求；project_visual_route 不能选择无关 profile"
+      - "当前 RSI 包实跑校验为 markdown_images=10、warnings=13：10 张发布图均缺 visual_route，2 个 AI receipt 仍为 generic adapter，并单独报告全篇不足两类；因此旧视觉不能静默进入 ready"
+    promoted_rules:
+      - "PROJECT-WECHAT-VISUAL-ROUTES-001 (owner-binding E0 three-route and two-type-minimum configuration; effectiveness unverified)"
+    next_review_on: "2026-09-25"
+  - id: "SOP-CHANGE-20260905-SCROLL-CANDIDATE"
+    date: "2026-09-05"
+    change: "公众号长图排版主动评估既有纵向滑动框，保留普通图片和动态媒体的展示方式"
+    source_cases:
+      - "astra-cli-review/FB016"
+    affected_sources:
+      - ".agents/skills/self-media-ops/references/wechat-publishing.md"
+    classification: "project_configuration"
+    evidence_level: "E0 owner-binding preference; no general effectiveness claim"
+    trigger: "长网页、长对话或连续步骤截图进入公众号排版"
+    action: "在 visual-notes 记录是否采用及理由；交接使用既有 scroll-handoff，不新建转换器"
+    pass_condition: "长图有明确处理记录；采用时沿用用途、权利、平台与公众号后台验收合同"
+    failure_signal: "未经评估铺满多屏；把普通横图或 GIF 强制转为静态滑动框；把滑动框当压缩手段"
+    scope: "微信公众号；不保证飞书兼容，不改变外部写入授权"
+    owner: "微信公众号发布适配器"
+    validation:
+      - "5 个既有 scroll_handoff 单元回归通过，未改工具或测试"
+      - "本篇月屿整页列为候选但因已有 GIF 与沉浸图暂不采用；唱片店首屏与小妖 GIF 保留直接展示"
+      - "公众号真实保存重开仍待首次正式使用验证"
+    promoted_rules: []
+    configured_rules:
+      - "PROJECT-WECHAT-VERTICAL-SCROLL-HANDOFF-001"
+    next_review_on: "2026-09-12"
+  - id: "SOP-CHANGE-20260905-SCROLL-HEIGHT-COPY"
+    date: "2026-09-05"
+    change: "将作者确认可用的滑动组件结构与可调高度纳入现有发布工具"
+    source_cases: ["astra-cli-review/FB033", "astra-cli-review/FB034", "astra-cli-review/FB035"]
+    classification: "project_configuration"
+    evidence_level: "E0 作者要求固化；本地浏览器检查；公众号可滑为作者反馈"
+    affected_sources:
+      - ".agents/skills/self-media-ops/references/wechat-publishing.md"
+      - "微信公众号/tools/wechat_publish.py"
+    action: "使用普通块布局和显式滚动高度；--height 按手机显示调整；完整组件直接复制到公众号"
+    pass_condition: "原图加载、窗口够高且有滚动距离、复制载荷包含内联图片与样式、所选高度进入回执"
+    failure_signal: "只复制图片、经飞书丢失交互、窗口过矮、对所有图片强用同一高度"
+    scope: "公众号纵向长图；正式交接的状态、权利、资源与外部写入门禁保持"
+    validation:
+      - "81 项发布适配器测试通过；自定义高度、非法高度和既有门禁覆盖"
+      - "375 / 390 px 下 260 px 窗口可滚动，复制 HTML 重解析仍可滚动，虚假复制成功被拒绝"
+      - "source-only 与 bundle-only 通过；本轮未做冷克隆"
+      - "公众号保存重开及手机端完整验收仍待记录，不用本地结果代替"
+    configured_rules: ["PROJECT-WECHAT-VERTICAL-SCROLL-HANDOFF-001"]
+    promoted_rules: []
+    next_review_on: "2026-09-12"
+  - id: "SOP-CHANGE-20260905-VISUAL-DELIVERY"
+    date: "2026-09-05"
+    change: "长图组件在 HTML 实际显示并滚动验收；测评信息图分清证据来源并插入对应正文"
+    source_cases: ["astra-cli-review/FB017", "astra-cli-review/FB018"]
+    affected_sources:
+      - ".agents/skills/self-media-ops/references/wechat-publishing.md"
+      - "微信公众号/tools/wechat_publish.py"
+      - "APPSO-数字资产/02-方法与知识/视觉与排版/APPSO 示意图设计速查.md"
+    classification: "project_configuration"
+    evidence_level: "E0 owner-binding preference; actual local browser verification"
+    action: "延用既有预览工具与完整 Image2 规范；来源图邻近案例，信息图标明厂商、机构、自测和作者判断"
+    pass_condition: "实际 HTML 能滚动、图片加载且手机可读；图内数字与来源一致；缺失项保留"
+    failure_signal: "仅记录素材但正文无图；假滑动提示；把重绘作品冒充实测；不同榜单合成总排名"
+    scope: "公众号本地预览与 APPSO 信息图；不改变发布授权与权利门禁"
+    validation:
+      - "80 项发布工具回归通过；source-only 与 bundle-only 合同检查通过"
+      - "25 张正文图在 375 / 390 px 全部加载；6 张 GIF 保留；长图键盘滚动与画面变化通过"
+      - "两张最终信息图经完整规范与 Logo preflight，数据逐字核对"
+    promoted_rules: []
+    next_review_on: "2026-09-12"

@@ -19,6 +19,29 @@ try {
         throw 'Cannot enumerate Git candidate files.'
     }
 
+    # Explicit owner-approved workflow sources, kept byte-for-byte in this private repo.
+    # All other source assets remain outside the boundary. Credential checks still apply.
+    $approvedSources = @{}
+    $sourceManifest = Join-Path $workspaceRoot 'tools/workflow-source-assets.json'
+    if (Test-Path -LiteralPath $sourceManifest -PathType Leaf) {
+        $sourceConfig = Get-Content -LiteralPath $sourceManifest -Raw -Encoding UTF8 | ConvertFrom-Json
+        foreach ($asset in $sourceConfig.assets) {
+            $sourcePath = [string]$asset.path
+            $resolvedSource = [IO.Path]::GetFullPath((Join-Path $workspaceRoot $sourcePath))
+            if (-not $resolvedSource.StartsWith($workspaceRoot + [IO.Path]::DirectorySeparatorChar, [StringComparison]::OrdinalIgnoreCase)) {
+                throw 'Workflow source path escapes workspace.'
+            }
+            if (-not (Test-Path -LiteralPath $resolvedSource -PathType Leaf)) {
+                throw "Missing approved workflow source: $sourcePath"
+            }
+            $actualHash = (Get-FileHash -LiteralPath $resolvedSource -Algorithm SHA256).Hash
+            if ($actualHash -ne $asset.sha256) {
+                throw "Workflow source hash mismatch: $sourcePath"
+            }
+            $approvedSources[$sourcePath] = $true
+        }
+    }
+
     # Keep this script ASCII-only so Windows PowerShell 5 can parse it without a BOM.
     # .NET regular expressions decode the \u sequences when matching Unicode paths.
     $blockedPatterns = @(
@@ -42,6 +65,9 @@ try {
         $normalizedPath = $path -replace '\\', '/'
         foreach ($pattern in $blockedPatterns) {
             if ($normalizedPath -match $pattern) {
+                if ($pattern.StartsWith('^APPSO-') -and $approvedSources.ContainsKey($normalizedPath)) {
+                    continue
+                }
                 $path
                 break
             }
