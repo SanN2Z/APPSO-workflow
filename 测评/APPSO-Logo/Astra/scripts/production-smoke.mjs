@@ -1,0 +1,15 @@
+import { chromium } from '@playwright/test';
+const browser=await chromium.launch({channel:'msedge',headless:true});
+const page=await browser.newPage({viewport:{width:1440,height:900}});
+const errors=[];
+page.on('pageerror',error=>errors.push(error.message));
+page.on('response',r=>{if(r.status()>=400)errors.push(`${r.status()} ${r.url()}`);});
+await page.goto('http://127.0.0.1:4174/');
+await page.waitForFunction(()=>window.__APPSO__);
+await page.locator('#start').click();
+await page.keyboard.down('w');await page.waitForTimeout(200);await page.keyboard.up('w');
+const state=await page.evaluate(()=>window.__APPSO__.snapshot());
+const logo=await page.locator('.brand img').evaluate(img=>img.complete&&img.naturalWidth===1978);
+if(errors.length||!logo||state.ball.z>=1.27)throw new Error(JSON.stringify({errors,logo,state}));
+console.log(JSON.stringify({production:'passed',logoLoaded:logo,keyboardMovement:true,errors}));
+await browser.close();

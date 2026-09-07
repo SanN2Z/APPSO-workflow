@@ -1,0 +1,37 @@
+project: APPSO Logo 乐园
+purpose: 当前任务授权的本地品牌创意游戏测试
+publication: not_published
+assets:
+  - id: source-logo
+    file: appso-logo.png
+    source: 用户随 PROMPT.md 提供
+    owner: APPSO 品牌权利人
+    sha256: 8160db79fc8cafdd864312b32bb6b01ee4d720187bc4acc6a875e273eecd04ff
+    modifications: 无，原始文件保持不变
+    allowed_platforms: [local_browser, internal_review]
+    rights_status: 当前任务明确授权本地品牌创意测试；未授权对外发布
+    ai_generated: false
+  - id: traced-geometry
+    file: src/logo-contours.json
+    source: source-logo
+    owner: 原 Logo 权利归 APPSO；衍生建模为本任务制作
+    modifications: 白色像素阈值分割、轮廓简化、保留孔洞；运行时挤出和倒角
+    allowed_platforms: [local_browser, internal_review]
+    rights_status: current_task_local_derivative
+    ai_generated: false
+    production: 代码辅助建模；非 AI 生成图片
+  - id: browser-captures
+    files:
+      - artifacts/01-flat-logo.png
+      - artifacts/02-opening.png
+      - artifacts/03-gameplay.png
+      - artifacts/04-completion.png
+      - artifacts/05-mobile.png
+      - artifacts/06-keyboard-completion.png
+    source: 本地 Three.js 实时渲染，经 Playwright 截图
+    owner: 原 Logo 权利归 APPSO；场景为本任务制作
+    modifications: 无后期拼贴；测试时改变正常游戏状态与视口
+    allowed_platforms: [local_browser, internal_review]
+    rights_status: current_task_local_derivative
+    ai_generated: false
+    production: AI 辅助编程产生的游戏实屏；不代表官方产品截图

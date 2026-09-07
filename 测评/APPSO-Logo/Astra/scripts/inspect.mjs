@@ -1,0 +1,16 @@
+import { chromium } from '@playwright/test';
+const browser=await chromium.launch({channel:'msedge',headless:true,args:['--enable-webgl','--ignore-gpu-blocklist']});
+const page=await browser.newPage({viewport:{width:1440,height:1000},deviceScaleFactor:1});
+page.on('pageerror',e=>console.log('PAGE ERROR:',e.message));
+page.on('console',msg=>{if(msg.type()==='error')console.log('CONSOLE:',msg.text());});
+await page.goto('http://127.0.0.1:5174/?test=1');
+await page.waitForFunction(()=>window.__APPSO__);
+await page.waitForTimeout(350);
+await page.screenshot({path:'artifacts/01-flat-logo.png'});
+await page.waitForTimeout(5200);
+await page.screenshot({path:'artifacts/02-opening.png'});
+await page.locator('#start').click();
+await page.waitForTimeout(1000);
+await page.screenshot({path:'artifacts/03-gameplay.png'});
+console.log(await page.evaluate(()=>window.__APPSO__.snapshot()));
+await browser.close();

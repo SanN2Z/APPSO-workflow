@@ -1,0 +1,20 @@
+{
+  "name": "appso-logo-playground",
+  "version": "1.0.0",
+  "description": "APPSO Logo 乐园 — a playable 3D marble playground",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "vite build",
+    "preview": "vite preview --host 127.0.0.1",
+    "test": "playwright test"
+  },
+  "keywords": [],
+  "author": "",
+  "type": "module",
+  "dependencies": {
+    "@playwright/test": "^1.63.0",
+    "three": "^0.185.1",
+    "vite": "^8.2.2"
+  },
+  "private": true
+}

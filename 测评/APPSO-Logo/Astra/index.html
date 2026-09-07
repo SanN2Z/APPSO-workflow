@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f4f3ef" />
+    <meta name="description" content="让 APPSO 的一颗小圆点，滚过一整座灵感乐园。" />
+    <title>APPSO Logo 乐园 · Play Lab</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%23F72F2F'/%3E%3Ccircle cx='20' cy='20' r='9' fill='white'/%3E%3C/svg%3E" />
+  </head>
+  <body>
+    <div id="app">
+      <header class="header">
+        <a class="brand" href="./" aria-label="APPSO Logo 乐园首页"><img src="./appso-logo.png" alt="APPSO" /><span class="brand-divider"></span><span>PLAY LAB<span class="brand-sub">把好奇心，变成游乐场</span></span></a>
+        <div class="toolbar">
+          <span class="edition">EXPERIMENT <b>001</b></span>
+          <button id="sound" class="icon-button" aria-label="静音" title="静音 · M"></button>
+          <button id="pause" class="icon-button" aria-label="暂停" title="暂停 · Esc"></button>
+          <button id="restart" class="icon-button" aria-label="重新开始" title="重新开始 · R"></button>
+        </div>
+      </header>
+      <main>
+        <section class="intro-copy">
+          <div><div class="eyebrow"><span class="red-dot"></span> A LITTLE DOT. A BIG ADVENTURE.</div><h1>让灵感，<span>滚起来。</span></h1><p>从一个小圆点出发，玩进 APPSO 的字里行间。</p></div>
+          <div class="mission"><span class="mission-label">你的任务 / THE MISSION</span><p>穿过 A · P · P · S<br />把小白球送进 <span class="goal-letter">O</span></p><span class="mission-note">一座 Logo，五段小冒险。</span></div>
+        </section>
+        <div id="stage" aria-label="APPSO 立体滚球关卡"><div id="loading">正在把 Logo 变成乐园<span>BUILDING YOUR PLAYGROUND</span></div></div>
+        <div class="stage-topline"><span class="live-label"><i></i><span id="scene-label">LOGO → PLAYGROUND</span></span><button id="view" class="text-button" title="切换俯视 / 立体 · V">↗ 俯视全景</button></div>
+        <div id="ball-label" class="ball-label">就是这颗小圆点<span>↓</span></div>
+        <div class="stage-caption"><span>01 — APPSO LOGO 乐园</span><span>DESIGNED TO BE PLAYED.</span></div>
+        <section class="play-panel">
+          <div class="play-state"><span class="status-orb"></span><div><strong id="status-title">小圆点，准备出发</strong><span id="status-detail">白色是道路，红色是地面。沿着圆点走。</span></div></div>
+          <button id="start" class="primary-button"><span>开始冒险</span><span class="button-arrow">↗</span></button>
+          <div id="progress" class="progress" hidden><div class="stages"><span data-stage="0">A</span><i></i><span data-stage="1">P</span><i></i><span data-stage="2">P</span><i></i><span data-stage="3">S</span><i></i><span data-stage="4">O</span></div><div class="run-stats"><span id="timer">00:00</span><span id="falls">0 次掉落</span></div></div>
+        </section>
+        <footer class="footer"><div class="controls"><span class="key-cluster"><kbd>W</kbd><span><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd></span></span><span>或方向键移动</span><span class="control-divider"></span><kbd class="wide-key">SPACE</kbd><span>刹车，慢一点也很好</span></div><span class="footnote">APPSO 品牌创意实验<span> · </span>非官方 Logo 改版</span></footer>
+      </main>
+      <div id="toast" role="status" aria-live="polite"></div>
+      <div id="pause-overlay" class="overlay" hidden><div class="modal"><div class="eyebrow">TAKE A LITTLE BREAK</div><h2>灵感，暂停一下。</h2><p>小圆点会在这里等你。</p><button id="resume" class="primary-button">继续冒险 <span>↗</span></button><button id="pause-restart" class="text-button">重新开始这一局</button></div></div>
+      <div id="win-card" hidden><span class="eyebrow">ALL THE WAY TO O.</span><h2>灵感，圆满抵达。</h2><p id="win-stats"></p><button id="again" class="primary-button">再滚一次 <span>↗</span></button></div>
+      <div class="touch-controls" aria-label="触屏方向控制"><button data-key="ArrowUp" aria-label="向上">↑</button><div><button data-key="ArrowLeft" aria-label="向左">←</button><button data-key="Space" aria-label="刹车">●</button><button data-key="ArrowRight" aria-label="向右">→</button></div><button data-key="ArrowDown" aria-label="向下">↓</button></div>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
