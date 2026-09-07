@@ -1,0 +1,44 @@
+{
+  "assets": [
+    {
+      "file": "assets/infographic-001-image2.png",
+      "width": 1086,
+      "height": 1448,
+      "bytes": 892195,
+      "sha256": "fe936d80abff60c19a3b22e8557eb75a461bcfe2c67da4cd2e436cb7fb2d0fb9",
+      "preflight_receipt": "research/image-generation-runs/infographic-001-final-preflight.json"
+    },
+    {
+      "file": "assets/infographic-002-image2.png",
+      "width": 1024,
+      "height": 1536,
+      "bytes": 1399379,
+      "sha256": "ec598de0b9b72b141e73234ce603129a340a1a2766b511a980595bb7b4efedec",
+      "preflight_receipt": "research/image-generation-runs/infographic-002-final-preflight.json"
+    },
+    {
+      "file": "assets/infographic-003-image2.png",
+      "width": 1086,
+      "height": 1448,
+      "bytes": 856219,
+      "sha256": "66a6bf7e3877fb8c47c37f8b5ebde4e3727f6377a6cd3e6fd153634b3b438c3d",
+      "preflight_receipt": "research/image-generation-runs/infographic-003-final-preflight.json"
+    },
+    {
+      "file": "assets/infographic-004-image2.png",
+      "width": 1086,
+      "height": 1448,
+      "bytes": 1297815,
+      "sha256": "af2d2aea1c04239958aeae74e80cfd63625205fc51e291954c1754b5f720e787",
+      "preflight_receipt": "research/image-generation-runs/infographic-004-final-preflight.json",
+      "review": "12 个数字、5 行百分号、末行指数单位、6 项名称版本、模型列顺序、日期与来源逐项视觉核对通过；前四行 Astra 标红，末两行 Fable 标红。"
+    }
+  ],
+  "review": "逐字检查通过；实测图未将画面偏好写成综合排名；机构图的 67/70、测试环境和自测标签与原文一致。",
+  "rejected_first_draft": "第一版含非实测作品示意，未用于正文；改为文字比较。",
+  "original_rules_match_user_file": true,
+  "superseded_assets": [
+    "assets/infographic-001-image2.png"
+  ],
+  "latest_correction": "FB021：将正文六项跑分表替换为 APPSO 信息图；保留 AA 原图；结尾两段合并。"
+}

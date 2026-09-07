@@ -1,0 +1,408 @@
+[
+  {
+    "name": "berman-fallguys",
+    "id": "2095616764793270705",
+    "author": "MatthewBerman",
+    "text": "We're now in a world of prompt-to-playable games. \n\nI didn't think this would happen so soon. This game took 2 prompts and is actually fun the play. \n\nFall guys clone. https://t.co/zmnJyoAe7Q",
+    "created_at": "2026-09-03T20:55:46.000Z",
+    "source_url": "https://x.com/MatthewBerman/status/2095616764793270705",
+    "accessed_at": "2026-09-05T03:58:28.791844+00:00",
+    "mediaDetails": [
+      {
+        "additional_media_info": {},
+        "display_url": "pic.x.com/zmnJyoAe7Q",
+        "expanded_url": "https://x.com/MatthewBerman/status/2095616764793270705/video/1",
+        "ext_media_availability": {
+          "status": "Available"
+        },
+        "indices": [
+          168,
+          191
+        ],
+        "media_url_https": "https://pbs.twimg.com/amplify_video_thumb/2095616562510417920/img/fOyuziX_0CBo7biZ.jpg",
+        "original_info": {
+          "focus_rects": [],
+          "height": 2362,
+          "width": 3290
+        },
+        "sizes": {
+          "large": {
+            "h": 1470,
+            "resize": "fit",
+            "w": 2048
+          },
+          "medium": {
+            "h": 862,
+            "resize": "fit",
+            "w": 1200
+          },
+          "small": {
+            "h": 488,
+            "resize": "fit",
+            "w": 680
+          },
+          "thumb": {
+            "h": 150,
+            "resize": "crop",
+            "w": 150
+          }
+        },
+        "type": "video",
+        "url": "https://t.co/zmnJyoAe7Q",
+        "video_info": {
+          "aspect_ratio": [
+            1645,
+            1181
+          ],
+          "duration_millis": 44080,
+          "variants": [
+            {
+              "content_type": "application/x-mpegURL",
+              "url": "https://video.twimg.com/amplify_video/2095616562510417920/pl/X1IO_8FCsMpiXsHV.m3u8"
+            },
+            {
+              "bitrate": 256000,
+              "content_type": "video/mp4",
+              "url": "https://video.twimg.com/amplify_video/2095616562510417920/vid/avc1/376x270/NGVZ-oFIXRVGJHCK.mp4"
+            },
+            {
+              "bitrate": 832000,
+              "content_type": "video/mp4",
+              "url": "https://video.twimg.com/amplify_video/2095616562510417920/vid/avc1/500x360/Lk13G5B44DMpXZec.mp4"
+            },
+            {
+              "bitrate": 2176000,
+              "content_type": "video/mp4",
+              "url": "https://video.twimg.com/amplify_video/2095616562510417920/vid/avc1/1002x720/xqMleuU6s2a_CK_X.mp4"
+            },
+            {
+              "bitrate": 10368000,
+              "content_type": "video/mp4",
+              "url": "https://video.twimg.com/amplify_video/2095616562510417920/vid/avc1/1504x1080/WynIrdpBgL8PVkVQ.mp4"
+            },
+            {
+              "bitrate": 25128000,
+              "content_type": "video/mp4",
+              "url": "https://video.twimg.com/amplify_video/2095616562510417920/vid/avc1/3008x2160/b7Qaxz8T4il_02Fw.mp4"
+            }
+          ]
+        }
+      }
+    ],
+    "file": "assets/external/berman-fallguys.jpg",
+    "download_url": "https://pbs.twimg.com/amplify_video_thumb/2095616562510417920/img/fOyuziX_0CBo7biZ.jpg",
+    "sha256": "af24b5ad097012ba6abda814418f46db7069208bd32699eb84f3765004059826"
+  },
+  {
+    "name": "berman-city",
+    "id": "2095595893991129444",
+    "author": "MatthewBerman",
+    "text": "Full Sim City Clone\n\nI used /goal for this and it ran for 5 days straight and still wasn't done by the time I shipped this demo. https://t.co/JTOjmJIR8b",
+    "created_at": "2026-09-03T19:32:50.000Z",
+    "source_url": "https://x.com/MatthewBerman/status/2095595893991129444",
+    "accessed_at": "2026-09-05T03:58:28.451345+00:00",
+    "mediaDetails": [
+      {
+        "additional_media_info": {},
+        "display_url": "pic.x.com/JTOjmJIR8b",
+        "expanded_url": "https://x.com/MatthewBerman/status/2095595893991129444/video/1",
+        "ext_media_availability": {
+          "status": "Available"
+        },
+        "indices": [
+          129,
+          152
+        ],
+        "media_url_https": "https://pbs.twimg.com/amplify_video_thumb/2095561367151579136/img/PXLY6nm0_sQsEn6U.jpg",
+        "original_info": {
+          "focus_rects": [],
+          "height": 2362,
+          "width": 3290
+        },
+        "sizes": {
+          "large": {
+            "h": 1470,
+            "resize": "fit",
+            "w": 2048
+          },
+          "medium": {
+            "h": 862,
+            "resize": "fit",
+            "w": 1200
+          },
+          "small": {
+            "h": 488,
+            "resize": "fit",
+            "w": 680
+          },
+          "thumb": {
+            "h": 150,
+            "resize": "crop",
+            "w": 150
+          }
+        },
+        "type": "video",
+        "url": "https://t.co/JTOjmJIR8b",
+        "video_info": {
+          "aspect_ratio": [
+            1645,
+            1181
+          ],
+          "duration_millis": 71246,
+          "variants": [
+            {
+              "content_type": "application/x-mpegURL",
+              "url": "https://video.twimg.com/amplify_video/2095561367151579136/pl/5vFCPEo88b7f0x3H.m3u8"
+            },
+            {
+              "bitrate": 256000,
+              "content_type": "video/mp4",
+              "url": "https://video.twimg.com/amplify_video/2095561367151579136/vid/avc1/376x270/fgvGDgpZdxskHh1c.mp4"
+            },
+            {
+              "bitrate": 832000,
+              "content_type": "video/mp4",
+              "url": "https://video.twimg.com/amplify_video/2095561367151579136/vid/avc1/500x360/TQRyJ8Q6u1Ga1ERV.mp4"
+            },
+            {
+              "bitrate": 2176000,
+              "content_type": "video/mp4",
+              "url": "https://video.twimg.com/amplify_video/2095561367151579136/vid/avc1/1002x720/EI-YtCB9-G_62l9t.mp4"
+            },
+            {
+              "bitrate": 10368000,
+              "content_type": "video/mp4",
+              "url": "https://video.twimg.com/amplify_video/2095561367151579136/vid/avc1/1504x1080/KtsQ0S7kr6nOxj-U.mp4"
+            },
+            {
+              "bitrate": 25128000,
+              "content_type": "video/mp4",
+              "url": "https://video.twimg.com/amplify_video/2095561367151579136/vid/avc1/3008x2160/V8DGm79sw7SYCugg.mp4"
+            }
+          ]
+        }
+      }
+    ],
+    "file": "assets/external/berman-city.jpg",
+    "download_url": "https://pbs.twimg.com/amplify_video_thumb/2095561367151579136/img/PXLY6nm0_sQsEn6U.jpg",
+    "sha256": "620c97f52b910d73f1d6c66c74bd4fc4f73a568c86d973e1add8c4230393332d"
+  },
+  {
+    "name": "claire-toy-computer",
+    "id": "2095625355231142079",
+    "author": "clairevo",
+    "text": "BREAKING: \n\nGPT-6 Astra absolutely crushes Tiny Computer Bench™️, by finally hacking in to this dumb little toy computer I bought off Amazon https://t.co/yelbHGqwAE",
+    "created_at": "2026-09-03T21:29:54.000Z",
+    "source_url": "https://x.com/clairevo/status/2095625355231142079",
+    "accessed_at": "2026-09-05T03:58:27.753883+00:00",
+    "mediaDetails": [
+      {
+        "additional_media_info": {},
+        "display_url": "pic.x.com/yelbHGqwAE",
+        "expanded_url": "https://x.com/clairevo/status/2095625355231142079/video/1",
+        "ext_media_availability": {
+          "status": "Available"
+        },
+        "indices": [
+          141,
+          164
+        ],
+        "media_url_https": "https://pbs.twimg.com/amplify_video_thumb/2095624765327458304/img/QeMFNEvrvTVg633i.jpg",
+        "original_info": {
+          "focus_rects": [],
+          "height": 1080,
+          "width": 1620
+        },
+        "sizes": {
+          "large": {
+            "h": 1080,
+            "resize": "fit",
+            "w": 1620
+          },
+          "medium": {
+            "h": 800,
+            "resize": "fit",
+            "w": 1200
+          },
+          "small": {
+            "h": 453,
+            "resize": "fit",
+            "w": 680
+          },
+          "thumb": {
+            "h": 150,
+            "resize": "crop",
+            "w": 150
+          }
+        },
+        "type": "video",
+        "url": "https://t.co/yelbHGqwAE",
+        "video_info": {
+          "aspect_ratio": [
+            3,
+            2
+          ],
+          "duration_millis": 52400,
+          "variants": [
+            {
+              "content_type": "application/x-mpegURL",
+              "url": "https://video.twimg.com/amplify_video/2095624765327458304/pl/UExViIKmUkbZQ3Ip.m3u8"
+            },
+            {
+              "bitrate": 256000,
+              "content_type": "video/mp4",
+              "url": "https://video.twimg.com/amplify_video/2095624765327458304/vid/avc1/404x270/UTq_mLd9dbgAbvjs.mp4"
+            },
+            {
+              "bitrate": 832000,
+              "content_type": "video/mp4",
+              "url": "https://video.twimg.com/amplify_video/2095624765327458304/vid/avc1/540x360/YktnZMJmgqVl-r8N.mp4"
+            },
+            {
+              "bitrate": 2176000,
+              "content_type": "video/mp4",
+              "url": "https://video.twimg.com/amplify_video/2095624765327458304/vid/avc1/1080x720/uzzJdKcASIuVx7CH.mp4"
+            },
+            {
+              "bitrate": 10368000,
+              "content_type": "video/mp4",
+              "url": "https://video.twimg.com/amplify_video/2095624765327458304/vid/avc1/1620x1080/yB-h3t7Hae_Aelox.mp4"
+            }
+          ]
+        }
+      }
+    ],
+    "file": "assets/external/claire-toy-computer.jpg",
+    "download_url": "https://pbs.twimg.com/amplify_video_thumb/2095624765327458304/img/QeMFNEvrvTVg633i.jpg",
+    "sha256": "238ecbf6edf7c5785db62f645e6970aa3840d8773ae6c9d50eeebc3e2fd74c5b",
+    "video_download": {
+      "url": "https://video.twimg.com/amplify_video/2095624765327458304/vid/avc1/540x360/YktnZMJmgqVl-r8N.mp4",
+      "file": "research/source-assets/claire-toy.mp4",
+      "duration": 52.453878,
+      "sha256": "4538fccc0e0153a47e40fbf468373d853470751c321301ef2e6ac667653ecd5d"
+    }
+  },
+  {
+    "name": "riley-shooter",
+    "id": "2095679352927056230",
+    "author": "rileybrown",
+    "text": "I’m in disbelief right now. 12 months ago I remember making flappy bird with AI in 2-3 prompts and being blown away. \n\nNow it can make a call of duty game. One that’s actually fun… I played for like 2 hours today and in between matches I would have GPT 6 make changes…\n\nI https://t.co/PdF8VGph9R",
+    "created_at": "2026-09-04T01:04:28.000Z",
+    "source_url": "https://x.com/rileybrown/status/2095679352927056230",
+    "accessed_at": "2026-09-05T03:58:27.861652+00:00",
+    "mediaDetails": [
+      {
+        "additional_media_info": {},
+        "display_url": "pic.x.com/PdF8VGph9R",
+        "expanded_url": "https://x.com/rileybrown/status/2095679352927056230/video/1",
+        "ext_media_availability": {
+          "status": "Available"
+        },
+        "indices": [
+          272,
+          295
+        ],
+        "media_url_https": "https://pbs.twimg.com/amplify_video_thumb/2095679099880534020/img/sFCSmH0sYt0lIF0B.jpg",
+        "original_info": {
+          "focus_rects": [],
+          "height": 1080,
+          "width": 1920
+        },
+        "sizes": {
+          "large": {
+            "h": 1080,
+            "resize": "fit",
+            "w": 1920
+          },
+          "medium": {
+            "h": 675,
+            "resize": "fit",
+            "w": 1200
+          },
+          "small": {
+            "h": 383,
+            "resize": "fit",
+            "w": 680
+          },
+          "thumb": {
+            "h": 150,
+            "resize": "crop",
+            "w": 150
+          }
+        },
+        "type": "video",
+        "url": "https://t.co/PdF8VGph9R",
+        "video_info": {
+          "aspect_ratio": [
+            16,
+            9
+          ],
+          "duration_millis": 271904,
+          "variants": [
+            {
+              "content_type": "application/x-mpegURL",
+              "url": "https://video.twimg.com/amplify_video/2095679099880534020/pl/QB4gVBevdUTtq1Uy.m3u8?v=a9d"
+            },
+            {
+              "bitrate": 256000,
+              "content_type": "video/mp4",
+              "url": "https://video.twimg.com/amplify_video/2095679099880534020/vid/avc1/480x270/IlsteIHeyV4fg0-i.mp4"
+            },
+            {
+              "bitrate": 832000,
+              "content_type": "video/mp4",
+              "url": "https://video.twimg.com/amplify_video/2095679099880534020/vid/avc1/640x360/3RlRvJk7C4qE9JnH.mp4"
+            },
+            {
+              "bitrate": 2176000,
+              "content_type": "video/mp4",
+              "url": "https://video.twimg.com/amplify_video/2095679099880534020/vid/avc1/1280x720/AL5POShnS7orxyNS.mp4"
+            },
+            {
+              "bitrate": 10368000,
+              "content_type": "video/mp4",
+              "url": "https://video.twimg.com/amplify_video/2095679099880534020/vid/avc1/1920x1080/W0TXDvFcVu5AbHiB.mp4"
+            }
+          ]
+        }
+      }
+    ],
+    "file": "assets/external/riley-shooter.jpg",
+    "download_url": "https://pbs.twimg.com/amplify_video_thumb/2095679099880534020/img/sFCSmH0sYt0lIF0B.jpg",
+    "sha256": "0450c02ff2da2a4c2f9cd5a71d34a1ee536257fce10a7346de005da83a1a07d1"
+  },
+  {
+    "name": "anthropic-game-solo",
+    "file": "assets/external/anthropic-game-solo.png",
+    "download_url": "https://www-cdn.anthropic.com/images/4zrzovbb/website/23c98f1d7ae720bfb39190d50e0706c03b177ad8-1999x1320.png",
+    "source_url": "https://www.anthropic.com/engineering/harness-design-long-running-apps",
+    "sha256": "af0bf36f28addf63558ad7e2c0655d315d45c45966afdf1c950eee241abf5e84",
+    "author": "Anthropic",
+    "accessed_at": "2026-09-05T03:58:32.753617+00:00"
+  },
+  {
+    "name": "anthropic-game-iterated",
+    "file": "assets/external/anthropic-game-iterated.png",
+    "download_url": "https://www-cdn.anthropic.com/images/4zrzovbb/website/a8bef95425966495629095a5cb38bde4a8b13558-1999x997.png",
+    "source_url": "https://www.anthropic.com/engineering/harness-design-long-running-apps",
+    "sha256": "5011c2337e2d014cbcdbf194614a28558fb61011fed4c4c880fb9f3e8db8094f",
+    "author": "Anthropic",
+    "accessed_at": "2026-09-05T03:58:34.612606+00:00"
+  },
+  {
+    "name": "anthropic-game-solo-play",
+    "file": "assets/external/anthropic-game-solo-play.png",
+    "download_url": "https://www-cdn.anthropic.com/images/4zrzovbb/website/79217dbfce3f31172eb7fd4deee5449023c9b2ac-1999x757.png",
+    "source_url": "https://www.anthropic.com/engineering/harness-design-long-running-apps",
+    "author": "Anthropic",
+    "sha256": "9b2134e8cd67d27466d4b95dcc675f1c5491a16ef31434546fd5fab9f60d934d"
+  },
+  {
+    "name": "anthropic-game-full-play",
+    "file": "assets/external/anthropic-game-full-play.png",
+    "download_url": "https://www-cdn.anthropic.com/images/4zrzovbb/website/f2953550e51957a0a49a3792a0df3bcfed0fde48-1994x1654.png",
+    "source_url": "https://www.anthropic.com/engineering/harness-design-long-running-apps",
+    "author": "Anthropic",
+    "sha256": "29ca7d7c4764ea81772b0a6fcece6038182eb80751adf8b2a2d17857faaa9e25"
+  }
+]

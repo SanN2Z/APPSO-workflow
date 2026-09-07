@@ -1,0 +1,76 @@
+[
+  {
+    "file": "assets/external/agi-time-interview.jpg",
+    "title": "TIME 对 Greg Brockman 的 AGI 专访封面",
+    "source_url": "https://www.youtube.com/watch?v=dnSpKF5pWNQ",
+    "creator_or_rightsholder": "TIME",
+    "notes": "采访官方封面原图，未经改动；不冒充发布会现场或本次 AGI 发言发生时的画面。",
+    "used_in_draft": true,
+    "width": 1280,
+    "height": 720,
+    "bytes": 104302,
+    "sha256": "7e8dfcc6022a68a839be5807120f078947d9f9b4af63cc61a9c58c78265e471b",
+    "accessed_at": "2026-09-05T07:21:38.159378+00:00",
+    "source_metadata": {
+      "title": "How Close Are We to True Artificial General Intelligence? | OpenAI’s Greg Brockman Speaks to TIME",
+      "author_name": "TIME",
+      "author_url": "https://www.youtube.com/@TIME",
+      "type": "video",
+      "height": 113,
+      "width": 200,
+      "version": "1.0",
+      "provider_name": "YouTube",
+      "provider_url": "https://www.youtube.com/",
+      "thumbnail_height": 360,
+      "thumbnail_width": 480,
+      "thumbnail_url": "https://i.ytimg.com/vi/dnSpKF5pWNQ/hqdefault.jpg",
+      "html": "<iframe width=\"200\" height=\"113\" src=\"https://www.youtube.com/embed/dnSpKF5pWNQ?feature=oembed\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen title=\"How Close Are We to True Artificial General Intelligence? | OpenAI’s Greg Brockman Speaks to TIME\"></iframe>"
+    }
+  },
+  {
+    "file": "assets/external/agi-fable-official-page.png",
+    "title": "Anthropic 发布专题首页",
+    "source_url": "https://www.anthropic.com/claude-fable-and-mythos-5-1",
+    "creator_or_rightsholder": "Anthropic",
+    "notes": "官网原生首页截图，含导航、标题、天空与月亮，以及 Made with Fable 5.1 标记。",
+    "used_in_draft": true,
+    "width": 2400,
+    "height": 1700,
+    "bytes": 3269662,
+    "sha256": "9075f8614f38026bed2af5f4b5458e9357a5ed27ff8e355d064d33305192a2e3",
+    "accessed_at": "2026-09-05T07:21:38.162375+00:00"
+  },
+  {
+    "file": "assets/external/agi-openai-x-full.png",
+    "title": "OpenAI 发布 Astra 的完整 X 帖子",
+    "source_url": "https://x.com/OpenAI/status/2095595741528125780",
+    "creator_or_rightsholder": "OpenAI / X",
+    "notes": "原生嵌入截图，完整保留账号、正文、视频封面、日期与互动栏；显示北京时间。图中的播放按钮属于静态截图。",
+    "used_in_draft": true,
+    "width": 1096,
+    "height": 1198,
+    "bytes": 162435,
+    "sha256": "33db6a71d6b221271afd73bce24ccf58f892c3cfd3db8d3ea52aefb46b0b0a01",
+    "accessed_at": "2026-09-05T07:21:38.163376+00:00",
+    "source_metadata": "OpenAI\n@OpenAI\n·\nFollow\nThis is GPT-6 Astra.\n\nAnything you can do on a computer, Astra can do for you. Fast.\n4:32 AM · Sep 4, 2026\n315.8K\nReply\nCopy link to post\nRead 7.9K replies"
+  },
+  {
+    "file": "assets/external/agi-techrepublic-page.png",
+    "title": "TechRepublic 报道标题与配图",
+    "source_url": "https://www.techrepublic.com/article/news-openai-gpt-6-astra-agi-era-2026/",
+    "creator_or_rightsholder": "TechRepublic / TechnologyAdvice；配图署名 OpenAI",
+    "notes": "原网页连续区域截图，保留标题与完整配图，避开广告留白；未改字、重排或拼接。备选，不与采访图堆叠。",
+    "used_in_draft": false,
+    "width": 1500,
+    "height": 1200,
+    "bytes": 530913,
+    "sha256": "015eaed2d0c2fb3c17a6c1695439d5b3f618c11f253a8fb4b5bf8761e7d39d94",
+    "accessed_at": "2026-09-05T07:21:38.164376+00:00",
+    "source_metadata": {
+      "title": "OpenAI Launches GPT-6 Astra as Brockman Says the ‘AGI Era’ Has Arrived",
+      "headings": [
+        "OpenAI Launches GPT-6 Astra as Brockman Says the ‘AGI Era’ Has Arrived"
+      ]
+    }
+  }
+]

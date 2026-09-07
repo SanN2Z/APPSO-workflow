@@ -1,0 +1,91 @@
+{
+  "accessed_at": "2026-09-05T02:03:00.662465+00:00",
+  "document_sha256": "26db024d8c48a4f5e94de32bdfcb4e3628a39e31da44bfc55e2ef5db74386d5b",
+  "images": [
+    {
+      "index": 1,
+      "model_label": "Astra",
+      "source": "user-provided-document/image-1",
+      "file": "assets/user-results/doc-01-astra.png",
+      "width": 2106,
+      "height": 3292,
+      "format": "PNG",
+      "status": "downloaded",
+      "bytes": 2830718,
+      "sha256": "17121c5eb7a6bcd8c7fc7e829c5c4d58f65894427683ead6b56c94d569cf763d"
+    },
+    {
+      "index": 2,
+      "model_label": "Fable",
+      "source": "user-provided-document/image-2",
+      "file": "assets/user-results/doc-02-fable.png",
+      "width": 2561,
+      "height": 3451,
+      "format": "PNG",
+      "status": "downloaded",
+      "bytes": 6924691,
+      "sha256": "531a1afa08cbd4311f1e8c3cdd8ba80535c5e8b602df35dfe6c14fbb4cf44bab"
+    },
+    {
+      "index": 3,
+      "model_label": "Fable",
+      "source": "user-provided-document/image-3",
+      "file": "assets/user-results/doc-03-fable.png",
+      "width": 1251,
+      "height": 627,
+      "format": "PNG",
+      "status": "downloaded",
+      "bytes": 88412,
+      "sha256": "871b876be16159b37479bd127e14b4922a181cf72267eea8c9e1dbfe99d847a0"
+    },
+    {
+      "index": 4,
+      "model_label": "Fable",
+      "source": "user-provided-document/image-4",
+      "file": "assets/user-results/doc-04-fable.png",
+      "width": 1254,
+      "height": 645,
+      "format": "PNG",
+      "status": "downloaded",
+      "bytes": 111064,
+      "sha256": "df12df9c85dd6ae9028425850b82dadfd5bf5a2f41c960d8af4b880ab8b3efbf"
+    },
+    {
+      "index": 5,
+      "model_label": "Fable",
+      "source": "user-provided-document/image-5",
+      "file": "assets/user-results/doc-05-fable.png",
+      "width": 2561,
+      "height": 2337,
+      "format": "PNG",
+      "status": "downloaded",
+      "bytes": 2175527,
+      "sha256": "980a80508c77f8c5dd194745d4dbf761bc5e5324bbd067100410a0f219078b79"
+    },
+    {
+      "index": 6,
+      "model_label": "Astra",
+      "source": "user-provided-document/image-6",
+      "file": "assets/user-results/doc-06-astra.png",
+      "width": 2561,
+      "height": 1187,
+      "format": "PNG",
+      "status": "downloaded",
+      "bytes": 3475999,
+      "sha256": "758e8abb2c390cd4d2f30555d5ed046c340c164fab5653f509136764c0e68a07"
+    },
+    {
+      "index": 7,
+      "model_label": "Astra",
+      "source": "user-provided-document/image-7",
+      "file": "assets/user-results/doc-07-astra.png",
+      "width": 2561,
+      "height": 2631,
+      "format": "PNG",
+      "status": "downloaded",
+      "bytes": 4340894,
+      "sha256": "1f64caaadcf41df4f5c7a1ce6cebdb5eec1da479969c3cf0b4adde803e502cb3"
+    }
+  ],
+  "notes": "Download query credentials intentionally omitted. Model labels copied from document, not inferred from visuals."
+}

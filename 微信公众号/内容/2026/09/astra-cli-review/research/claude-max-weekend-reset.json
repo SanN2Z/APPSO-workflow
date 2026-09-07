@@ -1,0 +1,40 @@
+{
+  "source_url": "https://x.com/lydiahallie/status/2095967323412930677",
+  "post": {
+    "__typename": "Tweet",
+    "favorite_count": 11015,
+    "lang": "en",
+    "created_at": "2026-09-04T20:08:45.000Z",
+    "display_text_range": [
+      0,
+      191
+    ],
+    "entities": {},
+    "id_str": "2095967323412930677",
+    "text": "We've just reset weekly limits for everyone on a Claude Max plan.\n\nWith Fable 5.1 out and a long weekend ahead for many of you, we wanted to keep you building. I'd love to see what you build!",
+    "user": {
+      "id_str": "879696238953865217",
+      "name": "Lydia Hallie ✨",
+      "screen_name": "lydiahallie",
+      "is_blue_verified": true,
+      "profile_image_shape": "Circle",
+      "verified": false,
+      "profile_image_url_https": "https://pbs.twimg.com/profile_images/1994238936345137154/exEBW2UI_normal.jpg"
+    },
+    "edit_control": {
+      "edit_tweet_ids": [
+        "2095967323412930677"
+      ],
+      "editable_until_msecs": "1788556125000",
+      "edits_remaining": "5",
+      "is_edit_eligible": true
+    },
+    "conversation_count": 1623,
+    "news_action_type": "conversation",
+    "isEdited": false,
+    "isStaleEdit": false
+  },
+  "file": "assets/external/claude-max-weekend-reset.png",
+  "sha256": "bc1ae61258a50e904ba1482485602ca82739a0031c20a4fbbd665512e37241a2",
+  "accessed_at": "2026-09-05T08:09:54.252720+00:00"
+}

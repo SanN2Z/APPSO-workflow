@@ -1,0 +1,129 @@
+{
+  "sources": {
+    "ghost": {
+      "path": "C:\\Users\\22684\\Videos\\Captures\\小妖快跑：鬼门关淘汰赛 - Google Chrome 2026-09-05 10-54-51.mp4",
+      "duration_seconds": 94.2224,
+      "width": 2560,
+      "height": 1440,
+      "has_audio": true,
+      "bytes": 193736193,
+      "sha256": "1b2074704c1750724f7503f45fdd9e6dc6e5482e43a47bf1765aff37aca98922",
+      "model": "Astra",
+      "model_evidence": "作者最新明确更正：10-54-51 为 Astra；12-03-11 与 12-03-51 均为 Fable 5.1。覆盖此前相反归属。"
+    },
+    "lune": {
+      "path": "C:\\Users\\22684\\Videos\\Captures\\月屿 LUNÉ — Between the sea & the soul. - Google Chrome 2026-09-05 10-17-44.mp4",
+      "duration_seconds": 28.197866,
+      "width": 2560,
+      "height": 1440,
+      "has_audio": true,
+      "bytes": 49714327,
+      "sha256": "afffc601fd39da474397bb5563aac5dfd9af4243f11e8257613974f02f0643e4"
+    }
+  },
+  "outputs": [
+    {
+      "file": "assets/video/ghost-full.mp4",
+      "source": "ghost",
+      "kind": "full_mp4",
+      "duration_seconds": 94.226733,
+      "width": 1280,
+      "height": 720,
+      "has_audio": true,
+      "bytes": 33987262,
+      "sha256": "3b41f1d07fde5813934db0d7749f544e184ccc0560fd352de8e430b2fa74e5cf",
+      "full_decode_check": "passed",
+      "model": "Astra",
+      "model_evidence": "作者最新明确更正：10-54-51 为 Astra；12-03-11 与 12-03-51 均为 Fable 5.1。覆盖此前相反归属。"
+    },
+    {
+      "file": "assets/video/lune-full.mp4",
+      "source": "lune",
+      "kind": "full_mp4",
+      "duration_seconds": 28.227467,
+      "width": 1280,
+      "height": 720,
+      "has_audio": true,
+      "bytes": 1984299,
+      "sha256": "c43bd23c53649111a29f472f606aae5c253eff19498f0d34eea8141d841f2639",
+      "full_decode_check": "passed"
+    },
+    {
+      "file": "assets/video/ghost-start.gif",
+      "source": "ghost",
+      "kind": "excerpt_gif",
+      "start_seconds": 0,
+      "excerpt_seconds": 7,
+      "duration_seconds": 7.0,
+      "width": 640,
+      "height": 360,
+      "has_audio": false,
+      "bytes": 3397240,
+      "sha256": "c54bd653311e6fa313b8082f11b9fd57ea5e19f51a93b290337d0fe1d5c4fc00",
+      "full_decode_check": "passed",
+      "model": "Astra",
+      "model_evidence": "作者最新明确更正：10-54-51 为 Astra；12-03-11 与 12-03-51 均为 Fable 5.1。覆盖此前相反归属。"
+    },
+    {
+      "file": "assets/video/ghost-platforms.gif",
+      "source": "ghost",
+      "kind": "excerpt_gif",
+      "start_seconds": 50,
+      "excerpt_seconds": 7,
+      "duration_seconds": 7.0,
+      "width": 640,
+      "height": 360,
+      "has_audio": false,
+      "bytes": 4458468,
+      "sha256": "3847c4da3a82403a48bd1e8f286a88ff11050cf05be994a139473bfbbae58549",
+      "full_decode_check": "passed",
+      "model": "Astra",
+      "model_evidence": "作者最新明确更正：10-54-51 为 Astra；12-03-11 与 12-03-51 均为 Fable 5.1。覆盖此前相反归属。"
+    },
+    {
+      "file": "assets/video/ghost-finish.gif",
+      "source": "ghost",
+      "kind": "excerpt_gif",
+      "start_seconds": 84,
+      "excerpt_seconds": 9,
+      "duration_seconds": 9.0,
+      "width": 640,
+      "height": 360,
+      "has_audio": false,
+      "bytes": 3368065,
+      "sha256": "ed3bf0e09b78b64d7aa3dc32af7f6bdf0c2f3c3416d15f3f821d126e4dfcd586",
+      "full_decode_check": "passed",
+      "model": "Astra",
+      "model_evidence": "作者最新明确更正：10-54-51 为 Astra；12-03-11 与 12-03-51 均为 Fable 5.1。覆盖此前相反归属。"
+    },
+    {
+      "file": "assets/video/lune-tide.gif",
+      "source": "lune",
+      "kind": "excerpt_gif",
+      "start_seconds": 7,
+      "excerpt_seconds": 7,
+      "duration_seconds": 7.0,
+      "width": 640,
+      "height": 360,
+      "has_audio": false,
+      "bytes": 2589565,
+      "sha256": "373f7b331418e078e5cc1fcab3537851b54f1a4f6993e17737fdab10816f0d59",
+      "full_decode_check": "passed"
+    },
+    {
+      "file": "assets/video/lune-sky.gif",
+      "source": "lune",
+      "kind": "excerpt_gif",
+      "start_seconds": 13,
+      "excerpt_seconds": 8,
+      "duration_seconds": 8.0,
+      "width": 640,
+      "height": 360,
+      "has_audio": false,
+      "bytes": 3546624,
+      "sha256": "b7f2d1b3a1b095fa1d89c5bc3f88cd3f2e76107fb55701f568c6511c2ca9e596",
+      "full_decode_check": "passed"
+    }
+  ],
+  "notes": "Local derivatives. Sources unchanged. No speed change, synthetic frames, overlays, or scene replacement. GIFs are silent selected excerpts; MP4s retain the complete recording and source audio."
+}

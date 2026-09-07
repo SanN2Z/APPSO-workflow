@@ -1,0 +1,5 @@
+expense_id,status,category,amount
+E1,paid,场地,300
+E2,paid,印刷,120
+E3,paid,包装,80
+E4,planned,广告,200

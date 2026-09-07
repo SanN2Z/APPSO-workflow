@@ -1,0 +1,32 @@
+{
+  "local_scroll": [
+    {
+      "width": 375,
+      "height": 260,
+      "total": 385,
+      "wheel_scroll": true
+    },
+    {
+      "width": 390,
+      "height": 260,
+      "total": 401,
+      "wheel_scroll": true
+    }
+  ],
+  "clipboard_handler_simulated": {
+    "images": 1,
+    "inline": true,
+    "sections": 3,
+    "scripts": 0,
+    "styles": [
+      "margin:0;padding:0;width:100%;overflow:hidden;",
+      "margin:0;padding:0;display:block;width:100%;height:260px;overflow-x:hidden;overflow-y:scroll;-webkit-overflow-scrolling:touch;",
+      "margin:6px 0;font-size:12px;line-height:17px;color:#A7A7A7;text-align:center;"
+    ],
+    "controls": 0
+  },
+  "parsed_html_scroll": true,
+  "copy_failure_not_reported_as_success": true,
+  "os_clipboard_changed": false,
+  "wechat_backend_roundtrip": "pending"
+}

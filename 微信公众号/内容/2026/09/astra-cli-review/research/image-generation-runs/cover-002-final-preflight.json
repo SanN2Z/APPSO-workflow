@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "status": "pass",
+  "checked_on": "2026-09-05",
+  "task_id": "cover-002",
+  "stage": "final",
+  "project_adapter": "appsso",
+  "visual_type": "ai_editorial_creative",
+  "visual_route": "clumsy_doodle",
+  "style_override_source": null,
+  "style_profile": "appsso-004",
+  "style_scope": "all_ai_generated_editorial_images",
+  "new_image_strategy": "two_stage_reference_then_redraw",
+  "reference_strategy": "provided_local",
+  "mode": "referenced_edit",
+  "input_binding": "referenced_image_paths",
+  "num_last_images_to_include": null,
+  "conversation_derivative_rights_confirmed": false,
+  "prompt_ref": "appsso-004",
+  "prompt_sha256": "6ba5e092a4f8d6fb2bd33602424ba4792715aa59f2bf5f916b90d8bb3f0bbd0a",
+  "invocation_prompt_sha256": "3f0287c10a7380a44badd59695e54a1d686aaa6b52e16f7699d6f8f4fdf58f90",
+  "input_assets": [
+    "assets/cover-gpt6-doodle-v01.png"
+  ],
+  "input_fingerprints": [
+    {
+      "file": "assets/cover-gpt6-doodle-v01.png",
+      "sha256": "c9d1beb203d71fd0b2886cda6f61e7ebef4db8a3d61feeebe0a9f6cc840784f2",
+      "rights_status": "project_owned"
+    }
+  ],
+  "output": "assets/cover-gpt6-doodle-v02.png",
+  "present_to_user": true,
+  "plan": "research/image-generation-plan.json",
+  "plan_sha256": "b0d1c90de22422f93475152130c852f2899a1ebd8b8a3e3f1e439a92e93a07fb",
+  "profile_registry": "APPSO-数字资产/04-模板/生图风格档案.json",
+  "profile_registry_sha256": "1f2bc264eca47a0716a233193e314ed8521c29b8a6e58b50e3d151709118b970",
+  "prompt_source": "APPSO-数字资产/01-栏目与品牌/品牌视觉/生图-Prompt/笨拙涂鸦重绘.md",
+  "constraints_sha256": "4f6cf32a1359dfda28c20d4ebbb1fb31f1d68e781909238d4c77b243bacae98e",
+  "receipt": "research/image-generation-runs/cover-002-final-preflight.json"
+}

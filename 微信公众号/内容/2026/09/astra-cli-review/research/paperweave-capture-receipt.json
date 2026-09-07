@@ -1,0 +1,27 @@
+[
+  {
+    "file": "assets/user-results/paperweave-map-drag.png",
+    "sha256": "ec7288f940efd8d4fd291c9f04d76a895f019f115a8b1dd825ce1caec08dc96d",
+    "bytes": 155196
+  },
+  {
+    "file": "assets/user-results/paperweave-map-focus.png",
+    "sha256": "2f1928439e00afa456c1ad814fd044ddbdd520276b538896c1c978e126c102e6",
+    "bytes": 42520
+  },
+  {
+    "file": "assets/user-results/paperweave-map.png",
+    "sha256": "1abc86b8a34fdec3a501fd48b0ca3dcb76fd73de0d93a3bcfd695ac998b9fa93",
+    "bytes": 150451
+  },
+  {
+    "file": "assets/user-results/paperweave-notes-focus.png",
+    "sha256": "24a2c8ce0cff26b6a6a4fd0e18630f6f2fb39851b1110fdc704ab16b0795d0c0",
+    "bytes": 46631
+  },
+  {
+    "file": "assets/user-results/paperweave-notes.png",
+    "sha256": "8446f8a39f3cd2c3f483a581ebfb496de9b2747c67d23b59b5ad510f9272874e",
+    "bytes": 92107
+  }
+]

@@ -1,0 +1,415 @@
+[
+  {
+    "text": "Because we are beyond happy to have Astra rolled out today ahead of schedule and you have been super patient with us (not really, but it’s ok!)… we will do the full banked reset today too for all Plus, Pro and Business users. Lands end of day.\n\nHappy Astra day and enjoy a",
+    "created_at": "2026-09-05T00:39:25.000Z",
+    "favorite_count": 7303,
+    "conversation_count": 839,
+    "mediaDetails": null,
+    "label": "astra-full-reset",
+    "id": "2096035437299237298",
+    "author": "thsottiaux",
+    "accessed_at": "2026-09-05T01:26:49.477786+00:00"
+  },
+  {
+    "text": "OK nevermind, the team and Astra did a good job and our systems are more scalable than we anticipated.\n\nAstra is now rolled out to all Plus and Business users too. Hope you have a blast and let us know how it goes!",
+    "created_at": "2026-09-04T22:30:29.000Z",
+    "favorite_count": 11476,
+    "conversation_count": 1346,
+    "mediaDetails": null,
+    "label": "astra-plus-business-live",
+    "id": "2096002992046796932",
+    "author": "thsottiaux",
+    "accessed_at": "2026-09-05T01:26:50.717811+00:00"
+  },
+  {
+    "text": "Astra (GPT-6) is here!!!\n\nI've had early access and tested it like crazy with things like games, code, writing, browser control, presentations and general knowledge work.\n\nThis is the best model I've ever used. Period.\n\n(Incredible demos below in this thread ⬇️)\n\nHere's my take https://t.co/t1CMMSBelQ",
+    "created_at": "2026-09-03T19:32:49.000Z",
+    "favorite_count": 4057,
+    "conversation_count": 210,
+    "mediaDetails": [
+      {
+        "additional_media_info": {},
+        "display_url": "pic.x.com/t1CMMSBelQ",
+        "expanded_url": "https://x.com/MatthewBerman/status/2095595892464333065/video/1",
+        "ext_media_availability": {
+          "status": "Available"
+        },
+        "indices": [
+          279,
+          302
+        ],
+        "media_url_https": "https://pbs.twimg.com/amplify_video_thumb/2095578042618052608/img/RyBElYNzg3S7Efc4.jpg",
+        "original_info": {
+          "focus_rects": [],
+          "height": 720,
+          "width": 1280
+        },
+        "sizes": {
+          "large": {
+            "h": 720,
+            "resize": "fit",
+            "w": 1280
+          },
+          "medium": {
+            "h": 675,
+            "resize": "fit",
+            "w": 1200
+          },
+          "small": {
+            "h": 383,
+            "resize": "fit",
+            "w": 680
+          },
+          "thumb": {
+            "h": 150,
+            "resize": "crop",
+            "w": 150
+          }
+        },
+        "type": "video",
+        "url": "https://t.co/t1CMMSBelQ",
+        "video_info": {
+          "aspect_ratio": [
+            16,
+            9
+          ],
+          "duration_millis": 14000,
+          "variants": [
+            {
+              "content_type": "application/x-mpegURL",
+              "url": "https://video.twimg.com/amplify_video/2095578042618052608/pl/yhBQdj40s1ALHinT.m3u8?v=cfc"
+            },
+            {
+              "bitrate": 256000,
+              "content_type": "video/mp4",
+              "url": "https://video.twimg.com/amplify_video/2095578042618052608/vid/avc1/480x270/vMdgIQPLUFOOp1_0.mp4"
+            },
+            {
+              "bitrate": 832000,
+              "content_type": "video/mp4",
+              "url": "https://video.twimg.com/amplify_video/2095578042618052608/vid/avc1/640x360/SNriTCrj49s0lkgG.mp4"
+            },
+            {
+              "bitrate": 2176000,
+              "content_type": "video/mp4",
+              "url": "https://video.twimg.com/amplify_video/2095578042618052608/vid/avc1/1280x720/_EOXtMDQrQABTtHy.mp4"
+            }
+          ]
+        }
+      }
+    ],
+    "label": "berman-early-access",
+    "id": "2095595892464333065",
+    "author": "MatthewBerman",
+    "accessed_at": "2026-09-05T01:26:49.487962+00:00"
+  },
+  {
+    "text": "With Fable 5.1 out today, we've also reset 5-hour and weekly limits for all users.",
+    "created_at": "2026-09-01T18:35:27.000Z",
+    "favorite_count": 26085,
+    "conversation_count": 1136,
+    "mediaDetails": null,
+    "label": "claude-reset",
+    "id": "2094856679250919746",
+    "author": "ClaudeDevs",
+    "accessed_at": "2026-09-05T01:26:50.917302+00:00"
+  },
+  {
+    "text": "We will give one banked reset for every day you don't have access to Astra on your paid ChatGPT plan, starting today.  Team is moving mountains to give access as fast as we can.\n\nFirst one will land in ~ 3 hours. There is still time to create your account if you don't have one.",
+    "created_at": "2026-09-03T23:12:09.000Z",
+    "favorite_count": 48042,
+    "conversation_count": 5639,
+    "mediaDetails": null,
+    "label": "codex-reset",
+    "id": "2095651088502591861",
+    "author": "thsottiaux",
+    "accessed_at": "2026-09-05T01:26:50.668194+00:00"
+  },
+  {
+    "text": "Across the plans Astra will be included in the normal usage allocation and you will be able to use 100% of it towards Astra.",
+    "created_at": "2026-09-03T19:39:51.000Z",
+    "favorite_count": 9043,
+    "conversation_count": 373,
+    "mediaDetails": null,
+    "label": "astra-allocation",
+    "id": "2095597659545591917",
+    "author": "thsottiaux",
+    "accessed_at": "2026-09-05T01:26:50.987550+00:00"
+  },
+  {
+    "text": "This is GPT-6 Astra.\n\nAnything you can do on a computer, Astra can do for you. Fast. https://t.co/gDd0IsewJw",
+    "created_at": "2026-09-03T19:32:13.000Z",
+    "favorite_count": 309530,
+    "conversation_count": 7735,
+    "mediaDetails": [
+      {
+        "additional_media_info": {},
+        "display_url": "pic.x.com/gDd0IsewJw",
+        "expanded_url": "https://x.com/OpenAI/status/2095595741528125780/video/1",
+        "ext_media_availability": {
+          "status": "Available"
+        },
+        "indices": [
+          85,
+          108
+        ],
+        "media_url_https": "https://pbs.twimg.com/amplify_video_thumb/2095595661559574528/img/Vmb2pgEFJ6fpCUTD.jpg",
+        "original_info": {
+          "focus_rects": [],
+          "height": 1080,
+          "width": 1920
+        },
+        "sizes": {
+          "large": {
+            "h": 1080,
+            "resize": "fit",
+            "w": 1920
+          },
+          "medium": {
+            "h": 675,
+            "resize": "fit",
+            "w": 1200
+          },
+          "small": {
+            "h": 383,
+            "resize": "fit",
+            "w": 680
+          },
+          "thumb": {
+            "h": 150,
+            "resize": "crop",
+            "w": 150
+          }
+        },
+        "type": "video",
+        "url": "https://t.co/gDd0IsewJw",
+        "video_info": {
+          "aspect_ratio": [
+            16,
+            9
+          ],
+          "duration_millis": 162965,
+          "variants": [
+            {
+              "content_type": "application/x-mpegURL",
+              "url": "https://video.twimg.com/amplify_video/2095595661559574528/pl/Xq_LduP0ihdDNafh.m3u8"
+            },
+            {
+              "bitrate": 256000,
+              "content_type": "video/mp4",
+              "url": "https://video.twimg.com/amplify_video/2095595661559574528/vid/avc1/480x270/CntmNmX2nKsH3Czk.mp4"
+            },
+            {
+              "bitrate": 832000,
+              "content_type": "video/mp4",
+              "url": "https://video.twimg.com/amplify_video/2095595661559574528/vid/avc1/640x360/H0EgAPRo-BmSJVdT.mp4"
+            },
+            {
+              "bitrate": 2176000,
+              "content_type": "video/mp4",
+              "url": "https://video.twimg.com/amplify_video/2095595661559574528/vid/avc1/1280x720/Cv4dXuFNWqERUUJd.mp4"
+            },
+            {
+              "bitrate": 10368000,
+              "content_type": "video/mp4",
+              "url": "https://video.twimg.com/amplify_video/2095595661559574528/vid/avc1/1920x1080/grXdGA07X-yPH_8z.mp4"
+            }
+          ]
+        }
+      }
+    ],
+    "label": "astra-launch",
+    "id": "2095595741528125780",
+    "author": "OpenAI",
+    "accessed_at": "2026-09-05T01:26:51.147923+00:00"
+  },
+  {
+    "text": "I had early access to GPT-6. This model will completely shatter your understanding of what's possible, and it will start a new era of creativity.\n\nIt's hard to explain how big of a jump this is, so I'll share my tests.\n\n1/6 Made this 3D model and animation in code from an image. https://t.co/hUCWiLSlrV",
+    "created_at": "2026-09-03T19:32:59.000Z",
+    "favorite_count": 9865,
+    "conversation_count": 342,
+    "mediaDetails": [
+      {
+        "additional_media_info": {},
+        "display_url": "pic.x.com/hUCWiLSlrV",
+        "expanded_url": "https://x.com/skirano/status/2095595932335170031/video/1",
+        "ext_media_availability": {
+          "status": "Available"
+        },
+        "indices": [
+          280,
+          303
+        ],
+        "media_url_https": "https://pbs.twimg.com/amplify_video_thumb/2095521996171853824/img/6pYJ4jJjByUu2Bll.jpg",
+        "original_info": {
+          "focus_rects": [],
+          "height": 900,
+          "width": 900
+        },
+        "sizes": {
+          "large": {
+            "h": 900,
+            "resize": "fit",
+            "w": 900
+          },
+          "medium": {
+            "h": 900,
+            "resize": "fit",
+            "w": 900
+          },
+          "small": {
+            "h": 680,
+            "resize": "fit",
+            "w": 680
+          },
+          "thumb": {
+            "h": 150,
+            "resize": "crop",
+            "w": 150
+          }
+        },
+        "type": "video",
+        "url": "https://t.co/hUCWiLSlrV",
+        "video_info": {
+          "aspect_ratio": [
+            1,
+            1
+          ],
+          "duration_millis": 9000,
+          "variants": [
+            {
+              "content_type": "application/x-mpegURL",
+              "url": "https://video.twimg.com/amplify_video/2095521996171853824/pl/7cp3-ivYO088OO6L.m3u8"
+            },
+            {
+              "bitrate": 432000,
+              "content_type": "video/mp4",
+              "url": "https://video.twimg.com/amplify_video/2095521996171853824/vid/avc1/320x320/b84vtsZj55T7J3MU.mp4"
+            },
+            {
+              "bitrate": 832000,
+              "content_type": "video/mp4",
+              "url": "https://video.twimg.com/amplify_video/2095521996171853824/vid/avc1/540x540/8e_DbFJOYkbpUrEi.mp4"
+            },
+            {
+              "bitrate": 1280000,
+              "content_type": "video/mp4",
+              "url": "https://video.twimg.com/amplify_video/2095521996171853824/vid/avc1/720x720/eTANCsKmgIT-3brv.mp4"
+            },
+            {
+              "bitrate": 8768000,
+              "content_type": "video/mp4",
+              "url": "https://video.twimg.com/amplify_video/2095521996171853824/vid/avc1/900x900/mhKOKkknVPjh-R_4.mp4"
+            }
+          ]
+        }
+      }
+    ],
+    "label": "skirano-3d",
+    "id": "2095595932335170031",
+    "author": "skirano",
+    "accessed_at": "2026-09-05T01:26:51.207561+00:00",
+    "download": {
+      "file": "assets/skirano-3d-video-preview.jpg",
+      "url": "https://pbs.twimg.com/amplify_video_thumb/2095521996171853824/img/6pYJ4jJjByUu2Bll.jpg",
+      "sha256": "729f3cf2304f7f1422db4aa2e2c52dd4ead4fc372a18b5dd649d94f2543ae7e4"
+    }
+  },
+  {
+    "text": "Full Sim City Clone\n\nI used /goal for this and it ran for 5 days straight and still wasn't done by the time I shipped this demo. https://t.co/JTOjmJIR8b",
+    "created_at": "2026-09-03T19:32:50.000Z",
+    "favorite_count": 266,
+    "conversation_count": 6,
+    "mediaDetails": [
+      {
+        "additional_media_info": {},
+        "display_url": "pic.x.com/JTOjmJIR8b",
+        "expanded_url": "https://x.com/MatthewBerman/status/2095595893991129444/video/1",
+        "ext_media_availability": {
+          "status": "Available"
+        },
+        "indices": [
+          129,
+          152
+        ],
+        "media_url_https": "https://pbs.twimg.com/amplify_video_thumb/2095561367151579136/img/PXLY6nm0_sQsEn6U.jpg",
+        "original_info": {
+          "focus_rects": [],
+          "height": 2362,
+          "width": 3290
+        },
+        "sizes": {
+          "large": {
+            "h": 1470,
+            "resize": "fit",
+            "w": 2048
+          },
+          "medium": {
+            "h": 862,
+            "resize": "fit",
+            "w": 1200
+          },
+          "small": {
+            "h": 488,
+            "resize": "fit",
+            "w": 680
+          },
+          "thumb": {
+            "h": 150,
+            "resize": "crop",
+            "w": 150
+          }
+        },
+        "type": "video",
+        "url": "https://t.co/JTOjmJIR8b",
+        "video_info": {
+          "aspect_ratio": [
+            1645,
+            1181
+          ],
+          "duration_millis": 71246,
+          "variants": [
+            {
+              "content_type": "application/x-mpegURL",
+              "url": "https://video.twimg.com/amplify_video/2095561367151579136/pl/5vFCPEo88b7f0x3H.m3u8"
+            },
+            {
+              "bitrate": 256000,
+              "content_type": "video/mp4",
+              "url": "https://video.twimg.com/amplify_video/2095561367151579136/vid/avc1/376x270/fgvGDgpZdxskHh1c.mp4"
+            },
+            {
+              "bitrate": 832000,
+              "content_type": "video/mp4",
+              "url": "https://video.twimg.com/amplify_video/2095561367151579136/vid/avc1/500x360/TQRyJ8Q6u1Ga1ERV.mp4"
+            },
+            {
+              "bitrate": 2176000,
+              "content_type": "video/mp4",
+              "url": "https://video.twimg.com/amplify_video/2095561367151579136/vid/avc1/1002x720/EI-YtCB9-G_62l9t.mp4"
+            },
+            {
+              "bitrate": 10368000,
+              "content_type": "video/mp4",
+              "url": "https://video.twimg.com/amplify_video/2095561367151579136/vid/avc1/1504x1080/KtsQ0S7kr6nOxj-U.mp4"
+            },
+            {
+              "bitrate": 25128000,
+              "content_type": "video/mp4",
+              "url": "https://video.twimg.com/amplify_video/2095561367151579136/vid/avc1/3008x2160/V8DGm79sw7SYCugg.mp4"
+            }
+          ]
+        }
+      }
+    ],
+    "label": "berman-simcity",
+    "id": "2095595893991129444",
+    "author": "MatthewBerman",
+    "accessed_at": "2026-09-05T01:26:51.557535+00:00",
+    "download": {
+      "file": "assets/berman-simcity-video-preview.jpg",
+      "url": "https://pbs.twimg.com/amplify_video_thumb/2095561367151579136/img/PXLY6nm0_sQsEn6U.jpg",
+      "sha256": "620c97f52b910d73f1d6c66c74bd4fc4f73a568c86d973e1add8c4230393332d"
+    }
+  }
+]

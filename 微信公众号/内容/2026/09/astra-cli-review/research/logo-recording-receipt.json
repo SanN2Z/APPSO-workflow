@@ -1,0 +1,148 @@
+{
+  "source_path": "C:\\Users\\22684\\Videos\\Captures\\APPSO Logo 乐园 · Play Lab - Google Chrome 2026-09-05 12-06-10.mp4",
+  "duration_seconds": 26.1789,
+  "width": 2560,
+  "height": 1440,
+  "bytes": 6757574,
+  "has_audio": true,
+  "sha256": "8b594418ca41d057fee00e652849d6d07b7fadbb8bd401c75988e99387515e2d",
+  "samples": [
+    {
+      "seconds": 0.051533333333333334,
+      "file": "research/viewing/logo-recording/frame-00.png"
+    },
+    {
+      "seconds": 2.1909666666666667,
+      "file": "research/viewing/logo-recording/frame-01.png"
+    },
+    {
+      "seconds": 4.366766666666667,
+      "file": "research/viewing/logo-recording/frame-02.png"
+    },
+    {
+      "seconds": 6.578866666666666,
+      "file": "research/viewing/logo-recording/frame-03.png"
+    },
+    {
+      "seconds": 8.736433333333334,
+      "file": "research/viewing/logo-recording/frame-04.png"
+    },
+    {
+      "seconds": 10.9304,
+      "file": "research/viewing/logo-recording/frame-05.png"
+    },
+    {
+      "seconds": 13.1183,
+      "file": "research/viewing/logo-recording/frame-06.png"
+    },
+    {
+      "seconds": 15.275866666666667,
+      "file": "research/viewing/logo-recording/frame-07.png"
+    },
+    {
+      "seconds": 17.463766666666668,
+      "file": "research/viewing/logo-recording/frame-08.png"
+    },
+    {
+      "seconds": 19.6577,
+      "file": "research/viewing/logo-recording/frame-09.png"
+    },
+    {
+      "seconds": 21.851666666666667,
+      "file": "research/viewing/logo-recording/frame-10.png"
+    },
+    {
+      "seconds": 24.0032,
+      "file": "research/viewing/logo-recording/frame-11.png"
+    },
+    {
+      "seconds": 25.9062,
+      "file": "research/viewing/logo-recording/frame-12.png"
+    }
+  ],
+  "model": "Astra",
+  "model_evidence": "用户新回传的截图与录屏，匹配此前 Astra 独立项目 Play Lab 的页面和关卡；用户确认这项已做好",
+  "outputs": [
+    {
+      "file": "assets/video/logo-astra-full.mp4",
+      "kind": "full_mp4",
+      "modifications": "完整录屏无重编码封装；保留视频、原音与时间顺序，faststart",
+      "bytes": 5718344,
+      "sha256": "f1254dfc1fb5b8f91474232725e7a8b4a4f7f1293abee6745451236e440b3391",
+      "duration_seconds": 26.1754,
+      "width": 2560,
+      "height": 1440,
+      "has_audio": true,
+      "full_decode_check": "passed"
+    },
+    {
+      "file": "assets/video/logo-astra-start.gif",
+      "kind": "excerpt_gif",
+      "start_seconds": 2,
+      "excerpt_seconds": 8,
+      "modifications": "原录屏 2–10 秒，原速无声节选；960×540，12 帧/秒，96 色；无裁切或场景替换",
+      "bytes": 286185,
+      "sha256": "ae0428f898cfdb0e68f9985ef7ab9c911c9e0fd8c617ea634ce98abcbd5d24be",
+      "duration_seconds": 8.0,
+      "width": 960,
+      "height": 540,
+      "has_audio": false,
+      "full_decode_check": "passed"
+    },
+    {
+      "file": "assets/video/logo-astra-play.gif",
+      "kind": "excerpt_gif",
+      "start_seconds": 10,
+      "excerpt_seconds": 8,
+      "modifications": "原录屏 10–18 秒，原速无声节选；960×540，12 帧/秒，96 色；无裁切或场景替换",
+      "bytes": 280215,
+      "sha256": "22899219cc39f97e9c77593d5ed0400bb6f4e285013af6b8366fc0baea02825b",
+      "duration_seconds": 8.08,
+      "width": 960,
+      "height": 540,
+      "has_audio": false,
+      "full_decode_check": "passed"
+    }
+  ],
+  "direct_decode_verification": [
+    {
+      "file": "APPSO Logo 乐园 · Play Lab - Google Chrome 2026-09-05 12-06-10.mp4",
+      "streams": [
+        {
+          "kind": "video",
+          "decoded_frames": 717,
+          "first_pts_seconds": 0.051533333333333334,
+          "last_pts_seconds": 26.160766666666667,
+          "monotonic_pts": true
+        },
+        {
+          "kind": "audio",
+          "decoded_frames": 1220,
+          "first_pts_seconds": 0.0,
+          "last_pts_seconds": 26.005333333333333,
+          "monotonic_pts": true
+        }
+      ]
+    },
+    {
+      "file": "logo-astra-full.mp4",
+      "streams": [
+        {
+          "kind": "video",
+          "decoded_frames": 717,
+          "first_pts_seconds": 0.051,
+          "last_pts_seconds": 26.160233333333334,
+          "monotonic_pts": true
+        },
+        {
+          "kind": "audio",
+          "decoded_frames": 1220,
+          "first_pts_seconds": 0.0,
+          "last_pts_seconds": 26.005333333333333,
+          "monotonic_pts": true
+        }
+      ]
+    }
+  ],
+  "verification_notes": "FFmpeg null muxer emitted repeated DTS warnings; separately decoded every video and audio frame with PyAV. Both source and remux have monotonic presentation timestamps and matching decoded frame counts. No decoding error."
+}

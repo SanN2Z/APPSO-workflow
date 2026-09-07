@@ -1,0 +1,23 @@
+[
+  {
+    "file": "assets/external/aa-astra-original-1.png",
+    "source_url": "https://artificialanalysis.ai/articles/benchmarking-gpt-6-astra",
+    "media_url": "https://cdn.sanity.io/images/6vfeftx9/articles/6a5c91370d7c44889aab0ebee84b75a60d6ee538-2940x2311.png",
+    "kind": "original_image",
+    "sha256": "aceb0bd016ac50cfb57f04a44c19e74364f5e67485106ba55dbcc4f4acc502fe"
+  },
+  {
+    "file": "assets/external/aa-astra-original-2.png",
+    "source_url": "https://artificialanalysis.ai/articles/benchmarking-gpt-6-astra",
+    "media_url": "https://cdn.sanity.io/images/6vfeftx9/articles/12e2b5002fd3b3e65cb9bc4fb4959c4c409dcd14-4640x4352.png",
+    "kind": "original_image",
+    "sha256": "02c2aff18b439d2b1c6da6ab1a31c644f96646dbbb487f288e3452a53d0020fd"
+  },
+  {
+    "file": "assets/external/aa-astra-original-3.png",
+    "source_url": "https://artificialanalysis.ai/articles/benchmarking-gpt-6-astra",
+    "media_url": "https://cdn.sanity.io/images/6vfeftx9/articles/5030dcb45684d0ac4ce33e799be92d7481aac40b-4653x4089.png",
+    "kind": "original_image",
+    "sha256": "625be024d10a13717294bd180b58e28a67ec1def41de93c7f1f89cd001228d6e"
+  }
+]

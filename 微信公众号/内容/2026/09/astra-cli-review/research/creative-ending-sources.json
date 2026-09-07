@@ -1,0 +1,670 @@
+[
+  {
+    "accessed_at": "2026-09-05T06:41:23.462488+00:00",
+    "source_url": "https://x.com/anshuc/status/2096008086901113339",
+    "post": {
+      "__typename": "Tweet",
+      "favorite_count": 1191,
+      "in_reply_to_screen_name": "anshuc",
+      "in_reply_to_status_id_str": "2096008083826725132",
+      "in_reply_to_user_id_str": "50949650",
+      "lang": "en",
+      "created_at": "2026-09-04T22:50:44.000Z",
+      "display_text_range": [
+        0,
+        279
+      ],
+      "entities": {},
+      "id_str": "2096008086901113339",
+      "text": "All I did was:\n1. Connect Codex to Blender MCP\n2. Paste in the concept for the game\n3. Tell Astra to use the Codex image gen skill to generate concept images of the target art style, then iterate until in-game screenshots look as close as possible to those, at 60fps\n\nSet to high",
+      "user": {
+        "id_str": "50949650",
+        "name": "Anshu",
+        "screen_name": "anshuc",
+        "is_blue_verified": true,
+        "profile_image_shape": "Circle",
+        "verified": false,
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/2062938542280712192/gds8Qtn8_normal.jpg"
+      },
+      "edit_control": {
+        "edit_tweet_ids": [
+          "2096008086901113339"
+        ],
+        "editable_until_msecs": "1788565844000",
+        "edits_remaining": "5",
+        "is_edit_eligible": false
+      },
+      "conversation_count": 22,
+      "news_action_type": "conversation",
+      "parent": {
+        "favorite_count": 8837,
+        "lang": "en",
+        "possibly_sensitive": false,
+        "reply_count": 222,
+        "retweet_count": 527,
+        "created_at": "2026-09-04T22:50:43.000Z",
+        "display_text_range": [
+          0,
+          240
+        ],
+        "entities": {
+          "media": [
+            {
+              "display_url": "pic.x.com/fOMa2bMLR6",
+              "expanded_url": "https://x.com/anshuc/status/2096008083826725132/video/1",
+              "indices": [
+                241,
+                264
+              ],
+              "url": "https://t.co/fOMa2bMLR6"
+            }
+          ]
+        },
+        "id_str": "2096008083826725132",
+        "text": "dude GPT-6 Astra is some kind of turbo-AGI machine god for 3D games. It one-shot this in 45 minutes for hardly a couple % of my quota.\n\nI figured out how to get great graphics out of it. The trick is image gen. I'll share the process below. https://t.co/fOMa2bMLR6",
+        "user": {
+          "id_str": "50949650",
+          "name": "Anshu",
+          "screen_name": "anshuc",
+          "is_blue_verified": true,
+          "profile_image_shape": "Circle",
+          "verified": false,
+          "profile_image_url_https": "https://pbs.twimg.com/profile_images/2062938542280712192/gds8Qtn8_normal.jpg"
+        },
+        "edit_control": {
+          "edit_tweet_ids": [
+            "2096008083826725132"
+          ],
+          "editable_until_msecs": "1788565843000",
+          "edits_remaining": "5",
+          "is_edit_eligible": false
+        },
+        "mediaDetails": [
+          {
+            "additional_media_info": {},
+            "display_url": "pic.x.com/fOMa2bMLR6",
+            "expanded_url": "https://x.com/anshuc/status/2096008083826725132/video/1",
+            "ext_media_availability": {
+              "status": "Available"
+            },
+            "indices": [
+              241,
+              264
+            ],
+            "media_url_https": "https://pbs.twimg.com/amplify_video_thumb/2096004824751890434/img/fW0IV1fAgJ3b7i-D.jpg",
+            "original_info": {
+              "focus_rects": [],
+              "height": 2160,
+              "width": 3692
+            },
+            "sizes": {
+              "large": {
+                "h": 1198,
+                "resize": "fit",
+                "w": 2048
+              },
+              "medium": {
+                "h": 702,
+                "resize": "fit",
+                "w": 1200
+              },
+              "small": {
+                "h": 398,
+                "resize": "fit",
+                "w": 680
+              },
+              "thumb": {
+                "h": 150,
+                "resize": "crop",
+                "w": 150
+              }
+            },
+            "type": "video",
+            "url": "https://t.co/fOMa2bMLR6",
+            "video_info": {
+              "aspect_ratio": [
+                923,
+                540
+              ],
+              "duration_millis": 18550,
+              "variants": [
+                {
+                  "content_type": "application/x-mpegURL",
+                  "url": "https://video.twimg.com/amplify_video/2096004824751890434/pl/r7tFmzAK515xZERS.m3u8"
+                },
+                {
+                  "bitrate": 256000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/amplify_video/2096004824751890434/vid/avc1/460x270/hYzlnE4CUXWQF3rG.mp4"
+                },
+                {
+                  "bitrate": 832000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/amplify_video/2096004824751890434/vid/avc1/614x360/SeCwzL2NiLTuqXnR.mp4"
+                },
+                {
+                  "bitrate": 2176000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/amplify_video/2096004824751890434/vid/avc1/1230x720/kGD0DSS9DWpNOW57.mp4"
+                },
+                {
+                  "bitrate": 10368000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/amplify_video/2096004824751890434/vid/avc1/1846x1080/5b4ZQD3UoQtiu4vq.mp4"
+                },
+                {
+                  "bitrate": 25128000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/amplify_video/2096004824751890434/vid/avc1/3692x2160/gaoPiuxsByXKZaqU.mp4"
+                }
+              ]
+            }
+          }
+        ],
+        "photos": [],
+        "video": {
+          "aspectRatio": [
+            923,
+            540
+          ],
+          "contentType": "media_entity",
+          "durationMs": 18550,
+          "mediaAvailability": {
+            "status": "available"
+          },
+          "poster": "https://pbs.twimg.com/amplify_video_thumb/2096004824751890434/img/fW0IV1fAgJ3b7i-D.jpg",
+          "variants": [
+            {
+              "type": "application/x-mpegURL",
+              "src": "https://video.twimg.com/amplify_video/2096004824751890434/pl/r7tFmzAK515xZERS.m3u8"
+            },
+            {
+              "type": "video/mp4",
+              "src": "https://video.twimg.com/amplify_video/2096004824751890434/vid/avc1/460x270/hYzlnE4CUXWQF3rG.mp4"
+            },
+            {
+              "type": "video/mp4",
+              "src": "https://video.twimg.com/amplify_video/2096004824751890434/vid/avc1/614x360/SeCwzL2NiLTuqXnR.mp4"
+            },
+            {
+              "type": "video/mp4",
+              "src": "https://video.twimg.com/amplify_video/2096004824751890434/vid/avc1/1230x720/kGD0DSS9DWpNOW57.mp4"
+            },
+            {
+              "type": "video/mp4",
+              "src": "https://video.twimg.com/amplify_video/2096004824751890434/vid/avc1/1846x1080/5b4ZQD3UoQtiu4vq.mp4"
+            },
+            {
+              "type": "video/mp4",
+              "src": "https://video.twimg.com/amplify_video/2096004824751890434/vid/avc1/3692x2160/gaoPiuxsByXKZaqU.mp4"
+            }
+          ],
+          "videoId": {
+            "type": "tweet",
+            "id": "2096008083826725132"
+          },
+          "viewCount": 0
+        },
+        "isEdited": false,
+        "isStaleEdit": false
+      },
+      "isEdited": false,
+      "isStaleEdit": false,
+      "note_tweet": {
+        "id": "Tm90ZVR3ZWV0UmVzdWx0czoyMDk2MDA4MDg2ODE3MjE0NDY0"
+      }
+    },
+    "file": "assets/external/anshu-concept-game.jpg",
+    "media_source_url": "https://x.com/anshuc/status/2096008083826725132",
+    "download_url": "https://pbs.twimg.com/amplify_video_thumb/2096004824751890434/img/fW0IV1fAgJ3b7i-D.jpg",
+    "sha256": "bb1935134adf7eeb982e5be9c0ebb4ce3572adee7ab1d07c6ce7ca5e316377a9",
+    "modifications": "Original video poster bytes; no redraw or edits"
+  },
+  {
+    "accessed_at": "2026-09-05T06:45:12.371401+00:00",
+    "source_url": "https://x.com/PaulSolt/status/2096023238081908917",
+    "post": {
+      "__typename": "Tweet",
+      "favorite_count": 0,
+      "in_reply_to_screen_name": "PaulSolt",
+      "in_reply_to_status_id_str": "2095970470390530453",
+      "in_reply_to_user_id_str": "14683259",
+      "lang": "en",
+      "created_at": "2026-09-04T23:50:56.000Z",
+      "display_text_range": [
+        0,
+        69
+      ],
+      "entities": {},
+      "id_str": "2096023238081908917",
+      "text": "My wife thinks it needs to look a little better…\n\nMore tweaking to do",
+      "user": {
+        "id_str": "14683259",
+        "name": "Paul Solt",
+        "screen_name": "PaulSolt",
+        "is_blue_verified": true,
+        "profile_image_shape": "Circle",
+        "verified": false,
+        "profile_image_url_https": "https://pbs.twimg.com/profile_images/1876014019967864832/ucFysJCn_normal.jpg"
+      },
+      "edit_control": {
+        "edit_tweet_ids": [
+          "2096023238081908917"
+        ],
+        "editable_until_msecs": "1788569456000",
+        "edits_remaining": "5",
+        "is_edit_eligible": false
+      },
+      "conversation_count": 0,
+      "news_action_type": "conversation",
+      "parent": {
+        "favorite_count": 8,
+        "lang": "en",
+        "possibly_sensitive": false,
+        "reply_count": 2,
+        "retweet_count": 0,
+        "created_at": "2026-09-04T20:21:16.000Z",
+        "display_text_range": [
+          0,
+          164
+        ],
+        "entities": {
+          "media": [
+            {
+              "display_url": "pic.x.com/bgmIBY4B3s",
+              "expanded_url": "https://x.com/PaulSolt/status/2095970470390530453/video/1",
+              "indices": [
+                165,
+                188
+              ],
+              "url": "https://t.co/bgmIBY4B3s"
+            }
+          ]
+        },
+        "id_str": "2095970470390530453",
+        "text": "How do you simulate WATER with PIXEL art?\n\nI'm created wave effects and open water sparkles to match my concept art.\n\nSubtle wave spectular highlights and movement. https://t.co/bgmIBY4B3s",
+        "user": {
+          "id_str": "14683259",
+          "name": "Paul Solt",
+          "screen_name": "PaulSolt",
+          "is_blue_verified": true,
+          "profile_image_shape": "Circle",
+          "verified": false,
+          "profile_image_url_https": "https://pbs.twimg.com/profile_images/1876014019967864832/ucFysJCn_normal.jpg"
+        },
+        "edit_control": {
+          "edit_tweet_ids": [
+            "2095970470390530453"
+          ],
+          "editable_until_msecs": "1788556876000",
+          "edits_remaining": "5",
+          "is_edit_eligible": false
+        },
+        "mediaDetails": [
+          {
+            "additional_media_info": {},
+            "display_url": "pic.x.com/bgmIBY4B3s",
+            "expanded_url": "https://x.com/PaulSolt/status/2095970470390530453/video/1",
+            "ext_media_availability": {
+              "status": "Available"
+            },
+            "indices": [
+              165,
+              188
+            ],
+            "media_url_https": "https://pbs.twimg.com/amplify_video_thumb/2095969750262087688/img/HPhtwIk6Q7bZt20-.jpg",
+            "original_info": {
+              "focus_rects": [],
+              "height": 2554,
+              "width": 2524
+            },
+            "sizes": {
+              "large": {
+                "h": 2048,
+                "resize": "fit",
+                "w": 2024
+              },
+              "medium": {
+                "h": 1200,
+                "resize": "fit",
+                "w": 1186
+              },
+              "small": {
+                "h": 680,
+                "resize": "fit",
+                "w": 672
+              },
+              "thumb": {
+                "h": 150,
+                "resize": "crop",
+                "w": 150
+              }
+            },
+            "type": "video",
+            "url": "https://t.co/bgmIBY4B3s",
+            "video_info": {
+              "aspect_ratio": [
+                1262,
+                1277
+              ],
+              "duration_millis": 68855,
+              "variants": [
+                {
+                  "content_type": "application/x-mpegURL",
+                  "url": "https://video.twimg.com/amplify_video/2095969750262087688/pl/joxb_Ryx6JnoNYpa.m3u8"
+                },
+                {
+                  "bitrate": 632000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/amplify_video/2095969750262087688/vid/avc1/320x322/IwmFfgkdZvHirAfH.mp4"
+                },
+                {
+                  "bitrate": 950000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/amplify_video/2095969750262087688/vid/avc1/480x484/LrKc0QJEMi1vSUPt.mp4"
+                },
+                {
+                  "bitrate": 2176000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/amplify_video/2095969750262087688/vid/avc1/720x728/vo-YietLmaOydGO5.mp4"
+                },
+                {
+                  "bitrate": 10368000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/amplify_video/2095969750262087688/vid/avc1/1080x1092/XiHn_7KEkuN-iBKf.mp4"
+                },
+                {
+                  "bitrate": 25128000,
+                  "content_type": "video/mp4",
+                  "url": "https://video.twimg.com/amplify_video/2095969750262087688/vid/avc1/2160x2184/cAglLczbx8G2kB7A.mp4"
+                }
+              ]
+            }
+          },
+          {
+            "display_url": "pic.x.com/bgmIBY4B3s",
+            "expanded_url": "https://x.com/PaulSolt/status/2095970470390530453/video/1",
+            "ext_media_availability": {
+              "status": "Available"
+            },
+            "indices": [
+              165,
+              188
+            ],
+            "media_url_https": "https://pbs.twimg.com/media/HRZhYfhWMAAErJU.jpg",
+            "original_info": {
+              "focus_rects": [
+                {
+                  "h": 1413,
+                  "w": 2524,
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "h": 2524,
+                  "w": 2524,
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "h": 2554,
+                  "w": 2240,
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "h": 2554,
+                  "w": 1277,
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "h": 2554,
+                  "w": 2524,
+                  "x": 0,
+                  "y": 0
+                }
+              ],
+              "height": 2554,
+              "width": 2524
+            },
+            "sizes": {
+              "large": {
+                "h": 2048,
+                "resize": "fit",
+                "w": 2024
+              },
+              "medium": {
+                "h": 1200,
+                "resize": "fit",
+                "w": 1186
+              },
+              "small": {
+                "h": 680,
+                "resize": "fit",
+                "w": 672
+              },
+              "thumb": {
+                "h": 150,
+                "resize": "crop",
+                "w": 150
+              }
+            },
+            "type": "photo",
+            "url": "https://t.co/bgmIBY4B3s"
+          },
+          {
+            "display_url": "pic.x.com/bgmIBY4B3s",
+            "expanded_url": "https://x.com/PaulSolt/status/2095970470390530453/video/1",
+            "ext_media_availability": {
+              "status": "Available"
+            },
+            "indices": [
+              165,
+              188
+            ],
+            "media_url_https": "https://pbs.twimg.com/media/HRZhh2KacAA4jO-.jpg",
+            "original_info": {
+              "focus_rects": [
+                {
+                  "h": 860,
+                  "w": 1536,
+                  "x": 0,
+                  "y": 0
+                },
+                {
+                  "h": 1024,
+                  "w": 1024,
+                  "x": 371,
+                  "y": 0
+                },
+                {
+                  "h": 1024,
+                  "w": 898,
+                  "x": 434,
+                  "y": 0
+                },
+                {
+                  "h": 1024,
+                  "w": 512,
+                  "x": 627,
+                  "y": 0
+                },
+                {
+                  "h": 1024,
+                  "w": 1536,
+                  "x": 0,
+                  "y": 0
+                }
+              ],
+              "height": 1024,
+              "width": 1536
+            },
+            "sizes": {
+              "large": {
+                "h": 1024,
+                "resize": "fit",
+                "w": 1536
+              },
+              "medium": {
+                "h": 800,
+                "resize": "fit",
+                "w": 1200
+              },
+              "small": {
+                "h": 453,
+                "resize": "fit",
+                "w": 680
+              },
+              "thumb": {
+                "h": 150,
+                "resize": "crop",
+                "w": 150
+              }
+            },
+            "type": "photo",
+            "url": "https://t.co/bgmIBY4B3s"
+          }
+        ],
+        "photos": [
+          {
+            "backgroundColor": {
+              "red": 204,
+              "green": 214,
+              "blue": 221
+            },
+            "cropCandidates": [
+              {
+                "h": 1413,
+                "w": 2524,
+                "x": 0,
+                "y": 0
+              },
+              {
+                "h": 2524,
+                "w": 2524,
+                "x": 0,
+                "y": 0
+              },
+              {
+                "h": 2554,
+                "w": 2240,
+                "x": 0,
+                "y": 0
+              },
+              {
+                "h": 2554,
+                "w": 1277,
+                "x": 0,
+                "y": 0
+              },
+              {
+                "h": 2554,
+                "w": 2524,
+                "x": 0,
+                "y": 0
+              }
+            ],
+            "expandedUrl": "https://x.com/PaulSolt/status/2095970470390530453/video/1",
+            "url": "https://pbs.twimg.com/media/HRZhYfhWMAAErJU.jpg",
+            "width": 2524,
+            "height": 2554
+          },
+          {
+            "backgroundColor": {
+              "red": 204,
+              "green": 214,
+              "blue": 221
+            },
+            "cropCandidates": [
+              {
+                "h": 860,
+                "w": 1536,
+                "x": 0,
+                "y": 0
+              },
+              {
+                "h": 1024,
+                "w": 1024,
+                "x": 371,
+                "y": 0
+              },
+              {
+                "h": 1024,
+                "w": 898,
+                "x": 434,
+                "y": 0
+              },
+              {
+                "h": 1024,
+                "w": 512,
+                "x": 627,
+                "y": 0
+              },
+              {
+                "h": 1024,
+                "w": 1536,
+                "x": 0,
+                "y": 0
+              }
+            ],
+            "expandedUrl": "https://x.com/PaulSolt/status/2095970470390530453/video/1",
+            "url": "https://pbs.twimg.com/media/HRZhh2KacAA4jO-.jpg",
+            "width": 1536,
+            "height": 1024
+          }
+        ],
+        "video": {
+          "aspectRatio": [
+            1262,
+            1277
+          ],
+          "contentType": "media_entity",
+          "durationMs": 68855,
+          "mediaAvailability": {
+            "status": "available"
+          },
+          "poster": "https://pbs.twimg.com/amplify_video_thumb/2095969750262087688/img/HPhtwIk6Q7bZt20-.jpg",
+          "variants": [
+            {
+              "type": "application/x-mpegURL",
+              "src": "https://video.twimg.com/amplify_video/2095969750262087688/pl/joxb_Ryx6JnoNYpa.m3u8"
+            },
+            {
+              "type": "video/mp4",
+              "src": "https://video.twimg.com/amplify_video/2095969750262087688/vid/avc1/320x322/IwmFfgkdZvHirAfH.mp4"
+            },
+            {
+              "type": "video/mp4",
+              "src": "https://video.twimg.com/amplify_video/2095969750262087688/vid/avc1/480x484/LrKc0QJEMi1vSUPt.mp4"
+            },
+            {
+              "type": "video/mp4",
+              "src": "https://video.twimg.com/amplify_video/2095969750262087688/vid/avc1/720x728/vo-YietLmaOydGO5.mp4"
+            },
+            {
+              "type": "video/mp4",
+              "src": "https://video.twimg.com/amplify_video/2095969750262087688/vid/avc1/1080x1092/XiHn_7KEkuN-iBKf.mp4"
+            },
+            {
+              "type": "video/mp4",
+              "src": "https://video.twimg.com/amplify_video/2095969750262087688/vid/avc1/2160x2184/cAglLczbx8G2kB7A.mp4"
+            }
+          ],
+          "videoId": {
+            "type": "tweet",
+            "id": "2095970470390530453"
+          },
+          "viewCount": 0
+        },
+        "isEdited": false,
+        "isStaleEdit": false
+      },
+      "isEdited": false,
+      "isStaleEdit": false
+    },
+    "file": "assets/external/paul-visual-feedback.png",
+    "sha256": "58dda42b47cda1b3a87411184820b0cfd7f56b73e56f9126c598ac92ba78d25d",
+    "modifications": "Native X embed reply screenshot, clipped to retain author, full reply and date; parent context in source receipt; no text edits or reconstruction"
+  }
+]

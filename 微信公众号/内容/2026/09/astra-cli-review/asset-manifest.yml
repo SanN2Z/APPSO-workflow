@@ -1,0 +1,1896 @@
+version: 3
+updated: '2026-09-05'
+assets:
+  - file: research/source-assets/cover-001-structure.png
+    used_in_draft: false
+    used_as_cover: false
+    use: research_reference
+    source_type: ai_generated
+    source: 本项目 Image2 封面构图中间稿；仅作为固定涂鸦重绘输入
+    creator_or_rightsholder: 本项目 / AI-generated
+    obtained_on: '2026-09-05'
+    generator: Codex built-in image_gen
+    model: gpt-image-2
+    generation_mode: text_to_image
+    prompt_ref: package-structure-reference-v1
+    preflight_receipt: research/image-generation-runs/cover-001-reference-preflight.json
+    rights_status: project_owned
+    derivative_rights_confirmed: true
+    allowed_platforms: []
+    modifications: 原字节复制；最终阶段将重绘为笨拙涂鸦
+    notes: 非成品，禁止当作公众号封面或官方视觉交付
+    prompt_sha256: 2fa3b73a925568d924111290db3fd4bf21a1ea62f7ed8ee19ab1636e87d370ac
+    invocation_prompt_sha256: 2fa3b73a925568d924111290db3fd4bf21a1ea62f7ed8ee19ab1636e87d370ac
+    input_assets: []
+    generated_on: '2026-09-05'
+    visual_route: clumsy_doodle
+    attribution: 本项目 AI 生成图
+    generation_constraints: 一个巨大红色数字 6 与小电脑；GPT-6 和 ASTRA 文字；黑白红横向构图；不含跑分或 AGI 断言。
+  - file: assets/user-results/paperweave-map-focus.png
+    used_in_draft: true
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: true
+    source_type: user_provided
+    source: 作者提供的 Paperweave，独立演示实例中的两张卡片与连线
+    source_url: local-user-material://2026-09-05/paperweave/map-focus
+    creator_or_rightsholder: 作者项目 Paperweave；第三方组件按各自许可
+    obtained_on: '2026-09-05'
+    modifications: 浏览器局部截图；未重排 UI；全屏原图保留为 paperweave-map.png
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 作者项目 Paperweave，画布局部与虚构演示数据
+    notes: 手机取景以看清两张卡片的关系为目标，不展示整个研究库
+  - file: assets/user-results/paperweave-notes-focus.png
+    used_in_draft: true
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: true
+    source_type: user_provided
+    source: 作者提供的 Paperweave，独立演示实例中的笔记正文
+    source_url: local-user-material://2026-09-05/paperweave/notes-focus
+    creator_or_rightsholder: 作者项目 Paperweave；第三方组件按各自许可
+    obtained_on: '2026-09-05'
+    modifications: 浏览器局部截图；保留标题、演示声明、问题和来源；全屏原图另存
+    rights_status: pending
+    allowed_platforms: []
+    attribution: Paperweave 笔记局部，内容为功能演示
+  - file: assets/user-results/paperweave-map.png
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: true
+    source_type: user_provided
+    source: 作者提供的 D:/projects/AgentLab_Gpt/paperweave；独立演示实例的实际浏览器截图
+    source_url: local-user-material://2026-09-05/paperweave/map
+    creator_or_rightsholder: 作者项目 Paperweave；第三方组件按各自许可
+    obtained_on: '2026-09-05'
+    modifications: 原生截图；通过正常界面隐藏空白终端；未重画或改写截图内容
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 作者项目 Paperweave，图中论文与关系为虚构演示数据
+    notes: 用户授权本次展示；不含真实研究资料；核对见 research/paperweave-learning-evidence.md
+  - file: assets/user-results/paperweave-notes.png
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: true
+    source_type: user_provided
+    source: 作者提供的 Paperweave，独立演示实例中的研究笔记
+    source_url: local-user-material://2026-09-05/paperweave/notes
+    creator_or_rightsholder: 作者项目 Paperweave；第三方组件按各自许可
+    obtained_on: '2026-09-05'
+    modifications: 原生浏览器截图，未修改图像内容
+    rights_status: pending
+    allowed_platforms: []
+    attribution: Paperweave 笔记界面，内容为功能演示
+    notes: 图内已有演示标识，不是真实论文或科学发现
+  - file: assets/user-results/paperweave-map-drag.png
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: true
+    source_type: user_provided
+    source: Paperweave 独立演示实例，实际拖动卡片后截图
+    source_url: local-user-material://2026-09-05/paperweave/map-drag
+    creator_or_rightsholder: 作者项目 Paperweave
+    obtained_on: '2026-09-05'
+    modifications: 无，保留为交互核对记录
+    rights_status: pending
+    allowed_platforms: []
+    attribution: Paperweave 功能演示
+  - file: research/cases/C07-appso-logo/appso-logo.png
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: official_original
+    original_pixels_preserved: true
+    source_type: user_provided
+    source: 用户本轮提供的 APPSO 红底白字 Logo，作为品牌魔改横评输入
+    source_url: local-user-attachment://2026-09-05/appso-logo
+    creator_or_rightsholder: APPSO / 爱范儿
+    obtained_on: '2026-09-05'
+    modifications: 无修改，原字节复制到独立案例输入目录
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 图源：APPSO，用户提供
+    notes: 用户明确授权本次 APPSO 品牌魔改测试；不推定衍生产物已获发布许可；原图 SHA256 8160DB79FC8CAFDD864312B32BB6B01EE4D720187BC4ACC6A875E273EECD04FF
+  - file: assets/official-astra-launch-video-cover.jpg
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: official_original
+    original_pixels_preserved: true
+    source_type: official_material
+    source: 官方发布视频封面，不是作者实测截图
+    source_url: https://x.com/OpenAI/status/2095595741528125780
+    download_url: https://pbs.twimg.com/amplify_video_thumb/2095595661559574528/img/Vmb2pgEFJ6fpCUTD.jpg
+    creator_or_rightsholder: OpenAI
+    obtained_on: '2026-09-05'
+    modifications: 无修改，下载原始文件
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 图源：OpenAI；https://x.com/OpenAI/status/2095595741528125780
+    notes: 研究候选；发布前核对转载边界及允许平台
+  - file: assets/official-astra-hallucinations-figure6.png
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: official_original
+    original_pixels_preserved: true
+    source_type: official_material
+    source: 系统卡 Figure 6，用户标记高幻觉风险样本，非生产平均错误率
+    source_url: https://deploymentsafety.openai.com/gpt-6-astra
+    download_url: https://deploymentsafety.openai.com/data/eval-sets/gpt-6-astra/assets/images/image7.png
+    creator_or_rightsholder: OpenAI
+    obtained_on: '2026-09-05'
+    modifications: 无修改，下载原始文件
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 图源：OpenAI；https://deploymentsafety.openai.com/gpt-6-astra
+    notes: 研究候选；发布前核对转载边界及允许平台
+  - file: assets/arc-astra-two-harnesses.png
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: official_original
+    original_pixels_preserved: true
+    source_type: official_material
+    source: 基准主办方原图；两种运行框架分开标注
+    source_url: https://arcprize.org/blog/astra
+    download_url: https://arcprize.org/media/images/blog/astra-arc-agi-3-leaderboard.png
+    creator_or_rightsholder: ARC Prize Foundation
+    obtained_on: '2026-09-05'
+    modifications: 无修改，下载原始文件
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 图源：ARC Prize Foundation；https://arcprize.org/blog/astra
+    notes: 研究候选；发布前核对转载边界及允许平台
+  - file: assets/arc-astra-action-efficiency.png
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: official_original
+    original_pixels_preserved: true
+    source_type: official_material
+    source: 动作效率原图，不能解释为现实世界所有任务超过人类
+    source_url: https://arcprize.org/blog/astra
+    download_url: https://arcprize.org/media/images/blog/astra-action-efficiency.png
+    creator_or_rightsholder: ARC Prize Foundation
+    obtained_on: '2026-09-05'
+    modifications: 无修改，下载原始文件
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 图源：ARC Prize Foundation；https://arcprize.org/blog/astra
+    notes: 研究候选；发布前核对转载边界及允许平台
+  - file: research/source-assets/x-berman-fall-guys-preview.jpg
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: x_screenshot
+    original_pixels_preserved: true
+    source_type: social_media
+    source: Original X video preview
+    source_url: https://x.com/MatthewBerman/status/2095616764793270705
+    creator_or_rightsholder: MatthewBerman
+    obtained_on: '2026-09-05'
+    modifications: None; downloaded video preview, not a post screenshot
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 'Source: @MatthewBerman'
+  - file: research/source-assets/x-theo-browser-game-preview.jpg
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: x_screenshot
+    original_pixels_preserved: true
+    source_type: social_media
+    source: Original X video preview
+    source_url: https://x.com/theo/status/2095599934766764338
+    creator_or_rightsholder: theo
+    obtained_on: '2026-09-05'
+    modifications: None; downloaded video preview, not a post screenshot
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 'Source: @theo'
+  - file: assets/reset-tracker.png
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: true
+    source_type: social_media
+    source: 第三方额度追踪站，含作者预测
+    source_url: https://when.usagereset.at/
+    creator_or_rightsholder: when.usagereset.at / Bettag Systems
+    obtained_on: '2026-09-05'
+    modifications: 真实网页上半部区域截图；保留标题、工具名与预测信号，未改写内容；原页下部有排版重叠，未纳入截图
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 图源：when.usagereset.at / Bettag Systems
+    notes: 内部草稿引用候选；公开可见不等于取得转载权，发布前确认允许平台。截图无登录、无私人信息；不重绘官推。
+  - file: assets/claude-reset-embed.png
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: official_original
+    original_pixels_preserved: true
+    source_type: official_material
+    source: Fable 5.1 发布重置官推
+    source_url: https://x.com/ClaudeDevs/status/2094856679250919746
+    creator_or_rightsholder: Anthropic / ClaudeDevs
+    obtained_on: '2026-09-05'
+    modifications: 原生公开网页截图，时区 Asia/Shanghai；无内容修改
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 图源：Anthropic / ClaudeDevs
+    notes: 内部草稿引用候选；公开可见不等于取得转载权，发布前确认允许平台。截图无登录、无私人信息；不重绘官推。
+  - file: assets/astra-reset-embed.png
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: x_screenshot
+    original_pixels_preserved: true
+    source_type: social_media
+    source: 等待 Astra 期间的有条件重置补偿原帖
+    source_url: https://x.com/thsottiaux/status/2095651088502591861
+    creator_or_rightsholder: Tibo / @thsottiaux
+    obtained_on: '2026-09-05'
+    modifications: 原生公开网页截图，时区 Asia/Shanghai；无内容修改
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 图源：Tibo / @thsottiaux
+    notes: 内部草稿引用候选；公开可见不等于取得转载权，发布前确认允许平台。截图无登录、无私人信息；不重绘官推。
+  - file: assets/astra-launch-embed.png
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: official_original
+    original_pixels_preserved: true
+    source_type: official_material
+    source: Astra 官方发布帖与视频封面
+    source_url: https://x.com/OpenAI/status/2095595741528125780
+    creator_or_rightsholder: OpenAI
+    obtained_on: '2026-09-05'
+    modifications: 原生公开网页截图，时区 Asia/Shanghai；无内容修改
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 图源：OpenAI
+    notes: 内部草稿引用候选；公开可见不等于取得转载权，发布前确认允许平台。截图无登录、无私人信息；不重绘官推。
+  - file: assets/skirano-3d-video-preview.jpg
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: x_screenshot
+    original_pixels_preserved: true
+    source_type: social_media
+    source: 图片转 3D 模型的原视频预览
+    source_url: https://x.com/skirano/status/2095595932335170031
+    creator_or_rightsholder: Pietro Schirano / @skirano；输入设计权利人未核
+    obtained_on: '2026-09-05'
+    modifications: 无修改，下载原视频预览；不是帖子截图
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 图源：Pietro Schirano / @skirano；输入设计权利人未核
+    notes: 内部草稿引用候选；公开可见不等于取得转载权，发布前确认允许平台。截图无登录、无私人信息；不重绘官推。
+  - file: assets/berman-simcity-video-preview.jpg
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: x_screenshot
+    original_pixels_preserved: true
+    source_type: social_media
+    source: 连续运行 5 天仍未结束的模拟城市项目原视频预览
+    source_url: https://x.com/MatthewBerman/status/2095595893991129444
+    creator_or_rightsholder: Matthew Berman / @MatthewBerman
+    obtained_on: '2026-09-05'
+    modifications: 无修改，下载原视频预览；不是帖子截图
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 图源：Matthew Berman / @MatthewBerman
+    notes: 内部草稿引用候选；公开可见不等于取得转载权，发布前确认允许平台。截图无登录、无私人信息；不重绘官推。
+  - file: assets/astra-full-reset-embed.png
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: x_screenshot
+    original_pixels_preserved: true
+    source_type: social_media
+    source: 全量开放后宣布向 Plus、Pro、Business 提供 banked reset
+    source_url: https://x.com/thsottiaux/status/2096035437299237298
+    creator_or_rightsholder: Tibo / @thsottiaux
+    obtained_on: '2026-09-05'
+    modifications: 原生公开网页截图，时区 Asia/Shanghai；无内容修改
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 图源：Tibo / @thsottiaux
+    notes: 内部草稿引用候选；公开可见不等于取得转载权，发布前确认允许平台。截图无登录、无私人信息；不重绘官推。
+  - file: assets/astra-plus-business-live-embed.png
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: x_screenshot
+    original_pixels_preserved: true
+    source_type: social_media
+    source: 宣布 Plus 和 Business 也已完成开放
+    source_url: https://x.com/thsottiaux/status/2096002992046796932
+    creator_or_rightsholder: Tibo / @thsottiaux
+    obtained_on: '2026-09-05'
+    modifications: 原生公开网页截图，时区 Asia/Shanghai；无内容修改
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 图源：Tibo / @thsottiaux
+    notes: 内部草稿引用候选；公开可见不等于取得转载权，发布前确认允许平台。截图无登录、无私人信息；不重绘官推。
+  - file: assets/video/ghost-full.mp4
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: false
+    source_type: user_provided
+    source: 用户实际测评截图或屏幕录制；模型生成作品的原始运行画面
+    source_url: local-user-material://2026-09-05/ghost-full.mp4
+    creator_or_rightsholder: 作者提供；模型生成网页或游戏，内含素材权利待核
+    obtained_on: '2026-09-05'
+    modifications: 完整录屏缩至 1280×720，H.264/AAC，保留原音，未变速
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 作者实际测评，画面中的作品由 AI 编写
+    notes: 本次任务已授权本地处理与入稿；未执行公开发布。不是 AI 生成的模拟运行截图。临时下载凭据不保存。 时间戳、源文件指纹及导出指纹见 research/video-export-receipt.json。
+    model: Astra
+    model_identification: 作者最新明确更正：10-54-51 为 Astra；12-03-11 与 12-03-51 均为 Fable 5.1。覆盖此前相反归属。
+  - file: assets/video/lune-full.mp4
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: false
+    source_type: user_provided
+    source: 用户实际测评截图或屏幕录制；模型生成作品的原始运行画面
+    source_url: local-user-material://2026-09-05/lune-full.mp4
+    creator_or_rightsholder: 作者提供；模型生成网页或游戏，内含素材权利待核
+    obtained_on: '2026-09-05'
+    modifications: 完整录屏缩至 1280×720，H.264/AAC，保留原音，未变速
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 作者实际测评，画面中的作品由 AI 编写
+    notes: 本次任务已授权本地处理与入稿；未执行公开发布。不是 AI 生成的模拟运行截图。临时下载凭据不保存。 时间戳、源文件指纹及导出指纹见 research/video-export-receipt.json。
+  - file: assets/video/ghost-start.gif
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: false
+    source_type: user_provided
+    source: 用户实际测评截图或屏幕录制；模型生成作品的原始运行画面
+    source_url: local-user-material://2026-09-05/ghost-start.gif
+    creator_or_rightsholder: 作者提供；模型生成网页或游戏，内含素材权利待核
+    obtained_on: '2026-09-05'
+    modifications: 原视频 0 秒起，截取 7 秒；640×360，10 帧/秒，64 色，无声循环；未变速
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 作者实际测评，画面中的作品由 AI 编写
+    notes: 本次任务已授权本地处理与入稿；未执行公开发布。不是 AI 生成的模拟运行截图。临时下载凭据不保存。 时间戳、源文件指纹及导出指纹见 research/video-export-receipt.json。
+    model: Astra
+    model_identification: 作者最新明确更正：10-54-51 为 Astra；12-03-11 与 12-03-51 均为 Fable 5.1。覆盖此前相反归属。
+  - file: assets/video/ghost-platforms.gif
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: false
+    source_type: user_provided
+    source: 用户实际测评截图或屏幕录制；模型生成作品的原始运行画面
+    source_url: local-user-material://2026-09-05/ghost-platforms.gif
+    creator_or_rightsholder: 作者提供；模型生成网页或游戏，内含素材权利待核
+    obtained_on: '2026-09-05'
+    modifications: 原视频 50 秒起，截取 7 秒；640×360，10 帧/秒，64 色，无声循环；未变速
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 作者实际测评，画面中的作品由 AI 编写
+    notes: 本次任务已授权本地处理与入稿；未执行公开发布。不是 AI 生成的模拟运行截图。临时下载凭据不保存。 时间戳、源文件指纹及导出指纹见 research/video-export-receipt.json。
+    model: Astra
+    model_identification: 作者最新明确更正：10-54-51 为 Astra；12-03-11 与 12-03-51 均为 Fable 5.1。覆盖此前相反归属。
+  - file: assets/video/ghost-finish.gif
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: false
+    source_type: user_provided
+    source: 用户实际测评截图或屏幕录制；模型生成作品的原始运行画面
+    source_url: local-user-material://2026-09-05/ghost-finish.gif
+    creator_or_rightsholder: 作者提供；模型生成网页或游戏，内含素材权利待核
+    obtained_on: '2026-09-05'
+    modifications: 原视频 84 秒起，截取 9 秒；640×360，10 帧/秒，64 色，无声循环；未变速
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 作者实际测评，画面中的作品由 AI 编写
+    notes: 本次任务已授权本地处理与入稿；未执行公开发布。不是 AI 生成的模拟运行截图。临时下载凭据不保存。 时间戳、源文件指纹及导出指纹见 research/video-export-receipt.json。
+    model: Astra
+    model_identification: 作者最新明确更正：10-54-51 为 Astra；12-03-11 与 12-03-51 均为 Fable 5.1。覆盖此前相反归属。
+  - file: assets/video/lune-tide.gif
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: false
+    source_type: user_provided
+    source: 用户实际测评截图或屏幕录制；模型生成作品的原始运行画面
+    source_url: local-user-material://2026-09-05/lune-tide.gif
+    creator_or_rightsholder: 作者提供；模型生成网页或游戏，内含素材权利待核
+    obtained_on: '2026-09-05'
+    modifications: 原视频 7 秒起，截取 7 秒；640×360，10 帧/秒，64 色，无声循环；未变速
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 作者实际测评，画面中的作品由 AI 编写
+    notes: 本次任务已授权本地处理与入稿；未执行公开发布。不是 AI 生成的模拟运行截图。临时下载凭据不保存。 时间戳、源文件指纹及导出指纹见 research/video-export-receipt.json。
+  - file: assets/video/lune-sky.gif
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: false
+    source_type: user_provided
+    source: 用户实际测评截图或屏幕录制；模型生成作品的原始运行画面
+    source_url: local-user-material://2026-09-05/lune-sky.gif
+    creator_or_rightsholder: 作者提供；模型生成网页或游戏，内含素材权利待核
+    obtained_on: '2026-09-05'
+    modifications: 原视频 13 秒起，截取 8 秒；640×360，10 帧/秒，64 色，无声循环；未变速
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 作者实际测评，画面中的作品由 AI 编写
+    notes: 本次任务已授权本地处理与入稿；未执行公开发布。不是 AI 生成的模拟运行截图。临时下载凭据不保存。 时间戳、源文件指纹及导出指纹见 research/video-export-receipt.json。
+  - file: assets/user-results/doc-01-astra.png
+    used_in_draft: true
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: true
+    source_type: user_provided
+    source: 用户实际测评截图或屏幕录制；模型生成作品的原始运行画面
+    source_url: local-user-material://2026-09-05/doc-01-astra.png
+    creator_or_rightsholder: 作者提供；模型生成网页或游戏，内含素材权利待核
+    obtained_on: '2026-09-05'
+    modifications: 原图字节复制
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 作者实际测评，画面中的作品由 AI 编写
+    notes: 本次任务已授权本地处理与入稿；未执行公开发布。不是 AI 生成的模拟运行截图。临时下载凭据不保存。
+  - file: assets/user-results/doc-02-fable.png
+    used_in_draft: true
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: true
+    source_type: user_provided
+    source: 用户实际测评截图或屏幕录制；模型生成作品的原始运行画面
+    source_url: local-user-material://2026-09-05/doc-02-fable.png
+    creator_or_rightsholder: 作者提供；模型生成网页或游戏，内含素材权利待核
+    obtained_on: '2026-09-05'
+    modifications: 原图字节复制
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 作者实际测评，画面中的作品由 AI 编写
+    notes: 本次任务已授权本地处理与入稿；未执行公开发布。不是 AI 生成的模拟运行截图。临时下载凭据不保存。
+  - file: assets/user-results/doc-03-fable.png
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: true
+    source_type: user_provided
+    source: 用户实际测评截图或屏幕录制；模型生成作品的原始运行画面
+    source_url: local-user-material://2026-09-05/doc-03-fable.png
+    creator_or_rightsholder: 作者提供；模型生成网页或游戏，内含素材权利待核
+    obtained_on: '2026-09-05'
+    modifications: 原图字节复制
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 作者实际测评，画面中的作品由 AI 编写
+    notes: 本次任务已授权本地处理与入稿；未执行公开发布。不是 AI 生成的模拟运行截图。临时下载凭据不保存。
+  - file: assets/user-results/doc-04-fable.png
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: true
+    source_type: user_provided
+    source: 用户实际测评截图或屏幕录制；模型生成作品的原始运行画面
+    source_url: local-user-material://2026-09-05/doc-04-fable.png
+    creator_or_rightsholder: 作者提供；模型生成网页或游戏，内含素材权利待核
+    obtained_on: '2026-09-05'
+    modifications: 原图字节复制
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 作者实际测评，画面中的作品由 AI 编写
+    notes: 本次任务已授权本地处理与入稿；未执行公开发布。不是 AI 生成的模拟运行截图。临时下载凭据不保存。
+  - file: assets/user-results/doc-05-fable.png
+    used_in_draft: true
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: true
+    source_type: user_provided
+    source: 用户实际测评截图或屏幕录制；模型生成作品的原始运行画面
+    source_url: local-user-material://2026-09-05/doc-05-fable.png
+    creator_or_rightsholder: 作者提供；模型生成网页或游戏，内含素材权利待核
+    obtained_on: '2026-09-05'
+    modifications: 原图字节复制
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 作者实际测评，画面中的作品由 AI 编写
+    notes: 本次任务已授权本地处理与入稿；未执行公开发布。不是 AI 生成的模拟运行截图。临时下载凭据不保存。
+  - file: assets/user-results/doc-06-astra.png
+    used_in_draft: true
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: true
+    source_type: user_provided
+    source: 用户实际测评截图或屏幕录制；模型生成作品的原始运行画面
+    source_url: local-user-material://2026-09-05/doc-06-astra.png
+    creator_or_rightsholder: 作者提供；模型生成网页或游戏，内含素材权利待核
+    obtained_on: '2026-09-05'
+    modifications: 原图字节复制
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 作者实际测评，画面中的作品由 AI 编写
+    notes: 本次任务已授权本地处理与入稿；未执行公开发布。不是 AI 生成的模拟运行截图。临时下载凭据不保存。
+  - file: assets/user-results/doc-07-astra.png
+    used_in_draft: true
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: true
+    source_type: user_provided
+    source: 用户实际测评截图或屏幕录制；模型生成作品的原始运行画面
+    source_url: local-user-material://2026-09-05/doc-07-astra.png
+    creator_or_rightsholder: 作者提供；模型生成网页或游戏，内含素材权利待核
+    obtained_on: '2026-09-05'
+    modifications: 原图字节复制
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 作者实际测评，画面中的作品由 AI 编写
+    notes: 本次任务已授权本地处理与入稿；未执行公开发布。不是 AI 生成的模拟运行截图。临时下载凭据不保存。
+  - file: assets/user-results/logo-astra-opening.png
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: true
+    source_type: user_provided
+    source: 用户实际测评截图或屏幕录制；模型生成作品的原始运行画面
+    source_url: local-user-material://2026-09-05/logo-astra-opening.png
+    creator_or_rightsholder: 作者；APPSO 品牌元素归 APPSO / 爱范儿
+    obtained_on: '2026-09-05'
+    modifications: 原图字节复制
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 作者实际测评，画面中的作品由 AI 编写
+    notes: 本次任务已授权本地处理与入稿；未执行公开发布。不是 AI 生成的模拟运行截图。临时下载凭据不保存。 来自被测项目 artifacts；通关图为项目自动键盘测试，不能归为作者真人试玩。
+  - file: assets/user-results/logo-astra-automated-completion.png
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: true
+    source_type: user_provided
+    source: 用户实际测评截图或屏幕录制；模型生成作品的原始运行画面
+    source_url: local-user-material://2026-09-05/logo-astra-automated-completion.png
+    creator_or_rightsholder: 作者；APPSO 品牌元素归 APPSO / 爱范儿
+    obtained_on: '2026-09-05'
+    modifications: 原图字节复制
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 作者实际测评，画面中的作品由 AI 编写
+    notes: 本次任务已授权本地处理与入稿；未执行公开发布。不是 AI 生成的模拟运行截图。临时下载凭据不保存。 来自被测项目 artifacts；通关图为项目自动键盘测试，不能归为作者真人试玩。
+  - file: assets/user-results/video-0000000ms.png
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: true
+    source_type: user_provided
+    source: 用户实际测评截图或屏幕录制；模型生成作品的原始运行画面
+    source_url: local-user-material://2026-09-05/video-0000000ms.png
+    creator_or_rightsholder: 作者提供；模型生成网页或游戏，内含素材权利待核
+    obtained_on: '2026-09-05'
+    modifications: 原视频抽帧，仅供内部选片；OpenCV 请求时间不是精确展示时间，以原视频 PTS 与导出清单为准
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 作者实际测评，画面中的作品由 AI 编写
+    notes: 本次任务已授权本地处理与入稿；未执行公开发布。不是 AI 生成的模拟运行截图。临时下载凭据不保存。 未用于正文，不作为独立截图任务成果。
+    model: Astra
+    model_identification: 作者最新明确更正：10-54-51 为 Astra；12-03-11 与 12-03-51 均为 Fable 5.1。覆盖此前相反归属。
+  - file: assets/user-results/video-0007850ms.png
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: true
+    source_type: user_provided
+    source: 用户实际测评截图或屏幕录制；模型生成作品的原始运行画面
+    source_url: local-user-material://2026-09-05/video-0007850ms.png
+    creator_or_rightsholder: 作者提供；模型生成网页或游戏，内含素材权利待核
+    obtained_on: '2026-09-05'
+    modifications: 原视频抽帧，仅供内部选片；OpenCV 请求时间不是精确展示时间，以原视频 PTS 与导出清单为准
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 作者实际测评，画面中的作品由 AI 编写
+    notes: 本次任务已授权本地处理与入稿；未执行公开发布。不是 AI 生成的模拟运行截图。临时下载凭据不保存。 未用于正文，不作为独立截图任务成果。
+    model: Astra
+    model_identification: 作者最新明确更正：10-54-51 为 Astra；12-03-11 与 12-03-51 均为 Fable 5.1。覆盖此前相反归属。
+  - file: assets/user-results/video-0015700ms.png
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: true
+    source_type: user_provided
+    source: 用户实际测评截图或屏幕录制；模型生成作品的原始运行画面
+    source_url: local-user-material://2026-09-05/video-0015700ms.png
+    creator_or_rightsholder: 作者提供；模型生成网页或游戏，内含素材权利待核
+    obtained_on: '2026-09-05'
+    modifications: 原视频抽帧，仅供内部选片；OpenCV 请求时间不是精确展示时间，以原视频 PTS 与导出清单为准
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 作者实际测评，画面中的作品由 AI 编写
+    notes: 本次任务已授权本地处理与入稿；未执行公开发布。不是 AI 生成的模拟运行截图。临时下载凭据不保存。 未用于正文，不作为独立截图任务成果。
+    model: Astra
+    model_identification: 作者最新明确更正：10-54-51 为 Astra；12-03-11 与 12-03-51 均为 Fable 5.1。覆盖此前相反归属。
+  - file: assets/user-results/video-0023540ms.png
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: true
+    source_type: user_provided
+    source: 用户实际测评截图或屏幕录制；模型生成作品的原始运行画面
+    source_url: local-user-material://2026-09-05/video-0023540ms.png
+    creator_or_rightsholder: 作者提供；模型生成网页或游戏，内含素材权利待核
+    obtained_on: '2026-09-05'
+    modifications: 原视频抽帧，仅供内部选片；OpenCV 请求时间不是精确展示时间，以原视频 PTS 与导出清单为准
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 作者实际测评，画面中的作品由 AI 编写
+    notes: 本次任务已授权本地处理与入稿；未执行公开发布。不是 AI 生成的模拟运行截图。临时下载凭据不保存。 未用于正文，不作为独立截图任务成果。
+    model: Astra
+    model_identification: 作者最新明确更正：10-54-51 为 Astra；12-03-11 与 12-03-51 均为 Fable 5.1。覆盖此前相反归属。
+  - file: assets/user-results/video-0031390ms.png
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: true
+    source_type: user_provided
+    source: 用户实际测评截图或屏幕录制；模型生成作品的原始运行画面
+    source_url: local-user-material://2026-09-05/video-0031390ms.png
+    creator_or_rightsholder: 作者提供；模型生成网页或游戏，内含素材权利待核
+    obtained_on: '2026-09-05'
+    modifications: 原视频抽帧，仅供内部选片；OpenCV 请求时间不是精确展示时间，以原视频 PTS 与导出清单为准
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 作者实际测评，画面中的作品由 AI 编写
+    notes: 本次任务已授权本地处理与入稿；未执行公开发布。不是 AI 生成的模拟运行截图。临时下载凭据不保存。 未用于正文，不作为独立截图任务成果。
+    model: Astra
+    model_identification: 作者最新明确更正：10-54-51 为 Astra；12-03-11 与 12-03-51 均为 Fable 5.1。覆盖此前相反归属。
+  - file: assets/user-results/video-0039240ms.png
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: true
+    source_type: user_provided
+    source: 用户实际测评截图或屏幕录制；模型生成作品的原始运行画面
+    source_url: local-user-material://2026-09-05/video-0039240ms.png
+    creator_or_rightsholder: 作者提供；模型生成网页或游戏，内含素材权利待核
+    obtained_on: '2026-09-05'
+    modifications: 原视频抽帧，仅供内部选片；OpenCV 请求时间不是精确展示时间，以原视频 PTS 与导出清单为准
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 作者实际测评，画面中的作品由 AI 编写
+    notes: 本次任务已授权本地处理与入稿；未执行公开发布。不是 AI 生成的模拟运行截图。临时下载凭据不保存。 未用于正文，不作为独立截图任务成果。
+    model: Astra
+    model_identification: 作者最新明确更正：10-54-51 为 Astra；12-03-11 与 12-03-51 均为 Fable 5.1。覆盖此前相反归属。
+  - file: assets/user-results/video-0047090ms.png
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: true
+    source_type: user_provided
+    source: 用户实际测评截图或屏幕录制；模型生成作品的原始运行画面
+    source_url: local-user-material://2026-09-05/video-0047090ms.png
+    creator_or_rightsholder: 作者提供；模型生成网页或游戏，内含素材权利待核
+    obtained_on: '2026-09-05'
+    modifications: 原视频抽帧，仅供内部选片；OpenCV 请求时间不是精确展示时间，以原视频 PTS 与导出清单为准
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 作者实际测评，画面中的作品由 AI 编写
+    notes: 本次任务已授权本地处理与入稿；未执行公开发布。不是 AI 生成的模拟运行截图。临时下载凭据不保存。 未用于正文，不作为独立截图任务成果。
+    model: Astra
+    model_identification: 作者最新明确更正：10-54-51 为 Astra；12-03-11 与 12-03-51 均为 Fable 5.1。覆盖此前相反归属。
+  - file: assets/user-results/video-0054930ms.png
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: true
+    source_type: user_provided
+    source: 用户实际测评截图或屏幕录制；模型生成作品的原始运行画面
+    source_url: local-user-material://2026-09-05/video-0054930ms.png
+    creator_or_rightsholder: 作者提供；模型生成网页或游戏，内含素材权利待核
+    obtained_on: '2026-09-05'
+    modifications: 原视频抽帧，仅供内部选片；OpenCV 请求时间不是精确展示时间，以原视频 PTS 与导出清单为准
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 作者实际测评，画面中的作品由 AI 编写
+    notes: 本次任务已授权本地处理与入稿；未执行公开发布。不是 AI 生成的模拟运行截图。临时下载凭据不保存。 未用于正文，不作为独立截图任务成果。
+    model: Astra
+    model_identification: 作者最新明确更正：10-54-51 为 Astra；12-03-11 与 12-03-51 均为 Fable 5.1。覆盖此前相反归属。
+  - file: assets/user-results/video-0062780ms.png
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: true
+    source_type: user_provided
+    source: 用户实际测评截图或屏幕录制；模型生成作品的原始运行画面
+    source_url: local-user-material://2026-09-05/video-0062780ms.png
+    creator_or_rightsholder: 作者提供；模型生成网页或游戏，内含素材权利待核
+    obtained_on: '2026-09-05'
+    modifications: 原视频抽帧，仅供内部选片；OpenCV 请求时间不是精确展示时间，以原视频 PTS 与导出清单为准
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 作者实际测评，画面中的作品由 AI 编写
+    notes: 本次任务已授权本地处理与入稿；未执行公开发布。不是 AI 生成的模拟运行截图。临时下载凭据不保存。 未用于正文，不作为独立截图任务成果。
+    model: Astra
+    model_identification: 作者最新明确更正：10-54-51 为 Astra；12-03-11 与 12-03-51 均为 Fable 5.1。覆盖此前相反归属。
+  - file: assets/user-results/video-0070630ms.png
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: true
+    source_type: user_provided
+    source: 用户实际测评截图或屏幕录制；模型生成作品的原始运行画面
+    source_url: local-user-material://2026-09-05/video-0070630ms.png
+    creator_or_rightsholder: 作者提供；模型生成网页或游戏，内含素材权利待核
+    obtained_on: '2026-09-05'
+    modifications: 原视频抽帧，仅供内部选片；OpenCV 请求时间不是精确展示时间，以原视频 PTS 与导出清单为准
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 作者实际测评，画面中的作品由 AI 编写
+    notes: 本次任务已授权本地处理与入稿；未执行公开发布。不是 AI 生成的模拟运行截图。临时下载凭据不保存。 未用于正文，不作为独立截图任务成果。
+    model: Astra
+    model_identification: 作者最新明确更正：10-54-51 为 Astra；12-03-11 与 12-03-51 均为 Fable 5.1。覆盖此前相反归属。
+  - file: assets/user-results/video-0078480ms.png
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: true
+    source_type: user_provided
+    source: 用户实际测评截图或屏幕录制；模型生成作品的原始运行画面
+    source_url: local-user-material://2026-09-05/video-0078480ms.png
+    creator_or_rightsholder: 作者提供；模型生成网页或游戏，内含素材权利待核
+    obtained_on: '2026-09-05'
+    modifications: 原视频抽帧，仅供内部选片；OpenCV 请求时间不是精确展示时间，以原视频 PTS 与导出清单为准
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 作者实际测评，画面中的作品由 AI 编写
+    notes: 本次任务已授权本地处理与入稿；未执行公开发布。不是 AI 生成的模拟运行截图。临时下载凭据不保存。 未用于正文，不作为独立截图任务成果。
+    model: Astra
+    model_identification: 作者最新明确更正：10-54-51 为 Astra；12-03-11 与 12-03-51 均为 Fable 5.1。覆盖此前相反归属。
+  - file: assets/user-results/video-0086320ms.png
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: true
+    source_type: user_provided
+    source: 用户实际测评截图或屏幕录制；模型生成作品的原始运行画面
+    source_url: local-user-material://2026-09-05/video-0086320ms.png
+    creator_or_rightsholder: 作者提供；模型生成网页或游戏，内含素材权利待核
+    obtained_on: '2026-09-05'
+    modifications: 原视频抽帧，仅供内部选片；OpenCV 请求时间不是精确展示时间，以原视频 PTS 与导出清单为准
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 作者实际测评，画面中的作品由 AI 编写
+    notes: 本次任务已授权本地处理与入稿；未执行公开发布。不是 AI 生成的模拟运行截图。临时下载凭据不保存。 未用于正文，不作为独立截图任务成果。
+    model: Astra
+    model_identification: 作者最新明确更正：10-54-51 为 Astra；12-03-11 与 12-03-51 均为 Fable 5.1。覆盖此前相反归属。
+  - file: assets/user-results/video-0093170ms.png
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: true
+    source_type: user_provided
+    source: 用户实际测评截图或屏幕录制；模型生成作品的原始运行画面
+    source_url: local-user-material://2026-09-05/video-0093170ms.png
+    creator_or_rightsholder: 作者提供；模型生成网页或游戏，内含素材权利待核
+    obtained_on: '2026-09-05'
+    modifications: 原视频抽帧，仅供内部选片；OpenCV 请求时间不是精确展示时间，以原视频 PTS 与导出清单为准
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 作者实际测评，画面中的作品由 AI 编写
+    notes: 本次任务已授权本地处理与入稿；未执行公开发布。不是 AI 生成的模拟运行截图。临时下载凭据不保存。 未用于正文，不作为独立截图任务成果。
+    model: Astra
+    model_identification: 作者最新明确更正：10-54-51 为 Astra；12-03-11 与 12-03-51 均为 Fable 5.1。覆盖此前相反归属。
+  - file: assets/user-results/lune-00s.jpg
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: false
+    source_type: user_provided
+    source: 用户实际测评截图或屏幕录制；模型生成作品的原始运行画面
+    source_url: local-user-material://2026-09-05/lune-00s.jpg
+    creator_or_rightsholder: 作者提供；模型生成网页或游戏，内含素材权利待核
+    obtained_on: '2026-09-05'
+    modifications: 原视频抽帧，仅供内部选片；OpenCV 请求时间不是精确展示时间，以原视频 PTS 与导出清单为准
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 作者实际测评，画面中的作品由 AI 编写
+    notes: 本次任务已授权本地处理与入稿；未执行公开发布。不是 AI 生成的模拟运行截图。临时下载凭据不保存。 未用于正文，不作为独立截图任务成果。
+  - file: assets/user-results/lune-03s.jpg
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: false
+    source_type: user_provided
+    source: 用户实际测评截图或屏幕录制；模型生成作品的原始运行画面
+    source_url: local-user-material://2026-09-05/lune-03s.jpg
+    creator_or_rightsholder: 作者提供；模型生成网页或游戏，内含素材权利待核
+    obtained_on: '2026-09-05'
+    modifications: 原视频抽帧，仅供内部选片；OpenCV 请求时间不是精确展示时间，以原视频 PTS 与导出清单为准
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 作者实际测评，画面中的作品由 AI 编写
+    notes: 本次任务已授权本地处理与入稿；未执行公开发布。不是 AI 生成的模拟运行截图。临时下载凭据不保存。 未用于正文，不作为独立截图任务成果。
+  - file: assets/user-results/lune-06s.jpg
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: false
+    source_type: user_provided
+    source: 用户实际测评截图或屏幕录制；模型生成作品的原始运行画面
+    source_url: local-user-material://2026-09-05/lune-06s.jpg
+    creator_or_rightsholder: 作者提供；模型生成网页或游戏，内含素材权利待核
+    obtained_on: '2026-09-05'
+    modifications: 原视频抽帧，仅供内部选片；OpenCV 请求时间不是精确展示时间，以原视频 PTS 与导出清单为准
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 作者实际测评，画面中的作品由 AI 编写
+    notes: 本次任务已授权本地处理与入稿；未执行公开发布。不是 AI 生成的模拟运行截图。临时下载凭据不保存。 未用于正文，不作为独立截图任务成果。
+  - file: assets/user-results/lune-09s.jpg
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: false
+    source_type: user_provided
+    source: 用户实际测评截图或屏幕录制；模型生成作品的原始运行画面
+    source_url: local-user-material://2026-09-05/lune-09s.jpg
+    creator_or_rightsholder: 作者提供；模型生成网页或游戏，内含素材权利待核
+    obtained_on: '2026-09-05'
+    modifications: 原视频抽帧，仅供内部选片；OpenCV 请求时间不是精确展示时间，以原视频 PTS 与导出清单为准
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 作者实际测评，画面中的作品由 AI 编写
+    notes: 本次任务已授权本地处理与入稿；未执行公开发布。不是 AI 生成的模拟运行截图。临时下载凭据不保存。 未用于正文，不作为独立截图任务成果。
+  - file: assets/user-results/lune-12s.jpg
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: false
+    source_type: user_provided
+    source: 用户实际测评截图或屏幕录制；模型生成作品的原始运行画面
+    source_url: local-user-material://2026-09-05/lune-12s.jpg
+    creator_or_rightsholder: 作者提供；模型生成网页或游戏，内含素材权利待核
+    obtained_on: '2026-09-05'
+    modifications: 原视频抽帧，仅供内部选片；OpenCV 请求时间不是精确展示时间，以原视频 PTS 与导出清单为准
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 作者实际测评，画面中的作品由 AI 编写
+    notes: 本次任务已授权本地处理与入稿；未执行公开发布。不是 AI 生成的模拟运行截图。临时下载凭据不保存。 未用于正文，不作为独立截图任务成果。
+  - file: assets/user-results/lune-15s.jpg
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: false
+    source_type: user_provided
+    source: 用户实际测评截图或屏幕录制；模型生成作品的原始运行画面
+    source_url: local-user-material://2026-09-05/lune-15s.jpg
+    creator_or_rightsholder: 作者提供；模型生成网页或游戏，内含素材权利待核
+    obtained_on: '2026-09-05'
+    modifications: 原视频抽帧，仅供内部选片；OpenCV 请求时间不是精确展示时间，以原视频 PTS 与导出清单为准
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 作者实际测评，画面中的作品由 AI 编写
+    notes: 本次任务已授权本地处理与入稿；未执行公开发布。不是 AI 生成的模拟运行截图。临时下载凭据不保存。 未用于正文，不作为独立截图任务成果。
+  - file: assets/user-results/lune-18s.jpg
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: false
+    source_type: user_provided
+    source: 用户实际测评截图或屏幕录制；模型生成作品的原始运行画面
+    source_url: local-user-material://2026-09-05/lune-18s.jpg
+    creator_or_rightsholder: 作者提供；模型生成网页或游戏，内含素材权利待核
+    obtained_on: '2026-09-05'
+    modifications: 原视频抽帧，仅供内部选片；OpenCV 请求时间不是精确展示时间，以原视频 PTS 与导出清单为准
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 作者实际测评，画面中的作品由 AI 编写
+    notes: 本次任务已授权本地处理与入稿；未执行公开发布。不是 AI 生成的模拟运行截图。临时下载凭据不保存。 未用于正文，不作为独立截图任务成果。
+  - file: assets/user-results/lune-21s.jpg
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: false
+    source_type: user_provided
+    source: 用户实际测评截图或屏幕录制；模型生成作品的原始运行画面
+    source_url: local-user-material://2026-09-05/lune-21s.jpg
+    creator_or_rightsholder: 作者提供；模型生成网页或游戏，内含素材权利待核
+    obtained_on: '2026-09-05'
+    modifications: 原视频抽帧，仅供内部选片；OpenCV 请求时间不是精确展示时间，以原视频 PTS 与导出清单为准
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 作者实际测评，画面中的作品由 AI 编写
+    notes: 本次任务已授权本地处理与入稿；未执行公开发布。不是 AI 生成的模拟运行截图。临时下载凭据不保存。 未用于正文，不作为独立截图任务成果。
+  - file: assets/user-results/lune-24s.jpg
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: false
+    source_type: user_provided
+    source: 用户实际测评截图或屏幕录制；模型生成作品的原始运行画面
+    source_url: local-user-material://2026-09-05/lune-24s.jpg
+    creator_or_rightsholder: 作者提供；模型生成网页或游戏，内含素材权利待核
+    obtained_on: '2026-09-05'
+    modifications: 原视频抽帧，仅供内部选片；OpenCV 请求时间不是精确展示时间，以原视频 PTS 与导出清单为准
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 作者实际测评，画面中的作品由 AI 编写
+    notes: 本次任务已授权本地处理与入稿；未执行公开发布。不是 AI 生成的模拟运行截图。临时下载凭据不保存。 未用于正文，不作为独立截图任务成果。
+  - file: assets/user-results/lune-27s.jpg
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: false
+    source_type: user_provided
+    source: 用户实际测评截图或屏幕录制；模型生成作品的原始运行画面
+    source_url: local-user-material://2026-09-05/lune-27s.jpg
+    creator_or_rightsholder: 作者提供；模型生成网页或游戏，内含素材权利待核
+    obtained_on: '2026-09-05'
+    modifications: 原视频抽帧，仅供内部选片；OpenCV 请求时间不是精确展示时间，以原视频 PTS 与导出清单为准
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 作者实际测评，画面中的作品由 AI 编写
+    notes: 本次任务已授权本地处理与入稿；未执行公开发布。不是 AI 生成的模拟运行截图。临时下载凭据不保存。 未用于正文，不作为独立截图任务成果。
+  - file: assets/video/logo-astra-full.mp4
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: true
+    source_type: user_provided
+    source: 用户 APPSO Logo 乐园实际截图与真人试玩录屏
+    source_url: local-user-material://2026-09-05/logo-astra-full.mp4
+    creator_or_rightsholder: 作者；APPSO / 爱范儿品牌元素
+    obtained_on: '2026-09-05'
+    modifications: 完整录屏无重编码封装；保留视频、原音与时间顺序，faststart
+    rights_status: pending
+    allowed_platforms: []
+    model: Astra
+    attribution: Astra 生成游戏，作者实际试玩
+    notes: 已授权本地处理与入稿；不代表品牌公开改版或发布授权。模型生成游戏的真实运行记录，未用生图工具模拟画面。源与输出指纹见 research/logo-recording-receipt.json。
+  - file: assets/video/logo-astra-start.gif
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: false
+    source_type: user_provided
+    source: 用户 APPSO Logo 乐园实际截图与真人试玩录屏
+    source_url: local-user-material://2026-09-05/logo-astra-start.gif
+    creator_or_rightsholder: 作者；APPSO / 爱范儿品牌元素
+    obtained_on: '2026-09-05'
+    modifications: 原录屏 2–10 秒，原速无声节选；960×540，12 帧/秒，96 色；无裁切或场景替换
+    rights_status: pending
+    allowed_platforms: []
+    model: Astra
+    attribution: Astra 生成游戏，作者实际试玩
+    notes: 已授权本地处理与入稿；不代表品牌公开改版或发布授权。模型生成游戏的真实运行记录，未用生图工具模拟画面。源与输出指纹见 research/logo-recording-receipt.json。
+  - file: assets/video/logo-astra-play.gif
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: false
+    source_type: user_provided
+    source: 用户 APPSO Logo 乐园实际截图与真人试玩录屏
+    source_url: local-user-material://2026-09-05/logo-astra-play.gif
+    creator_or_rightsholder: 作者；APPSO / 爱范儿品牌元素
+    obtained_on: '2026-09-05'
+    modifications: 原录屏 10–18 秒，原速无声节选；960×540，12 帧/秒，96 色；无裁切或场景替换
+    rights_status: pending
+    allowed_platforms: []
+    model: Astra
+    attribution: Astra 生成游戏，作者实际试玩
+    notes: 已授权本地处理与入稿；不代表品牌公开改版或发布授权。模型生成游戏的真实运行记录，未用生图工具模拟画面。源与输出指纹见 research/logo-recording-receipt.json。
+  - file: assets/user-results/logo-astra-user.png
+    used_in_draft: true
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: true
+    source_type: user_provided
+    source: 用户 APPSO Logo 乐园实际截图与真人试玩录屏
+    source_url: local-user-material://2026-09-05/logo-astra-user.png
+    creator_or_rightsholder: 作者；APPSO / 爱范儿品牌元素
+    obtained_on: '2026-09-05'
+    modifications: 用户附件原字节复制
+    rights_status: pending
+    allowed_platforms: []
+    model: Astra
+    attribution: Astra 生成游戏，作者实际试玩
+    notes: 已授权本地处理与入稿；不代表品牌公开改版或发布授权。模型生成游戏的真实运行记录，未用生图工具模拟画面。源与输出指纹见 research/logo-recording-receipt.json。
+  - file: assets/appso-logo-input.png
+    used_in_draft: true
+    visual_route: source_original
+    source_original_kind: official_original
+    original_pixels_preserved: true
+    source_type: user_provided
+    source: 用户本轮提供的 APPSO 红底白字 Logo，作为品牌魔改横评输入
+    source_url: local-user-attachment://2026-09-05/appso-logo
+    creator_or_rightsholder: APPSO / 爱范儿
+    obtained_on: '2026-09-05'
+    modifications: 无修改，原字节复制到独立案例输入目录
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 图源：APPSO，用户提供
+    notes: 用户明确授权本次 APPSO 品牌魔改测试；不推定衍生产物已获发布许可；原图 SHA256 8160DB79FC8CAFDD864312B32BB6B01EE4D720187BC4ACC6A875E273EECD04FF
+  - file: assets/feishu/logo-astra-play.gif
+    used_in_draft: true
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: false
+    source_type: user_provided
+    source: 作者原始实测录屏的飞书轻量节选
+    source_url: local-user-material://2026-09-05/logo-astra-play.gif
+    creator_or_rightsholder: 作者；Logo 品牌元素归 APPSO / 爱范儿
+    obtained_on: '2026-09-05'
+    modifications: 原视频 10 秒起，8 秒；宽 560，8 帧/秒，64 色；原速节选、等比例缩小、降低帧率与色数；不插帧、不裁切、不改变玩法结果
+    rights_status: pending
+    allowed_platforms: []
+    model: Astra
+    attribution: 作者实际试玩，模型生成作品
+    notes: 本次授权减小体积以便飞书协作；小于 1 MB 是自定处理目标，不是飞书官方上限。未上传。较清晰的旧 GIF 与完整 MP4 保留，指纹和精确片段见 research/feishu-gif-receipt.json。
+  - file: assets/feishu/lune-sky.gif
+    used_in_draft: true
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: false
+    source_type: user_provided
+    source: 作者原始实测录屏的飞书轻量节选
+    source_url: local-user-material://2026-09-05/lune-sky.gif
+    creator_or_rightsholder: 作者；Logo 品牌元素归 APPSO / 爱范儿
+    obtained_on: '2026-09-05'
+    modifications: 原视频 13 秒起，8 秒；宽 420，6 帧/秒，32 色；原速节选、等比例缩小、降低帧率与色数；不插帧、不裁切、不改变玩法结果
+    rights_status: pending
+    allowed_platforms: []
+    model: Astra
+    attribution: 作者实际试玩，模型生成作品
+    notes: 本次授权减小体积以便飞书协作；小于 1 MB 是自定处理目标，不是飞书官方上限。未上传。较清晰的旧 GIF 与完整 MP4 保留，指纹和精确片段见 research/feishu-gif-receipt.json。
+  - file: assets/feishu/lune-tide.gif
+    used_in_draft: true
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: false
+    source_type: user_provided
+    source: 作者原始实测录屏的飞书轻量节选
+    source_url: local-user-material://2026-09-05/lune-tide.gif
+    creator_or_rightsholder: 作者；Logo 品牌元素归 APPSO / 爱范儿
+    obtained_on: '2026-09-05'
+    modifications: 原视频 7 秒起，6 秒；宽 480，8 帧/秒，48 色；原速节选、等比例缩小、降低帧率与色数；不插帧、不裁切、不改变玩法结果
+    rights_status: pending
+    allowed_platforms: []
+    model: Astra
+    attribution: 作者实际试玩，模型生成作品
+    notes: 本次授权减小体积以便飞书协作；小于 1 MB 是自定处理目标，不是飞书官方上限。未上传。较清晰的旧 GIF 与完整 MP4 保留，指纹和精确片段见 research/feishu-gif-receipt.json。
+  - file: assets/feishu/ghost-start.gif
+    used_in_draft: true
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: false
+    source_type: user_provided
+    source: 作者原始实测录屏的飞书轻量节选
+    source_url: local-user-material://2026-09-05/ghost-start.gif
+    creator_or_rightsholder: 作者；Logo 品牌元素归 APPSO / 爱范儿
+    obtained_on: '2026-09-05'
+    modifications: 原视频 2 秒起，5 秒；宽 420，6 帧/秒，32 色；原速节选、等比例缩小、降低帧率与色数；不插帧、不裁切、不改变玩法结果
+    rights_status: pending
+    allowed_platforms: []
+    model: Astra
+    attribution: 作者实际试玩，模型生成作品
+    notes: 本次授权减小体积以便飞书协作；小于 1 MB 是自定处理目标，不是飞书官方上限。未上传。较清晰的旧 GIF 与完整 MP4 保留，指纹和精确片段见 research/feishu-gif-receipt.json。
+    model_identification: 作者最新明确更正：10-54-51 为 Astra；12-03-11 与 12-03-51 均为 Fable 5.1。覆盖此前相反归属。
+  - file: assets/feishu/ghost-platforms.gif
+    used_in_draft: true
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: false
+    source_type: user_provided
+    source: 作者原始实测录屏的飞书轻量节选
+    source_url: local-user-material://2026-09-05/ghost-platforms.gif
+    creator_or_rightsholder: 作者；Logo 品牌元素归 APPSO / 爱范儿
+    obtained_on: '2026-09-05'
+    modifications: 原视频 52 秒起，5 秒；宽 420，6 帧/秒，32 色；原速节选、等比例缩小、降低帧率与色数；不插帧、不裁切、不改变玩法结果
+    rights_status: pending
+    allowed_platforms: []
+    model: Astra
+    attribution: 作者实际试玩，模型生成作品
+    notes: 本次授权减小体积以便飞书协作；小于 1 MB 是自定处理目标，不是飞书官方上限。未上传。较清晰的旧 GIF 与完整 MP4 保留，指纹和精确片段见 research/feishu-gif-receipt.json。
+    model_identification: 作者最新明确更正：10-54-51 为 Astra；12-03-11 与 12-03-51 均为 Fable 5.1。覆盖此前相反归属。
+  - file: assets/feishu/ghost-finish.gif
+    used_in_draft: true
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: false
+    source_type: user_provided
+    source: 作者原始实测录屏的飞书轻量节选
+    source_url: local-user-material://2026-09-05/ghost-finish.gif
+    creator_or_rightsholder: 作者；Logo 品牌元素归 APPSO / 爱范儿
+    obtained_on: '2026-09-05'
+    modifications: 原视频 85 秒起，7 秒；宽 480，6 帧/秒，48 色；原速节选、等比例缩小、降低帧率与色数；不插帧、不裁切、不改变玩法结果
+    rights_status: pending
+    allowed_platforms: []
+    model: Astra
+    attribution: 作者实际试玩，模型生成作品
+    notes: 本次授权减小体积以便飞书协作；小于 1 MB 是自定处理目标，不是飞书官方上限。未上传。较清晰的旧 GIF 与完整 MP4 保留，指纹和精确片段见 research/feishu-gif-receipt.json。
+    model_identification: 作者最新明确更正：10-54-51 为 Astra；12-03-11 与 12-03-51 均为 Fable 5.1。覆盖此前相反归属。
+  - file: assets/every-astra-writing.png
+    used_in_draft: true
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: true
+    source_type: third_party_review
+    source: Every 测评公开标题、署名和导语
+    source_url: https://every.to/vibe-check/gpt-6-astra-vibe-check
+    creator_or_rightsholder: Every / Katie Parrott
+    obtained_on: '2026-09-05'
+    modifications: 独立浏览器原生截图；不登录，不读取付费正文，不改写页面内容
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 图源：Every
+    notes: 仅公开导语；正文中的经历是测评作者自述，不是本稿作者测试。截图指纹见 external-followup-images.json。
+  - file: assets/figma-make-kits.png
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: official_original
+    original_pixels_preserved: true
+    source_type: official
+    source: Figma Make kits 官方介绍配图
+    source_url: https://www.figma.com/blog/introducing-make-kits-and-make-attachments/
+    creator_or_rightsholder: Figma
+    obtained_on: '2026-09-05'
+    modifications: 下载官方 CDN 原始 PNG；未裁切、未加字、未修改像素
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 图源：Figma，Make kits 官方配图
+    notes: 官方产品说明插图，不是本稿实际操作截图。原文件 1608×1206；下载地址与指纹见 research/trend-image-receipt.json。转载权利待核。
+  - file: assets/external/anthropic-game-full-play.png
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: official_original
+    original_pixels_preserved: true
+    source_type: official
+    source: 官网案例原图
+    source_url: https://www.anthropic.com/engineering/harness-design-long-running-apps
+    creator_or_rightsholder: Anthropic
+    obtained_on: '2026-09-05'
+    modifications: 官方原图或原生浏览器卡片截图，无改写
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 图源：Anthropic
+    notes: 研究／草稿候选；公开来源不等于转载授权。
+  - file: assets/external/anthropic-game-iterated.png
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: official_original
+    original_pixels_preserved: true
+    source_type: official
+    source: 官网案例原图
+    source_url: https://www.anthropic.com/engineering/harness-design-long-running-apps
+    creator_or_rightsholder: Anthropic
+    obtained_on: '2026-09-05'
+    modifications: 官方原图或原生浏览器卡片截图，无改写
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 图源：Anthropic
+    notes: 研究／草稿候选；公开来源不等于转载授权。
+  - file: assets/external/anthropic-game-solo-play.png
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: official_original
+    original_pixels_preserved: true
+    source_type: official
+    source: 官网案例原图
+    source_url: https://www.anthropic.com/engineering/harness-design-long-running-apps
+    creator_or_rightsholder: Anthropic
+    obtained_on: '2026-09-05'
+    modifications: 官方原图或原生浏览器卡片截图，无改写
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 图源：Anthropic
+    notes: 研究／草稿候选；公开来源不等于转载授权。
+  - file: assets/external/anthropic-game-solo.png
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: official_original
+    original_pixels_preserved: true
+    source_type: official
+    source: 官网案例原图
+    source_url: https://www.anthropic.com/engineering/harness-design-long-running-apps
+    creator_or_rightsholder: Anthropic
+    obtained_on: '2026-09-05'
+    modifications: 官方原图或原生浏览器卡片截图，无改写
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 图源：Anthropic
+    notes: 研究／草稿候选；公开来源不等于转载授权。
+  - file: assets/external/berman-city.jpg
+    used_in_draft: true
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: true
+    source_type: community
+    source: X 作者公开演示原始媒体
+    source_url: https://x.com/MatthewBerman/status/2095595893991129444
+    creator_or_rightsholder: MatthewBerman
+    obtained_on: '2026-09-05'
+    modifications: 原始视频封面，无裁切或改写
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 图源：MatthewBerman
+    notes: 研究／草稿候选；公开来源不等于转载授权。
+  - file: assets/external/berman-fallguys.jpg
+    used_in_draft: true
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: true
+    source_type: community
+    source: X 作者公开演示原始媒体
+    source_url: https://x.com/MatthewBerman/status/2095616764793270705
+    creator_or_rightsholder: MatthewBerman
+    obtained_on: '2026-09-05'
+    modifications: 原始视频封面，无裁切或改写
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 图源：MatthewBerman
+    notes: 研究／草稿候选；公开来源不等于转载授权。
+  - file: assets/external/claire-toy-computer.jpg
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: true
+    source_type: community
+    source: X 作者公开演示原始媒体
+    source_url: https://x.com/clairevo/status/2095625355231142079
+    creator_or_rightsholder: clairevo
+    obtained_on: '2026-09-05'
+    modifications: 原始视频封面，无裁切或改写
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 图源：clairevo
+    notes: 研究／草稿候选；公开来源不等于转载授权。
+  - file: assets/external/claire-toy-frame.png
+    used_in_draft: true
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: true
+    source_type: community
+    source: X 作者公开演示原始媒体
+    source_url: https://x.com/clairevo/status/2095625355231142079
+    creator_or_rightsholder: clairevo
+    obtained_on: '2026-09-05'
+    modifications: 视频原帧，无裁切或重绘；见视觉回执
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 图源：clairevo
+    notes: 研究／草稿候选；公开来源不等于转载授权。
+  - file: assets/external/cognition-fusion-failure.png
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: official_original
+    original_pixels_preserved: true
+    source_type: official
+    source: 官网案例原图
+    source_url: https://cognition.com/blog/devin-fusion
+    creator_or_rightsholder: Cognition
+    obtained_on: '2026-09-05'
+    modifications: 官方原图或原生浏览器卡片截图，无改写
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 图源：Cognition
+    notes: 研究／草稿候选；公开来源不等于转载授权。
+  - file: assets/external/riley-shooter.jpg
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: true
+    source_type: community
+    source: X 作者公开演示原始媒体
+    source_url: https://x.com/rileybrown/status/2095679352927056230
+    creator_or_rightsholder: rileybrown
+    obtained_on: '2026-09-05'
+    modifications: 原始视频封面，无裁切或改写
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 图源：rileybrown
+    notes: 研究／草稿候选；公开来源不等于转载授权。
+  - file: research/viewing/claire-toy-10.png
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: true
+    source_type: community
+    source: X 作者公开演示原始媒体
+    source_url: https://x.com/clairevo/status/2095625355231142079
+    creator_or_rightsholder: clairevo
+    obtained_on: '2026-09-05'
+    modifications: 视频原帧，无裁切或重绘；见视觉回执
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 图源：clairevo
+    notes: 研究／草稿候选；公开来源不等于转载授权。
+  - file: research/viewing/claire-toy-15.png
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: true
+    source_type: community
+    source: X 作者公开演示原始媒体
+    source_url: https://x.com/clairevo/status/2095625355231142079
+    creator_or_rightsholder: clairevo
+    obtained_on: '2026-09-05'
+    modifications: 视频原帧，无裁切或重绘；见视觉回执
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 图源：clairevo
+    notes: 研究／草稿候选；公开来源不等于转载授权。
+  - file: research/viewing/claire-toy-20.png
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: true
+    source_type: community
+    source: X 作者公开演示原始媒体
+    source_url: https://x.com/clairevo/status/2095625355231142079
+    creator_or_rightsholder: clairevo
+    obtained_on: '2026-09-05'
+    modifications: 视频原帧，无裁切或重绘；见视觉回执
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 图源：clairevo
+    notes: 研究／草稿候选；公开来源不等于转载授权。
+  - file: research/viewing/claire-toy-30.png
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: true
+    source_type: community
+    source: X 作者公开演示原始媒体
+    source_url: https://x.com/clairevo/status/2095625355231142079
+    creator_or_rightsholder: clairevo
+    obtained_on: '2026-09-05'
+    modifications: 视频原帧，无裁切或重绘；见视觉回执
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 图源：clairevo
+    notes: 研究／草稿候选；公开来源不等于转载授权。
+  - file: research/viewing/claire-toy-5.png
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: true
+    source_type: community
+    source: X 作者公开演示原始媒体
+    source_url: https://x.com/clairevo/status/2095625355231142079
+    creator_or_rightsholder: clairevo
+    obtained_on: '2026-09-05'
+    modifications: 视频原帧，无裁切或重绘；见视觉回执
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 图源：clairevo
+    notes: 研究／草稿候选；公开来源不等于转载授权。
+  - file: research/source-assets/appsso-logo-red-background.png
+    used_in_draft: false
+    use: research_reference
+    visual_route: source_original
+    source_original_kind: official_original
+    original_pixels_preserved: true
+    source_type: user_provided
+    source: 作者本轮提供的 APPSO Logo，与登记品牌原件 SHA256 一致
+    source_url: user_attachment://2026-09-05/appso-logo
+    attribution: APPSO / 爱范儿，用户提供
+    creator_or_rightsholder: APPSO / 爱范儿
+    obtained_on: '2026-09-05'
+    modifications: 原字节复制，无修改
+    rights_status: user_confirmed_derivative_use
+    allowed_platforms:
+      - wechat
+    notes: 用户本轮明确要求使用所附 Logo 制作本篇 APPSO 信息图。授权限此公司稿的信息图。
+  - file: assets/infographic-001-image2.png
+    used_in_draft: false
+    visual_route: infographic
+    source_type: ai_generated
+    source: 本文已核事实与作者实测反馈，经 APPSO 规范整理生成
+    creator_or_rightsholder: APPSO / 爱范儿
+    obtained_on: '2026-09-05'
+    modifications: Image2 依据完整登记规范与作者提供的 Logo 生成；未重绘实测作品
+    rights_status: project_owned
+    allowed_platforms:
+      - wechat
+    attribution: APPSO 整理，AI 辅助制图
+    generator: imagegen
+    model: gpt-image-2
+    generation_mode: referenced_edit
+    prompt_ref: appsso-infographic-v1
+    prompt_sha256: c8c191665a99da9af14f8ba84b0f7ef769cbadefe347f5d197635264b024c043
+    generation_constraints: 完整规范与登记 Logo 输入；事实、厂商自报、第三方结果、作者判断和待验证项分开；不伪造作品
+    input_assets:
+      - research/source-assets/appsso-logo-red-background.png
+    generated_on: '2026-09-05'
+    preflight_receipt: research/image-generation-runs/infographic-001-final-preflight.json
+    invocation_prompt_sha256: 961202c12fcd261cb081072bc115cb9d03b14d6315ba945fd4c18261797abc8b
+    notes: 仅用于本篇 APPSO 公司稿；Logo 衍生使用由本轮用户明确授权。正文与图内均标注 AI。
+    use: research_reference
+  - file: assets/infographic-002-image2.png
+    used_in_draft: false
+    visual_route: infographic
+    source_type: ai_generated
+    source: 本文已核事实与作者实测反馈，经 APPSO 规范整理生成
+    creator_or_rightsholder: APPSO / 爱范儿
+    obtained_on: '2026-09-05'
+    modifications: Image2 依据完整登记规范与作者提供的 Logo 生成；未重绘实测作品
+    rights_status: project_owned
+    allowed_platforms:
+      - wechat
+    attribution: APPSO 整理，AI 辅助制图
+    generator: imagegen
+    model: gpt-image-2
+    generation_mode: referenced_edit
+    prompt_ref: appsso-infographic-v1
+    prompt_sha256: c8c191665a99da9af14f8ba84b0f7ef769cbadefe347f5d197635264b024c043
+    generation_constraints: 完整规范与登记 Logo 输入；事实、厂商自报、第三方结果、作者判断和待验证项分开；不伪造作品
+    input_assets:
+      - research/source-assets/appsso-logo-red-background.png
+    generated_on: '2026-09-05'
+    preflight_receipt: research/image-generation-runs/infographic-002-final-preflight.json
+    invocation_prompt_sha256: bf0cc8a100b5b79569b3822d9d69170d2707d29254a0d1030a499d822a59ef60
+    notes: 仅用于本篇 APPSO 公司稿；Logo 衍生使用由本轮用户明确授权。正文与图内均标注 AI。
+  - file: assets/video/ghost-fable-intro-full.mp4
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: false
+    source_type: user_provided
+    source: 作者录屏，C:\Users\22684\Videos\Captures\小妖快跑：鬼门关淘汰赛 - Google Chrome 2026-09-05 12-03-11.mp4
+    source_url: local-user-material://2026-09-05/ghost-fable-intro-full.mp4
+    creator_or_rightsholder: 作者提供；模型生成游戏中的素材权利待核
+    obtained_on: '2026-09-05'
+    modifications: 原速节选或完整转码，原文件未改；精确时间及指纹见 research/ghost-correction-receipt.json
+    rights_status: pending
+    allowed_platforms: []
+    attribution: Fable 5.1 生成，作者实际录屏
+    model: Fable 5.1
+    model_identification: 作者最新明确更正：10-54-51 为 Astra；12-03-11 与 12-03-51 均为 Fable 5.1。覆盖此前相反归属。
+  - file: assets/feishu/ghost-fable-intro.gif
+    used_in_draft: true
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: false
+    source_type: user_provided
+    source: 作者录屏，C:\Users\22684\Videos\Captures\小妖快跑：鬼门关淘汰赛 - Google Chrome 2026-09-05 12-03-11.mp4
+    source_url: local-user-material://2026-09-05/ghost-fable-intro.gif
+    creator_or_rightsholder: 作者提供；模型生成游戏中的素材权利待核
+    obtained_on: '2026-09-05'
+    modifications: 原速节选或完整转码，原文件未改；精确时间及指纹见 research/ghost-correction-receipt.json
+    rights_status: pending
+    allowed_platforms: []
+    attribution: Fable 5.1 生成，作者实际录屏
+    model: Fable 5.1
+    model_identification: 作者最新明确更正：10-54-51 为 Astra；12-03-11 与 12-03-51 均为 Fable 5.1。覆盖此前相反归属。
+  - file: assets/video/ghost-fable-play-full.mp4
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: false
+    source_type: user_provided
+    source: 作者录屏，C:\Users\22684\Videos\Captures\小妖快跑：鬼门关淘汰赛 - Google Chrome 2026-09-05 12-03-51.mp4
+    source_url: local-user-material://2026-09-05/ghost-fable-play-full.mp4
+    creator_or_rightsholder: 作者提供；模型生成游戏中的素材权利待核
+    obtained_on: '2026-09-05'
+    modifications: 原速节选或完整转码，原文件未改；精确时间及指纹见 research/ghost-correction-receipt.json
+    rights_status: pending
+    allowed_platforms: []
+    attribution: Fable 5.1 生成，作者实际录屏
+    model: Fable 5.1
+    model_identification: 作者最新明确更正：10-54-51 为 Astra；12-03-11 与 12-03-51 均为 Fable 5.1。覆盖此前相反归属。
+  - file: assets/feishu/ghost-fable-play.gif
+    used_in_draft: true
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: false
+    source_type: user_provided
+    source: 作者录屏，C:\Users\22684\Videos\Captures\小妖快跑：鬼门关淘汰赛 - Google Chrome 2026-09-05 12-03-51.mp4
+    source_url: local-user-material://2026-09-05/ghost-fable-play.gif
+    creator_or_rightsholder: 作者提供；模型生成游戏中的素材权利待核
+    obtained_on: '2026-09-05'
+    modifications: 原速节选或完整转码，原文件未改；精确时间及指纹见 research/ghost-correction-receipt.json
+    rights_status: pending
+    allowed_platforms: []
+    attribution: Fable 5.1 生成，作者实际录屏
+    model: Fable 5.1
+    model_identification: 作者最新明确更正：10-54-51 为 Astra；12-03-11 与 12-03-51 均为 Fable 5.1。覆盖此前相反归属。
+  - file: research/viewing/missing-ghost/12-03-11-0.png
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: true
+    source_type: user_provided
+    source: 作者录屏，C:\Users\22684\Videos\Captures\小妖快跑：鬼门关淘汰赛 - Google Chrome 2026-09-05 12-03-11.mp4
+    source_url: local-user-material://2026-09-05/12-03-11-0.png
+    creator_or_rightsholder: 作者提供；模型生成游戏中的素材权利待核
+    obtained_on: '2026-09-05'
+    modifications: 原速节选或完整转码，原文件未改；精确时间及指纹见 research/ghost-correction-receipt.json
+    rights_status: pending
+    allowed_platforms: []
+    attribution: Fable 5.1 生成，作者实际录屏
+    model: Fable 5.1
+    model_identification: 作者最新明确更正：10-54-51 为 Astra；12-03-11 与 12-03-51 均为 Fable 5.1。覆盖此前相反归属。
+    use: research_reference
+  - file: research/viewing/missing-ghost/12-03-11-1.png
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: true
+    source_type: user_provided
+    source: 作者录屏，C:\Users\22684\Videos\Captures\小妖快跑：鬼门关淘汰赛 - Google Chrome 2026-09-05 12-03-11.mp4
+    source_url: local-user-material://2026-09-05/12-03-11-1.png
+    creator_or_rightsholder: 作者提供；模型生成游戏中的素材权利待核
+    obtained_on: '2026-09-05'
+    modifications: 原速节选或完整转码，原文件未改；精确时间及指纹见 research/ghost-correction-receipt.json
+    rights_status: pending
+    allowed_platforms: []
+    attribution: Fable 5.1 生成，作者实际录屏
+    model: Fable 5.1
+    model_identification: 作者最新明确更正：10-54-51 为 Astra；12-03-11 与 12-03-51 均为 Fable 5.1。覆盖此前相反归属。
+    use: research_reference
+  - file: research/viewing/missing-ghost/12-03-11-2.png
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: true
+    source_type: user_provided
+    source: 作者录屏，C:\Users\22684\Videos\Captures\小妖快跑：鬼门关淘汰赛 - Google Chrome 2026-09-05 12-03-11.mp4
+    source_url: local-user-material://2026-09-05/12-03-11-2.png
+    creator_or_rightsholder: 作者提供；模型生成游戏中的素材权利待核
+    obtained_on: '2026-09-05'
+    modifications: 原速节选或完整转码，原文件未改；精确时间及指纹见 research/ghost-correction-receipt.json
+    rights_status: pending
+    allowed_platforms: []
+    attribution: Fable 5.1 生成，作者实际录屏
+    model: Fable 5.1
+    model_identification: 作者最新明确更正：10-54-51 为 Astra；12-03-11 与 12-03-51 均为 Fable 5.1。覆盖此前相反归属。
+    use: research_reference
+  - file: research/viewing/missing-ghost/12-03-51-0.png
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: true
+    source_type: user_provided
+    source: 作者录屏，C:\Users\22684\Videos\Captures\小妖快跑：鬼门关淘汰赛 - Google Chrome 2026-09-05 12-03-51.mp4
+    source_url: local-user-material://2026-09-05/12-03-51-0.png
+    creator_or_rightsholder: 作者提供；模型生成游戏中的素材权利待核
+    obtained_on: '2026-09-05'
+    modifications: 原速节选或完整转码，原文件未改；精确时间及指纹见 research/ghost-correction-receipt.json
+    rights_status: pending
+    allowed_platforms: []
+    attribution: Fable 5.1 生成，作者实际录屏
+    model: Fable 5.1
+    model_identification: 作者最新明确更正：10-54-51 为 Astra；12-03-11 与 12-03-51 均为 Fable 5.1。覆盖此前相反归属。
+    use: research_reference
+  - file: research/viewing/missing-ghost/12-03-51-1.png
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: true
+    source_type: user_provided
+    source: 作者录屏，C:\Users\22684\Videos\Captures\小妖快跑：鬼门关淘汰赛 - Google Chrome 2026-09-05 12-03-51.mp4
+    source_url: local-user-material://2026-09-05/12-03-51-1.png
+    creator_or_rightsholder: 作者提供；模型生成游戏中的素材权利待核
+    obtained_on: '2026-09-05'
+    modifications: 原速节选或完整转码，原文件未改；精确时间及指纹见 research/ghost-correction-receipt.json
+    rights_status: pending
+    allowed_platforms: []
+    attribution: Fable 5.1 生成，作者实际录屏
+    model: Fable 5.1
+    model_identification: 作者最新明确更正：10-54-51 为 Astra；12-03-11 与 12-03-51 均为 Fable 5.1。覆盖此前相反归属。
+    use: research_reference
+  - file: research/viewing/missing-ghost/12-03-51-2.png
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: true
+    source_type: user_provided
+    source: 作者录屏，C:\Users\22684\Videos\Captures\小妖快跑：鬼门关淘汰赛 - Google Chrome 2026-09-05 12-03-51.mp4
+    source_url: local-user-material://2026-09-05/12-03-51-2.png
+    creator_or_rightsholder: 作者提供；模型生成游戏中的素材权利待核
+    obtained_on: '2026-09-05'
+    modifications: 原速节选或完整转码，原文件未改；精确时间及指纹见 research/ghost-correction-receipt.json
+    rights_status: pending
+    allowed_platforms: []
+    attribution: Fable 5.1 生成，作者实际录屏
+    model: Fable 5.1
+    model_identification: 作者最新明确更正：10-54-51 为 Astra；12-03-11 与 12-03-51 均为 Fable 5.1。覆盖此前相反归属。
+    use: research_reference
+  - file: assets/infographic-003-image2.png
+    used_in_draft: true
+    visual_route: infographic
+    source_type: ai_generated
+    source: 本文已核事实与作者实测反馈，经 APPSO 规范整理生成
+    creator_or_rightsholder: APPSO / 爱范儿
+    obtained_on: '2026-09-05'
+    modifications: Image2 依据完整登记规范与作者提供的 Logo 生成；未重绘实测作品
+    rights_status: project_owned
+    allowed_platforms:
+      - wechat
+    attribution: APPSO 整理，AI 辅助制图
+    generator: imagegen
+    model: gpt-image-2
+    generation_mode: referenced_edit
+    prompt_ref: appsso-infographic-v1
+    prompt_sha256: c8c191665a99da9af14f8ba84b0f7ef769cbadefe347f5d197635264b024c043
+    generation_constraints: 完整规范与登记 Logo 输入；事实、厂商自报、第三方结果、作者判断和待验证项分开；不伪造作品
+    input_assets:
+      - assets/infographic-001-image2.png
+      - research/source-assets/appsso-logo-red-background.png
+    generated_on: '2026-09-05'
+    preflight_receipt: research/image-generation-runs/infographic-003-final-preflight.json
+    invocation_prompt_sha256: b1a76bf48fc5afbe14c4daf049dd08d75456d4196bfd58826c0c9763372bcb2f
+    notes: 仅用于本篇 APPSO 公司稿；Logo 衍生使用由本轮用户明确授权。正文与图内均标注 AI。
+  - file: assets/user-results/ghost-fable-start.png
+    used_in_draft: true
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: true
+    source_type: user_provided
+    source: 作者录屏，C:\Users\22684\Videos\Captures\小妖快跑：鬼门关淘汰赛 - Google Chrome 2026-09-05 12-03-11.mp4
+    source_url: local-user-material://2026-09-05/12-03-11-1.png
+    creator_or_rightsholder: 作者提供；模型生成游戏中的素材权利待核
+    obtained_on: '2026-09-05'
+    modifications: 原速节选或完整转码，原文件未改；精确时间及指纹见 research/ghost-correction-receipt.json
+    rights_status: pending
+    allowed_platforms: []
+    attribution: Fable 5.1 生成，作者实际录屏
+    model: Fable 5.1
+    model_identification: 作者最新明确更正：10-54-51 为 Astra；12-03-11 与 12-03-51 均为 Fable 5.1。覆盖此前相反归属。
+  - file: assets/external/aa-astra-original-1.png
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: official_original
+    original_pixels_preserved: true
+    source_type: official
+    source: Artificial Analysis 测评机构官网原图
+    source_url: https://artificialanalysis.ai/articles/benchmarking-gpt-6-astra
+    creator_or_rightsholder: Artificial Analysis
+    obtained_on: '2026-09-05'
+    modifications: CDN 原字节下载，无重绘、裁切或改字
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 图源：Artificial Analysis，2026 年 9 月 3 日
+    notes: 原始文件 URL 和 SHA256 见 research/benchmark-originals-receipt.json；公开来源不等于已获转载许可。
+  - file: assets/external/aa-astra-original-2.png
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: official_original
+    original_pixels_preserved: true
+    source_type: official
+    source: Artificial Analysis 测评机构官网原图
+    source_url: https://artificialanalysis.ai/articles/benchmarking-gpt-6-astra
+    creator_or_rightsholder: Artificial Analysis
+    obtained_on: '2026-09-05'
+    modifications: CDN 原字节下载，无重绘、裁切或改字
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 图源：Artificial Analysis，2026 年 9 月 3 日
+    notes: 原始文件 URL 和 SHA256 见 research/benchmark-originals-receipt.json；公开来源不等于已获转载许可。
+  - file: assets/external/aa-astra-original-3.png
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: official_original
+    original_pixels_preserved: true
+    source_type: official
+    source: Artificial Analysis 测评机构官网原图
+    source_url: https://artificialanalysis.ai/articles/benchmarking-gpt-6-astra
+    creator_or_rightsholder: Artificial Analysis
+    obtained_on: '2026-09-05'
+    modifications: CDN 原字节下载，无重绘、裁切或改字
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 图源：Artificial Analysis，2026 年 9 月 3 日
+    notes: 原始文件 URL 和 SHA256 见 research/benchmark-originals-receipt.json；公开来源不等于已获转载许可。
+  - file: assets/infographic-004-image2.png
+    used_in_draft: true
+    visual_route: infographic
+    source_type: ai_generated
+    source: https://openai.com/index/gpt-6-astra/
+    creator_or_rightsholder: APPSO / 爱范儿
+    obtained_on: '2026-09-05'
+    modifications: Image2 依据完整登记规范与作者提供的 Logo 生成；未重绘实测作品
+    rights_status: project_owned
+    allowed_platforms:
+      - wechat
+    attribution: APPSO 整理，AI 辅助制图
+    generator: imagegen
+    model: gpt-image-2
+    generation_mode: referenced_edit
+    prompt_ref: appsso-infographic-v1
+    prompt_sha256: c8c191665a99da9af14f8ba84b0f7ef769cbadefe347f5d197635264b024c043
+    generation_constraints: 六项原始数据与版本逐项保留；前五项为百分比，末行为指数分；每行较高数字标红；标明厂商发布页数据与 AI 制图
+    input_assets:
+      - research/source-assets/appsso-logo-red-background.png
+    generated_on: '2026-09-05'
+    preflight_receipt: research/image-generation-runs/infographic-004-final-preflight.json
+    invocation_prompt_sha256: 103d692274b4fcebfe26d07fe962b439149db785769d8be3aa37635fb437367d
+    notes: 仅用于本篇 APPSO 公司稿；Logo 衍生使用由本轮用户明确授权。正文与图内均标注 AI。
+  - file: assets/external/anshu-concept-game.jpg
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: true
+    source_type: public_web
+    source: X 公开原帖及原生媒体
+    source_url: https://x.com/anshuc/status/2096008083826725132
+    creator_or_rightsholder: Anshu / @anshuc
+    obtained_on: '2026-09-05'
+    modifications: Original video poster bytes; no redraw or edits
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 图源：Anshu / @anshuc / X
+    notes: 原文与父帖上下文、素材指纹见 research/creative-ending-sources.json；不是 APPSO 亲测；转载权利待核。
+  - file: assets/external/paul-visual-feedback.png
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: true
+    source_type: public_web
+    source: X 公开原帖及原生媒体
+    source_url: https://x.com/PaulSolt/status/2096023238081908917
+    creator_or_rightsholder: Paul Solt / @PaulSolt
+    obtained_on: '2026-09-05'
+    modifications: Native X embed reply screenshot, clipped to retain author, full reply and date; parent context in source receipt; no text edits or reconstruction
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 图源：Paul Solt / @PaulSolt / X
+    notes: 原文与父帖上下文、素材指纹见 research/creative-ending-sources.json；不是 APPSO 亲测；转载权利待核。
+  - file: assets/external/agi-media-headline.png
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: true
+    source_type: public_web
+    source: TechRepublic 原始报道标题
+    source_url: https://www.techrepublic.com/article/news-openai-gpt-6-astra-agi-era-2026/
+    creator_or_rightsholder: TechRepublic / TechnologyAdvice
+    obtained_on: '2026-09-05'
+    modifications: 原生网页 h1 元素截图；未改字、重绘或拼接
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 图源：TechRepublic，2026 年 9 月 4 日
+    notes: 报道标题转述 Brockman 判断，不写成媒体独立认证 AGI；原始标题与指纹见 research/agi-headline-receipt.json。
+  - file: assets/external/agi-time-interview.jpg
+    used_in_draft: true
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: true
+    source_type: public_web
+    source: TIME 对 Greg Brockman 的 AGI 专访封面
+    source_url: https://www.youtube.com/watch?v=dnSpKF5pWNQ
+    creator_or_rightsholder: TIME
+    obtained_on: '2026-09-05'
+    modifications: 采访官方封面原图，未经改动；不冒充发布会现场或本次 AGI 发言发生时的画面。
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 图源：TIME
+    notes: 原始出处与文件指纹见 research/quality-visual-receipts.json；转载权利待核。
+  - file: assets/external/agi-fable-official-page.png
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: true
+    source_type: public_web
+    source: Anthropic 发布专题首页
+    source_url: https://www.anthropic.com/claude-fable-and-mythos-5-1
+    creator_or_rightsholder: Anthropic
+    obtained_on: '2026-09-05'
+    modifications: 官网原生首页截图，含导航、标题、天空与月亮，以及 Made with Fable 5.1 标记。
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 图源：Anthropic
+    notes: 原始出处与文件指纹见 research/quality-visual-receipts.json；转载权利待核。
+  - file: assets/external/agi-openai-x-full.png
+    used_in_draft: true
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: true
+    source_type: public_web
+    source: OpenAI 发布 Astra 的完整 X 帖子
+    source_url: https://x.com/OpenAI/status/2095595741528125780
+    creator_or_rightsholder: OpenAI / X
+    obtained_on: '2026-09-05'
+    modifications: 原生嵌入截图，完整保留账号、正文、视频封面、日期与互动栏；显示北京时间。图中的播放按钮属于静态截图。
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 图源：OpenAI / X
+    notes: 原始出处与文件指纹见 research/quality-visual-receipts.json；转载权利待核。
+  - file: assets/external/agi-techrepublic-page.png
+    used_in_draft: false
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: true
+    source_type: public_web
+    source: TechRepublic 报道标题与配图
+    source_url: https://www.techrepublic.com/article/news-openai-gpt-6-astra-agi-era-2026/
+    creator_or_rightsholder: TechRepublic / TechnologyAdvice；配图署名 OpenAI
+    obtained_on: '2026-09-05'
+    modifications: 原网页连续区域截图，保留标题与完整配图，避开广告留白；未改字、重排或拼接。备选，不与采访图堆叠。
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 图源：TechRepublic / TechnologyAdvice；配图署名 OpenAI
+    notes: 原始出处与文件指纹见 research/quality-visual-receipts.json；转载权利待核。
+  - file: assets/external/claude-max-weekend-reset.png
+    used_in_draft: true
+    visual_route: source_original
+    source_original_kind: community_screenshot
+    original_pixels_preserved: true
+    source_type: public_web
+    source: Lydia Hallie 的 Claude Max 周额度再次重置公告
+    source_url: https://x.com/lydiahallie/status/2095967323412930677
+    creator_or_rightsholder: Lydia Hallie / Anthropic / X
+    obtained_on: '2026-09-05'
+    modifications: 原生 X 嵌入截图，保留账号、完整正文、日期和互动区；无重绘或改字，显示北京时间
+    rights_status: pending
+    allowed_platforms: []
+    attribution: 图源：Lydia Hallie / X
+    notes: 本轮仅说明 Max 周额度重置；不写成所有订阅或 5 小时额度重置，不声称由竞争对手逼迫；回执见 research/claude-max-weekend-reset.json。
+  - file: assets/cover-gpt6-doodle-v01.png
+    used_in_draft: false
+    used_as_cover: false
+    use: unused
+    source_type: ai_generated
+    visual_route: clumsy_doodle
+    source: 本项目 Image2 生成的 GPT-6 Astra 封面候选；不是官方图片。
+    creator_or_rightsholder: 本项目 / AI-generated
+    obtained_on: '2026-09-05'
+    generator: Codex built-in image_gen
+    model: gpt-image-2
+    generation_mode: referenced_edit
+    prompt_ref: appsso-004
+    prompt_sha256: 6ba5e092a4f8d6fb2bd33602424ba4792715aa59f2bf5f916b90d8bb3f0bbd0a
+    preflight_receipt: research/image-generation-runs/cover-001-final-preflight.json
+    rights_status: project_owned
+    derivative_rights_confirmed: true
+    allowed_platforms:
+      - wechat
+    modifications: 将内部构图参考按 APPSO 笨拙涂鸦风格重绘。
+    notes: AI 生成封面候选。第一版上下留白偏紧，继续调整裁切余量。
+    invocation_prompt_sha256: 24e64909573602b541479cdb0bde07f3dcddf4f8e57c89ed62e830e622ec8a2b
+    input_assets:
+      - research/source-assets/cover-001-structure.png
+    generated_on: '2026-09-05'
+    attribution: 本项目 AI 生成图
+    generation_constraints: 一个巨大红色数字 6 与小电脑；GPT-6 和 ASTRA 文字；黑白红横向构图；不含跑分或 AGI 断言。
+  - file: assets/cover-gpt6-doodle-v02.png
+    used_in_draft: false
+    used_as_cover: false
+    use: unused
+    source_type: ai_generated
+    visual_route: clumsy_doodle
+    source: 本项目 Image2 生成的 GPT-6 Astra 封面候选；不是官方图片。
+    creator_or_rightsholder: 本项目 / AI-generated
+    obtained_on: '2026-09-05'
+    generator: Codex built-in image_gen
+    model: gpt-image-2
+    generation_mode: referenced_edit
+    prompt_ref: appsso-004
+    prompt_sha256: 6ba5e092a4f8d6fb2bd33602424ba4792715aa59f2bf5f916b90d8bb3f0bbd0a
+    preflight_receipt: research/image-generation-runs/cover-002-final-preflight.json
+    rights_status: project_owned
+    derivative_rights_confirmed: true
+    allowed_platforms:
+      - wechat
+    modifications: 以第一版为参考调整构图留白，保持黑白红笨拙涂鸦。
+    notes: 本次交付候选；不是官网截图。保留 GPT-6、ASTRA 和巨大数字与电脑的比例反差。未绑定发布封面。
+    attribution: APPSO · AI 生成封面
+    invocation_prompt_sha256: 3f0287c10a7380a44badd59695e54a1d686aaa6b52e16f7699d6f8f4fdf58f90
+    input_assets:
+      - assets/cover-gpt6-doodle-v01.png
+    generated_on: '2026-09-05'
+    generation_constraints: 一个巨大红色数字 6 与小电脑；GPT-6 和 ASTRA 文字；黑白红横向构图；不含跑分或 AGI 断言。

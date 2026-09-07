@@ -1,0 +1,77 @@
+{
+  "source_path": "C:\\Users\\22684\\Videos\\Captures\\小妖快跑：鬼门关淘汰赛 - Google Chrome 2026-09-05 10-54-51.mp4",
+  "bytes": 193736193,
+  "sha256": "1b2074704c1750724f7503f45fdd9e6dc6e5482e43a47bf1765aff37aca98922",
+  "fps": 27.099896888715207,
+  "frames": 2552,
+  "duration_seconds": 94.1701,
+  "width": 2560,
+  "height": 1440,
+  "samples": [
+    {
+      "requested_seconds": 0.0,
+      "file": "assets/user-results/video-0000000ms.png",
+      "sha256": "3fed9e7dedaf351165132b1da2640f1657ebdf306d5e24e1b9e97cac0e5e13a5"
+    },
+    {
+      "requested_seconds": 7.85,
+      "file": "assets/user-results/video-0007850ms.png",
+      "sha256": "4d2f84fe0882ae7200821f342856a6b5795e6242004652a401d3590f7ce87eea"
+    },
+    {
+      "requested_seconds": 15.7,
+      "file": "assets/user-results/video-0015700ms.png",
+      "sha256": "66a599a2831b5bf6437e2922b2f66e709e78625948b377c065114141aca0808d"
+    },
+    {
+      "requested_seconds": 23.54,
+      "file": "assets/user-results/video-0023540ms.png",
+      "sha256": "85c902a0d1101ffa7a12e65d14b6646e706460754de0d98309932a91ed6fbaca"
+    },
+    {
+      "requested_seconds": 31.39,
+      "file": "assets/user-results/video-0031390ms.png",
+      "sha256": "87aaa849cf7669e4b69afb904b3fd61d0b7fd388009fdaefe4ff6d6e558f8202"
+    },
+    {
+      "requested_seconds": 39.24,
+      "file": "assets/user-results/video-0039240ms.png",
+      "sha256": "4b0b9616e01bcc82f36a182d0dc7f373b81fc4f99446fa3250b416f44c945820"
+    },
+    {
+      "requested_seconds": 47.09,
+      "file": "assets/user-results/video-0047090ms.png",
+      "sha256": "f33d7599f624dcddb922808ed600b10c14196340af44d1440f68d68f16ace932"
+    },
+    {
+      "requested_seconds": 54.93,
+      "file": "assets/user-results/video-0054930ms.png",
+      "sha256": "fc72da79b2e0fc6acf93e59c9c37207d3b19e74b1a35e7d06ef85aa728b2bf34"
+    },
+    {
+      "requested_seconds": 62.78,
+      "file": "assets/user-results/video-0062780ms.png",
+      "sha256": "a501523e6376063193f1ad10304d9b3815ed6c6942846e1cc3f20dc32d1373f0"
+    },
+    {
+      "requested_seconds": 70.63,
+      "file": "assets/user-results/video-0070630ms.png",
+      "sha256": "e25e6467b2c176b4a180f41ac4983e50f13d8a0d650254a915f39b6ef8b25984"
+    },
+    {
+      "requested_seconds": 78.48,
+      "file": "assets/user-results/video-0078480ms.png",
+      "sha256": "61aaf38fac5c333ff2073a77979e31b0e5785a5635326aaf00d751f334856897"
+    },
+    {
+      "requested_seconds": 86.32,
+      "file": "assets/user-results/video-0086320ms.png",
+      "sha256": "47c9fbf439477fcbdc5596120466ba1d2e10ebb90ddde32d5b8b8adbf9b34877"
+    },
+    {
+      "requested_seconds": 93.1701,
+      "file": "assets/user-results/video-0093170ms.png",
+      "sha256": "b56efc5bb6db23b4080c995dfcba57651a02061cc314e19ae9ad2f68ce7a3cec"
+    }
+  ]
+}

@@ -1,0 +1,113 @@
+{
+  "confirmation": "作者最新明确更正：10-54-51 为 Astra；12-03-11 与 12-03-51 均为 Fable 5.1。覆盖此前相反归属。",
+  "sources": [
+    {
+      "file": "C:\\Users\\22684\\Videos\\Captures\\小妖快跑：鬼门关淘汰赛 - Google Chrome 2026-09-05 12-03-11.mp4",
+      "model": "Fable 5.1",
+      "bytes": 38979574,
+      "sha256": "8db63a9c1c103cb54284a4f0d53bae3c87a3a57a55ae888cd469da4b4bc43834"
+    },
+    {
+      "file": "C:\\Users\\22684\\Videos\\Captures\\小妖快跑：鬼门关淘汰赛 - Google Chrome 2026-09-05 12-03-51.mp4",
+      "model": "Fable 5.1",
+      "bytes": 95416470,
+      "sha256": "f069d2479264570558285cace6dba9b817950e3c73b065bef8044ffc27b4c44f"
+    }
+  ],
+  "outputs": [
+    {
+      "file": "assets/video/ghost-fable-intro-full.mp4",
+      "model": "Fable 5.1",
+      "source": "C:\\Users\\22684\\Videos\\Captures\\小妖快跑：鬼门关淘汰赛 - Google Chrome 2026-09-05 12-03-11.mp4",
+      "kind": "complete_mp4",
+      "bytes": 10667254,
+      "sha256": "47a109b55fd351ee4c230fc4afdee09595b2a9560cc6e3c785d7e520fce88b57",
+      "full_decode_check": "passed"
+    },
+    {
+      "file": "assets/feishu/ghost-fable-intro.gif",
+      "model": "Fable 5.1",
+      "source": "C:\\Users\\22684\\Videos\\Captures\\小妖快跑：鬼门关淘汰赛 - Google Chrome 2026-09-05 12-03-11.mp4",
+      "kind": "excerpt_gif",
+      "start_seconds": 0,
+      "excerpt_seconds": 6,
+      "width": 420,
+      "fps": 6,
+      "colors": 32,
+      "bytes": 921143,
+      "sha256": "d020f1a7d9edd7803baced477c72e0f69d0a01d5e7135a454b0f786d2d1916b3",
+      "full_decode_check": "passed"
+    },
+    {
+      "file": "assets/video/ghost-fable-play-full.mp4",
+      "model": "Fable 5.1",
+      "source": "C:\\Users\\22684\\Videos\\Captures\\小妖快跑：鬼门关淘汰赛 - Google Chrome 2026-09-05 12-03-51.mp4",
+      "kind": "complete_mp4",
+      "bytes": 26521923,
+      "sha256": "d408d6e0b673d9b2481f0f240e1db16894c0db48cc18648ab67de51a356b3cfe",
+      "full_decode_check": "passed"
+    },
+    {
+      "file": "assets/feishu/ghost-fable-play.gif",
+      "model": "Fable 5.1",
+      "source": "C:\\Users\\22684\\Videos\\Captures\\小妖快跑：鬼门关淘汰赛 - Google Chrome 2026-09-05 12-03-51.mp4",
+      "kind": "excerpt_gif",
+      "start_seconds": 16,
+      "excerpt_seconds": 7,
+      "width": 360,
+      "fps": 6,
+      "colors": 32,
+      "bytes": 956752,
+      "sha256": "1ca272831a9144cd35f5206b1b2b178314f20fd7536fe062ac80762fc622c3f9",
+      "full_decode_check": "passed"
+    },
+    {
+      "file": "research/viewing/missing-ghost/12-03-11-0.png",
+      "model": "Fable 5.1",
+      "kind": "research_frame",
+      "source": "C:\\Users\\22684\\Videos\\Captures\\小妖快跑：鬼门关淘汰赛 - Google Chrome 2026-09-05 12-03-11.mp4",
+      "bytes": 2551608,
+      "sha256": "46dff8bfa9b027267d5a9fe0536463dff9f1591961e51ae2c7c2110851bb07e6"
+    },
+    {
+      "file": "research/viewing/missing-ghost/12-03-11-1.png",
+      "model": "Fable 5.1",
+      "kind": "research_frame",
+      "source": "C:\\Users\\22684\\Videos\\Captures\\小妖快跑：鬼门关淘汰赛 - Google Chrome 2026-09-05 12-03-11.mp4",
+      "bytes": 2993612,
+      "sha256": "25c86468bdf29e1ac51934612a4a06b79bd3d6f295eba6ba2e19961945d812a9"
+    },
+    {
+      "file": "research/viewing/missing-ghost/12-03-11-2.png",
+      "model": "Fable 5.1",
+      "kind": "research_frame",
+      "source": "C:\\Users\\22684\\Videos\\Captures\\小妖快跑：鬼门关淘汰赛 - Google Chrome 2026-09-05 12-03-11.mp4",
+      "bytes": 2683775,
+      "sha256": "9dc015c861be2f5bacbd3914ba09e59c96207054fa153b64ee9925a16615da82"
+    },
+    {
+      "file": "research/viewing/missing-ghost/12-03-51-0.png",
+      "model": "Fable 5.1",
+      "kind": "research_frame",
+      "source": "C:\\Users\\22684\\Videos\\Captures\\小妖快跑：鬼门关淘汰赛 - Google Chrome 2026-09-05 12-03-51.mp4",
+      "bytes": 2315342,
+      "sha256": "6f16b928b1e1f6058c156f4a0237ba694f1d69dd3c967558b947561c6a67a9f6"
+    },
+    {
+      "file": "research/viewing/missing-ghost/12-03-51-1.png",
+      "model": "Fable 5.1",
+      "kind": "research_frame",
+      "source": "C:\\Users\\22684\\Videos\\Captures\\小妖快跑：鬼门关淘汰赛 - Google Chrome 2026-09-05 12-03-51.mp4",
+      "bytes": 957966,
+      "sha256": "12154da064d6658541b951e4b72f9466029e60905d45f4d63e3a181de5961df1"
+    },
+    {
+      "file": "research/viewing/missing-ghost/12-03-51-2.png",
+      "model": "Fable 5.1",
+      "kind": "research_frame",
+      "source": "C:\\Users\\22684\\Videos\\Captures\\小妖快跑：鬼门关淘汰赛 - Google Chrome 2026-09-05 12-03-51.mp4",
+      "bytes": 1873297,
+      "sha256": "8026e57584a4dff5db07806b88b7e26f2f84c9ea0a54fefc6a57589954f759ea"
+    }
+  ]
+}

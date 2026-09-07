@@ -1,0 +1,92 @@
+[
+  {
+    "file": "research/cases/C07-appso-logo/appso-logo.png",
+    "width": 1978,
+    "height": 634,
+    "sha256": "8160db79fc8cafdd864312b32bb6b01ee4d720187bc4acc6a875e273eecd04ff"
+  },
+  {
+    "file": "assets/official-astra-launch-video-cover.jpg",
+    "width": 1200,
+    "height": 675,
+    "sha256": "894fc73855c275564752aa815a377776b2d2fc23ed8a04e9fe44a3c2327b86b3"
+  },
+  {
+    "file": "assets/official-astra-hallucinations-figure6.png",
+    "width": 2048,
+    "height": 809,
+    "sha256": "864d6b7fc8a879cf96336da6cfe800ba8e20c99568758041747e778a0c5519e1"
+  },
+  {
+    "file": "assets/arc-astra-two-harnesses.png",
+    "width": 981,
+    "height": 531,
+    "sha256": "c395bed7d2966f5bbcdec9788a1e25517d6a34de28aa756ee4601f2740007915"
+  },
+  {
+    "file": "assets/arc-astra-action-efficiency.png",
+    "width": 2640,
+    "height": 1540,
+    "sha256": "404429cd4ab60e801f58150f67d6e25477678b5346b7735befd281220322076d"
+  },
+  {
+    "file": "research/source-assets/x-berman-fall-guys-preview.jpg",
+    "width": 1200,
+    "height": 862,
+    "sha256": "af24b5ad097012ba6abda814418f46db7069208bd32699eb84f3765004059826"
+  },
+  {
+    "file": "research/source-assets/x-theo-browser-game-preview.jpg",
+    "width": 1199,
+    "height": 746,
+    "sha256": "4f2515978b3abd6a7d181c3087b8ef82f4d673bb6bcd892c7d3fb243c8c03a6b"
+  },
+  {
+    "file": "assets/reset-tracker.png",
+    "width": 1800,
+    "height": 645,
+    "sha256": "9ad34bb0b3aaa736927a3a7bc34a449c263adc3a4d2f24632dd2ce80d337fe36"
+  },
+  {
+    "file": "assets/claude-reset-embed.png",
+    "width": 822,
+    "height": 371,
+    "sha256": "17b5375a09c3e8305ae5c0d46a19539686cce3470cbaa5a04bbf335bf5fd101a"
+  },
+  {
+    "file": "assets/astra-reset-embed.png",
+    "width": 822,
+    "height": 551,
+    "sha256": "f55beb8787f8dba29641fe6bcab73ce0ec801698ae24b854dc4091a9ffd0580b"
+  },
+  {
+    "file": "assets/astra-launch-embed.png",
+    "width": 822,
+    "height": 899,
+    "sha256": "e5962e25426b2feaea24096e1a653f78266699023b1d8a2041df05f18a63ccf1"
+  },
+  {
+    "file": "assets/skirano-3d-video-preview.jpg",
+    "width": 900,
+    "height": 900,
+    "sha256": "729f3cf2304f7f1422db4aa2e2c52dd4ead4fc372a18b5dd649d94f2543ae7e4"
+  },
+  {
+    "file": "assets/berman-simcity-video-preview.jpg",
+    "width": 1200,
+    "height": 862,
+    "sha256": "620c97f52b910d73f1d6c66c74bd4fc4f73a568c86d973e1add8c4230393332d"
+  },
+  {
+    "file": "assets/astra-full-reset-embed.png",
+    "width": 822,
+    "height": 551,
+    "sha256": "48bbb449747ac9b7c7b8b6f1229ff579c3fd877835300755cfca175c081ce5f0"
+  },
+  {
+    "file": "assets/astra-plus-business-live-embed.png",
+    "width": 822,
+    "height": 479,
+    "sha256": "79ec566e9bcc120eee564a9c2dda4de11d3f98d868f1a87aa21802c2e79e30c7"
+  }
+]

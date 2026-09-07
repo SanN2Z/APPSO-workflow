@@ -1,0 +1,13 @@
+{
+  "file": "assets/cover-gpt6-doodle-v02.png",
+  "size": [
+    1922,
+    818
+  ],
+  "bytes": 802472,
+  "ai_generated": true,
+  "visual_review": "GPT-6 / ASTRA 可读；主体完整；黑白红涂鸦；没有虚构跑分或新闻画面。",
+  "crop_review": "横图原生比例约 2.35:1；上下已增加留白。方形裁切需另选裁切区域。",
+  "selection": "candidate_not_bound",
+  "official_reference": "https://openai.com/index/gpt-6-astra/"
+}

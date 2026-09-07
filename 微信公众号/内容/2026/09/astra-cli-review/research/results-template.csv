@@ -1,0 +1,11 @@
+case_id,model_id,cli_version,effort,round,status,start_time,end_time,elapsed_seconds,session_used_before,session_used_after,weekly_all_before,weekly_all_after,weekly_fable_before,weekly_fable_after,tool_calls,subagents,manual_rescues,artifact_path,screenshot_path,function_gate,fact_gate,score_1,score_2,score_3,score_4,notes
+C02,Astra,,,1,not_run,,,,,,,,,,,,,,,,,,,,,
+C02,Fable5.1,,,1,not_run,,,,,,,,,,,,,,,,,,,,,
+C02,Astra,,,2_optional,not_run,,,,,,,,,,,,,,,,,,,,,
+C02,Fable5.1,,,2_optional,not_run,,,,,,,,,,,,,,,,,,,,,
+C01,Astra,,,1,not_run,,,,,,,,,,,,,,,,,,,,,
+C01,Astra,,,2,not_run,,,,,,,,,,,,,,,,,,,,,
+C03,Astra,,,1,not_run,,,,,,,,,,,,,,,,,,,,,
+C04,Astra,,,1_optional,not_run,,,,,,,,,,,,,,,,,,,,,
+C05,Astra,,,1_optional,not_run,,,,,,,,,,,,,,,,,,,,,
+C06,Astra,,,1_optional,not_run,,,,,,,,,,,,,,,,,,,,,

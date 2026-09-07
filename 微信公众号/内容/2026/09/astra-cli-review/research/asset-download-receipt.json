@@ -1,0 +1,42 @@
+[
+  {
+    "file": "assets/official-astra-launch-video-cover.jpg",
+    "download_url": "https://pbs.twimg.com/amplify_video_thumb/2095595661559574528/img/Vmb2pgEFJ6fpCUTD.jpg",
+    "source_url": "https://x.com/OpenAI/status/2095595741528125780",
+    "bytes": 19841,
+    "width": 1200,
+    "height": 675,
+    "sha256": "894fc73855c275564752aa815a377776b2d2fc23ed8a04e9fe44a3c2327b86b3",
+    "obtained_on": "2026-09-05"
+  },
+  {
+    "file": "assets/official-astra-hallucinations-figure6.png",
+    "download_url": "https://deploymentsafety.openai.com/data/eval-sets/gpt-6-astra/assets/images/image7.png",
+    "source_url": "https://deploymentsafety.openai.com/gpt-6-astra",
+    "bytes": 238067,
+    "width": 2048,
+    "height": 809,
+    "sha256": "864d6b7fc8a879cf96336da6cfe800ba8e20c99568758041747e778a0c5519e1",
+    "obtained_on": "2026-09-05"
+  },
+  {
+    "file": "assets/arc-astra-two-harnesses.png",
+    "download_url": "https://arcprize.org/media/images/blog/astra-arc-agi-3-leaderboard.png",
+    "source_url": "https://arcprize.org/blog/astra",
+    "bytes": 53886,
+    "width": 981,
+    "height": 531,
+    "sha256": "c395bed7d2966f5bbcdec9788a1e25517d6a34de28aa756ee4601f2740007915",
+    "obtained_on": "2026-09-05"
+  },
+  {
+    "file": "assets/arc-astra-action-efficiency.png",
+    "download_url": "https://arcprize.org/media/images/blog/astra-action-efficiency.png",
+    "source_url": "https://arcprize.org/blog/astra",
+    "bytes": 252546,
+    "width": 2640,
+    "height": 1540,
+    "sha256": "404429cd4ab60e801f58150f67d6e25477678b5346b7735befd281220322076d",
+    "obtained_on": "2026-09-05"
+  }
+]

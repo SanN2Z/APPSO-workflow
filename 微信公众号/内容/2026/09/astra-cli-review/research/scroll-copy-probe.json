@@ -1,0 +1,12 @@
+{
+  "kind": "case_compatibility_probe_not_release_handoff",
+  "source": "assets/user-results/doc-07-astra.png",
+  "source_sha256": "1f64caaadcf41df4f5c7a1ce6cebdb5eec1da479969c3cf0b4adde803e502cb3",
+  "component_sha256": "b47f75db8ceed1ea730538c9f17805e47e4d69b221f540b2104034a3973d88ef",
+  "copy_bytes": 5788373,
+  "viewport_height_px": 260,
+  "previous_180px_version_user_feedback": "Copy/paste works; viewport too short",
+  "wechat_backend_roundtrip": "pending",
+  "draft_state_unchanged": true,
+  "external_actions": "none"
+}

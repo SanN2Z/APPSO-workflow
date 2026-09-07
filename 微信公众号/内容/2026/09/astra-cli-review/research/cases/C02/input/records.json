@@ -1,0 +1,8 @@
+[
+  {"id":"r1","title":"雨停以前","artist":"室内天气","genre":"Ambient","price":168,"stock":3,"note":"像末班车驶过积水，留下一圈慢慢散开的光。"},
+  {"id":"r2","title":"便利店凌晨三点","artist":"透明塑料","genre":"Electronic","price":198,"stock":2,"note":"白色灯管下，夜晚还没结束。"},
+  {"id":"r3","title":"没有人的舞池","artist":"星期五以后","genre":"Jazz","price":228,"stock":0,"note":"低音先到，其他人明天再来。"},
+  {"id":"r4","title":"沿河走回家","artist":"慢步行","genre":"Ambient","price":158,"stock":4,"note":"把水声留在左耳，把城市放远一点。"},
+  {"id":"r5","title":"夜航信号","artist":"短波俱乐部","genre":"Electronic","price":188,"stock":1,"note":"一段没有接通的通话，一张仍在旋转的唱片。"},
+  {"id":"r6","title":"最后一杯","artist":"旧窗四重奏","genre":"Jazz","price":208,"stock":2,"note":"椅子还没有翻上桌面，钢琴轻了一点。"}
+]
