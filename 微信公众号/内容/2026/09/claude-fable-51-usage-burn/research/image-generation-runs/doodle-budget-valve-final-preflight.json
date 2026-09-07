@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "status": "pass",
+  "checked_on": "2026-09-02",
+  "task_id": "doodle-budget-valve",
+  "stage": "final",
+  "project_adapter": "appsso",
+  "visual_type": "ai_editorial_creative",
+  "visual_route": "clumsy_doodle",
+  "style_override_source": null,
+  "style_profile": "appsso-004",
+  "style_scope": "all_ai_generated_editorial_images",
+  "new_image_strategy": "two_stage_reference_then_redraw",
+  "reference_strategy": "provided_local",
+  "mode": "referenced_edit",
+  "input_binding": "referenced_image_paths",
+  "num_last_images_to_include": null,
+  "conversation_derivative_rights_confirmed": false,
+  "prompt_ref": "appsso-004",
+  "prompt_sha256": "6ba5e092a4f8d6fb2bd33602424ba4792715aa59f2bf5f916b90d8bb3f0bbd0a",
+  "invocation_prompt_sha256": "03090713f2e257428c90fb71af3081d83c6fdcbdb7750b6845b9ec6ef7e5c3d3",
+  "input_assets": [
+    "research/source-assets/doodle-budget-valve-structure-v01.png"
+  ],
+  "input_fingerprints": [
+    {
+      "file": "research/source-assets/doodle-budget-valve-structure-v01.png",
+      "sha256": "2d53671a88450b7bb7797525885dd3cc48911f530fa2fce1b8f9facb46f88fe3",
+      "rights_status": "project_owned"
+    }
+  ],
+  "output": "assets/doodle-budget-valve-appsso-v01.png",
+  "present_to_user": true,
+  "plan": "research/image-generation-plan.json",
+  "plan_sha256": "c6419887a2592533e9351c3d429ef951207c01c98562944d8fbcb8c99ce1998f",
+  "profile_registry": "APPSO-数字资产/04-模板/生图风格档案.json",
+  "profile_registry_sha256": "1f2bc264eca47a0716a233193e314ed8521c29b8a6e58b50e3d151709118b970",
+  "prompt_source": "APPSO-数字资产/01-栏目与品牌/品牌视觉/生图-Prompt/笨拙涂鸦重绘.md",
+  "constraints_sha256": "d186b5e496eebdb74f8eeafd49d124d28e2b5d438b2200a695a03789c3189b9c",
+  "receipt": "research/image-generation-runs/doodle-budget-valve-final-preflight.json"
+}

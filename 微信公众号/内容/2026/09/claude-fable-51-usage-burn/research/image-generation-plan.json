@@ -1,0 +1,54 @@
+{
+  "schema_version": 2,
+  "template_only": false,
+  "updated": "2026-09-02",
+  "project_adapter": "appsso",
+  "profile_registry": "APPSO-数字资产/04-模板/生图风格档案.json",
+  "image_budget": {
+    "planned_total_body_images": 12,
+    "planned_source_originals": 7,
+    "planned_ai_doodles": 1,
+    "planned_manual_placeholders": 4,
+    "counting_rule": "当前正文已有 7 张真实来源图与 1 张 APPSO 笨拙涂鸦；作者首轮用量、Reddit 原帖、上一篇留言区、下午复测结果共 4 个位置等待手动原图，不制作替代信息卡。"
+  },
+  "style_policy": {
+    "profile": "appsso-004",
+    "scope": "all_ai_generated_editorial_images",
+    "new_image_strategy": "two_stage_reference_then_redraw",
+    "allow_final_text_to_image": false
+  },
+  "tasks": [
+    {
+      "id": "doodle-budget-valve",
+      "visual_type": "ai_editorial_creative",
+      "visual_route": "clumsy_doodle",
+      "purpose": "在结尾表现 Fable 5.1 已经能自行组建 Agent 队伍，但用户仍缺少开工前预算与硬止损阀门。",
+      "reference_strategy": "provided_local",
+      "final_stage": {
+        "mode": "referenced_edit",
+        "prompt_ref": "appsso-004",
+        "prompt_sha256": "6ba5e092a4f8d6fb2bd33602424ba4792715aa59f2bf5f916b90d8bb3f0bbd0a",
+        "input_assets": [
+          "research/source-assets/doodle-budget-valve-structure-v01.png"
+        ],
+        "output": "assets/doodle-budget-valve-appsso-v01.png",
+        "receipt": "research/image-generation-runs/doodle-budget-valve-final-preflight.json",
+        "present_to_user": true,
+        "preserve": [
+          "本图只画一个主体关系：一群歪扭小机器人从粗管道高速冲出，一个用户伸手寻找本该存在、实际缺失的关停阀门，燃料正在漏走。",
+          "保留参考图中『Agent 队伍已经出发，用户却没有预算刹车』的单向阅读关系。"
+        ],
+        "output_constraints": [
+          "Horizontal 16:9 WeChat body illustration with all important subjects inside the central crop-safe area",
+          "Use a pure white background and large mobile-readable silhouettes",
+          "No readable words, letters, numbers, labels, captions, prices, logos, or interface text inside the image"
+        ],
+        "avoid": [
+          "Polished technology-magazine composition, clean vector geometry, cinematic depth, professional illustration finish, 3D, photorealism, gradients, paper texture, or balanced corporate design",
+          "Logos, trademarks, watermarks, extra text, garbled text, fake interfaces, real-person likenesses, or news-scene realism",
+          "An explosion, physical injury, money bags, investment charts, or a claim that every Agent task is wasteful"
+        ]
+      }
+    }
+  ]
+}

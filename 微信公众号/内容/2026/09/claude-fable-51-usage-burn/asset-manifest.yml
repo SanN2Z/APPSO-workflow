@@ -1,0 +1,247 @@
+version: 3
+updated: "2026-09-02"
+assets:
+  - file: "assets/official-fable51-launch-visual.jpg"
+    used_in_draft: true
+    used_as_cover: false
+    use: "wechat_body_interactive"
+    dimensions: "1200x1200"
+    visual_route: "source_original"
+    source_original_kind: "official_original"
+    original_pixels_preserved: true
+    source_type: "official_product_image"
+    source: "Claude official Fable 5.1 launch post video thumbnail"
+    source_url: "https://x.com/claudeai/status/2094848572143407483"
+    original_media_url: "https://pbs.twimg.com/media/HRJlwmVWcAEyYzf.jpg"
+    creator_or_rightsholder: "Anthropic PBC"
+    obtained_on: "2026-09-02"
+    modifications: "Downloaded at the source resolution; no crop, annotation, text replacement, redraw or other edit"
+    privacy_handling: "No private information; official public launch artwork"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "The user explicitly requested official-source visuals for this APPSO review; used with attribution as launch context"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "图源：Anthropic"
+    ai_generated: false
+    output_sha256: "7de35529bc92aad9f8efdb79097d3eeaf0c0c0cea886f3bfb470da067dea4189"
+
+  - file: "assets/x-usage-reply-codebykrishna-2094896306862895104-v02.png"
+    used_in_draft: true
+    used_as_cover: false
+    use: "wechat_body_interactive"
+    dimensions: "600x870"
+    visual_route: "source_original"
+    source_original_kind: "x_screenshot"
+    original_pixels_preserved: true
+    source_type: "community_post_screenshot"
+    source: "Public X reply by @codebykrishna beneath Claude's launch post, captured through a public Nitter mirror"
+    source_url: "https://x.com/codebykrishna/status/2094896306862895104"
+    creator_or_rightsholder: "Original poster / X"
+    obtained_on: "2026-09-02"
+    modifications: "Viewport screenshot of the public post and its parent, cropped to the original post column for mobile readability; no text replacement, annotation, scaling or AI redraw"
+    privacy_handling: "Public account name and engagement metrics retained for attribution; no private information"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "The user requested real X discussion screenshots for commentary on launch-day experience"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "图源：X 用户 @codebykrishna；页面经 Nitter 镜像截取"
+    ai_generated: false
+    output_sha256: "09cb737b76a7d00637e5590ff72197e81db92432bfffe8d3aa38a6988f96df20"
+
+  - file: "assets/x-kimmonismus-fable51-rate-limit-auto-resume.png"
+    used_in_draft: true
+    used_as_cover: false
+    use: "wechat_body_interactive"
+    dimensions: "660x1071"
+    visual_route: "source_original"
+    source_original_kind: "x_screenshot"
+    original_pixels_preserved: true
+    source_type: "community_post_screenshot"
+    source: "User-supplied screenshot of two public X posts by @kimmonismus, including X's Chinese translation and the Claude Code session-limit interface"
+    source_url: "https://x.com/kimmonismus/status/2094912538387648707"
+    creator_or_rightsholder: "Original poster / X"
+    obtained_on: "2026-09-02"
+    modifications: "Copied exactly from the user-provided source; no crop, scaling, annotation, text replacement or AI redraw"
+    privacy_handling: "Public account name and post content retained for attribution; no private information"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "The user supplied the screenshot and explicitly requested that it be added to this APPSO review"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "图源：X 用户 @kimmonismus；截图由用户提供"
+    ai_generated: false
+    output_sha256: "d07cb5784ba9a55593c2288fcd610c11620fc2702bc4dc716ec578113f8248fb"
+
+  - file: "assets/every-dan-claude-code-usage.jpg"
+    used_in_draft: true
+    used_as_cover: false
+    use: "wechat_body_interactive"
+    dimensions: "1920x1440"
+    visual_route: "source_original"
+    source_original_kind: "community_screenshot"
+    original_pixels_preserved: true
+    source_type: "third_party_evaluation_image"
+    source: "Every Vibe Check: Fable 5.1, Dan Shipper's Claude Code usage chart"
+    source_url: "https://every.to/vibe-check/fable-5-1-vibe-check"
+    original_media_url: "https://every.to/fable-5-1-vibecheck/dan-claude-code-usage.jpg"
+    creator_or_rightsholder: "Every Media / Dan Shipper"
+    obtained_on: "2026-09-02"
+    modifications: "Downloaded at the source resolution; no crop, annotation, data edit or redraw"
+    privacy_handling: "Published evaluation image; no private information added"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "Used with attribution to discuss Every's published first-party usage analysis"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "图源：Every；数据来自 Dan Shipper 的 Claude Code 日志"
+    ai_generated: false
+    output_sha256: "fc516b04efc79059a6f6cf153751a73a0e0230c4bcccdda779a78307cf366df7"
+
+  - file: "assets/x-nine-accounts-fable51-review-2094918267190280505.png"
+    used_in_draft: true
+    used_as_cover: false
+    use: "wechat_body_interactive"
+    dimensions: "600x1710"
+    visual_route: "source_original"
+    source_original_kind: "x_screenshot"
+    original_pixels_preserved: true
+    source_type: "community_post_screenshot"
+    source: "Public X review by @AI_masaou, captured through a public Nitter mirror"
+    source_url: "https://x.com/AI_masaou/status/2094918267190280505"
+    creator_or_rightsholder: "Original poster / X"
+    obtained_on: "2026-09-02"
+    modifications: "Viewport screenshot of the full public post, cropped to the original post column for mobile readability; no text replacement, annotation, scaling or AI redraw"
+    privacy_handling: "Public account name, post content and engagement metrics retained for attribution"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "The user requested real-time developer feedback screenshots for editorial review"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "图源：X 用户 @AI_masaou；页面经 Nitter 镜像截取"
+    ai_generated: false
+    output_sha256: "f714ded499782541dce2049308b23ec738e039d29ba7057d1449f629f935c544"
+
+  - file: "assets/official-prompt-guide-subagent-parallel.png"
+    used_in_draft: true
+    used_as_cover: false
+    use: "wechat_body_interactive"
+    dimensions: "1332x450"
+    visual_route: "source_original"
+    source_original_kind: "official_original"
+    original_pixels_preserved: true
+    source_type: "official_document_screenshot"
+    source: "Claude Platform Docs, Prompting Claude Fable 5.1, section 'Let the lead agent keep working while subagents run'"
+    source_url: "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-fable-5-1#let-the-lead-agent-keep-working-while-subagents-run"
+    creator_or_rightsholder: "Anthropic PBC"
+    obtained_on: "2026-09-02"
+    modifications: "Browser-rendered screenshot clipped at capture time to the exact official subsection; no annotation, text replacement, scaling, translation or AI redraw"
+    privacy_handling: "No private information; official public documentation"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "The user explicitly requested that this official implementation clue appear as a source screenshot in the APPSO review"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "图源：Anthropic Claude Platform Docs"
+    ai_generated: false
+    output_sha256: "4d6494ed8c216944b3da5112d82a85017fce631b1ab3c7a343eff396740ae7ed"
+
+  - file: "assets/official-system-card-p95-095.png"
+    used_in_draft: true
+    used_as_cover: false
+    use: "wechat_body_interactive"
+    dimensions: "1180x870"
+    visual_route: "source_original"
+    source_original_kind: "official_original"
+    original_pixels_preserved: true
+    source_type: "official_material"
+    source: "Claude Fable 5.1 & Claude Mythos 5.1 System Card, page 95"
+    source_url: "https://www-cdn.anthropic.com/0339e6a7c5c7b87f5c07798616dc32c215d14235/Claude%20Fable%205.1%20%26%20Claude%20Mythos%205.1%20System%20Card.pdf"
+    source_file: "research/source-assets/claude-fable-5-1-system-card.pdf"
+    creator_or_rightsholder: "Anthropic PBC"
+    obtained_on: "2026-09-02"
+    modifications: "Rendered page 95 from the official PDF at 180 DPI, then cropped to the two approval-bypass examples discussed in the article; no annotation, text replacement, scaling or content edit"
+    privacy_handling: "No private information; official public document"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "Used with attribution to analyze the model's documented approval-bypass behavior"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "图源：Anthropic Fable 5.1 系统卡，第 95 页"
+    ai_generated: false
+    output_sha256: "174e52a9c80e747b79cd8fcd519a22cc9b0c111f1c33351151566148af05b6b1"
+
+  - file: "assets/doodle-budget-valve-appsso-v01.png"
+    used_in_draft: true
+    used_as_cover: false
+    use: "wechat_body_interactive"
+    dimensions: "1672x941"
+    visual_route: "clumsy_doodle"
+    source_type: "ai_generated"
+    source: "Codex built-in image_gen; governed APPSO task doodle-budget-valve"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-09-02"
+    modifications: "Exact package copy of the generated output; visually reviewed at original resolution; no post-generation edit"
+    privacy_handling: "No private information; no real-person likeness, interface or reconstructed news scene"
+    rights_status: "project_owned"
+    rights_basis: "Generated for this APPSO content package from a project-owned structural reference"
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "AI 生成笨拙涂鸦"
+    ai_generated: true
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "referenced_edit"
+    prompt_ref: "appsso-004"
+    prompt_sha256: "6ba5e092a4f8d6fb2bd33602424ba4792715aa59f2bf5f916b90d8bb3f0bbd0a"
+    invocation_prompt_sha256: "03090713f2e257428c90fb71af3081d83c6fdcbdb7750b6845b9ec6ef7e5c3d3"
+    generation_constraints: "16:9 白底 APPSO 笨拙涂鸦；Agent 队伍已冲出管道，用户寻找缺失的预算阀门；无文字、Logo、界面或真实人物"
+    input_assets: ["research/source-assets/doodle-budget-valve-structure-v01.png"]
+    generated_on: "2026-09-02"
+    preflight_receipt: "research/image-generation-runs/doodle-budget-valve-final-preflight.json"
+    output_sha256: "5032ea3902800b3f5adb2064e3eceff4de64fcb90a4e46dfbf456b833f6ac2b3"
+
+  - file: "research/source-assets/doodle-budget-valve-structure-v01.png"
+    use: "research_reference"
+    used_in_draft: false
+    used_as_cover: false
+    dimensions: "1672x941"
+    source_type: "project_owned_ai_reference"
+    ai_generated: true
+    source: "Project-owned rejected draft visual, retained only as the structural reference for the APPSO appsso-004 redraw"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-09-02"
+    modifications: "Exact copy of the rejected generic doodle; not approved for publication"
+    privacy_handling: "No private information"
+    rights_status: "project_owned"
+    rights_basis: "Generated for this content package without third-party input assets"
+    rights_blocker: false
+    allowed_platforms: []
+    attribution: "AI 生成内部构图参考（不发布）"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "text_to_image"
+    prompt_ref: "clumsy-doodle-v1"
+    prompt_sha256: "e4160da75ebd48f1e8625b61eb840195a66c833dd8373ac61155159826cc2a65"
+    invocation_prompt_sha256: "86b6c814be26e37af05f27f8262f845b08fa0bd8e161b518f3f91bf7669c4d65"
+    generation_constraints: "16:9 白底构图参考；用户寻找缺失的阀门，Agent 队伍从管道冲出；不作为发布成品"
+    input_assets: []
+    generated_on: "2026-09-02"
+    output_sha256: "2d53671a88450b7bb7797525885dd3cc48911f530fa2fce1b8f9facb46f88fe3"
+
+  - file: "assets/official-fable51-benchmark-table.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "unused"
+    dimensions: "2160x1996"
+    visual_route: "source_original"
+    source_original_kind: "official_original"
+    original_pixels_preserved: true
+    source_type: "official_material"
+    source: "Anthropic official Fable 5.1 benchmark comparison table"
+    source_url: "https://www.anthropic.com/claude-fable-and-mythos-5-1"
+    creator_or_rightsholder: "Anthropic PBC"
+    obtained_on: "2026-09-02"
+    modifications: "Downloaded from Anthropic's official image endpoint; no crop or content edit"
+    privacy_handling: "No private information"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "Retained as an optional official visual; not currently used to avoid repeating the prior release article"
+    rights_blocker: false
+    allowed_platforms: ["wechat", "research"]
+    attribution: "图源：Anthropic"
+    ai_generated: false
+    output_sha256: "6edfb004a8db5019d2d624a9179aad10eabe02bc3f9883696001b1ec0a081e20"
