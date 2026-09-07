@@ -1,0 +1,139 @@
+{
+  "schema_version": 1,
+  "template_only": false,
+  "updated": "2026-08-24",
+  "project_adapter": "generic",
+  "profile_registry": "共享/运营/SOP/笨拙涂鸦风格档案.json",
+  "image_budget": {
+    "default_total_body_images_min": 6,
+    "default_total_body_images_max": 10,
+    "planned_total_body_images": 6,
+    "planned_ai_doodles": 3,
+    "planned_existing_images": 3,
+    "counting_rule": "1 Amazon official product image + 1 author screenshot + 1 Hacker News quote card + 3 clumsy doodles; cover is counted separately."
+  },
+  "style_policy": {
+    "profile": "clumsy-doodle-v1",
+    "scope": "task",
+    "new_image_strategy": "direct",
+    "allow_final_text_to_image": true
+  },
+  "tasks": [
+    {
+      "id": "cover-ownership-doodle",
+      "visual_type": "editorial_cover",
+      "purpose": "表现设备已经买下，最终控制权却仍被一把锁挡住，4 个 AI 只是合力把钥匙递回来。",
+      "reference_strategy": "none",
+      "final_stage": {
+        "mode": "text_to_image",
+        "prompt_ref": "clumsy-doodle-v1",
+        "prompt_sha256": "e4160da75ebd48f1e8625b61eb840195a66c833dd8373ac61155159826cc2a65",
+        "input_assets": [],
+        "output": "assets/cover-ownership-doodle-v01.png",
+        "receipt": "research/image-generation-runs/cover-ownership-doodle-final-preflight.json",
+        "present_to_user": true,
+        "preserve": [
+          "本图只画：一个人已经抱着买下的平板，却被平板上的大锁挡住，四个歪歪扭扭的小机器人合力递来一把钥匙。"
+        ],
+        "output_constraints": [
+          "Very wide landscape WeChat cover, approximately 2.35:1; one main idea only; largest possible flat color blocks; keep all important subjects inside the central 80 percent crop-safe area",
+          "Pure white background with no texture, shadow, gradient, or decorative environment",
+          "No readable words, letters, numbers, labels, captions, receipts, prices, or interface text inside the image",
+          "Hard pixelated mouse-drawn edges, deliberately low-resolution appearance, and mobile-readable silhouettes"
+        ],
+        "avoid": [
+          "Polished editorial illustration, clean vector art, smooth curves, anti-aliased linework, pencil, crayon, watercolor, paper grain, collage, realistic lighting, 3D, photorealism, cinematic composition, cute professional cartoon style, or balanced graphic design",
+          "Amazon, Claude, Kimi, GLM or other logos and trademarks; watermarks; readable text; garbled text; fake interfaces; real-person likenesses; verified-looking news scenes; exploit instructions",
+          "Finance charts, piles of money, investment-return framing, or unsupported claims about model autonomy"
+        ]
+      }
+    },
+    {
+      "id": "doodle-ownership-wall",
+      "visual_type": "general_editorial",
+      "purpose": "解释买家能使用平板，却碰不到 3 个受保护软件包的权限墙。",
+      "reference_strategy": "none",
+      "final_stage": {
+        "mode": "text_to_image",
+        "prompt_ref": "clumsy-doodle-v1",
+        "prompt_sha256": "e4160da75ebd48f1e8625b61eb840195a66c833dd8373ac61155159826cc2a65",
+        "input_assets": [],
+        "output": "assets/doodle-ownership-wall-v01.png",
+        "receipt": "research/image-generation-runs/doodle-ownership-wall-final-preflight.json",
+        "present_to_user": true,
+        "preserve": [
+          "本图只画：买家抱着自己的平板，却隔着一堵带锁的墙够不到墙后面三个红色软件包。"
+        ],
+        "output_constraints": [
+          "Horizontal 16:9 body illustration; one main idea only; exactly one person, one tablet, one locked wall, and three red package shapes; largest possible flat color blocks",
+          "Pure white background with no texture, shadow, gradient, or decorative environment",
+          "No readable words, letters, numbers, labels, captions, or interface text inside the image",
+          "Hard pixelated mouse-drawn edges, deliberately low-resolution appearance, and mobile-readable silhouettes"
+        ],
+        "avoid": [
+          "Polished editorial illustration, clean vector art, smooth curves, anti-aliased linework, pencil, crayon, watercolor, paper grain, collage, realistic lighting, 3D, photorealism, cinematic composition, cute professional cartoon style, or balanced graphic design",
+          "Logos, trademarks, watermarks, readable text, garbled text, fake interfaces, real-person likenesses, or verified-looking news scenes",
+          "Remote attacker, malicious Amazon employee, code, exploit instructions, or a claim that any one package definitely caused every shutdown"
+        ]
+      }
+    },
+    {
+      "id": "doodle-four-ai-handoff",
+      "visual_type": "general_editorial",
+      "purpose": "表现 4 个 AI 靠同一份交接文件接力，而不是某个模型一次完成。",
+      "reference_strategy": "none",
+      "final_stage": {
+        "mode": "text_to_image",
+        "prompt_ref": "clumsy-doodle-v1",
+        "prompt_sha256": "e4160da75ebd48f1e8625b61eb840195a66c833dd8373ac61155159826cc2a65",
+        "input_assets": [],
+        "output": "assets/doodle-four-ai-handoff-v01.png",
+        "receipt": "research/image-generation-runs/doodle-four-ai-handoff-final-preflight.json",
+        "present_to_user": true,
+        "preserve": [
+          "本图只画：四个歪歪扭扭的小机器人从左到右传递同一个破旧文件夹，最后一个把钥匙递到一台仍在重启的平板旁。"
+        ],
+        "output_constraints": [
+          "Horizontal 16:9 body illustration; one main idea only; exactly four distinct robot helpers, one shared folder, one key, and one tablet; largest possible flat color blocks",
+          "Pure white background with no texture, shadow, gradient, or decorative environment",
+          "No readable words, letters, numbers, labels, captions, or interface text inside the image",
+          "Hard pixelated mouse-drawn edges, deliberately low-resolution appearance, and mobile-readable silhouettes"
+        ],
+        "avoid": [
+          "Polished editorial illustration, clean vector art, smooth curves, anti-aliased linework, pencil, crayon, watercolor, paper grain, collage, realistic lighting, 3D, photorealism, cinematic composition, cute professional cartoon style, or balanced graphic design",
+          "Logos, trademarks, watermarks, readable text, garbled text, fake interfaces, real-person likenesses, or verified-looking news scenes",
+          "Extra helpers, extra tablets, exploit code, a single heroic model, or a frictionless success scene"
+        ]
+      }
+    },
+    {
+      "id": "doodle-reboot-grind",
+      "visual_type": "general_editorial",
+      "purpose": "表现 500 多次尝试的笨重劳动，以及反复重启并不等于路线正确。",
+      "reference_strategy": "none",
+      "final_stage": {
+        "mode": "text_to_image",
+        "prompt_ref": "clumsy-doodle-v1",
+        "prompt_sha256": "e4160da75ebd48f1e8625b61eb840195a66c833dd8373ac61155159826cc2a65",
+        "input_assets": [],
+        "output": "assets/doodle-reboot-grind-v01.png",
+        "receipt": "research/image-generation-runs/doodle-reboot-grind-final-preflight.json",
+        "present_to_user": true,
+        "preserve": [
+          "本图只画：一个疲惫的人反复重启同一台仍上锁的平板，脚边失败纸团已经堆成一座小山。"
+        ],
+        "output_constraints": [
+          "Horizontal 16:9 body illustration; one main idea only; exactly one person, one locked tablet, and one large pile of failed paper balls; largest possible flat color blocks",
+          "Pure white background with no texture, shadow, gradient, or decorative environment",
+          "No readable words, letters, numbers, labels, captions, counters, or interface text inside the image",
+          "Hard pixelated mouse-drawn edges, deliberately low-resolution appearance, and mobile-readable silhouettes"
+        ],
+        "avoid": [
+          "Polished editorial illustration, clean vector art, smooth curves, anti-aliased linework, pencil, crayon, watercolor, paper grain, collage, realistic lighting, 3D, photorealism, cinematic composition, cute professional cartoon style, or balanced graphic design",
+          "Logos, trademarks, watermarks, readable text, garbled text, fake interfaces, real-person likenesses, or verified-looking news scenes",
+          "Exploit code, fire, physical device destruction, victorious unlock, or a claim that all attempts were identical"
+        ]
+      }
+    }
+  ]
+}

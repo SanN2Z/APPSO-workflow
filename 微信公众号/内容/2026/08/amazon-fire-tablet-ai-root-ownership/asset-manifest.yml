@@ -1,0 +1,329 @@
+version: 2
+updated: "2026-08-24"
+assets:
+  - file: "assets/cover-ownership-doodle-v01.png"
+    use: "unused"
+    used_in_draft: false
+    used_as_cover: false
+    dimensions: "1922x818"
+    source_type: "ai_generated"
+    source: "Codex built-in image_gen; task cover-ownership-doodle"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-08-24"
+    modifications: "First accepted clumsy-doodle cover candidate; no post-generation crop, text overlay, retouching or other edit"
+    rights_status: "project_owned"
+    rights_basis: "Created for this content package without third-party input assets; no logos, product interfaces, real-person likenesses or news-scene reconstruction."
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "AI 生成"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "text_to_image"
+    prompt_ref: "clumsy-doodle-v1"
+    prompt_sha256: "e4160da75ebd48f1e8625b61eb840195a66c833dd8373ac61155159826cc2a65"
+    invocation_prompt_sha256: "595d2f595885e692982fdf1f3f6750e2296ab1cf21ae612f0ded4d61a3648f19"
+    generation_constraints: "约 2.35:1 微信封面；白底、大色块、硬像素边；人物、上锁平板、钥匙和 4 个匿名机器人位于中央裁切安全区；无文字、数字、价格、Logo、界面或利用步骤"
+    input_assets: []
+    generated_on: "2026-08-24"
+    preflight_receipt: "research/image-generation-runs/cover-ownership-doodle-final-preflight.json"
+    output_sha256: "145b08092d78a99303903ac09661f5e6fd429066b2639243b7eea1b6b71c8db7"
+    editorial_note: "封面候选已通过原尺寸与中心裁切检查；按 SOP 等用户选中后再绑定 publish.cover。"
+
+  - file: "assets/doodle-ownership-wall-v01.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "1672x941"
+    source_type: "ai_generated"
+    source: "Codex built-in image_gen; task doodle-ownership-wall"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-08-24"
+    modifications: "First generated version selected after original-size and phone-width review; no post-generation edits"
+    rights_status: "project_owned"
+    rights_basis: "Created for this content package without third-party input assets; no logos, interfaces, likenesses, news-scene reconstruction or exploit instructions."
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "AI 生成"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "text_to_image"
+    prompt_ref: "clumsy-doodle-v1"
+    prompt_sha256: "e4160da75ebd48f1e8625b61eb840195a66c833dd8373ac61155159826cc2a65"
+    invocation_prompt_sha256: "58df4822ef6c3efa515c17d4dc33ac8b003f9adc1a9eb9db42b02f7a154e07d8"
+    generation_constraints: "16:9 白底笨拙涂鸦；1 个买家、1 台平板、1 堵带锁的墙和墙后 3 个红色软件包；无文字、Logo、界面、攻击者或代码"
+    input_assets: []
+    generated_on: "2026-08-24"
+    preflight_receipt: "research/image-generation-runs/doodle-ownership-wall-final-preflight.json"
+    output_sha256: "88a228e8e1a7071ff81e271e769ac882f358e898bfb7e76abab753304f234c40"
+    editorial_note: "只表现权限墙，不把任何单个软件包画成已确认的唯一关机原因。"
+
+  - file: "assets/doodle-four-ai-handoff-v01.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "1672x941"
+    source_type: "ai_generated"
+    source: "Codex built-in image_gen; task doodle-four-ai-handoff"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-08-24"
+    modifications: "Second generated attempt selected; the first attempt was rejected because it showed three folders instead of one shared handoff artifact; no post-generation edits"
+    rights_status: "project_owned"
+    rights_basis: "Created for this content package without third-party input assets; no logos, interfaces, likenesses, news-scene reconstruction or exploit instructions."
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "AI 生成"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "text_to_image"
+    prompt_ref: "clumsy-doodle-v1"
+    prompt_sha256: "e4160da75ebd48f1e8625b61eb840195a66c833dd8373ac61155159826cc2a65"
+    invocation_prompt_sha256: "1af95068548365bb9cb2e20318dedc28621dc5593615b820c3dcc2031ecdba53"
+    generation_constraints: "16:9 白底笨拙涂鸦；恰好 4 个匿名机器人、同一份文件夹、1 把钥匙和 1 台仍在重启的平板；无文字、Logo、界面或利用代码"
+    input_assets: []
+    generated_on: "2026-08-24"
+    preflight_receipt: "research/image-generation-runs/doodle-four-ai-handoff-final-preflight.json"
+    output_sha256: "3ee4fd4766b5f995f48f75962385ac02a7e5e0d79dcc1a30420806ba56a623c0"
+    editorial_note: "表现多模型接力，不把最后一个模型画成独立完成全部工作。"
+
+  - file: "assets/doodle-reboot-grind-v01.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "1672x941"
+    source_type: "ai_generated"
+    source: "Codex built-in image_gen; task doodle-reboot-grind"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-08-24"
+    modifications: "First generated version selected after original-size and phone-width review; no post-generation edits"
+    rights_status: "project_owned"
+    rights_basis: "Created for this content package without third-party input assets; no logos, interfaces, likenesses, news-scene reconstruction or exploit instructions."
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "AI 生成"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "text_to_image"
+    prompt_ref: "clumsy-doodle-v1"
+    prompt_sha256: "e4160da75ebd48f1e8625b61eb840195a66c833dd8373ac61155159826cc2a65"
+    invocation_prompt_sha256: "8a206f5ad34751e81cb8fc729a15ad1fce3a64a7bbd959a3107db3a72b5feca8"
+    generation_constraints: "16:9 白底笨拙涂鸦；1 个疲惫的人、1 台仍上锁的平板和 1 大堆失败纸团；无数字、计数器、Logo、界面、代码或成功解锁"
+    input_assets: []
+    generated_on: "2026-08-24"
+    preflight_receipt: "research/image-generation-runs/doodle-reboot-grind-final-preflight.json"
+    output_sha256: "ee9ff395e0baace92173bd8a6fc6d71d6803589dd97f1351273a806286f2cf48"
+    editorial_note: "表现反复尝试的劳动，不把 500 多次尝试画成每次完全相同。"
+
+  - file: "assets/amazon-fire-hd10-2021-official.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "1000x1000"
+    source_type: "official_product_image"
+    source: "https://developer.amazon.com/docs/device-specs/ft-device-specifications-firehd-models.html"
+    source_file: "https://m.media-amazon.com/images/G/01/mobile-apps/dex/firetablets/tabletspecthumb_firehd10_2021.png"
+    creator_or_rightsholder: "Amazon.com, Inc. or its affiliates"
+    obtained_on: "2026-08-24"
+    modifications: "Copied from the registered research source into release assets; no crop, annotation or other edit"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "User explicitly requested official images in this WeChat article preview on 2026-08-24; use is limited to attributed editorial commentary and is not a standalone republication license."
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "图：Amazon"
+    output_sha256: "4922fedb72c58ff5cc3e59b45ed4fd93972074ae4548b2caf4f3a92685df96df"
+
+  - file: "assets/author-claude-cyber-refusals-card.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "1200x760"
+    source_type: "editorial_quote_card"
+    source: "https://ericpardee.github.io/fire-hd-ownership/"
+    source_file: "https://ericpardee.github.io/fire-hd-ownership/blog-assets/claude-cyber-refusals.png"
+    creator_or_rightsholder: "Eric Pardee / Anthropic interface text / This project (card layout)"
+    obtained_on: "2026-08-24"
+    modifications: "Typeset two short verbatim safeguard excerpts from the registered author screenshot into a mobile-readable card; no change to the quoted wording"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "User explicitly requested author-source visuals in this WeChat article preview on 2026-08-24; use is limited to two short attributed quotations for editorial commentary and is not a standalone republication license."
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "引文：Eric Pardee 公布的 Claude 会话记录"
+    output_sha256: "7805a13e45f9beb0b3cd39401aadadc7ec3e01742214c586e7dda59f47245b43"
+    editorial_note: "原始横向截图在 390 像素宽度下不可读；发布卡只摘录两句安全拒绝提示，不含 exploit 命令或可执行片段。"
+
+  - file: "assets/hn-comment-fame-promise-screenshot.png"
+    used_in_draft: true
+    used_as_cover: false
+    dimensions: "772x164"
+    source_type: "webpage_screenshot"
+    source: "https://news.ycombinator.com/item?id=49409073"
+    source_file: "Hacker News public thread, comment item 49409832"
+    creator_or_rightsholder: "Shuddown / Hacker News; screenshot captured by this project"
+    obtained_on: "2026-08-24"
+    modifications: "Captured the exact public comment row in a fresh logged-out browser at a 390 CSS-pixel viewport and 2x device scale; element crop only, with no page-content edits"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "User explicitly requested the original community-comment screenshot in this WeChat article preview on 2026-08-24; use is limited to one short attributed comment for editorial commentary and is not a general republication license."
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "截图：Hacker News；评论：Shuddown"
+    output_sha256: "04b19ddf7aa551bc6448a3442b129996ee99dca51df422d698d8be050880d338"
+
+  - file: "research/source-assets/amazon-fire-hd10-2021-spec-official.png"
+    use: "research_reference"
+    used_in_draft: false
+    used_as_cover: false
+    dimensions: "1000x1000"
+    source_type: "official_product_image"
+    source: "https://developer.amazon.com/docs/device-specs/ft-device-specifications-firehd-models.html"
+    source_file: "https://m.media-amazon.com/images/G/01/mobile-apps/dex/firetablets/tabletspecthumb_firehd10_2021.png"
+    creator_or_rightsholder: "Amazon.com, Inc. or its affiliates"
+    obtained_on: "2026-08-24"
+    modifications: "Downloaded from the image host used by Amazon's official Fire tablet specifications page; no edits"
+    rights_status: "needs_review"
+    rights_basis: "Official product image collected at the user's request for candidate review; no standalone republication license was confirmed."
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "图：Amazon"
+    output_sha256: "4922fedb72c58ff5cc3e59b45ed4fd93972074ae4548b2caf4f3a92685df96df"
+
+  - file: "research/source-assets/amazon-fire-hd10-2021-blog-official.jpg"
+    use: "research_reference"
+    used_in_draft: false
+    used_as_cover: false
+    dimensions: "690x493"
+    source_type: "official_product_image"
+    source: "https://developer.amazon.com/apps-and-games/blogs/2021/04/new-fire-hd-10-tablets"
+    source_file: "https://dhhmpfovkf2ub.cloudfront.net/content/dam/appstore/visual_update_2020/blog/blog_trona_thumb_690x493.jpg?ck=1716338997"
+    creator_or_rightsholder: "Amazon.com, Inc. or its affiliates"
+    obtained_on: "2026-08-24"
+    modifications: "Downloaded from Amazon's official developer-blog image host; no edits"
+    rights_status: "needs_review"
+    rights_basis: "Official launch artwork collected at the user's request for candidate review; no standalone republication license was confirmed."
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "图：Amazon"
+    output_sha256: "8787bf58a080370c53b7826d23dd50e560d7174db6bc8aabf5ba16b4ceed5aa4"
+
+  - file: "research/source-assets/author-kimi-working-bug.png"
+    use: "research_reference"
+    used_in_draft: false
+    used_as_cover: false
+    dimensions: "3402x2108"
+    source_type: "author_original_screenshot"
+    source: "https://ericpardee.github.io/fire-hd-ownership/"
+    source_file: "https://ericpardee.github.io/fire-hd-ownership/blog-assets/kimi-we-found-a-working-bug.png"
+    creator_or_rightsholder: "Eric Pardee"
+    obtained_on: "2026-08-24"
+    modifications: "Downloaded from the author's article asset directory; no edits"
+    rights_status: "needs_review"
+    rights_basis: "Author screenshot collected for editorial candidate review; no standalone republication license was confirmed."
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "图：Eric Pardee"
+    output_sha256: "6b02cea9585a33a2790c283ff949394f4c91bf6069214f923819d33702b81518"
+    editorial_note: "Contains exploit-chain details and commands. Do not publish as-is; a safe crop and a separate rights decision are required."
+
+  - file: "research/source-assets/author-claude-cyber-refusals.png"
+    use: "research_reference"
+    used_in_draft: false
+    used_as_cover: false
+    dimensions: "1242x264"
+    source_type: "author_original_screenshot"
+    source: "https://ericpardee.github.io/fire-hd-ownership/"
+    source_file: "https://ericpardee.github.io/fire-hd-ownership/blog-assets/claude-cyber-refusals.png"
+    creator_or_rightsholder: "Eric Pardee / Anthropic interface text"
+    obtained_on: "2026-08-24"
+    modifications: "Downloaded from the author's article asset directory; no edits"
+    rights_status: "needs_review"
+    rights_basis: "Author screenshot collected for attributed editorial commentary; no standalone republication license was confirmed."
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "截图：Eric Pardee"
+    output_sha256: "ffed7509aa7912d9ba9465b6dbd4dc882c07e43a5cff9c9617f2182059850db6"
+    editorial_note: "Safe-content candidate that directly supports the article's Claude safeguard paragraph."
+
+  - file: "research/source-assets/author-glm53-root-verified.png"
+    use: "research_reference"
+    used_in_draft: false
+    used_as_cover: false
+    dimensions: "933x323"
+    source_type: "author_original_screenshot"
+    source: "https://ericpardee.github.io/fire-hd-ownership/"
+    source_file: "https://ericpardee.github.io/fire-hd-ownership/blog-assets/glm53-rooted-verified.png"
+    creator_or_rightsholder: "Eric Pardee"
+    obtained_on: "2026-08-24"
+    modifications: "Downloaded from the author's article asset directory; no edits"
+    rights_status: "needs_review"
+    rights_basis: "Author screenshot collected for editorial candidate review; no standalone republication license was confirmed."
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "图：Eric Pardee"
+    output_sha256: "6c6937e9cc98d05d629931d9b83a2a6a3f49ab7252efbb7e4d566372af7736ab"
+    editorial_note: "Contains executable command fragments. Do not publish as-is; a safe crop and a separate rights decision are required."
+
+  - file: "research/source-assets/author-openrouter-card-declined.png"
+    use: "unused"
+    used_in_draft: false
+    used_as_cover: false
+    dimensions: "630x238"
+    source_type: "author_original_screenshot"
+    source: "https://ericpardee.github.io/fire-hd-ownership/"
+    source_file: "https://ericpardee.github.io/fire-hd-ownership/blog-assets/openrouter-card-declined.png"
+    creator_or_rightsholder: "Eric Pardee / OpenRouter interface"
+    obtained_on: "2026-08-24"
+    modifications: "Downloaded from the author's article asset directory; no edits"
+    rights_status: "needs_review"
+    rights_basis: "Author screenshot collected as a humorous side-detail candidate; no standalone republication license was confirmed."
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "图：Eric Pardee"
+    output_sha256: "9229ebe27c6ee234805a3d1f5ddae7e7d73065af6994d8eb8dd8458e4f7dbfa2"
+    editorial_note: "The draft omits the card-decline side plot, so this image remains unused."
+
+  - file: "research/source-assets/hn-comment-fame-promise-49409832.png"
+    use: "research_reference"
+    used_in_draft: false
+    used_as_cover: false
+    dimensions: "1200x760"
+    source_type: "community_quote_card"
+    source: "https://news.ycombinator.com/item?id=49409832"
+    source_file: "Hacker News public comment API item 49409832"
+    creator_or_rightsholder: "Shuddown / This project (card layout)"
+    obtained_on: "2026-08-24"
+    modifications: "Typeset one short verbatim public comment with username and comment ID; no change to wording"
+    rights_status: "needs_review"
+    rights_basis: "Short attributed quotation prepared for editorial commentary; this is not a general license to republish community content."
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "评论：Shuddown / Hacker News"
+    output_sha256: "20e34e83df543d6c066bd5de43d1a86b9d6a4ce44c5d8c0d6ce24821333e7bd1"
+
+  - file: "research/source-assets/hn-comment-fame-promise-49409832-screenshot.png"
+    use: "research_reference"
+    used_in_draft: false
+    used_as_cover: false
+    dimensions: "772x164"
+    source_type: "webpage_screenshot"
+    source: "https://news.ycombinator.com/item?id=49409073"
+    source_file: "Hacker News public thread, comment item 49409832"
+    creator_or_rightsholder: "Shuddown / Hacker News; screenshot captured by this project"
+    obtained_on: "2026-08-24"
+    modifications: "Captured the exact public comment row in a fresh logged-out browser at a 390 CSS-pixel viewport and 2x device scale; element crop only, with no page-content edits"
+    rights_status: "needs_review"
+    rights_basis: "Research copy of one short attributed public comment; the release copy has separate current-task editorial-commentary clearance."
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "截图：Hacker News；评论：Shuddown"
+    output_sha256: "04b19ddf7aa551bc6448a3442b129996ee99dca51df422d698d8be050880d338"
+
+  - file: "research/source-assets/hn-comment-iphone-jailbreak-49409918.png"
+    use: "research_reference"
+    used_in_draft: false
+    used_as_cover: false
+    dimensions: "1200x760"
+    source_type: "community_quote_card"
+    source: "https://news.ycombinator.com/item?id=49409918"
+    source_file: "Hacker News public comment API item 49409918"
+    creator_or_rightsholder: "sajithdilshan / This project (card layout)"
+    obtained_on: "2026-08-24"
+    modifications: "Typeset one short verbatim public comment with username and comment ID; no change to wording"
+    rights_status: "needs_review"
+    rights_basis: "Short attributed quotation prepared for editorial commentary; this is not a general license to republish community content."
+    rights_blocker: false
+    allowed_platforms: ["wechat"]
+    attribution: "评论：sajithdilshan / Hacker News"
+    output_sha256: "e8869e7c57f68cc787087a303f6b133565d0545b071c2267f4dd836592ab6955"
