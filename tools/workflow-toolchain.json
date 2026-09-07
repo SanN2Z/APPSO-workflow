@@ -54,6 +54,7 @@
     ]
   },
   "entrypoints": {
+    "export-workflow": "tools/export_workflow_bundle.py",
     "capabilities": "tools/capability_bundle.py",
     "validate": ".agents/skills/self-media-ops/scripts/validate_content_package.py",
     "image-preflight": ".agents/skills/self-media-ops/scripts/preflight_image_generation.py",
@@ -83,6 +84,7 @@
     "set-openrouter-key": "tools/set_openrouter_key.ps1"
   },
   "required_tracked_paths": [
+    "tools/export_workflow_bundle.py",
     ".env.example",
     ".python-version",
     ".nvmrc",

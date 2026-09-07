@@ -2,7 +2,7 @@
 param(
     [Parameter(Mandatory = $true, Position = 0)]
     [ValidateSet(
-        "verify", "test", "repo-preflight", "capabilities", "validate", "image-preflight",
+        "verify", "test", "repo-preflight", "export-workflow", "capabilities", "validate", "image-preflight",
         "opening-check", "wechat", "company", "insight", "retrospective-init",
         "retrospective-audit", "corpus", "pdf-render", "crop-image", "normalize-text",
         "openrouter", "x-env", "x-readonly", "x-visibility", "x-post",
