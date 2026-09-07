@@ -1,0 +1,131 @@
+{
+  "version": "1.10.3",
+  "status": "local_test_candidate",
+  "file_count": 21,
+  "total_bytes": 3356118,
+  "manifest_sha256": "0E812026BB209927D071BF355617B87DC8D595F59162F27E3A3CD715691C8211",
+  "tree_sha256": "8925C442B19A32F912D98B7BF30ABBC12D35E088C54A7A6B766F2D189C50FC23",
+  "files": [
+    {
+      "file": "assets/appso-title.gif",
+      "sha256": "C047A3E80CEA40D3174E847ADB8FD20D2E75386E6B2B01374EFE6C81CD722314",
+      "bytes": 1137687
+    },
+    {
+      "file": "assets/ifanr-title.gif",
+      "sha256": "EE9E488FF73B56802FF24C7BA918092D7FF76F2CF562D6C5922C50438E887ABA",
+      "bytes": 1912846
+    },
+    {
+      "file": "content-script.js",
+      "sha256": "67449977767DC88AAF0AFE08CC713DD1F71A9576EF0F1D214C5F38B281307163",
+      "bytes": 12379
+    },
+    {
+      "file": "editor-adapter.js",
+      "sha256": "49A07AD7E866A7D7D731F558B172EFE391846C966CED3114BFE9D5077C54C9A9",
+      "bytes": 55801
+    },
+    {
+      "file": "feishu-content-script.js",
+      "sha256": "BA67FCAF2DEA6511FFDDB5662D4D52B00531B68C3F530F5012BFAB2750DC6CBA",
+      "bytes": 22872
+    },
+    {
+      "file": "feishu-page-reader.js",
+      "sha256": "C5BEE3FD6396F66E4281194CC245ACF27696C9073791F72EE9A9A616AD9EB429",
+      "bytes": 24360
+    },
+    {
+      "file": "icons/icon128.png",
+      "sha256": "E5CAD3861D9BBA7F37470BAD23072AB79D6284328EEF6B8E10B522DE9715344F",
+      "bytes": 8190
+    },
+    {
+      "file": "icons/icon16.png",
+      "sha256": "4AE8A077562233F3846E30410AC16858EE67B7088BEB21F355FAB12E264757CC",
+      "bytes": 1532
+    },
+    {
+      "file": "icons/icon32.png",
+      "sha256": "4B3BA683FD7583A316E41ACB5983FA2C719A3639636A58785D0C622D3305C993",
+      "bytes": 2223
+    },
+    {
+      "file": "icons/icon48.png",
+      "sha256": "3267807386F9F073B5CEE85D5DC5BFCD3C05A1939AD956AD3CD8D87BE1141274",
+      "bytes": 2979
+    },
+    {
+      "file": "icons/ifanr-logo-source.png",
+      "sha256": "4C1774B5DFC2FC767279776B9381EDC66036E2DB4D77AFBE533C9C8AC4575890",
+      "bytes": 58202
+    },
+    {
+      "file": "manifest.json",
+      "sha256": "0E812026BB209927D071BF355617B87DC8D595F59162F27E3A3CD715691C8211",
+      "bytes": 1649
+    },
+    {
+      "file": "page-connection.js",
+      "sha256": "2EF05F08C1D894A4F9973E9384E12938FDB31699CF0AB7C88A1A0DFB3C12C420",
+      "bytes": 3691
+    },
+    {
+      "file": "page-state.js",
+      "sha256": "AABB037B77247ABA5079164E958A978797FA2996DBE6D1D53088EECAC1DB17A1",
+      "bytes": 3091
+    },
+    {
+      "file": "popup.html",
+      "sha256": "83276C6E69AEBE3AA2CED59E5338DCC93D49A780B819837B66B7AB326544B238",
+      "bytes": 15087
+    },
+    {
+      "file": "popup.js",
+      "sha256": "3976B9297709D59AAA251A9E577C07780357EA2CBFB5072ED86CFCFA9C42B2F2",
+      "bytes": 56845
+    },
+    {
+      "file": "service-worker.js",
+      "sha256": "0B6FE986EBD7B90657566D3F3D9A0474986A64AC478AAEC1B28348EE555CB104",
+      "bytes": 23120
+    },
+    {
+      "file": "source-link.js",
+      "sha256": "0904EC4BF876BAF6C081450A147D30B41964BC153FB599081AE2FDBD104D3737",
+      "bytes": 1987
+    },
+    {
+      "file": "static-image-compression.js",
+      "sha256": "46B2A987E40DC9ECCBCF84B430824FB6554EDBAA09BD321E2BEA7496B24588A2",
+      "bytes": 6445
+    },
+    {
+      "file": "title-image-brand.js",
+      "sha256": "FDB216CA5364C1D7371D54899EF342775B12940A514D7EECCCBC0F692361C0B8",
+      "bytes": 3253
+    },
+    {
+      "file": "wechat-write-guard.js",
+      "sha256": "040959C7A9E02C5216AA1120343AB4DDF135D19D099E3FC6C0607EB6CEAAEC94",
+      "bytes": 1879
+    }
+  ],
+  "modified_from_1_10_0": [
+    "content-script.js",
+    "editor-adapter.js",
+    "feishu-content-script.js",
+    "feishu-page-reader.js",
+    "manifest.json",
+    "page-connection.js",
+    "popup.html",
+    "popup.js",
+    "service-worker.js"
+  ],
+  "permissions_and_network_scope_unchanged": true,
+  "regression_checks": 33,
+  "real_wechat_roundtrip": "pending",
+  "cold_clone": "not_run",
+  "credential_review": "Changes reviewed: packaged script loading and layout, no credentials or new network hosts; connection status contains error codes, no page text."
+}

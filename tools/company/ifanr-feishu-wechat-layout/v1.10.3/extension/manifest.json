@@ -1,0 +1,58 @@
+{
+  "manifest_version": 3,
+  "name": "爱范儿飞书到微信排版 POC",
+  "version": "1.10.3",
+  "minimum_chrome_version": "106",
+  "description": "读取当前 Chrome 飞书文档并排入微信公众号编辑器。",
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "permissions": ["activeTab", "scripting", "storage", "unlimitedStorage", "clipboardWrite"],
+  "host_permissions": [
+    "https://*.feishu.cn/*",
+    "https://*.feishucdn.com/*",
+    "https://mp.weixin.qq.com/*",
+    "http://127.0.0.1/*",
+    "http://localhost/*"
+  ],
+  "action": {
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    },
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "service-worker.js"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["assets/ifanr-title.gif", "assets/appso-title.gif"],
+      "matches": ["https://*.feishu.cn/*"]
+    }
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.feishu.cn/wiki/*",
+        "https://*.feishu.cn/docx/*"
+      ],
+      "js": ["source-link.js", "static-image-compression.js", "title-image-brand.js", "feishu-page-reader.js", "feishu-content-script.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://mp.weixin.qq.com/*",
+        "http://127.0.0.1/*",
+        "http://localhost/*"
+      ],
+      "js": ["source-link.js", "page-state.js", "editor-adapter.js", "content-script.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}

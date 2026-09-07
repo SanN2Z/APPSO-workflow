@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>爱范儿一键排版</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --brand: #FD4606;
+      --brand-dark: #D93B04;
+      --ink: #25211F;
+      --muted: #756D67;
+      --paper: #FFFDFC;
+      --canvas: #F7F1E8;
+      --line: #E8DED2;
+      --success: #287A50;
+      --success-bg: #EDF7F1;
+      --warning: #9A5A14;
+      --warning-bg: #FFF5E6;
+      --danger: #B43A32;
+      --danger-bg: #FFF0EE;
+      --shadow: 0 12px 30px rgba(70, 46, 30, .08);
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      width: 356px;
+      margin: 0;
+      color: var(--ink);
+      background: var(--canvas);
+      font: 13px/1.55 "PingFang SC", "Hiragino Sans GB", -apple-system, BlinkMacSystemFont, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button, summary { font: inherit; }
+    button:focus-visible, summary:focus-visible {
+      outline: 2px solid rgba(253, 70, 6, .35);
+      outline-offset: 2px;
+    }
+
+    .app-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 18px 12px;
+    }
+    .brand-mark { width: 30px; height: 30px; border-radius: 7px; }
+    .brand-copy { min-width: 0; flex: 1; }
+    .brand-copy strong { display: block; font-size: 15px; font-weight: 600; letter-spacing: .01em; }
+    .brand-copy span { color: var(--muted); font-size: 11px; }
+    .service-pill {
+      flex: none;
+      padding: 3px 7px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      background: rgba(255,255,255,.55);
+      font-size: 10px;
+      white-space: nowrap;
+    }
+    .service-pill[data-state="online"] { color: var(--success); border-color: #CBE4D6; background: var(--success-bg); }
+    .service-pill[data-state="offline"] { color: var(--danger); border-color: #F0C9C4; background: var(--danger-bg); }
+
+    main { padding: 0 12px 14px; }
+    .card {
+      margin-bottom: 9px;
+      padding: 13px 14px;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: rgba(255,253,252,.93);
+      box-shadow: var(--shadow);
+    }
+    .status-card { position: relative; overflow: hidden; padding: 15px 15px 16px; }
+    .status-card::before {
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 3px;
+      background: var(--brand);
+      content: "";
+    }
+    .status-card[data-tone="success"]::before { background: var(--success); }
+    .status-card[data-tone="warning"]::before { background: var(--warning); }
+    .status-card[data-tone="danger"]::before { background: var(--danger); }
+    .step-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 8px; }
+    .eyebrow { color: var(--brand); font-size: 10px; font-weight: 600; letter-spacing: .08em; }
+    .status-tag { padding: 2px 7px; border-radius: 999px; color: var(--muted); background: #F2ECE5; font-size: 10px; }
+    .status-card h1 { margin: 0; font-size: 18px; line-height: 1.35; font-weight: 600; letter-spacing: -.01em; }
+    .status-card p { margin: 6px 0 0; color: var(--muted); }
+
+    .section-label { margin: 0 0 5px; color: var(--muted); font-size: 10px; letter-spacing: .06em; }
+    .source-card h2, .result-card h2, .notice-card h2 { margin: 0; font-size: 13px; line-height: 1.45; font-weight: 600; }
+    .source-card p, .result-card p, .notice-card p { margin: 4px 0 0; color: var(--muted); font-size: 12px; }
+    .source-meta { overflow-wrap: anywhere; }
+
+    .quality-card { padding: 10px 14px; box-shadow: none; }
+    .quality-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .quality-row + .quality-row { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--line); }
+    .quality-copy { min-width: 0; }
+    .quality-copy strong { display: block; font-size: 12px; font-weight: 600; }
+    .quality-copy span { display: block; margin-top: 2px; color: var(--muted); font-size: 10px; }
+    .quality-select {
+      flex: none;
+      min-height: 30px;
+      padding: 4px 24px 4px 8px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      color: var(--ink);
+      background: #FFF;
+      font: inherit;
+      font-size: 11px;
+    }
+
+    .package-card { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; padding: 10px; }
+    .metric { padding: 7px 8px; border-radius: 9px; background: #F8F3ED; }
+    .metric span { display: block; color: var(--muted); font-size: 10px; }
+    .metric strong { display: block; margin-top: 1px; font-size: 13px; font-weight: 600; }
+
+    .progress-card { padding: 12px 14px; box-shadow: none; }
+    .progress-head, .progress-meta { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .progress-head strong { font-size: 12px; font-weight: 600; }
+    .progress-head span { color: var(--brand); font-size: 12px; font-variant-numeric: tabular-nums; }
+    .progress-track { height: 7px; margin: 9px 0 7px; overflow: hidden; border-radius: 999px; background: #EDE3D8; }
+    .progress-bar { display: block; width: 0; height: 100%; border-radius: inherit; background: linear-gradient(90deg, #FF8A2A, var(--brand)); transition: width .3s ease; }
+    .progress-meta { align-items: flex-start; color: var(--muted); font-size: 10px; }
+    .progress-meta span:first-child { min-width: 0; overflow-wrap: anywhere; }
+    .progress-meta span:last-child { flex: none; font-variant-numeric: tabular-nums; }
+    .progress-actions { display: flex; justify-content: flex-end; margin-top: 9px; }
+    .progress-actions .compact-button { min-height: 28px; padding: 4px 9px; color: var(--danger); background: transparent; }
+
+    .notice-card { border-color: #EED6B5; background: var(--warning-bg); box-shadow: none; }
+    .notice-card[data-tone="success"] { border-color: #CBE4D6; background: var(--success-bg); }
+    .notice-card[data-tone="neutral"] { border-color: var(--line); background: #F8F3ED; }
+
+    .compact-button { min-height: 32px; padding: 6px 10px; border: 1px solid var(--line); color: var(--ink); background: #FFF; font-size: 11px; }
+
+    .actions { display: flex; gap: 8px; margin-top: 10px; }
+    button {
+      min-height: 36px;
+      border: 0;
+      border-radius: 9px;
+      cursor: pointer;
+      transition: background .15s ease, transform .15s ease, opacity .15s ease;
+    }
+    button:active:not(:disabled) { transform: translateY(1px); }
+    .primary {
+      flex: 1;
+      padding: 8px 13px;
+      color: #fff;
+      background: var(--brand);
+      font-weight: 600;
+    }
+    .primary:hover:not(:disabled) { background: var(--brand-dark); }
+    button:disabled { cursor: not-allowed; opacity: .55; }
+    .secondary {
+      flex: none;
+      min-width: 70px;
+      padding: 8px 11px;
+      color: var(--muted);
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.5);
+    }
+    button[hidden], section[hidden] { display: none; }
+
+    .result-card { margin-top: 9px; box-shadow: none; }
+    .result-card[data-tone="success"] { border-color: #CBE4D6; background: var(--success-bg); }
+    .result-card[data-tone="warning"] { border-color: #EED6B5; background: var(--warning-bg); }
+    .result-card[data-tone="danger"] { border-color: #F0C9C4; background: var(--danger-bg); }
+    #result-copy { white-space: pre-line; }
+    .gif-issue-panel { margin-top: 9px; }
+    .gif-issue-toggle {
+      width: 100%;
+      min-height: 32px;
+      padding: 6px 10px;
+      border: 1px solid #E8CDAA;
+      color: #8A4A16;
+      background: rgba(255,255,255,.65);
+      font-size: 11px;
+      font-weight: 600;
+      text-align: left;
+    }
+    .gif-issue-toggle::after { content: '展开'; float: right; color: var(--muted); font-size: 10px; font-weight: 400; }
+    .gif-issue-toggle[aria-expanded="true"]::after { content: '收起'; }
+    .gif-issue-list {
+      max-height: 330px;
+      margin-top: 7px;
+      overflow: auto;
+      border: 1px solid #EED6B5;
+      border-radius: 9px;
+      background: rgba(255,255,255,.55);
+    }
+    .gif-issue-panel[hidden], .gif-issue-list[hidden] { display: none; }
+    .gif-issue-item { padding: 10px; border-top: 1px solid #EFE1D1; }
+    .gif-issue-item:first-child { border-top: 0; }
+    .gif-issue-item strong { display: block; color: var(--ink); font-size: 11px; line-height: 1.45; }
+    .gif-issue-meta { margin-top: 3px; color: var(--muted); font-size: 10px; line-height: 1.5; }
+    .gif-issue-reason { margin-top: 6px; color: #8A4A16; font-size: 10px; line-height: 1.5; }
+    .gif-issue-advice { margin: 6px 0 0; padding-left: 16px; color: #5B534E; font-size: 10px; line-height: 1.55; }
+    .gif-issue-advice li + li { margin-top: 3px; }
+    details { margin-top: 8px; }
+    summary { color: var(--muted); cursor: pointer; font-size: 11px; }
+    .detail-actions { display: flex; justify-content: flex-end; margin-top: 6px; }
+    .copy-detail {
+      min-height: 26px;
+      padding: 3px 8px;
+      border: 1px solid var(--line);
+      color: var(--muted);
+      background: rgba(255,255,255,.7);
+      font-size: 10px;
+    }
+    pre {
+      max-height: 190px;
+      margin: 8px 0 0;
+      padding: 9px;
+      overflow: auto;
+      border-radius: 8px;
+      color: #5B534E;
+      background: rgba(255,255,255,.62);
+      white-space: pre-wrap;
+      word-break: break-all;
+      font: 10px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="app-header">
+    <img class="brand-mark" src="icons/icon48.png" alt="爱范儿">
+    <div class="brand-copy">
+      <strong>爱范儿一键排版</strong>
+      <span>飞书内容到微信公众号</span>
+    </div>
+    <span id="service-indicator" class="service-pill" data-state="checking">服务检查中</span>
+  </header>
+
+  <main>
+    <section id="status-card" class="card status-card" data-tone="neutral" role="status" aria-live="polite" aria-atomic="true">
+      <div class="step-row">
+        <span id="step-label" class="eyebrow">正在识别页面</span>
+        <span id="status-tag" class="status-tag">请稍候</span>
+      </div>
+      <h1 id="status-title">正在准备排版流程</h1>
+      <p id="status-copy">插件正在读取当前页面和本地内容包。</p>
+    </section>
+
+    <section class="card source-card">
+      <p class="section-label">当前来源</p>
+      <h2 id="source-title">尚未选择飞书文档</h2>
+      <p id="source-meta" class="source-meta">请先在飞书 Wiki 或文档页面完成收录。</p>
+    </section>
+
+    <section id="quality-card" class="card quality-card" hidden>
+      <div class="quality-row">
+        <div class="quality-copy">
+          <strong>文章题图</strong>
+          <span>自动识别 AppSo；判断不准时可以手动指定。</span>
+        </div>
+        <select id="title-image-brand" class="quality-select" aria-label="文章题图品牌">
+          <option value="auto" selected>自动</option>
+          <option value="ifanr">爱范儿</option>
+          <option value="appso">AppSo</option>
+        </select>
+      </div>
+      <div class="quality-row">
+        <div class="quality-copy">
+          <strong>超限静态图画质</strong>
+          <span>仅处理超过 5MB 的静态图；动图保持原样。</span>
+        </div>
+        <select id="static-image-quality" class="quality-select" aria-label="超限静态图压缩画质">
+          <option value="75">兼容</option>
+          <option value="90" selected>高清</option>
+          <option value="95">极清</option>
+        </select>
+      </div>
+    </section>
+
+    <section id="package-card" class="card package-card" hidden>
+      <div class="metric"><span>内容块</span><strong id="metric-blocks">—</strong></div>
+      <div class="metric"><span>图片</span><strong id="metric-images">—</strong></div>
+      <div class="metric"><span>状态</span><strong id="metric-state">—</strong></div>
+    </section>
+
+    <section id="compile-progress" class="card progress-card" hidden aria-live="polite">
+      <div class="progress-head">
+        <strong id="progress-phase">正在准备</strong>
+        <span id="progress-percent">0%</span>
+      </div>
+      <div class="progress-track" role="progressbar" aria-label="排版生成进度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+        <span id="progress-bar" class="progress-bar"></span>
+      </div>
+      <div class="progress-meta">
+        <span id="progress-detail">任务已进入处理队列</span>
+        <span id="progress-elapsed">0 秒 / 45 秒</span>
+      </div>
+      <div class="progress-actions">
+        <button id="cancel-compile" class="compact-button" type="button">停止任务</button>
+      </div>
+    </section>
+
+    <section id="page-notice" class="card notice-card" hidden aria-live="assertive">
+      <h2 id="page-notice-title"></h2>
+      <p id="page-notice-copy"></p>
+    </section>
+
+    <div class="actions">
+      <button id="inject" class="primary" type="button" disabled>正在识别…</button>
+      <button id="clear-source" class="secondary" type="button" hidden>清除</button>
+    </div>
+
+    <section id="result-card" class="card result-card" hidden role="status" aria-live="polite" aria-atomic="true">
+      <h2 id="result-title"></h2>
+      <p id="result-copy"></p>
+      <div id="gif-issue-panel" class="gif-issue-panel" hidden>
+        <button id="toggle-gif-issues" class="gif-issue-toggle" type="button" aria-expanded="false">查看问题动图</button>
+        <div id="gif-issue-list" class="gif-issue-list" hidden></div>
+      </div>
+      <details>
+        <summary>查看技术详情</summary>
+        <div class="detail-actions">
+          <button id="copy-result" class="copy-detail" type="button">复制详情</button>
+        </div>
+        <pre id="result">等待操作</pre>
+      </details>
+    </section>
+  </main>
+
+  <script src="source-link.js"></script>
+  <script src="page-state.js"></script>
+  <script src="wechat-write-guard.js"></script>
+  <script src="title-image-brand.js"></script>
+  <script src="page-connection.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

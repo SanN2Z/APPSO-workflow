@@ -1,0 +1,120 @@
+{
+  "version": "1.10.1",
+  "status": "local_test_candidate",
+  "file_count": 20,
+  "total_bytes": 3346025,
+  "manifest_sha256": "67C5DC6A7B636943326A9A4C3E131207AEE2B0668A8A92C68F6CA7D538CF9318",
+  "tree_sha256": "B6491BDCB3C5C038215390A6DFF5CA20C19B15B4C59D9C959A44EA56D9E25574",
+  "files": [
+    {
+      "file": "assets/appso-title.gif",
+      "sha256": "C047A3E80CEA40D3174E847ADB8FD20D2E75386E6B2B01374EFE6C81CD722314",
+      "bytes": 1137687
+    },
+    {
+      "file": "assets/ifanr-title.gif",
+      "sha256": "EE9E488FF73B56802FF24C7BA918092D7FF76F2CF562D6C5922C50438E887ABA",
+      "bytes": 1912846
+    },
+    {
+      "file": "content-script.js",
+      "sha256": "192802B0EEA1D3F9065E23C3DF706AB2AC01E54AB10077C5E9D49370B40B7607",
+      "bytes": 12135
+    },
+    {
+      "file": "editor-adapter.js",
+      "sha256": "7266147FD7F9040057C42DB0BFD369DD0A6FA4273D1979FF44E0A31F80C7DB9D",
+      "bytes": 53865
+    },
+    {
+      "file": "feishu-content-script.js",
+      "sha256": "2A7AD183A7AD07A11218BBBEFF42E6FEE871E28167E932D9C7969A4A468F19F9",
+      "bytes": 22563
+    },
+    {
+      "file": "feishu-page-reader.js",
+      "sha256": "094F45A1EBAA72820DD59D40BFAE32A158BEBB5E4AC2D063DBD22F60EFB86EDF",
+      "bytes": 23621
+    },
+    {
+      "file": "icons/icon128.png",
+      "sha256": "E5CAD3861D9BBA7F37470BAD23072AB79D6284328EEF6B8E10B522DE9715344F",
+      "bytes": 8190
+    },
+    {
+      "file": "icons/icon16.png",
+      "sha256": "4AE8A077562233F3846E30410AC16858EE67B7088BEB21F355FAB12E264757CC",
+      "bytes": 1532
+    },
+    {
+      "file": "icons/icon32.png",
+      "sha256": "4B3BA683FD7583A316E41ACB5983FA2C719A3639636A58785D0C622D3305C993",
+      "bytes": 2223
+    },
+    {
+      "file": "icons/icon48.png",
+      "sha256": "3267807386F9F073B5CEE85D5DC5BFCD3C05A1939AD956AD3CD8D87BE1141274",
+      "bytes": 2979
+    },
+    {
+      "file": "icons/ifanr-logo-source.png",
+      "sha256": "4C1774B5DFC2FC767279776B9381EDC66036E2DB4D77AFBE533C9C8AC4575890",
+      "bytes": 58202
+    },
+    {
+      "file": "manifest.json",
+      "sha256": "67C5DC6A7B636943326A9A4C3E131207AEE2B0668A8A92C68F6CA7D538CF9318",
+      "bytes": 1614
+    },
+    {
+      "file": "page-state.js",
+      "sha256": "AABB037B77247ABA5079164E958A978797FA2996DBE6D1D53088EECAC1DB17A1",
+      "bytes": 3091
+    },
+    {
+      "file": "popup.html",
+      "sha256": "24F0E6FD3F5A19A91CB9997200562EAC2B7A42DB8DBE6E4B4453FBFDBB3057FE",
+      "bytes": 14280
+    },
+    {
+      "file": "popup.js",
+      "sha256": "CC40CC0FA18D7E78A6EA2868831937424F4CED6CF5E472DF2F4144581E814B47",
+      "bytes": 54701
+    },
+    {
+      "file": "service-worker.js",
+      "sha256": "2043E82C558EC598FE169E31AC88B6D2F6F1A0D4B2000C865C1FD10E474C0F92",
+      "bytes": 22932
+    },
+    {
+      "file": "source-link.js",
+      "sha256": "0904EC4BF876BAF6C081450A147D30B41964BC153FB599081AE2FDBD104D3737",
+      "bytes": 1987
+    },
+    {
+      "file": "static-image-compression.js",
+      "sha256": "46B2A987E40DC9ECCBCF84B430824FB6554EDBAA09BD321E2BEA7496B24588A2",
+      "bytes": 6445
+    },
+    {
+      "file": "title-image-brand.js",
+      "sha256": "FDB216CA5364C1D7371D54899EF342775B12940A514D7EECCCBC0F692361C0B8",
+      "bytes": 3253
+    },
+    {
+      "file": "wechat-write-guard.js",
+      "sha256": "040959C7A9E02C5216AA1120343AB4DDF135D19D099E3FC6C0607EB6CEAAEC94",
+      "bytes": 1879
+    }
+  ],
+  "modified_from_1_10_0": [
+    "editor-adapter.js",
+    "feishu-page-reader.js",
+    "manifest.json"
+  ],
+  "permissions_and_network_scope_unchanged": true,
+  "regression_checks": 20,
+  "real_wechat_roundtrip": "pending",
+  "cold_clone": "not_run",
+  "credential_review": "Only layout and title fallback formatting changed; no credential, account, request or storage inputs added."
+}

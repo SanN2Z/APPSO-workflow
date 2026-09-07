@@ -1,0 +1,1266 @@
+(function exposeWechatEditorAdapter(global) {
+  const DEFAULT_EDITOR_SELECTORS = [
+    '#ueditor_0 .ProseMirror',
+    '.ProseMirror[contenteditable="true"]',
+    '[contenteditable="true"][data-wechat-editor]'
+  ];
+
+  const DEFAULT_SAVE_SELECTORS = [
+    '[data-save-status]',
+    '.weui-desktop-editor__status',
+    '.js_save_status',
+    '[role="alert"]',
+    '[class*="toast"]',
+    '[class*="tips"]',
+    '[class*="save"][class*="status"]'
+  ];
+
+  const DEFAULT_TITLE_FIELD_SELECTORS = [
+    'textarea#title',
+    'input#title',
+    'textarea[name="title"]',
+    'input[name="title"]',
+    '.js_title',
+    '[data-placeholder*="标题"]',
+    '[placeholder*="标题"]'
+  ];
+
+  const DEFAULT_SUMMARY_FIELD_SELECTORS = [
+    'textarea#js_description',
+    'textarea#js_digest',
+    'textarea[name="digest"]',
+    'textarea[name="description"]',
+    'input[name="digest"]',
+    '[data-placeholder*="摘要"]',
+    '[placeholder*="摘要"]'
+  ];
+
+  const SAVED_TEXT = /已保存|保存成功|草稿已保存/i;
+  const DEFAULT_IMAGE_STALL_TIMEOUT_MS = 8000;
+  const DEFAULT_SAVE_STALL_TIMEOUT_MS = 3000;
+
+  function editorCandidateDetails(selectors) {
+    const nodes = [];
+    const seen = new Set();
+    for (const selector of selectors) {
+      for (const node of document.querySelectorAll(selector)) {
+        if (seen.has(node)) continue;
+        seen.add(node);
+        nodes.push(node);
+      }
+    }
+    return nodes.map((node, index) => {
+      const rect = node.getBoundingClientRect?.() || { width: 0, height: 0 };
+      const textLength = compactNodeText(node).length;
+      const htmlLength = String(node.innerHTML || '').length;
+      const area = Math.max(0, Number(rect.width || node.clientWidth || 0)) *
+        Math.max(0, Number(rect.height || node.clientHeight || 0));
+      const editable = node.isContentEditable || node.getAttribute?.('contenteditable') === 'true';
+      const insideMainEditor = Boolean(node.closest?.('#ueditor_0'));
+      const visible = area > 0;
+      const score = (editable ? 1_000_000 : 0) +
+        (insideMainEditor ? 2_000_000 : 0) +
+        (visible ? 250_000 : 0) +
+        Math.min(500_000, area) +
+        Math.min(250_000, Number(node.scrollHeight || 0) * Math.max(1, Number(node.clientWidth || 0))) +
+        Math.min(100_000, textLength * 8) +
+        Math.min(50_000, htmlLength);
+      return { node, index, score, textLength, htmlLength, area, editable, insideMainEditor, visible };
+    }).sort((a, b) => b.score - a.score || b.textLength - a.textLength || b.htmlLength - a.htmlLength || a.index - b.index);
+  }
+
+  function findWechatEditor(selectors) {
+    const candidates = editorCandidateDetails(selectors);
+    const summarize = (candidate) => candidate ? {
+      score: candidate.score,
+      textLength: candidate.textLength,
+      htmlLength: candidate.htmlLength,
+      area: Math.round(candidate.area),
+      editable: candidate.editable,
+      insideMainEditor: candidate.insideMainEditor,
+      visible: candidate.visible
+    } : null;
+    return {
+      editor: candidates[0]?.node || null,
+      candidateCount: candidates.length,
+      selected: summarize(candidates[0]),
+      candidates: candidates.slice(0, 4).map(summarize)
+    };
+  }
+
+  function wait(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
+  function metadataFieldValue(field) {
+    if (!field) return '';
+    return 'value' in field ? String(field.value || '') : String(field.innerText || field.textContent || '');
+  }
+
+  function metadataFieldVisible(field) {
+    const rect = field.getBoundingClientRect?.() || { width: 0, height: 0 };
+    const style = global.getComputedStyle?.(field);
+    return rect.width > 0 && rect.height > 0 && style?.display !== 'none' && style?.visibility !== 'hidden';
+  }
+
+  function metadataFieldDescriptor(field) {
+    if (!field) return null;
+    return {
+      tag: field.tagName,
+      id: field.id || null,
+      name: field.getAttribute?.('name') || null,
+      className: String(field.className || '').slice(0, 120),
+      placeholder: field.getAttribute?.('placeholder') || field.getAttribute?.('data-placeholder') || null,
+      maxLength: Number(field.maxLength || 0) > 0 ? Number(field.maxLength) : null
+    };
+  }
+
+  function findWechatMetadataField(kind, editor, selectors) {
+    const exact = new Map();
+    selectors.forEach((selector, index) => {
+      try {
+        for (const node of document.querySelectorAll(selector)) {
+          if (!exact.has(node)) exact.set(node, selectors.length - index);
+        }
+      } catch {
+        // A future selector override must not interrupt the body write.
+      }
+    });
+    const candidates = new Set([
+      ...exact.keys(),
+      ...document.querySelectorAll('input,textarea,[contenteditable="true"]')
+    ]);
+    const wanted = kind === 'title' ? /(?:^|[-_\s])(title)(?:$|[-_\s])|标题/i : /digest|summary|description|摘要/i;
+    const excluded = kind === 'title'
+      ? /作者|author|摘要|digest|summary|description|封面|cover/i
+      : /作者|author|标题|title|封面|cover|原文链接|source/i;
+    const scored = [...candidates].filter((field) => {
+      if (field === editor || editor.contains?.(field) || field.closest?.('#ueditor_0')) return false;
+      if (field.disabled || field.readOnly || field.getAttribute?.('aria-disabled') === 'true') return false;
+      if (field.tagName === 'INPUT' && ['hidden', 'file', 'checkbox', 'radio'].includes(String(field.type || '').toLowerCase())) return false;
+      return metadataFieldVisible(field);
+    }).map((field) => {
+      const attributes = [
+        field.id,
+        field.getAttribute?.('name'),
+        field.className,
+        field.getAttribute?.('placeholder'),
+        field.getAttribute?.('data-placeholder'),
+        field.getAttribute?.('aria-label'),
+        field.parentElement?.innerText
+      ].filter(Boolean).join(' ').slice(0, 500);
+      let score = (exact.get(field) || 0) * 1000;
+      if (wanted.test(attributes)) score += 200;
+      if (excluded.test(attributes)) score -= 500;
+      if (field.tagName === 'TEXTAREA') score += kind === 'summary' ? 30 : 10;
+      if (field.id === (kind === 'title' ? 'title' : 'js_description')) score += 500;
+      return { field, score, descriptor: metadataFieldDescriptor(field) };
+    }).filter((item) => item.score > 0)
+      .sort((a, b) => b.score - a.score);
+    return {
+      field: scored[0]?.field || null,
+      candidateCount: scored.length,
+      selected: scored[0]?.descriptor || null
+    };
+  }
+
+  function setMetadataFieldValue(field, value) {
+    if ('value' in field) {
+      const prototype = field.tagName === 'TEXTAREA' ? global.HTMLTextAreaElement?.prototype : global.HTMLInputElement?.prototype;
+      const setter = prototype && Object.getOwnPropertyDescriptor(prototype, 'value')?.set;
+      if (setter) setter.call(field, value);
+      else field.value = value;
+    } else {
+      field.replaceChildren(document.createTextNode(value));
+    }
+    try {
+      field.dispatchEvent(new InputEvent('input', { bubbles: true, inputType: 'insertText', data: value }));
+    } catch {
+      field.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+    field.dispatchEvent(new Event('change', { bubbles: true }));
+  }
+
+  async function fillMetadataField(kind, editor, requestedValue, selectors) {
+    const requested = String(requestedValue || '').replace(/\p{Cf}/gu, '').replace(/\s+/g, ' ').trim();
+    if (!requested) return { requested: false, found: false, confirmed: true, length: 0 };
+    const selection = findWechatMetadataField(kind, editor, selectors);
+    const field = selection.field;
+    if (!field) {
+      return { requested: true, found: false, confirmed: false, length: requested.length, candidateCount: selection.candidateCount };
+    }
+    const fallbackLimit = kind === 'title' ? 64 : 120;
+    const maxLength = Number(field.maxLength || 0) > 0 ? Number(field.maxLength) : fallbackLimit;
+    const value = Array.from(requested).slice(0, maxLength).join('');
+    setMetadataFieldValue(field, value);
+    await wait(60);
+    const confirmed = metadataFieldValue(field).replace(/\s+/g, ' ').trim() === value;
+    return {
+      requested: true,
+      found: true,
+      confirmed,
+      length: value.length,
+      truncated: value !== requested,
+      candidateCount: selection.candidateCount,
+      selected: selection.selected
+    };
+  }
+
+  async function fillArticleMetadata(editor, options) {
+    const title = await fillMetadataField('title', editor, options.articleTitle, options.titleFieldSelectors || DEFAULT_TITLE_FIELD_SELECTORS);
+    const summary = await fillMetadataField('summary', editor, options.articleSummary, options.summaryFieldSelectors || DEFAULT_SUMMARY_FIELD_SELECTORS);
+    return {
+      title,
+      summary,
+      titleConfirmed: title.confirmed,
+      summaryConfirmed: summary.confirmed,
+      metadataConfirmed: title.confirmed && summary.confirmed
+    };
+  }
+
+  async function emitProgress(options, progress) {
+    if (typeof options.onProgress !== 'function') return;
+    try {
+      await options.onProgress({
+        ...progress,
+        updatedAt: new Date().toISOString()
+      });
+    } catch {
+      // Progress reporting must never interrupt an otherwise valid write.
+    }
+  }
+
+  function readSavedSignal(selectors) {
+    for (const selector of selectors) {
+      const nodes = document.querySelectorAll(selector);
+      for (const node of nodes) {
+        const value = node.textContent?.trim() || '';
+        if (SAVED_TEXT.test(value)) return value;
+      }
+    }
+    return '';
+  }
+
+  function findSafeDraftSaveControl() {
+    const candidates = [...document.querySelectorAll('button, a, [role="button"]')]
+      .filter((node) => node.textContent?.trim() === '保存为草稿')
+      .filter((node) => !node.disabled && node.getAttribute('aria-disabled') !== 'true');
+    return {
+      candidateCount: candidates.length,
+      control: candidates.length === 1 ? candidates[0] : null
+    };
+  }
+
+  function textHash(text) {
+    let hash = 2166136261;
+    for (let index = 0; index < text.length; index += 1) {
+      hash ^= text.charCodeAt(index);
+      hash = Math.imul(hash, 16777619);
+    }
+    return (hash >>> 0).toString(16).padStart(8, '0');
+  }
+
+  function normalizeValidationText(value = '') {
+    return String(value || '')
+      .normalize('NFKC')
+      .replace(/\p{Cf}/gu, '')
+      .replace(/\s+/g, '')
+      .trim();
+  }
+
+  function validateReplacement({
+    actualText = '',
+    expectedTextContains = '',
+    forbiddenTextFound = [],
+    forcedReplacement = false,
+    styleInspection = {},
+    expectedImageCount = 0
+  } = {}) {
+    const normalizedActualText = normalizeValidationText(actualText);
+    const normalizedExpectedText = normalizeValidationText(expectedTextContains);
+    const expectedTextFound = !normalizedExpectedText || normalizedActualText.includes(normalizedExpectedText);
+    const forbiddenClear = forbiddenTextFound.length === 0;
+    const strictReplacementConfirmed = expectedTextFound && forbiddenClear;
+    const structuralContentConfirmed = Number(styleInspection.directArticleRootCount || 0) === 1 &&
+      styleInspection.editorIsolationConfirmed === true &&
+      (normalizedActualText.length > 0 || Number(expectedImageCount || 0) > 0);
+    const replacementValidationBypassed = forcedReplacement &&
+      !strictReplacementConfirmed &&
+      forbiddenClear &&
+      structuralContentConfirmed;
+    return {
+      expectedTextFound,
+      strictReplacementConfirmed,
+      structuralContentConfirmed,
+      replacementValidationBypassed,
+      replacementConfirmed: strictReplacementConfirmed || replacementValidationBypassed
+    };
+  }
+
+  function inspectImages(editor) {
+    const images = [...editor.querySelectorAll('img')];
+    const details = images.map((image) => {
+      const src = image.getAttribute('src') || '';
+      let kind = '';
+      if (!src || !/^(?:data:|blob:|chrome-extension:|https?:\/\/)/i.test(src)) kind = 'relative';
+      else if (src.startsWith('data:')) kind = 'data';
+      else if (src.startsWith('blob:')) kind = 'blob';
+      else if (src.startsWith('chrome-extension:')) kind = 'extension';
+      else {
+        try {
+          kind = new URL(src, location.href).hostname || 'relative';
+        } catch {
+          kind = 'invalid';
+        }
+      }
+      const rect = image.getBoundingClientRect();
+      const style = global.getComputedStyle?.(image);
+      const imageContainer = image.closest?.('[data-ifanr-image-order], [data-media-name]');
+      const rawOrder = image.dataset.ifanrImageOrder || imageContainer?.dataset.ifanrImageOrder || '';
+      return {
+        kind,
+        order: Number(rawOrder) || null,
+        mediaName: image.dataset.ifanrMediaName || imageContainer?.dataset.mediaName || null,
+        animated: (image.dataset.ifanrImageKind || imageContainer?.dataset.ifanrImageKind) === 'gif',
+        width: Math.round(rect.width),
+        height: Math.round(rect.height),
+        loaded: image.complete && image.naturalWidth > 0,
+        visible: rect.width > 1 && rect.height > 1 && style?.display !== 'none' && style?.visibility !== 'hidden'
+      };
+    });
+    const isHosted = item => item.visible && item.loaded && /^(?:mmbiz\.qpic\.cn|mmbiz\.qlogo\.cn)$/.test(item.kind);
+    const visibleHostedImages = details.filter(isHosted).filter((item,index,all) => !item.order || all.findIndex(other => other.order === item.order) === index);
+    const hostedOrders = new Set(visibleHostedImages.map(item => item.order).filter(Boolean));
+    const pendingImages = details.filter(item => !isHosted(item) && !(!item.visible && item.order && hostedOrders.has(item.order)));
+    return {
+      imageCount: images.length,
+      visibleImageCount: details.filter((item) => item.visible).length,
+      visibleHostedImageCount: visibleHostedImages.length,
+      hostedImageCount: visibleHostedImages.length,
+      imageSourceKinds: details.map((item) => item.kind),
+      imageSourceDetails: details,
+      pendingEmbeddedImageCount: pendingImages.length,
+      pendingImageOrders: [...new Set(pendingImages.map((item) => item.order).filter(Boolean))].sort((a, b) => a - b),
+      pendingImageNames: [...new Set(pendingImages.map((item) => item.mediaName).filter(Boolean))],
+      pendingAnimatedImageCount: pendingImages.filter((item) => item.animated).length
+    };
+  }
+
+  function sanitizeArticleHtml(html) {
+    const template = document.createElement('template');
+    template.innerHTML = String(html || '');
+    const blockedTags = 'script,style,iframe,object,embed,link,meta,base,form,input,button,textarea,select,option,video,audio,canvas,svg,math';
+    template.content.querySelectorAll(blockedTags).forEach((node) => node.remove());
+    for (const node of template.content.querySelectorAll('*')) {
+      for (const attribute of [...node.attributes]) {
+        const name = attribute.name.toLowerCase();
+        const value = attribute.value.trim();
+        if (name.startsWith('on') || ['srcdoc', 'srcset', 'formaction', 'xlink:href', 'autofocus', 'contenteditable'].includes(name)) {
+          node.removeAttribute(attribute.name);
+          continue;
+        }
+        if (name === 'href' && !/^https?:\/\//i.test(value)) {
+          node.removeAttribute(attribute.name);
+          continue;
+        }
+        if (name === 'src') {
+          const safeImage = node.tagName === 'IMG' && (/^https?:\/\//i.test(value) || /^data:image\/(?:jpeg|png|gif|webp);base64,/i.test(value));
+          if (!safeImage) node.removeAttribute(attribute.name);
+          continue;
+        }
+        if (name === 'style' && /(?:expression\s*\(|javascript:|url\s*\(|@import|-moz-binding|behavior\s*:)/i.test(value)) {
+          node.removeAttribute(attribute.name);
+        }
+      }
+    }
+    return template.innerHTML;
+  }
+
+  function expectedLayoutStyles(html) {
+    const template = document.createElement('template');
+    template.innerHTML = html;
+    return {
+      headingCount: template.content.querySelectorAll('[data-ifanr-block="heading"]').length,
+      bodyCount: template.content.querySelectorAll('[data-ifanr-block="paragraph"]').length,
+      quoteCount: template.content.querySelectorAll('[data-ifanr-block="quote"]').length,
+      rootCount: template.content.querySelectorAll('[data-ifanr-template]').length
+    };
+  }
+
+  function compactNodeText(node) {
+    return String(node?.textContent || '').replace(/[\s\u200B-\u200D\u2060\u2063\uFEFF]+/g, '');
+  }
+
+  function hasVisibleLeftBorder(node) {
+    const style = global.getComputedStyle?.(node) || node.style;
+    return Number.parseFloat(style?.borderLeftWidth || '0') > 0 &&
+      !['none', 'hidden'].includes(String(style?.borderLeftStyle || '').toLowerCase());
+  }
+
+  function isNativeQuoteWrapper(node) {
+    const className = String(node?.className || '');
+    return node?.tagName === 'BLOCKQUOTE' ||
+      node?.getAttribute?.('role') === 'blockquote' ||
+      /blockquote|(^|[-_\s])quote(?:[-_\s]|$)/i.test(className);
+  }
+
+  function setImportantStyle(node, property, value) {
+    const compact = (input) => String(input || '').replace(/\s+/g, '').toLowerCase();
+    const unchanged = compact(node.style.getPropertyValue(property)) === compact(value) &&
+      node.style.getPropertyPriority(property) === 'important';
+    if (unchanged) return false;
+    node.style.setProperty(property, value, 'important');
+    return true;
+  }
+
+  function quoteDecorationNodes(editor, quote) {
+    const quoteText = compactNodeText(quote);
+    const nodes = [quote];
+    for (const descendant of quote.querySelectorAll('blockquote, [role="blockquote"], [class*="quote"], [style]')) {
+      if (compactNodeText(descendant) === quoteText && (isNativeQuoteWrapper(descendant) || hasVisibleLeftBorder(descendant))) {
+        nodes.push(descendant);
+      }
+    }
+    let ancestor = quote.parentElement;
+    while (ancestor && ancestor !== editor) {
+      if (compactNodeText(ancestor) === quoteText && (isNativeQuoteWrapper(ancestor) || hasVisibleLeftBorder(ancestor))) {
+        nodes.push(ancestor);
+      }
+      if (ancestor.hasAttribute?.('data-ifanr-template')) break;
+      ancestor = ancestor.parentElement;
+    }
+    return [...new Set(nodes)];
+  }
+
+  function removeDuplicateQuoteCopies(editor) {
+    const quotes = [...editor.querySelectorAll('[data-ifanr-block="quote"]')];
+    let removedCount = 0;
+    for (const quote of quotes) {
+      const quoteText = compactNodeText(quote);
+      if (!quoteText) continue;
+      const candidates = new Set([quote.previousElementSibling, quote.nextElementSibling]);
+      const parent = quote.parentElement;
+      if (parent && parent !== editor && (isNativeQuoteWrapper(parent) || hasVisibleLeftBorder(parent))) {
+        for (const child of parent.children) {
+          if (child !== quote && !child.contains(quote)) candidates.add(child);
+        }
+        candidates.add(parent.previousElementSibling);
+        candidates.add(parent.nextElementSibling);
+      }
+      for (const candidate of candidates) {
+        if (!candidate || candidate.contains(quote) || quote.contains(candidate)) continue;
+        const insideNativeWrapper = candidate.parentElement === parent && parent && isNativeQuoteWrapper(parent);
+        if (compactNodeText(candidate) !== quoteText) continue;
+        if (!insideNativeWrapper && !isNativeQuoteWrapper(candidate) && !hasVisibleLeftBorder(candidate)) continue;
+        candidate.remove();
+        removedCount += 1;
+      }
+    }
+    return removedCount;
+  }
+
+  function normalizeQuoteDecorations(editor) {
+    const quotes = [...editor.querySelectorAll('[data-ifanr-block="quote"]')];
+    let fixedCount = 0;
+    for (const quote of quotes) {
+      const related = quoteDecorationNodes(editor, quote).filter((node) => node !== quote);
+      for (const node of related) {
+        let changed = false;
+        changed = setImportantStyle(node, 'border-left', '0') || changed;
+        changed = setImportantStyle(node, 'border-inline-start', '0') || changed;
+        if (isNativeQuoteWrapper(node)) {
+          changed = setImportantStyle(node, 'padding-left', '0') || changed;
+          changed = setImportantStyle(node, 'padding-inline-start', '0') || changed;
+          changed = setImportantStyle(node, 'margin-left', '0') || changed;
+          changed = setImportantStyle(node, 'margin-inline-start', '0') || changed;
+        }
+        if (changed) fixedCount += 1;
+      }
+      let quoteChanged = false;
+      quoteChanged = setImportantStyle(quote, 'border-left', '3px solid #D9D9D9') || quoteChanged;
+      quoteChanged = setImportantStyle(quote, 'border-inline-start', '3px solid #D9D9D9') || quoteChanged;
+      if (quoteChanged) fixedCount += 1;
+    }
+    return fixedCount;
+  }
+
+  function inspectQuoteDecorations(editor, expectedCount = 0) {
+    const quotes = [...editor.querySelectorAll('[data-ifanr-block="quote"]')];
+    const decorationCounts = quotes.map((quote) => quoteDecorationNodes(editor, quote)
+      .filter((node) => hasVisibleLeftBorder(node)).length);
+    const countConfirmed = expectedCount === 0 || quotes.length === expectedCount;
+    return {
+      expectedQuoteBlockCount: expectedCount,
+      quoteBlockCount: quotes.length,
+      quoteDecorationCounts: decorationCounts,
+      quoteDecorationConfirmed: countConfirmed && decorationCounts.every((count) => count === 1)
+    };
+  }
+
+  function inspectLayoutStyles(editor, expected = { headingCount: 0, bodyCount: 0 }) {
+    const styled = [...editor.querySelectorAll('[style]')].filter((node) => (node.textContent || '').trim().length > 0);
+    const read = (node) => global.getComputedStyle?.(node) || node.style;
+    const headingNodes = styled.filter((node) => {
+      const style = read(node);
+      const color = String(style?.color || '').replaceAll(' ', '').toLowerCase();
+      const size = Number.parseFloat(style?.fontSize || '0');
+      const weight = Number.parseInt(style?.fontWeight || '0', 10);
+      return ['rgb(253,70,6)', '#fd4606'].includes(color) && [18, 22].includes(Math.round(size)) && weight >= 500;
+    });
+    const bodyNodes = styled.filter((node) => {
+      const style = read(node);
+      const color = String(style?.color || '').replaceAll(' ', '').toLowerCase();
+      const size = Number.parseFloat(style?.fontSize || '0');
+      return ['rgb(34,34,34)', '#222222'].includes(color) && Math.round(size) === 15;
+    });
+    const headingConfirmed = expected.headingCount === 0 || headingNodes.length >= expected.headingCount;
+    const bodyConfirmed = expected.bodyCount === 0 || bodyNodes.length >= expected.bodyCount;
+    const articleRoots = [...editor.querySelectorAll('[data-ifanr-template]')];
+    const directArticleRootCount = articleRoots.filter((node) => node.parentElement === editor).length;
+    const editorIsolationConfirmed = expected.rootCount === 0 || (
+      articleRoots.length === expected.rootCount &&
+      directArticleRootCount === expected.rootCount
+    );
+    const coreLayoutStyleConfirmed = headingConfirmed && bodyConfirmed && editorIsolationConfirmed;
+    const quoteInspection = inspectQuoteDecorations(editor, expected.quoteCount || 0);
+    return {
+      expectedHeadingStyleCount: expected.headingCount,
+      expectedBodyStyleCount: expected.bodyCount,
+      headingStyleCount: headingNodes.length,
+      bodyStyleCount: bodyNodes.length,
+      articleRootCount: articleRoots.length,
+      directArticleRootCount,
+      nestedArticleRootCount: articleRoots.length - directArticleRootCount,
+      editorIsolationConfirmed,
+      ...quoteInspection,
+      coreLayoutStyleConfirmed,
+      layoutStyleConfirmed: coreLayoutStyleConfirmed && quoteInspection.quoteDecorationConfirmed
+    };
+  }
+
+  function dispatchEditorMutation(editor, inputType) {
+    editor.dispatchEvent(new InputEvent('input', { bubbles: true, inputType, data: null }));
+    editor.dispatchEvent(new Event('change', { bubbles: true }));
+  }
+
+  function editorIsSemanticallyEmpty(editor) {
+    const text = (editor.innerText || editor.textContent || '')
+      .replace(/[\s\u200B-\u200D\u2060\u2063\uFEFF]/g, '');
+    const meaningfulMedia = editor.querySelector('img,video,audio,iframe,object,embed,canvas,svg');
+    return text.length === 0 && !meaningfulMedia;
+  }
+
+  function editorHasResidualFormatting(editor) {
+    return Boolean(editor.querySelector([
+      '[style]',
+      '[data-ifanr-block]',
+      '[data-ifanr-template]',
+      'blockquote',
+      'ul',
+      'ol',
+      'table',
+      'h1',
+      'h2',
+      'h3',
+      'h4',
+      'h5',
+      'h6'
+    ].join(',')));
+  }
+
+  async function clearEditorState(editor) {
+    editor.focus();
+    const selection = global.getSelection?.();
+    const range = document.createRange();
+    range.selectNodeContents(editor);
+    selection?.removeAllRanges();
+    selection?.addRange(range);
+
+    let transactionCleared = false;
+    try {
+      transactionCleared = Boolean(document.execCommand?.('delete', false, null));
+    } catch {
+      transactionCleared = false;
+    }
+    selection?.removeAllRanges();
+
+    // ProseMirror can retain the final paragraph's marks after a selection delete.
+    // Reset the DOM root as well, then notify its mutation observer before insertion.
+    editor.replaceChildren();
+    dispatchEditorMutation(editor, 'deleteContentBackward');
+    await wait(80);
+
+    // ProseMirror may recreate a neutral <p><br></p>; that is safe. Styled,
+    // structural or article nodes are not safe because they can wrap the new root.
+    const confirmed = editorIsSemanticallyEmpty(editor) && !editorHasResidualFormatting(editor);
+    return {
+      confirmed,
+      method: transactionCleared ? 'selection-delete+root-reset' : 'root-reset-fallback'
+    };
+  }
+
+  function restoreEditorSnapshot(editor, html) {
+    editor.replaceChildren();
+    editor.innerHTML = html;
+    dispatchEditorMutation(editor, 'historyUndo');
+    return editor.innerHTML === html;
+  }
+
+  function replaceEditorHtml(editor, html) {
+    editor.focus();
+    const selection = global.getSelection?.();
+    const range = document.createRange();
+    range.selectNodeContents(editor);
+    selection?.removeAllRanges();
+    selection?.addRange(range);
+
+    let inserted = false;
+    try {
+      inserted = Boolean(document.execCommand?.('insertHTML', false, html));
+    } catch {
+      inserted = false;
+    }
+
+    selection?.removeAllRanges();
+    if (inserted) {
+      dispatchEditorMutation(editor, 'insertFromPaste');
+      return 'selection-insert-html';
+    }
+
+    editor.innerHTML = html;
+    dispatchEditorMutation(editor, 'insertFromPaste');
+    return 'dom-replacement-fallback';
+  }
+
+  function forceReplaceEditorHtml(editor, html) {
+    editor.focus();
+    global.getSelection?.()?.removeAllRanges();
+    editor.replaceChildren();
+    return `force-root-replacement+${replaceEditorHtml(editor, html)}`;
+  }
+
+  function recoverEditorHtmlWithInlineStyles(editor, html) {
+    editor.replaceChildren();
+    return `dom-style-recovery+${replaceEditorHtml(editor, html)}`;
+  }
+
+  function stageAnimatedImages(html, manualImageReplacements = []) {
+    const template = document.createElement('template');
+    template.innerHTML = html;
+    const manualByOrder = new Map((manualImageReplacements || []).map((item) => [Number(item.order), item]));
+    const animatedImages = [...template.content.querySelectorAll('img[data-ifanr-image-kind="gif"]')]
+      .filter((image) => (image.getAttribute('src') || '').startsWith('data:image/gif'))
+      .map((image, index) => {
+        const container = image.closest('[data-ifanr-image-order], [data-media-name]');
+        const order = Number(image.dataset.ifanrImageOrder || container?.dataset.ifanrImageOrder || 0);
+        const mediaName = image.dataset.ifanrMediaName || container?.dataset.mediaName || `animated-${index + 1}.gif`;
+        const manual = manualByOrder.get(order);
+        if (manual) {
+          const marker = document.createElement('span');
+          marker.dataset.ifanrManualImagePlaceholder = String(order || index + 1);
+          marker.dataset.ifanrImageOrder = String(order || index + 1);
+          marker.dataset.ifanrMediaName = mediaName;
+          marker.setAttribute('style', 'color:#FD4606;font-size:14px;line-height:1.7;');
+          if (image.closest('[data-ifanr-title-image="true"]')) {
+            marker.setAttribute('style', 'color:#FD4606;font-size:14px;line-height:1.7;');
+          }
+          marker.textContent = `动图待手动补充：第 ${order || index + 1} 张 ${manual.name || mediaName}（${manual.reason || '超过微信上传限制'}）`;
+          image.replaceWith(marker);
+          return null;
+        }
+        const placeholder = document.createElement('span');
+        placeholder.dataset.ifanrGifPlaceholder = String(order || index + 1);
+        placeholder.dataset.ifanrImageOrder = String(order || index + 1);
+        placeholder.dataset.ifanrImageKind = 'gif';
+        placeholder.dataset.ifanrMediaName = mediaName;
+        placeholder.setAttribute('aria-hidden', 'true');
+        placeholder.textContent = '\u2063';
+        const item = {
+          order: order || index + 1,
+          mediaName,
+          isTitleImage: Boolean(image.closest('[data-ifanr-title-image="true"]')),
+          isTailImage: Boolean(image.closest('[data-ifanr-tail-image="true"]')),
+          html: image.outerHTML
+        };
+        image.replaceWith(placeholder);
+        return item;
+      })
+      .filter(Boolean);
+    return { html: template.innerHTML, animatedImages, manualImageReplacements };
+  }
+
+  function insertStagedImage(editor, item) {
+    const placeholder = editor.querySelector(`[data-ifanr-gif-placeholder="${item.order}"]`);
+    const container = placeholder?.parentElement?.closest('[data-ifanr-image-order]') ||
+      editor.querySelector(`[data-ifanr-image-order="${item.order}"]`);
+    const target = placeholder || container;
+    if (!target) return { inserted: false, method: 'placeholder-not-found' };
+
+    editor.focus();
+    const selection = global.getSelection?.();
+    const range = document.createRange();
+    if (placeholder) range.selectNode(placeholder);
+    else range.selectNodeContents(container);
+    selection?.removeAllRanges();
+    selection?.addRange(range);
+
+    // Let the editor's file-paste handler receive the original GIF bytes.
+    // Merely inserting a data-URI img does not guarantee a host upload starts.
+    const template = document.createElement('template');
+    template.innerHTML = item.html;
+    const dataUri = template.content.querySelector('img')?.getAttribute('src') || '';
+    let filePasteAttempted = false;
+    if (/^data:image\/gif;base64,/i.test(dataUri) && global.DataTransfer && global.ClipboardEvent && global.File) {
+      try {
+        const bytes = Uint8Array.from(atob(dataUri.split(',')[1]), character => character.charCodeAt(0));
+        const data = new DataTransfer();
+        data.items.add(new File([bytes], item.mediaName, {type:'image/gif'}));
+        const paste = new ClipboardEvent('paste', {clipboardData:data, bubbles:true, cancelable:true});
+        filePasteAttempted = true;
+        editor.dispatchEvent(paste);
+        if (paste.defaultPrevented) {
+          selection?.removeAllRanges();
+          return {inserted:true, method:'editor-file-paste', filePasteAttempted:true, filePasteAccepted:true, positionRestored:false, anchor:container};
+        }
+      } catch { /* No accepted file event: retain the original HTML fallback. */ }
+    }
+
+    let inserted = false;
+    try {
+      inserted = Boolean(document.execCommand?.('insertHTML', false, item.html));
+    } catch {
+      inserted = false;
+    }
+    selection?.removeAllRanges();
+
+    let positionRestored = false;
+    if (inserted && placeholder?.isConnected) {
+      const insertedImage = [...editor.querySelectorAll(`img[data-ifanr-image-order="${item.order}"]`)]
+        .find((image) => (image.getAttribute('src') || '').startsWith('data:image/gif'));
+      if (insertedImage) {
+        if (!container?.contains(insertedImage)) {
+          placeholder.replaceWith(insertedImage);
+          positionRestored = true;
+        } else {
+          placeholder.remove();
+        }
+      }
+    }
+
+    if (!inserted && placeholder) {
+      placeholder.outerHTML = item.html;
+    } else if (!inserted && container) {
+      container.innerHTML = item.html;
+    }
+    editor.dispatchEvent(new InputEvent('input', { bubbles: true, inputType: 'insertFromPaste', data: null }));
+    editor.dispatchEvent(new Event('change', { bubbles: true }));
+    return {
+      inserted: true,
+      method: inserted ? 'selection-insert-html' : 'dom-image-fallback',
+      filePasteAttempted,
+      filePasteAccepted: false,
+      positionRestored,
+      anchor: container
+    };
+  }
+
+  function restoreAnimatedHostingPlaceholder(editor, item, preferredContainer = null) {
+    const order = Number(item.order || 0);
+    const candidates = [...editor.querySelectorAll(`[data-ifanr-image-order="${order}"]`)];
+    let container = preferredContainer?.isConnected
+      ? preferredContainer
+      : candidates.find((node) => node.tagName !== 'IMG' && !node.hasAttribute('data-ifanr-image-hosting-placeholder'));
+    if (!container) return false;
+    // A staging anchor can itself be a span inside the title paragraph.
+    const titleContainer = container.closest('[data-ifanr-title-image="true"], [data-ifanr-tail-image="true"]');
+    if (titleContainer) container = titleContainer;
+    const marker = document.createElement('span');
+    marker.dataset.ifanrImageHostingPlaceholder = 'true';
+    marker.dataset.ifanrImageOrder = String(order);
+    marker.dataset.ifanrMediaName = item.mediaName;
+    marker.setAttribute('style', 'margin:0;padding:18px 16px;border:1px solid #FD4606;background:#FFF4EE;color:#FD4606;font-size:14px;font-family:"PingFang SC",-apple-system,BlinkMacSystemFont,"Microsoft YaHei",sans-serif;line-height:1.7;text-align:center;box-sizing:border-box;');
+    marker.setAttribute('style', 'color:#FD4606;font-size:14px;line-height:1.7;');
+    marker.textContent = `第 ${order} 张动图未完成微信托管，请在这里手动补图`;
+    container.replaceChildren(marker);
+    dispatchEditorMutation(editor, 'insertReplacementText');
+    return marker.isConnected;
+  }
+
+  function imageOrderConfirmed(inspection, order) {
+    const matching = inspection.imageSourceDetails.filter((item) => item.order === order);
+    return matching.some(item => item.visible && item.loaded && /^(?:mmbiz\.qpic\.cn|mmbiz\.qlogo\.cn)$/.test(item.kind)) &&
+      !inspection.pendingImageOrders.includes(order);
+  }
+
+  async function injectHtml(html, options = {}) {
+    const startedAt = Date.now();
+    const timeoutMs = options.timeoutMs || 45000;
+    const deadlineAt = startedAt + timeoutMs;
+    await emitProgress(options, {
+      phase: 'preparing-write',
+      percent: 2,
+      message: '正在确认公众号编辑器'
+    });
+    const editorSelection = findWechatEditor(options.editorSelectors || DEFAULT_EDITOR_SELECTORS);
+    const editor = editorSelection.editor;
+    if (!editor) throw new Error('WECHAT_EDITOR_NOT_FOUND');
+    const editorDiagnostics = {
+      editorCandidateCount: editorSelection.candidateCount,
+      selectedEditor: editorSelection.selected,
+      editorCandidates: editorSelection.candidates
+    };
+
+    const sanitizedHtml = sanitizeArticleHtml(html);
+    const previousHtml = editor.innerHTML;
+    const previousText = editor.innerText || editor.textContent || '';
+    const staged = stageAnimatedImages(sanitizedHtml, options.manualImageReplacements);
+    const expectedStyles = expectedLayoutStyles(staged.html);
+    await emitProgress(options, {
+      phase: 'clearing-editor',
+      percent: 6,
+      message: '正在备份并清空原草稿格式'
+    });
+    const clearResult = await clearEditorState(editor);
+    const forcedReplacement = options.forceEditorReplace !== false;
+    if (!clearResult.confirmed && !forcedReplacement) {
+      const rollbackConfirmed = restoreEditorSnapshot(editor, previousHtml);
+      throw Object.assign(new Error('WECHAT_EDITOR_CLEAR_NOT_CONFIRMED'), {
+        result: {
+          injected: false,
+          editorCleared: false,
+          clearMethod: clearResult.method,
+          clearConfirmed: false,
+          forceReplaceAvailable: true,
+          rollbackPerformed: true,
+          rollbackConfirmed,
+          ...editorDiagnostics,
+          previousHtmlLength: previousHtml.length,
+          previousTextLength: previousText.trim().length,
+          previousTextHash: textHash(previousText.trim())
+        }
+      });
+    }
+    if (forcedReplacement) {
+      await emitProgress(options, {
+        phase: 'clearing-editor',
+        percent: 8,
+        message: '正在直接净空并覆盖原草稿正文'
+      });
+    }
+    await emitProgress(options, {
+      phase: 'inserting-content',
+      percent: 9,
+      message: forcedReplacement
+        ? '正在用新排版覆盖当前正文和图片'
+        : '原草稿已净空，正在写入正文和图片占位'
+    });
+    let injectionMethod = '';
+    let styleInspection;
+    let styleRecoveryError = null;
+    let quoteDecorationFixCount = 0;
+    let quoteDuplicateRemovalCount = 0;
+    try {
+      injectionMethod = forcedReplacement
+        ? forceReplaceEditorHtml(editor, staged.html)
+        : replaceEditorHtml(editor, staged.html);
+      await wait(80);
+      quoteDuplicateRemovalCount += removeDuplicateQuoteCopies(editor);
+      quoteDecorationFixCount += normalizeQuoteDecorations(editor);
+      if (quoteDecorationFixCount > 0) await wait(80);
+      styleInspection = inspectLayoutStyles(editor, expectedStyles);
+      if (!styleInspection.coreLayoutStyleConfirmed) {
+        try {
+          injectionMethod = `${injectionMethod}+${recoverEditorHtmlWithInlineStyles(editor, staged.html)}`;
+          await wait(120);
+          quoteDuplicateRemovalCount += removeDuplicateQuoteCopies(editor);
+          quoteDecorationFixCount += normalizeQuoteDecorations(editor);
+          if (quoteDecorationFixCount > 0) await wait(80);
+          styleInspection = inspectLayoutStyles(editor, expectedStyles);
+        } catch (error) {
+          if (!forcedReplacement) throw error;
+          styleRecoveryError = error?.message || String(error);
+        }
+      }
+    } catch (error) {
+      const rollbackConfirmed = restoreEditorSnapshot(editor, previousHtml);
+      throw Object.assign(new Error('WECHAT_INSERTION_FAILED'), {
+        cause: error,
+        result: {
+          injected: false,
+          editorCleared: true,
+          clearMethod: forcedReplacement ? `${clearResult.method}+force-root-replacement` : clearResult.method,
+          clearConfirmed: clearResult.confirmed,
+          forcedReplacement,
+          rollbackPerformed: true,
+          rollbackConfirmed,
+          ...editorDiagnostics,
+          previousHtmlLength: previousHtml.length,
+          previousTextLength: previousText.trim().length,
+          previousTextHash: textHash(previousText.trim())
+        }
+      });
+    }
+    if (!styleInspection.layoutStyleConfirmed && !forcedReplacement) {
+      const rollbackConfirmed = restoreEditorSnapshot(editor, previousHtml);
+      throw Object.assign(new Error('WECHAT_STYLE_NOT_CONFIRMED'), {
+        result: {
+          injected: false,
+          editorCleared: true,
+          clearMethod: forcedReplacement ? `${clearResult.method}+force-root-replacement` : clearResult.method,
+          clearConfirmed: clearResult.confirmed,
+          forcedReplacement,
+          rollbackPerformed: true,
+          rollbackConfirmed,
+          ...editorDiagnostics,
+          previousHtmlLength: previousHtml.length,
+          previousTextLength: previousText.trim().length,
+          previousTextHash: textHash(previousText.trim()),
+          ...styleInspection
+        }
+      });
+    }
+    if (!styleInspection.layoutStyleConfirmed && forcedReplacement) {
+      await emitProgress(options, {
+        phase: 'inserting-content',
+        percent: 15,
+        message: '正文已直接覆盖；样式差异仅作提醒，不会回滚正文'
+      });
+    }
+    await emitProgress(options, {
+      phase: 'filling-metadata',
+      percent: 16,
+      message: '正在填写文章标题和摘要'
+    });
+    const metadataResult = await fillArticleMetadata(editor, options);
+    await emitProgress(options, {
+      phase: 'inserting-content',
+      percent: 18,
+      message: staged.animatedImages.length
+        ? `正文和静态图已写入，${staged.animatedImages.length} 张动图将逐张托管`
+        : '正文已写入，正在等待微信托管图片'
+    });
+
+    const saveSelectors = options.saveSelectors || DEFAULT_SAVE_SELECTORS;
+    let saveText = '';
+    let saveTriggered = false;
+    let saveMethod = 'auto-status';
+    let saveControlCandidateCount = 0;
+
+    const autoSaveStart = Date.now();
+    let observedUnsavedState = false;
+    while (Date.now() - autoSaveStart < 1500 && Date.now() < deadlineAt) {
+      const currentSaveText = readSavedSignal(saveSelectors);
+      if (!currentSaveText) observedUnsavedState = true;
+      // Do not accept an "已保存" label left over from the previous draft.
+      // A fresh signal must follow an unsaved state or a short post-write settling window.
+      if (currentSaveText && (observedUnsavedState || Date.now() - autoSaveStart >= 700)) {
+        saveText = currentSaveText;
+        break;
+      }
+      await wait(100);
+    }
+
+    if (!saveText && options.clickSaveAsDraft !== false) {
+      const safeSave = findSafeDraftSaveControl();
+      saveControlCandidateCount = safeSave.candidateCount;
+      if (safeSave.control) {
+        safeSave.control.click();
+        saveTriggered = true;
+        saveMethod = 'exact-save-as-draft-button';
+      } else {
+        saveMethod = safeSave.candidateCount === 0 ? 'save-control-not-found' : 'save-control-ambiguous';
+      }
+    }
+
+    const expectedImageCount = Number(options.expectedImageCount || 0);
+    let imageInspection = inspectImages(editor);
+    let lastProgressSignature = '';
+    const animatedUploadAttempts = [];
+
+    if (staged.animatedImages.length > 0) {
+      const staticExpected = Math.max(0, expectedImageCount - staged.animatedImages.length);
+      while (Date.now() < deadlineAt) {
+        imageInspection = inspectImages(editor);
+        const staticConfirmed = imageInspection.visibleHostedImageCount >= staticExpected &&
+          imageInspection.pendingEmbeddedImageCount === 0;
+        await emitProgress(options, {
+          phase: 'uploading-images',
+          percent: staticExpected > 0
+            ? 18 + Math.round(Math.min(1, imageInspection.visibleHostedImageCount / staticExpected) * 42)
+            : 60,
+          message: `正在托管静态图片：${Math.min(imageInspection.visibleHostedImageCount, staticExpected)} / ${staticExpected}`
+        });
+        if (staticConfirmed) break;
+        await wait(250);
+      }
+
+      for (let index = 0; index < staged.animatedImages.length && Date.now() < deadlineAt; index += 1) {
+        const item = staged.animatedImages[index];
+        const inserted = insertStagedImage(editor, item);
+        const remainingImages = staged.animatedImages.length - index;
+        const remainingTime = Math.max(1000, deadlineAt - Date.now());
+        const imageDeadline = Math.min(deadlineAt, Date.now() + Math.max(4000, Math.min(8000, Math.floor(remainingTime / (remainingImages + 1)))));
+        let confirmed = false;
+        await emitProgress(options, {
+          phase: 'uploading-animated-images',
+          percent: 60 + Math.round(28 * index / staged.animatedImages.length),
+          message: `正在托管第 ${index + 1} / ${staged.animatedImages.length} 张动图（原文第 ${item.order} 张）`
+        });
+        while (Date.now() < imageDeadline) {
+          imageInspection = inspectImages(editor);
+          if (imageOrderConfirmed(imageInspection, item.order)) {
+            confirmed = true;
+            break;
+          }
+          await wait(250);
+        }
+        const hostingEvidenceBeforeFallback = inspectImages(editor).imageSourceDetails
+          .filter(detail => detail.order === item.order || detail.order == null);
+        const hostingPlaceholderRestored = confirmed
+          ? false
+          : restoreAnimatedHostingPlaceholder(editor, item, inserted.anchor);
+        if (hostingPlaceholderRestored) imageInspection = inspectImages(editor);
+        animatedUploadAttempts.push({
+          order: item.order,
+          mediaName: item.mediaName,
+          inserted: inserted.inserted,
+          insertionMethod: inserted.method,
+          filePasteAttempted: Boolean(inserted.filePasteAttempted),
+          filePasteAccepted: Boolean(inserted.filePasteAccepted),
+          hostingEvidenceBeforeFallback,
+          positionRestored: inserted.positionRestored,
+          hostingPlaceholderRestored,
+          confirmed
+        });
+        await emitProgress(options, {
+          phase: 'uploading-animated-images',
+          percent: 60 + Math.round(28 * (index + 1) / staged.animatedImages.length),
+          message: confirmed
+            ? `原文第 ${item.order} 张动图已完成托管`
+            : `原文第 ${item.order} 张动图未完成，继续检查下一张`
+        });
+      }
+    }
+
+    quoteDuplicateRemovalCount += removeDuplicateQuoteCopies(editor);
+    quoteDecorationFixCount += normalizeQuoteDecorations(editor);
+    if (quoteDecorationFixCount > 0 || quoteDuplicateRemovalCount > 0) await wait(80);
+
+    const imageStallTimeoutMs = Number(options.imageStallTimeoutMs || DEFAULT_IMAGE_STALL_TIMEOUT_MS);
+    const saveStallTimeoutMs = Number(options.saveStallTimeoutMs || DEFAULT_SAVE_STALL_TIMEOUT_MS);
+    let lastHostedCount = imageInspection.visibleHostedImageCount;
+    let lastImageProgressAt = Date.now();
+    let imagesConfirmedAt = expectedImageCount === 0 ? Date.now() : null;
+    let waitStoppedReason = null;
+    while (Date.now() < deadlineAt) {
+      if (!saveText) saveText = readSavedSignal(saveSelectors);
+      imageInspection = inspectImages(editor);
+      const visibleHosted = imageInspection.visibleHostedImageCount;
+      if (visibleHosted > lastHostedCount) {
+        lastHostedCount = visibleHosted;
+        lastImageProgressAt = Date.now();
+      }
+      const imageRatio = expectedImageCount > 0
+        ? Math.min(1, visibleHosted / expectedImageCount)
+        : 1;
+      const imagesConfirmed = expectedImageCount === 0 || (
+        visibleHosted >= expectedImageCount &&
+        imageInspection.pendingEmbeddedImageCount === 0
+      );
+      if (imagesConfirmed && imagesConfirmedAt == null) imagesConfirmedAt = Date.now();
+      const phase = !imagesConfirmed
+        ? 'uploading-images'
+        : saveText ? 'validating-write' : 'waiting-save';
+      const percent = !imagesConfirmed
+        ? 18 + Math.round(imageRatio * 70)
+        : saveText ? 96 : 90;
+      const message = !imagesConfirmed
+        ? `微信已托管 ${visibleHosted} / ${expectedImageCount} 张图片${imageInspection.pendingEmbeddedImageCount ? `，还有 ${imageInspection.pendingEmbeddedImageCount} 张正在处理` : ''}`
+        : saveText ? '图片已托管，正在完成最后检查' : '图片已托管，正在等待微信自动保存';
+      const signature = `${phase}:${percent}:${message}`;
+      if (signature !== lastProgressSignature) {
+        lastProgressSignature = signature;
+        await emitProgress(options, { phase, percent, message });
+      }
+      if (saveText && (!options.requireHostedImages || imagesConfirmed)) break;
+      if (options.requireHostedImages && !imagesConfirmed && Date.now() - lastImageProgressAt >= imageStallTimeoutMs) {
+        waitStoppedReason = 'image-hosting-stalled';
+        await emitProgress(options, {
+          phase: 'uploading-images',
+          percent: 18 + Math.round(imageRatio * 70),
+          message: `图片托管超过 ${Math.round(imageStallTimeoutMs / 1000)} 秒没有进展，已停止等待`
+        });
+        break;
+      }
+      if (imagesConfirmed && !saveText && imagesConfirmedAt != null && Date.now() - imagesConfirmedAt >= saveStallTimeoutMs) {
+        waitStoppedReason = 'save-status-stalled';
+        await emitProgress(options, {
+          phase: 'waiting-save',
+          percent: 90,
+          message: `微信在 ${Math.round(saveStallTimeoutMs / 1000)} 秒内没有返回保存状态，已停止等待`
+        });
+        break;
+      }
+      await wait(250);
+    }
+
+    let finalQuoteNormalizationApplied = false;
+    const finalDuplicateRemovalCount = removeDuplicateQuoteCopies(editor);
+    if (finalDuplicateRemovalCount > 0) {
+      finalQuoteNormalizationApplied = true;
+      quoteDuplicateRemovalCount += finalDuplicateRemovalCount;
+    }
+    const beforeFinalQuoteInspection = inspectQuoteDecorations(editor, expectedStyles.quoteCount || 0);
+    if (!beforeFinalQuoteInspection.quoteDecorationConfirmed) {
+      const finalFixCount = normalizeQuoteDecorations(editor);
+      if (finalFixCount > 0) {
+        finalQuoteNormalizationApplied = true;
+        quoteDecorationFixCount += finalFixCount;
+        await wait(80);
+      }
+    }
+
+    const saved = Boolean(saveText);
+
+    styleInspection = inspectLayoutStyles(editor, expectedStyles);
+
+    const imageUploadConfirmed = expectedImageCount === 0
+      ? null
+      : imageInspection.visibleHostedImageCount >= expectedImageCount &&
+        imageInspection.pendingEmbeddedImageCount === 0;
+    const hostingFallbackImageOrders = [...editor.querySelectorAll('[data-ifanr-image-hosting-placeholder]')]
+      .map((node) => Number(node.dataset.ifanrImageOrder || 0))
+      .filter((order) => order > 0);
+    const hostingFallbackPlaceholderCount = hostingFallbackImageOrders.length;
+    const imageWriteAccountedConfirmed = expectedImageCount === 0 || (
+      imageInspection.visibleHostedImageCount + hostingFallbackPlaceholderCount >= expectedImageCount &&
+      imageInspection.pendingEmbeddedImageCount === 0
+    );
+    const validationScope = editor.closest('#ueditor_0') || editor;
+    const text = validationScope.innerText || validationScope.textContent || '';
+    const visiblePageText = document.body.innerText || '';
+    const expectedTextContains = options.expectedTextContains || '';
+    const forbiddenTextMarkers = options.forbiddenTextMarkers || [];
+    const forbiddenTextFound = forbiddenTextMarkers.filter((marker) => marker && visiblePageText.includes(marker));
+    const {
+      expectedTextFound,
+      strictReplacementConfirmed,
+      structuralContentConfirmed,
+      replacementValidationBypassed,
+      replacementConfirmed
+    } = validateReplacement({
+      actualText: text,
+      expectedTextContains,
+      forbiddenTextFound,
+      forcedReplacement,
+      styleInspection,
+      expectedImageCount
+    });
+    const headings = [...editor.querySelectorAll('[data-ifanr-block="heading"], h1, h2, h3, h4, h5, h6')];
+    const failedAnimatedAttempts = animatedUploadAttempts.filter((attempt) => !attempt.confirmed);
+    const pendingImageOrders = [...new Set([
+      ...imageInspection.pendingImageOrders,
+      ...failedAnimatedAttempts.map((attempt) => attempt.order)
+    ])].sort((a, b) => a - b);
+    const pendingImageNames = [...new Set([
+      ...imageInspection.pendingImageNames,
+      ...failedAnimatedAttempts.map((attempt) => attempt.mediaName)
+    ])];
+    const result = {
+      ok: saved && replacementConfirmed && (!options.requireHostedImages || imageWriteAccountedConfirmed),
+      injected: true,
+      injectionMethod,
+      replacementConfirmed,
+      expectedTextFound,
+      strictReplacementConfirmed,
+      structuralContentConfirmed,
+      replacementValidationBypassed,
+      forbiddenTextFound,
+      saved,
+      saveStatus: saveText || 'UNKNOWN',
+      saveTriggered,
+      saveMethod,
+      saveControlCandidateCount,
+      waitStoppedReason,
+      editorCleared: true,
+      clearMethod: forcedReplacement ? `${clearResult.method}+force-root-replacement` : clearResult.method,
+      clearConfirmed: clearResult.confirmed,
+      forcedReplacement,
+      styleValidationBypassed: forcedReplacement && !styleInspection.layoutStyleConfirmed,
+      styleRecoveryError,
+      quoteDecorationFixCount,
+      quoteDuplicateRemovalCount,
+      finalQuoteNormalizationApplied,
+      ...metadataResult,
+      rollbackPerformed: false,
+      rollbackConfirmed: null,
+      ...editorDiagnostics,
+      previousHtmlLength: previousHtml.length,
+      previousTextLength: previousText.trim().length,
+      previousTextHash: textHash(previousText.trim()),
+      paragraphCount: editor.querySelectorAll('[data-ifanr-block="paragraph"], p').length || Math.min(expectedStyles.bodyCount, styleInspection.bodyStyleCount),
+      headingCount: headings.length || Math.min(expectedStyles.headingCount, styleInspection.headingStyleCount),
+      headingTexts: headings.map((heading) => (heading.innerText || heading.textContent || '').trim()).slice(0, 10),
+      imageCount: imageInspection.imageCount,
+      sourceImageCount: Number(options.sourceImageCount || expectedImageCount + staged.manualImageReplacements.length),
+      visibleImageCount: imageInspection.visibleImageCount,
+      visibleHostedImageCount: imageInspection.visibleHostedImageCount,
+      hostedImageCount: imageInspection.hostedImageCount,
+      imageSourceKinds: imageInspection.imageSourceKinds,
+      imageSourceDetails: imageInspection.imageSourceDetails,
+      pendingEmbeddedImageCount: imageInspection.pendingEmbeddedImageCount,
+      pendingImageOrders,
+      pendingImageNames,
+      pendingAnimatedImageCount: Math.max(imageInspection.pendingAnimatedImageCount, failedAnimatedAttempts.length),
+      stagedAnimatedImageCount: staged.animatedImages.length,
+      manualImagePlaceholderCount: staged.manualImageReplacements.length,
+      manualImageOrders: staged.manualImageReplacements.map((item) => item.order),
+      manualImageNames: staged.manualImageReplacements.map((item) => item.name),
+      hostingFallbackPlaceholderCount,
+      hostingFallbackImageOrders,
+      animatedUploadAttempts,
+      imageUploadConfirmed,
+      imageWriteAccountedConfirmed,
+      ...styleInspection,
+      textLength: text.trim().length,
+      textHash: textHash(text.trim())
+    };
+
+    if (!replacementConfirmed) {
+      result.rollbackPerformed = true;
+      result.rollbackConfirmed = restoreEditorSnapshot(editor, previousHtml);
+      throw Object.assign(new Error('WECHAT_REPLACEMENT_NOT_CONFIRMED'), { result });
+    }
+    if (!styleInspection.layoutStyleConfirmed && !forcedReplacement) {
+      result.rollbackPerformed = true;
+      result.rollbackConfirmed = restoreEditorSnapshot(editor, previousHtml);
+      throw Object.assign(new Error('WECHAT_STYLE_NOT_CONFIRMED'), { result });
+    }
+    if (options.requireHostedImages && !imageWriteAccountedConfirmed) {
+      throw Object.assign(new Error('WECHAT_IMAGE_UPLOAD_NOT_CONFIRMED'), { result });
+    }
+    if (!saved) throw Object.assign(new Error('WECHAT_SAVE_NOT_CONFIRMED'), { result });
+    await emitProgress(options, {
+      phase: 'write-completed',
+      percent: 100,
+      message: result.styleValidationBypassed
+        ? '正文已强制覆盖并保存，请在发布前人工检查样式'
+        : hostingFallbackPlaceholderCount
+        ? `正文已保存，${hostingFallbackPlaceholderCount} 张图片未完成托管并已在原位置标记待补`
+        : staged.manualImageReplacements.length
+        ? `正文已保存，${staged.manualImageReplacements.length} 张超限动图已在原位置标记待补`
+        : '正文、图片和自动保存均已确认'
+    });
+    return result;
+  }
+
+  global.WechatEditorAdapter = {
+    injectHtml,
+    inspectImages,
+    inspectLayoutStyles,
+    sanitizeArticleHtml,
+    editorIsSemanticallyEmpty,
+    normalizeValidationText,
+    validateReplacement
+  };
+})(globalThis);
