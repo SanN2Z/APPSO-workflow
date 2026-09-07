@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "status": "pass",
+  "checked_on": "2026-08-25",
+  "task_id": "rsi-three-constraints-infographic",
+  "stage": "final",
+  "project_adapter": "appsso",
+  "visual_type": "qualitative_explainer",
+  "visual_route": "infographic",
+  "style_override_source": "project_visual_route",
+  "style_profile": "appsso-infographic-v1",
+  "style_scope": "task",
+  "new_image_strategy": "reference_required",
+  "reference_strategy": "provided_local",
+  "mode": "referenced_edit",
+  "input_binding": "referenced_image_paths",
+  "num_last_images_to_include": null,
+  "conversation_derivative_rights_confirmed": false,
+  "prompt_ref": "appsso-infographic-v1",
+  "prompt_sha256": "c8c191665a99da9af14f8ba84b0f7ef769cbadefe347f5d197635264b024c043",
+  "invocation_prompt_sha256": "2c14622abbfe041b83eb83f3968b6283bc28b0a1342832135c7f8246b56ad6ab",
+  "input_assets": [
+    "research/source-assets/rsi-three-constraints-structure-v01.png",
+    "research/source-assets/appsso-logo-red-background.png"
+  ],
+  "input_fingerprints": [
+    {
+      "file": "research/source-assets/rsi-three-constraints-structure-v01.png",
+      "sha256": "5729d21700314fa69a25b0f4ea1527f757d6ad0143823941715b4429627e97cd",
+      "rights_status": "project_owned"
+    },
+    {
+      "file": "research/source-assets/appsso-logo-red-background.png",
+      "sha256": "8160db79fc8cafdd864312b32bb6b01ee4d720187bc4acc6a875e273eecd04ff",
+      "rights_status": "user_confirmed_company_brand_use"
+    }
+  ],
+  "output": "assets/rsi-three-constraints-infographic-image2-v01.png",
+  "present_to_user": true,
+  "plan": "research/image-generation-plan.json",
+  "plan_sha256": "06eb55f9c24614110286c886d8e25636405f4a6e0d7df2f1d85977495273a69a",
+  "profile_registry": "APPSO-数字资产/04-模板/生图风格档案.json",
+  "profile_registry_sha256": "1f2bc264eca47a0716a233193e314ed8521c29b8a6e58b50e3d151709118b970",
+  "prompt_source": "APPSO-数字资产/01-栏目与品牌/品牌视觉/原始资料/Markdown 示意图设计系统规范.md",
+  "constraints_sha256": "70b94c42bf02aa99780ce4a960582ebab0aa491a18cc09581bee45f3d2fa4d00",
+  "receipt": "research/image-generation-runs/rsi-three-constraints-infographic-final-preflight.json"
+}

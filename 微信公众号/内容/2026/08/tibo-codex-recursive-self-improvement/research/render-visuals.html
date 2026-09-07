@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1600, initial-scale=1">
+<style>
+:root {
+  --bg: #08111f;
+  --panel: #101d30;
+  --panel2: #14243a;
+  --line: #31435b;
+  --text: #f4f7fb;
+  --muted: #a9b6c8;
+  --cyan: #51d7ff;
+  --cyan2: #148db8;
+  --amber: #ffbd59;
+  --red: #ff6b75;
+  --green: #55dda3;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; width: 1600px; height: 900px; overflow: hidden; background: var(--bg); }
+body { font-family: "Microsoft YaHei UI", "Microsoft YaHei", "PingFang SC", sans-serif; color: var(--text); }
+.figure {
+  display: none;
+  position: relative;
+  width: 1600px;
+  height: 900px;
+  padding: 70px 82px 62px;
+  flex-direction: column;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 88% 8%, rgba(81,215,255,.14), transparent 28%),
+    radial-gradient(circle at 8% 92%, rgba(255,189,89,.09), transparent 28%),
+    linear-gradient(145deg, #07101d, #0b1728 58%, #091321);
+}
+.figure:target { display: flex; }
+.figure::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: .16;
+  background-image:
+    linear-gradient(rgba(255,255,255,.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+}
+.header { position: relative; z-index: 2; }
+.eyebrow { color: var(--cyan); font-size: 24px; font-weight: 700; letter-spacing: 3px; }
+h1 { margin: 12px 0 10px; font-size: 58px; line-height: 1.16; letter-spacing: -1px; }
+.dek { color: var(--muted); font-size: 27px; line-height: 1.45; }
+.content { position: relative; z-index: 2; flex: 1; margin-top: 34px; }
+.footer {
+  position: absolute; z-index: 3; left: 82px; right: 82px; bottom: 28px;
+  display: flex; justify-content: space-between; color: #708198; font-size: 19px;
+}
+.card {
+  background: linear-gradient(145deg, rgba(20,36,58,.96), rgba(12,25,42,.94));
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.22);
+}
+.badge {
+  display: inline-flex; align-items: center; min-height: 36px; padding: 4px 14px;
+  border-radius: 999px; color: var(--cyan); border: 1px solid rgba(81,215,255,.4);
+  background: rgba(81,215,255,.08); font-size: 20px; font-weight: 700;
+}
+.badge.amber { color: var(--amber); border-color: rgba(255,189,89,.45); background: rgba(255,189,89,.08); }
+.small { color: var(--muted); font-size: 22px; line-height: 1.5; }
+.arrow { color: var(--cyan); font-size: 52px; font-weight: 300; align-self: center; }
+.strong { color: var(--text); font-weight: 800; }
+.cyan { color: var(--cyan); }
+.amber { color: var(--amber); }
+.muted { color: var(--muted); }
+
+/* 01 three gates */
+.gates { display: grid; grid-template-columns: 1fr 74px 1fr 74px 1fr; gap: 18px; align-items: stretch; }
+.gate { padding: 30px 30px 28px; min-height: 245px; border-top: 4px solid var(--cyan); }
+.gate .num { font-size: 25px; color: var(--cyan); font-weight: 800; letter-spacing: 2px; }
+.gate h2 { margin: 16px 0 14px; font-size: 36px; line-height: 1.25; }
+.gate p { margin: 0; color: var(--muted); font-size: 25px; line-height: 1.5; }
+.strict-bar {
+  margin-top: 28px; padding: 23px 30px; border-radius: 18px;
+  border: 1px solid rgba(255,189,89,.48); background: rgba(255,189,89,.08);
+  display: grid; grid-template-columns: 190px 1fr; align-items: center; gap: 24px;
+}
+.strict-bar .label { font-size: 28px; font-weight: 800; color: var(--amber); }
+.strict-bar .items { font-size: 27px; word-spacing: 10px; }
+
+/* 02 map */
+.plot {
+  position: relative; height: 510px; margin-left: 98px; border-left: 2px solid #50647d;
+  border-bottom: 2px solid #50647d; border-radius: 0 0 0 2px;
+}
+.axis-y { position: absolute; left: -94px; top: 160px; transform: rotate(-90deg); font-size: 24px; color: var(--muted); }
+.axis-x { position: absolute; right: 8px; bottom: -42px; font-size: 24px; color: var(--muted); }
+.axis-note { position: absolute; left: 18px; bottom: -42px; font-size: 21px; color: #718198; }
+.bubble {
+  position: absolute; display: flex; flex-direction: column; justify-content: center;
+  padding: 20px 24px; border-radius: 22px; border: 1px solid var(--line);
+  background: rgba(16,29,48,.96); box-shadow: 0 18px 50px rgba(0,0,0,.23);
+}
+.bubble b { font-size: 31px; margin-bottom: 8px; }
+.bubble span { font-size: 21px; color: var(--muted); line-height: 1.35; }
+.b1 { left: 55px; bottom: 38px; width: 290px; height: 126px; border-color: #53657b; }
+.b2 { left: 360px; bottom: 188px; width: 300px; height: 142px; border-color: var(--cyan2); }
+.b3 { left: 700px; bottom: 295px; width: 315px; height: 146px; border-color: var(--cyan); }
+.b4 { right: 44px; bottom: 198px; width: 325px; height: 158px; border: 2px dashed var(--amber); }
+.map-note { position: absolute; right: 48px; top: 10px; color: var(--amber); font-size: 23px; font-weight: 700; }
+
+/* 03 timeline */
+.timeline { position: relative; height: 500px; display: grid; grid-template-columns: repeat(4,1fr); gap: 30px; align-items: center; }
+.timeline::before { content: ""; position: absolute; left: 75px; right: 75px; top: 234px; height: 3px; background: linear-gradient(90deg, #445973, var(--cyan), var(--amber)); }
+.time-item { position: relative; height: 355px; padding: 28px 26px; }
+.time-item::after { content: ""; position: absolute; width: 24px; height: 24px; border-radius: 50%; background: var(--bg); border: 5px solid var(--cyan); left: calc(50% - 12px); bottom: 99px; box-shadow: 0 0 24px rgba(81,215,255,.5); }
+.year { font-size: 45px; font-weight: 900; color: var(--cyan); }
+.time-item h2 { font-size: 31px; margin: 10px 0 12px; }
+.time-item p { font-size: 22px; line-height: 1.48; color: var(--muted); margin: 0; }
+.time-item .shift { position: absolute; bottom: 22px; left: 24px; right: 24px; text-align: center; color: var(--text); font-size: 22px; font-weight: 700; }
+
+/* 04 code loop */
+.loop-row { display: grid; grid-template-columns: 1fr 48px 1fr 48px 1fr 48px 1fr 48px 1fr; align-items: center; }
+.loop-node { min-height: 188px; padding: 27px 22px; text-align: center; border-top: 4px solid var(--cyan); }
+.loop-node .step { color: var(--cyan); font-size: 22px; font-weight: 800; }
+.loop-node h2 { font-size: 31px; margin: 15px 0 8px; }
+.loop-node p { font-size: 21px; line-height: 1.42; color: var(--muted); margin: 0; }
+.return-loop {
+  margin: 34px 80px 0; height: 94px; border: 3px solid var(--amber); border-top: none;
+  border-radius: 0 0 44px 44px; position: relative;
+}
+.return-loop::before { content: "下一轮"; position: absolute; left: calc(50% - 56px); bottom: -17px; width: 112px; text-align:center; background: var(--bg); color: var(--amber); font-size: 24px; font-weight:800; }
+.return-loop::after { content: "↖"; position: absolute; left: -18px; top: -37px; color: var(--amber); font-size: 54px; }
+.code-callout { margin-top: 22px; text-align: center; color: var(--muted); font-size: 25px; }
+
+/* 05 cases */
+.case-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+.case { padding: 22px 26px 20px; min-height: 224px; position: relative; }
+.case h2 { margin: 10px 0 14px; font-size: 30px; }
+.case dl { display: grid; grid-template-columns: 116px 1fr; gap: 7px 13px; margin: 0; }
+.case dt { color: var(--cyan); font-size: 21px; font-weight: 800; }
+.case dd { margin: 0; color: var(--muted); font-size: 21px; line-height: 1.35; }
+.case .source { position: absolute; right: 22px; top: 20px; font-size: 18px; color: var(--amber); }
+
+/* 06 OpenAI RSI Index derivative */
+.openai-layout { display: grid; grid-template-columns: 1.62fr .78fr; gap: 24px; align-items: stretch; }
+.official-chart { height: 494px; overflow: hidden; position: relative; background: #000; border-color: #404954; }
+.official-chart img { position: absolute; width: 810px; max-width: none; left: 50%; top: -145px; transform: translateX(-50%); }
+.official-stamp { position: absolute; right: 18px; top: 18px; z-index: 2; padding: 9px 14px; border-radius: 999px; background: rgba(5,9,14,.88); border: 1px solid #586575; color: #fff; font-size: 18px; font-weight: 800; letter-spacing: .4px; }
+.rsi-readout { padding: 27px 28px; display: flex; flex-direction: column; justify-content: space-between; border-top: 4px solid var(--cyan); }
+.rsi-readout .label { color: var(--muted); font-size: 21px; }
+.rsi-score { display: grid; grid-template-columns: 1fr auto; align-items: baseline; gap: 14px; padding: 16px 0; border-bottom: 1px solid #33455b; }
+.rsi-score strong { font-size: 29px; }
+.rsi-score b { font-size: 42px; color: var(--cyan); }
+.rsi-delta { margin-top: 17px; padding: 18px; border-radius: 15px; background: rgba(81,215,255,.08); border: 1px solid rgba(81,215,255,.38); }
+.rsi-delta .big { display: block; color: var(--cyan); font-size: 54px; font-weight: 900; line-height: 1; }
+.rsi-delta .small { display: block; margin-top: 9px; color: var(--muted); font-size: 20px; line-height: 1.4; }
+.rsi-caveat { margin-top: 18px; color: var(--amber); font-size: 20px; line-height: 1.45; font-weight: 700; }
+
+/* 07 constraints */
+.constraint-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; align-items: stretch; }
+.constraint { min-height: 320px; padding: 30px; position: relative; border-top: 5px solid var(--cyan); }
+.constraint:nth-child(2) { border-top-color: var(--amber); }
+.constraint:nth-child(3) { border-top-color: var(--red); }
+.constraint .index { font-size: 23px; font-weight: 800; color: var(--cyan); }
+.constraint:nth-child(2) .index { color: var(--amber); }
+.constraint:nth-child(3) .index { color: var(--red); }
+.constraint h2 { font-size: 35px; margin: 16px 0 18px; }
+.constraint p { font-size: 23px; line-height: 1.5; color: var(--muted); margin: 0; }
+.not-equal { margin-top: 30px; padding: 21px; text-align: center; font-size: 30px; font-weight: 800; border: 1px solid #40536b; border-radius: 18px; background: rgba(12,25,42,.72); }
+
+/* 09 conclusion */
+.compare { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; height: 485px; }
+.side { padding: 28px 30px; position: relative; overflow: hidden; }
+.side h2 { margin: 0; font-size: 36px; }
+.side .sub { margin-top: 8px; color: var(--muted); font-size: 22px; }
+.window-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-top: 28px; }
+.window { height: 84px; border-radius: 12px; border: 1px solid #53657b; background: #0a1422; padding: 13px; }
+.window::before { content:""; display:block; width: 38px; height: 7px; border-radius: 9px; background: var(--cyan2); margin-bottom: 13px; }
+.window::after { content:""; display:block; width: 75%; height: 7px; border-radius: 9px; background: #34465d; box-shadow: 0 15px 0 #2b3c52; }
+.attention { margin-top: 24px; display:flex; justify-content:space-between; padding: 16px 18px; border-radius:12px; background: rgba(255,189,89,.09); color: var(--amber); font-size: 22px; font-weight: 700; }
+.cloud { margin-top: 24px; height: 238px; position: relative; border-radius: 120px; border: 2px solid rgba(81,215,255,.45); background: rgba(81,215,255,.05); }
+.cloud-core { position:absolute; left:calc(50% - 78px); top:72px; width:156px; height:94px; border-radius:22px; background:rgba(81,215,255,.15); border:2px solid var(--cyan); display:flex; align-items:center; justify-content:center; font-size:26px; font-weight:800; }
+.agent-dot { position:absolute; width:88px; height:62px; border-radius:18px; background:#102039; border:1px solid #3f637a; display:flex; align-items:center; justify-content:center; color:var(--muted); font-size:20px; }
+.a1{left:72px;top:42px}.a2{right:72px;top:42px}.a3{left:72px;bottom:36px}.a4{right:72px;bottom:36px}
+.exception { margin-top: 18px; text-align:center; color:var(--amber); font-size:22px; font-weight:700; }
+.disclaimer { margin-top: 24px; padding: 16px 22px; border-radius: 14px; background: rgba(255,189,89,.08); border: 1px solid rgba(255,189,89,.35); color: #ffd899; font-size: 22px; }
+</style>
+</head>
+<body>
+
+<section class="figure" id="three-gates">
+  <div class="header">
+    <div class="eyebrow">RSI 判断尺 01</div>
+    <h1>一次优化，什么时候才有「递归」？</h1>
+    <div class="dek">先看循环是否真的闭上，再讨论它是不是严格 RSI。</div>
+  </div>
+  <div class="content">
+    <div class="gates">
+      <div class="gate card"><div class="num">GATE 01</div><h2>修改持久进入下一轮</h2><p>不是只在一次回答里反思，而是留下代码、数据、权重或系统变化。</p></div>
+      <div class="arrow">→</div>
+      <div class="gate card"><div class="num">GATE 02</div><h2>新能力继续改同一系统</h2><p>改进结果要反过来提升下一轮的改进能力，而不只是完成一次外包任务。</p></div>
+      <div class="arrow">→</div>
+      <div class="gate card"><div class="num">GATE 03</div><h2>循环已经实际跑过</h2><p>看真实的多轮运行记录，不把「理论上可以继续」当成已经发生。</p></div>
+    </div>
+    <div class="strict-bar">
+      <div class="label">严格 RSI 再加</div>
+      <div class="items">自主选择方向　·　可信评测继任者　·　人类逐项介入持续减少</div>
+    </div>
+  </div>
+  <div class="footer"><span>递归是可检验的运行关系，不是情绪词。</span><span>作者制图</span></div>
+</section>
+
+<section class="figure" id="four-forms">
+  <div class="header">
+    <div class="eyebrow">RSI 判断尺 02</div>
+    <h1>四种「自我改进」，不是一条成熟度阶梯</h1>
+    <div class="dek">改动对象更深，不代表闭环一定更强；参与研发，也不自动等于递归。</div>
+  </div>
+  <div class="content">
+    <div class="plot">
+      <div class="axis-y">闭环强度更高 ↑</div>
+      <div class="axis-x">改动对象：输出 → Agent → 权重／训练 → 研发系统</div>
+      <div class="axis-note">只在本次运行</div>
+      <div class="map-note">虚线：是否递归视案例而定</div>
+      <div class="bubble b1"><b>上下文内反思</b><span>改一次回答<br>通常不持久</span></div>
+      <div class="bubble b2"><b>自改 Agent</b><span>改提示词、工具或代码<br>可以多轮保留</span></div>
+      <div class="bubble b3"><b>自生训练信号</b><span>改题目、奖励、数据或权重<br>仍受课程与评测约束</span></div>
+      <div class="bubble b4"><b>自动化研发系统</b><span>改实验、内核和训练流程<br>参与研发 ≠ 已闭环</span></div>
+    </div>
+  </div>
+  <div class="footer"><span>横轴回答「改了什么」，纵轴回答「循环有多闭合」。</span><span>作者制图</span></div>
+</section>
+
+<section class="figure" id="history">
+  <div class="header">
+    <div class="eyebrow">60 年脉络</div>
+    <h1>从智能爆炸设想到可运行的实验循环</h1>
+    <div class="dek">变化不在于机器第一次改程序，而在于通用模型开始理解目的、生成修改并调用反馈。</div>
+  </div>
+  <div class="content">
+    <div class="timeline">
+      <div class="time-item card"><div class="year">1965</div><h2>I. J. Good</h2><p>机器设计机器的能力若超过人类，改进可能反过来加速机器设计。</p><div class="shift">思想实验</div></div>
+      <div class="time-item card"><div class="year">2003</div><h2>Gödel Machine</h2><p>只有能证明自我改写提高效用，系统才执行修改。</p><div class="shift">从设想到证明</div></div>
+      <div class="time-item card"><div class="year">2023</div><h2>STOP</h2><p>语言模型改写代码优化脚手架，再按人类预设效用函数留优。</p><div class="shift">从证明到实验</div></div>
+      <div class="time-item card"><div class="year">2026</div><h2>autoresearch</h2><p>单 GPU、固定指标与短实验，让 Agent 可连续改代码、训练和回退。</p><div class="shift">从实验到自动运行</div></div>
+    </div>
+  </div>
+  <div class="footer"><span>关键转折：可执行 + 可评测 + 可并行。</span><span>作者制图</span></div>
+</section>
+
+<section class="figure" id="code-loop">
+  <div class="header">
+    <div class="eyebrow">为什么从代码开始</div>
+    <h1>软件世界给了 Agent 一条便宜、清晰的反馈回路</h1>
+    <div class="dek">测试是否通过、程序是否更快、显存是否下降，都可以自动量。</div>
+  </div>
+  <div class="content">
+    <div class="loop-row">
+      <div class="loop-node card"><div class="step">01</div><h2>读仓库</h2><p>理解代码与当前目标</p></div><div class="arrow">→</div>
+      <div class="loop-node card"><div class="step">02</div><h2>生成修改</h2><p>提出候选实现</p></div><div class="arrow">→</div>
+      <div class="loop-node card"><div class="step">03</div><h2>机器评测</h2><p>测试、速度、显存</p></div><div class="arrow">→</div>
+      <div class="loop-node card"><div class="step">04</div><h2>保留／回退</h2><p>把结果写入系统</p></div><div class="arrow">→</div>
+      <div class="loop-node card"><div class="step">05</div><h2>更新搜索</h2><p>决定下一次尝试</p></div>
+    </div>
+    <div class="return-loop"></div>
+    <div class="code-callout">代码既是 AI 的工具，也是承载 AI 的基础设施。</div>
+  </div>
+  <div class="footer"><span>反馈越可验证，自动循环越容易先跑起来。</span><span>作者制图</span></div>
+</section>
+
+<section class="figure" id="four-cases">
+  <div class="header">
+    <div class="eyebrow">4 个承重案例</div>
+    <h1>它们分别闭上了哪一段？</h1>
+    <div class="dek">统一看修改对象、已闭合部分和仍由人掌握的边界。</div>
+  </div>
+  <div class="content">
+    <div class="case-grid">
+      <div class="case card"><span class="source">论文作者报告</span><span class="badge">DGM</span><h2>Agent 修改自己的工作方式</h2><dl><dt>改动</dt><dd>自身 Python 脚手架</dd><dt>已闭合</dt><dd>保留后代，继续产生新后代</dd><dt>人类边界</dt><dd>固定编码基准；基础模型冻结</dd></dl></div>
+      <div class="case card"><span class="source">ICLR 2026 原论文</span><span class="badge">R-Zero</span><h2>模型开始自造课程</h2><dl><dt>改动</dt><dd>题目、训练信号与 Solver</dd><dt>已闭合</dt><dd>Challenger／Solver 多轮共演化</dd><dt>人类边界</dt><dd>分工、训练范围与最终评测</dd></dl></div>
+      <div class="case card"><span class="source">厂商生产自报</span><span class="badge amber">Sol / Codex</span><h2>模型改进运行模型的机器</h2><dl><dt>改动</dt><dd>内核、路由与草稿模型</dd><dt>已闭合</dt><dd>修改进入真实生产系统</dd><dt>人类边界</dt><dd>目标、验证、上线与验收</dd></dl></div>
+      <div class="case card"><span class="source">公司研究报告</span><span class="badge amber">AAR</span><h2>Agent 开始成组跑研究</h2><dl><dt>改动</dt><dd>围绕既定问题的研究方案</dd><dt>已闭合</dt><dd>提出想法、实验、共享结果</dd><dt>人类边界</dt><dd>问题、指标与研究 Agent 本身</dd></dl></div>
+    </div>
+  </div>
+  <div class="footer"><span>没有一个案例同时证明严格、自主、持续加速的 RSI。</span><span>作者制图</span></div>
+</section>
+
+<section class="figure" id="openai-rsi">
+  <div class="header">
+    <div class="eyebrow">OPENAI · RSI INDEX</div>
+    <h1>分数提高了，不等于严格 RSI 已经实现</h1>
+    <div class="dek">这张官方图测的是一组 AI 研究任务：调试、内核优化、训练配方与实验执行。</div>
+  </div>
+  <div class="content">
+    <div class="openai-layout">
+      <div class="official-chart card">
+        <div class="official-stamp">OPENAI 官方原图 · 版式裁切</div>
+        <img src="source-assets/openai-rsi-index-reference.png" alt="OpenAI RSI Index 官方图">
+      </div>
+      <div class="rsi-readout card">
+        <div>
+          <div class="label">官方公开结果</div>
+          <div class="rsi-score"><strong>GPT-5.6 Sol</strong><b>57.9%</b></div>
+          <div class="rsi-score"><strong>GPT-5.5</strong><b>41.7%</b></div>
+          <div class="rsi-delta"><span class="big">+16.2</span><span class="small">个百分点<br>OpenAI 内部 RSI 任务集</span></div>
+        </div>
+        <div class="rsi-caveat">厂商内部评测｜没有外部模型对照｜不能单独证明自主、持续加速的递归改进</div>
+      </div>
+    </div>
+  </div>
+  <div class="footer"><span>原图：OpenAI；中文阅读层为本项目改编。数据为厂商自报。</span><span>OpenAI 官方图改编</span></div>
+</section>
+
+<section class="figure" id="constraints">
+  <div class="header">
+    <div class="eyebrow">闭环之外</div>
+    <h1>能循环，不等于能自主、能加速、能安全</h1>
+    <div class="dek">现实 RSI 仍受三类不同性质的制约。</div>
+  </div>
+  <div class="content">
+    <div class="constraint-grid">
+      <div class="constraint card"><div class="index">01 / JUDGMENT</div><h2>选对并评对</h2><p>谁决定问题值得研究？谁证明新尺子比旧尺子更接近真实目标？</p></div>
+      <div class="constraint card"><div class="index">02 / THROUGHPUT</div><h2>持续加速</h2><p>数据、训练算力、推理成本和现实实验时间，都可能让反馈失速。</p></div>
+      <div class="constraint card"><div class="index">03 / CONTROL</div><h2>安全接管</h2><p>错误也会递归；权限、审计、外部验证与回滚不能被同一指标吞掉。</p></div>
+    </div>
+    <div class="not-equal"><span class="cyan">形成循环</span>　≠　自主运行　≠　持续加速　≠　<span class="amber">可以安全部署</span></div>
+  </div>
+  <div class="footer"><span>补齐某一个环节，不会自动补齐另外三个命题。</span><span>作者制图</span></div>
+</section>
+
+<section class="figure" id="codex-observation">
+  <div class="header">
+    <div class="eyebrow">回到 Codex</div>
+    <h1>可能先显得「原始」的，是工作组织方式</h1>
+    <div class="dek">不是只看模型分数，而是看任务如何被分配、保持和验收。</div>
+  </div>
+  <div class="content">
+    <div class="compare">
+      <div class="side card">
+        <h2>今天：人围着 Agent 跑</h2><div class="sub">手工补背景、切窗口、盯进度、拼结果</div>
+        <div class="window-grid"><div class="window"></div><div class="window"></div><div class="window"></div><div class="window"></div><div class="window"></div><div class="window"></div></div>
+        <div class="attention"><span>瓶颈</span><span>人的注意力</span></div>
+      </div>
+      <div class="side card">
+        <h2>观察方向：Agent 围着任务跑</h2><div class="sub">持续上下文、云端并行、异常才回到人</div>
+        <div class="cloud"><div class="cloud-core">项目状态</div><div class="agent-dot a1">任务 A</div><div class="agent-dot a2">任务 B</div><div class="agent-dot a3">验证</div><div class="agent-dot a4">监控</div></div>
+        <div class="exception">目标冲突／权限变化／结果异常 → 人类判断</div>
+      </div>
+    </div>
+    <div class="disclaimer">持续上下文、云端并行与主动处理是观察指标，不是 Tibo 已公布的具体路线图。</div>
+  </div>
+  <div class="footer"><span>标题答案：原始的可能是 harness，而不只是模型。</span><span>作者制图</span></div>
+</section>
+
+</body>
+</html>

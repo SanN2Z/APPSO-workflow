@@ -1,0 +1,678 @@
+version: 3
+updated: "2026-08-25"
+assets:
+  - file: "assets/tibo-matthew-interview-x-original.jpg"
+    used_in_draft: true
+    used_as_cover: false
+    use: "wechat_body_header"
+    visual_route: "source_original"
+    source_original_kind: "x_screenshot"
+    original_pixels_preserved: true
+    dimensions: "1200x675"
+    source_type: "social_media_original"
+    source: "Matthew Berman 公开 X 访谈视频的原始缩略图"
+    source_url: "https://x.com/MatthewBerman/status/2091959711423996249"
+    retrieval_url: "https://pbs.twimg.com/amplify_video_thumb/2091957857650716672/img/4-Zbw9M-1kQqGjLj.jpg"
+    creator_or_rightsholder: "Matthew Berman / X video publisher"
+    obtained_on: "2026-08-25"
+    modifications: "Downloaded unchanged; no redraw, restyling, crop, overlay, or pixel modification"
+    rights_status: "user_confirmed_editorial_commentary"
+    rights_basis: "User explicitly requested original community or X visuals for this editorial article; used with source attribution and no AI redraw"
+    rights_blocker: false
+    allowed_platforms: ["wechat", "research"]
+    attribution: "图：Matthew Berman 访谈视频 / X"
+    ai_generated: false
+    output_sha256: "3488bc0a61b1c0c0769e9e9e8a369e463a36941d4f7506e2e4dfa9c255d29256"
+
+  - file: "assets/karpathy-autoresearch-progress-original.png"
+    used_in_draft: true
+    used_as_cover: false
+    use: "wechat_body_header"
+    visual_route: "source_original"
+    source_original_kind: "official_original"
+    original_pixels_preserved: true
+    dimensions: "2382x1180"
+    source_type: "official_repository_original"
+    source: "karpathy/autoresearch official repository progress.png"
+    source_url: "https://github.com/karpathy/autoresearch/blob/master/progress.png"
+    retrieval_url: "https://raw.githubusercontent.com/karpathy/autoresearch/master/progress.png"
+    creator_or_rightsholder: "Andrej Karpathy / karpathy/autoresearch contributors"
+    obtained_on: "2026-08-25"
+    modifications: "Downloaded unchanged; original pixels and English labels preserved"
+    rights_status: "licensed"
+    rights_basis: "The official repository is distributed under the MIT License; image used unchanged with source attribution"
+    rights_blocker: false
+    allowed_platforms: ["wechat", "research"]
+    attribution: "原图：karpathy/autoresearch"
+    ai_generated: false
+    output_sha256: "a6be2ad8dece12be1907356b1254f3ba133035d264d73634dbed442887a69d8d"
+
+  - file: "assets/openai-rsi-index-original.png"
+    used_in_draft: true
+    used_as_cover: false
+    use: "wechat_body_header"
+    visual_route: "source_original"
+    source_original_kind: "official_original"
+    original_pixels_preserved: true
+    dimensions: "968x955"
+    source_type: "official_chart_original"
+    source: "OpenAI GPT-5.6 release page RSI Index original chart"
+    source_url: "https://openai.com/index/gpt-5-6/"
+    retrieval_url: "https://static2.pisapapeles.net/uploads/2026/07/Grafico-RSI-Index-%E2%80%94-puntuacion-frente-al-costo-estimado-de-API.png"
+    creator_or_rightsholder: "OpenAI"
+    obtained_on: "2026-08-25"
+    modifications: "Copied byte-for-byte from the previously verified source asset; no Chinese overlay, redraw, crop, or data modification"
+    rights_status: "user_confirmed_editorial_use"
+    rights_basis: "User explicitly confirmed OpenAI visual use for this current WeChat article on 2026-08-25"
+    rights_blocker: false
+    allowed_platforms: ["wechat", "research"]
+    attribution: "原图：OpenAI；内部评测，结果为厂商自报"
+    ai_generated: false
+    output_sha256: "3e1ba5663eeed2311383d39e786b705b407b2e52983c439b43b857eb3cf599a2"
+
+  - file: "research/source-assets/appsso-logo-red-background.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "research_reference"
+    dimensions: "1978x634"
+    source_type: "user_supplied_company_brand_asset"
+    source: "APPSO registered brand asset appsso-002"
+    creator_or_rightsholder: "APPSO / user-supplied company asset"
+    obtained_on: "2026-08-25"
+    modifications: "Copied unchanged from the registered repository asset for Image2 reference input"
+    rights_status: "user_confirmed_company_brand_use"
+    rights_basis: "Allowed for APPSO company article infographics; exact hash matches appsso-002"
+    rights_blocker: false
+    allowed_platforms: ["research"]
+    attribution: "APPSO"
+    ai_generated: false
+    output_sha256: "8160db79fc8cafdd864312b32bb6b01ee4d720187bc4acc6a875e273eecd04ff"
+
+  - file: "research/source-assets/rsi-three-gates-structure-v01.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "research_reference"
+    dimensions: "1600x900"
+    source_type: "project_owned_structure_reference"
+    source: "Rejected v01 deterministic diagram, retained only as information-structure input"
+    creator_or_rightsholder: "This project"
+    obtained_on: "2026-08-25"
+    modifications: "Byte-identical copy of the rejected diagram; not a release asset"
+    rights_status: "project_owned"
+    rights_basis: "Project-created structure reference"
+    rights_blocker: false
+    allowed_platforms: ["research"]
+    attribution: "内部结构参考"
+    ai_generated: false
+    output_sha256: "7e8f9848936c130e59657e5e27bc34d0761298cd9dc8174767cce3b3d38d5af6"
+
+  - file: "research/source-assets/rsi-code-loop-structure-v01.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "research_reference"
+    dimensions: "1600x900"
+    source_type: "project_owned_structure_reference"
+    source: "Rejected v01 deterministic diagram, retained only as composition input"
+    creator_or_rightsholder: "This project"
+    obtained_on: "2026-08-25"
+    modifications: "Byte-identical copy of the rejected diagram; not a release asset"
+    rights_status: "project_owned"
+    rights_basis: "Project-created structure reference"
+    rights_blocker: false
+    allowed_platforms: ["research"]
+    attribution: "内部结构参考"
+    ai_generated: false
+    output_sha256: "50bbb134341153789c5c0027b5b1eedf38a4f92bd2dcbfd323fa272fe01c04f3"
+
+  - file: "research/source-assets/rsi-four-cases-structure-v01.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "research_reference"
+    dimensions: "1600x900"
+    source_type: "project_owned_structure_reference"
+    source: "Rejected v01 deterministic diagram, retained only as information-structure input"
+    creator_or_rightsholder: "This project"
+    obtained_on: "2026-08-25"
+    modifications: "Byte-identical copy of the rejected diagram; not a release asset"
+    rights_status: "project_owned"
+    rights_basis: "Project-created structure reference"
+    rights_blocker: false
+    allowed_platforms: ["research"]
+    attribution: "内部结构参考"
+    ai_generated: false
+    output_sha256: "9c22f61bad142ea456ba62eb9da6bfaef4e6da40696670c6d714a7b8bb8e9c7a"
+
+  - file: "research/source-assets/rsi-three-constraints-structure-v01.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "research_reference"
+    dimensions: "1600x900"
+    source_type: "project_owned_structure_reference"
+    source: "Rejected v01 deterministic diagram, retained only as information-structure input"
+    creator_or_rightsholder: "This project"
+    obtained_on: "2026-08-25"
+    modifications: "Byte-identical copy of the rejected diagram; not a release asset"
+    rights_status: "project_owned"
+    rights_basis: "Project-created structure reference"
+    rights_blocker: false
+    allowed_platforms: ["research"]
+    attribution: "内部结构参考"
+    ai_generated: false
+    output_sha256: "5729d21700314fa69a25b0f4ea1527f757d6ad0143823941715b4429627e97cd"
+
+  - file: "research/source-assets/rsi-reward-hacking-structure-v01.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "research_reference"
+    dimensions: "1672x941"
+    source_type: "project_owned_visual_structure"
+    source: "Rejected generic Image2 v01, retained only for the bypass relationship"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-08-25"
+    modifications: "Byte-identical copy of the rejected image; not a release asset"
+    rights_status: "project_owned"
+    rights_basis: "Original AI-assisted image generated for this project"
+    rights_blocker: false
+    allowed_platforms: ["research"]
+    attribution: "内部结构参考"
+    ai_generated: true
+    output_sha256: "7878b6ac8443a790fd2b4f8e9984b4c153b1e9938027bb245f1418c6e2ec2eff"
+
+  - file: "research/source-assets/codex-workflow-structure-v01.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "research_reference"
+    dimensions: "1600x900"
+    source_type: "project_owned_structure_reference"
+    source: "Rejected v01 deterministic comparison, retained only as composition input"
+    creator_or_rightsholder: "This project"
+    obtained_on: "2026-08-25"
+    modifications: "Byte-identical copy of the rejected diagram; not a release asset"
+    rights_status: "project_owned"
+    rights_basis: "Project-created structure reference"
+    rights_blocker: false
+    allowed_platforms: ["research"]
+    attribution: "内部结构参考"
+    ai_generated: false
+    output_sha256: "3dad67d615b07782cc1c32ff94065fdf440f06f34e2cdd887b784719ffeea369"
+
+  - file: "research/source-assets/rsi-three-gates-infographic-v01-edit-target.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "research_reference"
+    dimensions: "1024x1536"
+    source_type: "project_owned_visual_iteration"
+    source: "Image2 v01 output retained only as the edit target for a factual footer correction"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-08-25"
+    modifications: "Byte-identical copy of the v01 output; not a release asset"
+    rights_status: "project_owned"
+    rights_basis: "Original AI-assisted project asset cleared for iterative editing"
+    rights_blocker: false
+    allowed_platforms: ["research"]
+    attribution: "AI 生成迭代参考"
+    ai_generated: true
+    output_sha256: "97ab41b1f8ed63851f59acbc45c2073e09cb9363ba1eaa8e1709498476fbc935"
+
+  - file: "research/source-assets/rsi-four-cases-infographic-v01-edit-target.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "research_reference"
+    dimensions: "1024x1536"
+    source_type: "project_owned_visual_iteration"
+    source: "Image2 v01 output retained only as the edit target for a factual footer correction"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-08-25"
+    modifications: "Byte-identical copy of the v01 output; not a release asset"
+    rights_status: "project_owned"
+    rights_basis: "Original AI-assisted project asset cleared for iterative editing"
+    rights_blocker: false
+    allowed_platforms: ["research"]
+    attribution: "AI 生成迭代参考"
+    ai_generated: true
+    output_sha256: "265f050d2db073b99d2fae3c81ba13f14df85c2cb06e19abab794617b152e1c4"
+
+  - file: "research/source-assets/rsi-three-constraints-infographic-v01-edit-target.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "research_reference"
+    dimensions: "1024x1536"
+    source_type: "project_owned_visual_iteration"
+    source: "Image2 v01 output retained only as the edit target for a density and footer correction"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-08-25"
+    modifications: "Byte-identical copy of the v01 output; not a release asset"
+    rights_status: "project_owned"
+    rights_basis: "Original AI-assisted project asset cleared for iterative editing"
+    rights_blocker: false
+    allowed_platforms: ["research"]
+    attribution: "AI 生成迭代参考"
+    ai_generated: true
+    output_sha256: "7b572a5776e9241f55e5d383897ca095a33305ac1fc849d14ce323e701a7af93"
+
+  - file: "assets/rsi-three-gates-infographic-image2-v02.png"
+    used_in_draft: true
+    used_as_cover: false
+    use: "wechat_body_header"
+    visual_route: "infographic"
+    dimensions: "1024x1536"
+    source_type: "ai_generated"
+    source: "Image2 task rsi-three-gates-infographic-v02; selected release asset"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-08-25"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "referenced_edit"
+    prompt_ref: "appsso-infographic-v1"
+    prompt_sha256: "c8c191665a99da9af14f8ba84b0f7ef769cbadefe347f5d197635264b024c043"
+    invocation_prompt_sha256: "5e48dcf588af820e7e3e1fe15d2cc4381dd6d6b5317baf665021b238184539e8"
+    preflight_receipt: "research/image-generation-runs/rsi-three-gates-infographic-v02-final-preflight.json"
+    generation_constraints: "Portrait APPSO information graphic; preserve three gates and strict-RSI condition; correct footer source only; registered Logo unchanged"
+    input_assets: ["research/source-assets/rsi-three-gates-infographic-v01-edit-target.png", "research/source-assets/appsso-logo-red-background.png"]
+    generated_on: "2026-08-25"
+    modifications: "v02 selected after Image2 corrected the footer source while preserving the governed APPSO layout"
+    rights_status: "project_owned"
+    rights_basis: "Original AI-assisted APPSO editorial infographic generated from project-owned structure and authorized company brand input"
+    rights_blocker: false
+    allowed_platforms: ["wechat", "research"]
+    attribution: "AI 生成信息图"
+    ai_generated: true
+    output_sha256: "f11f6016dc0fac50b43d3d5877e62b8de399d26fabe128682a361cab30217521"
+
+  - file: "assets/rsi-code-loop-doodle-image2-v01.png"
+    used_in_draft: true
+    used_as_cover: false
+    use: "wechat_body_header"
+    visual_route: "clumsy_doodle"
+    dimensions: "1086x1448"
+    source_type: "ai_generated"
+    source: "Image2 task rsi-code-loop-doodle; selected release asset"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-08-25"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "referenced_edit"
+    prompt_ref: "appsso-004"
+    prompt_sha256: "6ba5e092a4f8d6fb2bd33602424ba4792715aa59f2bf5f916b90d8bb3f0bbd0a"
+    invocation_prompt_sha256: "3916deaaeadc0f856eb63a6664217452521d0011a39ec50d56990c082418e697"
+    preflight_receipt: "research/image-generation-runs/rsi-code-loop-doodle-final-preflight.json"
+    generation_constraints: "3:4 white-background clumsy mouse doodle; one code-run-evaluate-keep-or-revert loop; no text or branding"
+    input_assets: ["research/source-assets/rsi-code-loop-structure-v01.png"]
+    generated_on: "2026-08-25"
+    modifications: "Copied unchanged from the governed Image2 output after original-size visual review"
+    rights_status: "project_owned"
+    rights_basis: "Original AI-assisted editorial doodle generated from a project-owned structure reference"
+    rights_blocker: false
+    allowed_platforms: ["wechat", "research"]
+    attribution: "AI 生成笨拙涂鸦"
+    ai_generated: true
+    output_sha256: "846aa29b0cb46151034db6d7ae2be6f35c9e6a0ee4290ec57d4a4d88a235e1f7"
+
+  - file: "assets/rsi-four-cases-infographic-image2-v02.png"
+    used_in_draft: true
+    used_as_cover: false
+    use: "wechat_body_header"
+    visual_route: "infographic"
+    dimensions: "1024x1536"
+    source_type: "ai_generated"
+    source: "Image2 task rsi-four-cases-infographic-v02; selected release asset"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-08-25"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "referenced_edit"
+    prompt_ref: "appsso-infographic-v1"
+    prompt_sha256: "c8c191665a99da9af14f8ba84b0f7ef769cbadefe347f5d197635264b024c043"
+    invocation_prompt_sha256: "701ddb16bb2081b2c6a59200806bc03f28cdd1370d7f1a8f5d9824ca94dadad3"
+    preflight_receipt: "research/image-generation-runs/rsi-four-cases-infographic-v02-final-preflight.json"
+    generation_constraints: "Portrait four-row APPSO comparison; exact case boundaries; corrected source and 2026-08-25 date; registered Logo unchanged"
+    input_assets: ["research/source-assets/rsi-four-cases-infographic-v01-edit-target.png", "research/source-assets/appsso-logo-red-background.png"]
+    generated_on: "2026-08-25"
+    modifications: "v02 selected after Image2 corrected the source and date while preserving all four case rows"
+    rights_status: "project_owned"
+    rights_basis: "Original AI-assisted APPSO editorial infographic generated from project-owned structure and authorized company brand input"
+    rights_blocker: false
+    allowed_platforms: ["wechat", "research"]
+    attribution: "AI 生成信息图"
+    ai_generated: true
+    output_sha256: "3a8a6ec0932ec99a45f135f313b3713ea930ca7d686c71a3391b8cb48bd93aa7"
+
+  - file: "assets/rsi-three-constraints-infographic-image2-v02.png"
+    used_in_draft: true
+    used_as_cover: false
+    use: "wechat_body_header"
+    visual_route: "infographic"
+    dimensions: "1086x1448"
+    source_type: "ai_generated"
+    source: "Image2 task rsi-three-constraints-infographic-v02; selected release asset"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-08-25"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "referenced_edit"
+    prompt_ref: "appsso-infographic-v1"
+    prompt_sha256: "c8c191665a99da9af14f8ba84b0f7ef769cbadefe347f5d197635264b024c043"
+    invocation_prompt_sha256: "218ab5a1ad47e3ac0e45b41bac6b6374e5dd980ceaff3a53f6ee51e57b1dcec1"
+    preflight_receipt: "research/image-generation-runs/rsi-three-constraints-infographic-v02-final-preflight.json"
+    generation_constraints: "Portrait three-card APPSO explanation; remove small explanatory paragraphs; exact footer source and 2026-08-25 date; registered Logo unchanged"
+    input_assets: ["research/source-assets/rsi-three-constraints-infographic-v01-edit-target.png", "research/source-assets/appsso-logo-red-background.png"]
+    generated_on: "2026-08-25"
+    modifications: "v02 selected after Image2 removed dense body copy and corrected the footer"
+    rights_status: "project_owned"
+    rights_basis: "Original AI-assisted APPSO editorial infographic generated from project-owned structure and authorized company brand input"
+    rights_blocker: false
+    allowed_platforms: ["wechat", "research"]
+    attribution: "AI 生成信息图"
+    ai_generated: true
+    output_sha256: "17fd4bbb686138929ff876d516b57aa39a22a90c3c0ee5e54175678207fd362c"
+
+  - file: "assets/rsi-reward-hacking-doodle-image2-v01.png"
+    used_in_draft: true
+    used_as_cover: false
+    use: "wechat_body_header"
+    visual_route: "clumsy_doodle"
+    dimensions: "1086x1448"
+    source_type: "ai_generated"
+    source: "Image2 task rsi-reward-hacking-doodle; selected release asset"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-08-25"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "referenced_edit"
+    prompt_ref: "appsso-004"
+    prompt_sha256: "6ba5e092a4f8d6fb2bd33602424ba4792715aa59f2bf5f916b90d8bb3f0bbd0a"
+    invocation_prompt_sha256: "f58f9948723d7282de3478742e084d032b0249fe8a8979279e5d22acfefcf07c"
+    preflight_receipt: "research/image-generation-runs/rsi-reward-hacking-doodle-final-preflight.json"
+    generation_constraints: "3:4 white-background clumsy mouse doodle; proxy reward loop visibly bypasses the true target; no text or branding"
+    input_assets: ["research/source-assets/rsi-reward-hacking-structure-v01.png"]
+    generated_on: "2026-08-25"
+    modifications: "Copied unchanged from the governed Image2 output after original-size visual review"
+    rights_status: "project_owned"
+    rights_basis: "Original AI-assisted editorial doodle generated from a project-owned structure reference"
+    rights_blocker: false
+    allowed_platforms: ["wechat", "research"]
+    attribution: "AI 生成笨拙涂鸦"
+    ai_generated: true
+    output_sha256: "285759e76d0583ff4ce4aba20e56057c14cc35d71cff88a3c7874cae180c2d90"
+
+  - file: "assets/codex-workflow-doodle-image2-v01.png"
+    used_in_draft: true
+    used_as_cover: false
+    use: "wechat_body_header"
+    visual_route: "clumsy_doodle"
+    dimensions: "1086x1448"
+    source_type: "ai_generated"
+    source: "Image2 task codex-workflow-doodle; selected release asset"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-08-25"
+    generator: "Codex built-in image_gen"
+    model: "gpt-image-2"
+    generation_mode: "referenced_edit"
+    prompt_ref: "appsso-004"
+    prompt_sha256: "6ba5e092a4f8d6fb2bd33602424ba4792715aa59f2bf5f916b90d8bb3f0bbd0a"
+    invocation_prompt_sha256: "32e029852324d50f407685ca37da1868e7f00dde7058a66967e4562797ba1492"
+    preflight_receipt: "research/image-generation-runs/codex-workflow-doodle-final-preflight.json"
+    generation_constraints: "3:4 white-background two-panel clumsy mouse doodle; manual multi-agent attention versus persistent project-state orchestration; no text or branding"
+    input_assets: ["research/source-assets/codex-workflow-structure-v01.png"]
+    generated_on: "2026-08-25"
+    modifications: "Copied unchanged from the governed Image2 output after original-size visual review"
+    rights_status: "project_owned"
+    rights_basis: "Original AI-assisted editorial doodle generated from a project-owned structure reference"
+    rights_blocker: false
+    allowed_platforms: ["wechat", "research"]
+    attribution: "AI 生成笨拙涂鸦"
+    ai_generated: true
+    output_sha256: "380a3bf748821166ab2b00666691d7cf0a253057b1943a930849cb8b5b6483c3"
+
+  # Superseded and rejected iterations retained only as an audit trail.
+  - file: "assets/codex-workflow-observation.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "unused"
+    dimensions: "1600x900"
+    source_type: "rejected_editorial_graphic"
+    source: "Superseded project-made workflow graphic"
+    creator_or_rightsholder: "This project"
+    obtained_on: "2026-08-25"
+    modifications: "Rejected after visual-direction review; retained only for audit"
+    rights_status: "project_owned"
+    rights_basis: "Original project editorial graphic"
+    rights_blocker: false
+    allowed_platforms: ["research"]
+    attribution: "Not for publication"
+    ai_generated: false
+    output_sha256: "3dad67d615b07782cc1c32ff94065fdf440f06f34e2cdd887b784719ffeea369"
+
+  - file: "assets/openai-rsi-index-adapted-v03.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "unused"
+    dimensions: "1600x900"
+    source_type: "rejected_editorial_adaptation"
+    source: "Superseded adaptation of OpenAI's RSI Index chart"
+    creator_or_rightsholder: "OpenAI; adaptation by this project"
+    obtained_on: "2026-08-25"
+    modifications: "Reformatted for an earlier draft, then rejected in favor of the official original"
+    rights_status: "user_confirmed_derivative_use"
+    rights_basis: "User explicitly authorized OpenAI derivative use for this task"
+    rights_blocker: false
+    allowed_platforms: ["research"]
+    attribution: "OpenAI; rejected adaptation"
+    ai_generated: false
+    output_sha256: "43bbe423938adfc787f9f4f240e6940e9d78b2cad3251286759723fba6cc1fad"
+
+  - file: "assets/rsi-code-feedback-loop.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "unused"
+    dimensions: "1600x900"
+    source_type: "rejected_editorial_graphic"
+    source: "Superseded project-made code feedback-loop graphic"
+    creator_or_rightsholder: "This project"
+    obtained_on: "2026-08-25"
+    modifications: "Rejected after visual-direction review; retained only for audit"
+    rights_status: "project_owned"
+    rights_basis: "Original project editorial graphic"
+    rights_blocker: false
+    allowed_platforms: ["research"]
+    attribution: "Not for publication"
+    ai_generated: false
+    output_sha256: "50bbb134341153789c5c0027b5b1eedf38a4f92bd2dcbfd323fa272fe01c04f3"
+
+  - file: "assets/rsi-cover-system-loop-image2-v01.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "unused"
+    dimensions: "1672x941"
+    source_type: "rejected_visual_iteration"
+    source: "Superseded Image2 cover iteration"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-08-25"
+    modifications: "Rejected because the generic 3D technology style violated the selected visual routes"
+    rights_status: "project_owned"
+    rights_basis: "Original AI-assisted project artwork"
+    rights_blocker: false
+    allowed_platforms: ["research"]
+    attribution: "AI-generated; not for publication"
+    ai_generated: true
+    output_sha256: "4903b83cf4437ed9f7959ac32814e8f27081a3fdf4fd725327f8a7d52f8db343"
+
+  - file: "assets/rsi-four-cases-infographic-image2-v01.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "unused"
+    dimensions: "1024x1536"
+    source_type: "rejected_visual_iteration"
+    source: "Image2 infographic v01; superseded by v02"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-08-25"
+    modifications: "Rejected because the footer date was incorrect"
+    rights_status: "project_owned"
+    rights_basis: "Original AI-assisted APPSO editorial infographic"
+    rights_blocker: false
+    allowed_platforms: ["research"]
+    attribution: "AI-generated; not for publication"
+    ai_generated: true
+    output_sha256: "265f050d2db073b99d2fae3c81ba13f14df85c2cb06e19abab794617b152e1c4"
+
+  - file: "assets/rsi-four-cases-map.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "unused"
+    dimensions: "1600x900"
+    source_type: "rejected_editorial_graphic"
+    source: "Superseded project-made four-case map"
+    creator_or_rightsholder: "This project"
+    obtained_on: "2026-08-25"
+    modifications: "Rejected after visual-direction review; retained only for audit"
+    rights_status: "project_owned"
+    rights_basis: "Original project editorial graphic"
+    rights_blocker: false
+    allowed_platforms: ["research"]
+    attribution: "Not for publication"
+    ai_generated: false
+    output_sha256: "9c22f61bad142ea456ba62eb9da6bfaef4e6da40696670c6d714a7b8bb8e9c7a"
+
+  - file: "assets/rsi-four-forms-map.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "unused"
+    dimensions: "1600x900"
+    source_type: "rejected_editorial_graphic"
+    source: "Superseded project-made four-form map"
+    creator_or_rightsholder: "This project"
+    obtained_on: "2026-08-25"
+    modifications: "Rejected after visual-direction review; retained only for audit"
+    rights_status: "project_owned"
+    rights_basis: "Original project editorial graphic"
+    rights_blocker: false
+    allowed_platforms: ["research"]
+    attribution: "Not for publication"
+    ai_generated: false
+    output_sha256: "63ab0e1bc9f6d613c5ffda96a83d426493a5d7ebf78081178e83aee729570fcc"
+
+  - file: "assets/rsi-history-timeline.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "unused"
+    dimensions: "1600x900"
+    source_type: "rejected_editorial_graphic"
+    source: "Superseded project-made RSI history timeline"
+    creator_or_rightsholder: "This project"
+    obtained_on: "2026-08-25"
+    modifications: "Rejected after visual-direction review; retained only for audit"
+    rights_status: "project_owned"
+    rights_basis: "Original project editorial graphic"
+    rights_blocker: false
+    allowed_platforms: ["research"]
+    attribution: "Not for publication"
+    ai_generated: false
+    output_sha256: "1d87d8618ddae3211d2f4533ab43342ff9274cdc5a87e0fe6d67cef2f1ff85dc"
+
+  - file: "assets/rsi-reward-hacking-image2-v01.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "unused"
+    dimensions: "1672x941"
+    source_type: "rejected_visual_iteration"
+    source: "Superseded Image2 reward-hacking illustration"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-08-25"
+    modifications: "Rejected because it used a polished 3D technology style instead of the clumsy-doodle route"
+    rights_status: "project_owned"
+    rights_basis: "Original AI-assisted project artwork"
+    rights_blocker: false
+    allowed_platforms: ["research"]
+    attribution: "AI-generated; not for publication"
+    ai_generated: true
+    output_sha256: "7878b6ac8443a790fd2b4f8e9984b4c153b1e9938027bb245f1418c6e2ec2eff"
+
+  - file: "assets/rsi-three-constraints-infographic-image2-v01.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "unused"
+    dimensions: "1024x1536"
+    source_type: "rejected_visual_iteration"
+    source: "Image2 infographic v01; superseded by v02"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-08-25"
+    modifications: "Rejected because the copy was too dense and the footer date was incorrect"
+    rights_status: "project_owned"
+    rights_basis: "Original AI-assisted APPSO editorial infographic"
+    rights_blocker: false
+    allowed_platforms: ["research"]
+    attribution: "AI-generated; not for publication"
+    ai_generated: true
+    output_sha256: "7b572a5776e9241f55e5d383897ca095a33305ac1fc849d14ce323e701a7af93"
+
+  - file: "assets/rsi-three-constraints.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "unused"
+    dimensions: "1600x900"
+    source_type: "rejected_editorial_graphic"
+    source: "Superseded project-made three-constraint graphic"
+    creator_or_rightsholder: "This project"
+    obtained_on: "2026-08-25"
+    modifications: "Rejected after visual-direction review; retained only for audit"
+    rights_status: "project_owned"
+    rights_basis: "Original project editorial graphic"
+    rights_blocker: false
+    allowed_platforms: ["research"]
+    attribution: "Not for publication"
+    ai_generated: false
+    output_sha256: "5729d21700314fa69a25b0f4ea1527f757d6ad0143823941715b4429627e97cd"
+
+  - file: "assets/rsi-three-gates-infographic-image2-v01.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "unused"
+    dimensions: "1024x1536"
+    source_type: "rejected_visual_iteration"
+    source: "Image2 infographic v01; superseded by v02"
+    creator_or_rightsholder: "This project / AI-generated"
+    obtained_on: "2026-08-25"
+    modifications: "Rejected because the footer source was incorrect"
+    rights_status: "project_owned"
+    rights_basis: "Original AI-assisted APPSO editorial infographic"
+    rights_blocker: false
+    allowed_platforms: ["research"]
+    attribution: "AI-generated; not for publication"
+    ai_generated: true
+    output_sha256: "97ab41b1f8ed63851f59acbc45c2073e09cb9363ba1eaa8e1709498476fbc935"
+
+  - file: "assets/rsi-three-gates.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "unused"
+    dimensions: "1600x900"
+    source_type: "rejected_editorial_graphic"
+    source: "Superseded project-made three-gate graphic"
+    creator_or_rightsholder: "This project"
+    obtained_on: "2026-08-25"
+    modifications: "Rejected after visual-direction review; retained only for audit"
+    rights_status: "project_owned"
+    rights_basis: "Original project editorial graphic"
+    rights_blocker: false
+    allowed_platforms: ["research"]
+    attribution: "Not for publication"
+    ai_generated: false
+    output_sha256: "7e8f9848936c130e59657e5e27bc34d0761298cd9dc8174767cce3b3d38d5af6"
+
+  - file: "research/source-assets/openai-rsi-index-reference.png"
+    used_in_draft: false
+    used_as_cover: false
+    use: "research_reference"
+    dimensions: "968x955"
+    source_type: "official_source_reference"
+    source: "OpenAI GPT-5.6 announcement RSI Index chart"
+    creator_or_rightsholder: "OpenAI"
+    obtained_on: "2026-08-25"
+    modifications: "Local byte-identical reference retained for the visual audit trail"
+    rights_status: "user_confirmed_derivative_use"
+    rights_basis: "User explicitly authorized OpenAI derivative use for this task"
+    rights_blocker: false
+    allowed_platforms: ["research"]
+    attribution: "OpenAI"
+    ai_generated: false
+    output_sha256: "3e1ba5663eeed2311383d39e786b705b407b2e52983c439b43b857eb3cf599a2"

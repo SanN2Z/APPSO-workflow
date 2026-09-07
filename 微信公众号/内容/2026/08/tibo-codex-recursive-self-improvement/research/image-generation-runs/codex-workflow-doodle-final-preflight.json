@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "status": "pass",
+  "checked_on": "2026-08-25",
+  "task_id": "codex-workflow-doodle",
+  "stage": "final",
+  "project_adapter": "appsso",
+  "visual_type": "ai_editorial_creative",
+  "visual_route": "clumsy_doodle",
+  "style_override_source": null,
+  "style_profile": "appsso-004",
+  "style_scope": "all_ai_generated_editorial_images",
+  "new_image_strategy": "two_stage_reference_then_redraw",
+  "reference_strategy": "provided_local",
+  "mode": "referenced_edit",
+  "input_binding": "referenced_image_paths",
+  "num_last_images_to_include": null,
+  "conversation_derivative_rights_confirmed": false,
+  "prompt_ref": "appsso-004",
+  "prompt_sha256": "6ba5e092a4f8d6fb2bd33602424ba4792715aa59f2bf5f916b90d8bb3f0bbd0a",
+  "invocation_prompt_sha256": "32e029852324d50f407685ca37da1868e7f00dde7058a66967e4562797ba1492",
+  "input_assets": [
+    "research/source-assets/codex-workflow-structure-v01.png"
+  ],
+  "input_fingerprints": [
+    {
+      "file": "research/source-assets/codex-workflow-structure-v01.png",
+      "sha256": "3dad67d615b07782cc1c32ff94065fdf440f06f34e2cdd887b784719ffeea369",
+      "rights_status": "project_owned"
+    }
+  ],
+  "output": "assets/codex-workflow-doodle-image2-v01.png",
+  "present_to_user": true,
+  "plan": "research/image-generation-plan.json",
+  "plan_sha256": "06eb55f9c24614110286c886d8e25636405f4a6e0d7df2f1d85977495273a69a",
+  "profile_registry": "APPSO-数字资产/04-模板/生图风格档案.json",
+  "profile_registry_sha256": "1f2bc264eca47a0716a233193e314ed8521c29b8a6e58b50e3d151709118b970",
+  "prompt_source": "APPSO-数字资产/01-栏目与品牌/品牌视觉/生图-Prompt/笨拙涂鸦重绘.md",
+  "constraints_sha256": "9b10cb4afc950ccfe1ae97a9d8585974663e2ebbb251eb75fce5278b871d64e5",
+  "receipt": "research/image-generation-runs/codex-workflow-doodle-final-preflight.json"
+}

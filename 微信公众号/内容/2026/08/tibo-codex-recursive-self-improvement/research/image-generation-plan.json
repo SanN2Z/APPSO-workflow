@@ -1,0 +1,233 @@
+{
+  "schema_version": 2,
+  "template_only": false,
+  "updated": "2026-08-25",
+  "project_adapter": "appsso",
+  "profile_registry": "APPSO-数字资产/04-模板/生图风格档案.json",
+  "style_policy": {
+    "profile": "appsso-004",
+    "scope": "all_ai_generated_editorial_images",
+    "new_image_strategy": "two_stage_reference_then_redraw",
+    "allow_final_text_to_image": false
+  },
+  "tasks": [
+    {
+      "id": "rsi-three-gates-infographic-v02",
+      "visual_type": "qualitative_explainer",
+      "visual_route": "infographic",
+      "purpose": "用三道递归门和严格 RSI 的额外条件，帮助读者判断一次优化是否真的构成递归自我改进。",
+      "style_override": {
+        "profile": "appsso-infographic-v1",
+        "profile_registry": "APPSO-数字资产/04-模板/生图风格档案.json",
+        "source": "project_visual_route",
+        "reason": "PROJECT-WECHAT-VISUAL-ROUTES-001 固定的信息图路线",
+        "confirmed_on": "2026-08-25"
+      },
+      "reference_strategy": "provided_local",
+      "final_stage": {
+        "mode": "referenced_edit",
+        "prompt_ref": "appsso-infographic-v1",
+        "prompt_sha256": "c8c191665a99da9af14f8ba84b0f7ef769cbadefe347f5d197635264b024c043",
+        "input_assets": [
+          "research/source-assets/rsi-three-gates-infographic-v01-edit-target.png",
+          "research/source-assets/appsso-logo-red-background.png"
+        ],
+        "output": "assets/rsi-three-gates-infographic-image2-v02.png",
+        "receipt": "research/image-generation-runs/rsi-three-gates-infographic-v02-final-preflight.json",
+        "present_to_user": true,
+        "preserve": [
+          "第一张输入图是要编辑的 v01 成图；保持它的画布、版式、标题、三道门、正文、图标、颜色、字号、间距和底部结论不变",
+          "第二张输入图是 APPSO Logo；继续原比例、完整红底白字放入页脚",
+          "只把页脚右侧「来源：APPSO研究」替换为「来源：本文整理」",
+          "不新增日期，不改写其他任何文字，不添加或删除其他元素"
+        ],
+        "output_constraints": [
+          "1080 x 1440 px vertical canvas with the safe areas, six-column grid, typography floors, color ratios, and footer rules from the governed specification",
+          "This is a precise single-field correction to the first input image, not a redesign",
+          "Use the provided APPSO red-background white-wordmark image unchanged and proportionally in the footer lockup",
+          "Keep all existing Chinese text except the exact footer source replacement"
+        ],
+        "avoid": [
+          "Any layout change, text rewriting beyond the exact footer source, invented date, garbled Chinese, extra trademarks, stretched branding, or a large red background"
+        ]
+      }
+    },
+    {
+      "id": "rsi-code-loop-doodle",
+      "visual_type": "ai_editorial_creative",
+      "visual_route": "clumsy_doodle",
+      "purpose": "用一张无文字笨拙涂鸦说明代码 Agent 为什么容易形成生成、运行、评测、保留或回退的反馈循环。",
+      "reference_strategy": "provided_local",
+      "final_stage": {
+        "mode": "referenced_edit",
+        "prompt_ref": "appsso-004",
+        "prompt_sha256": "6ba5e092a4f8d6fb2bd33602424ba4792715aa59f2bf5f916b90d8bb3f0bbd0a",
+        "input_assets": [
+          "research/source-assets/rsi-code-loop-structure-v01.png"
+        ],
+        "output": "assets/rsi-code-loop-doodle-image2-v01.png",
+        "receipt": "research/image-generation-runs/rsi-code-loop-doodle-final-preflight.json",
+        "present_to_user": true,
+        "preserve": [
+          "本图只画：一个笨拙的小 Agent 围着代码纸、运行按钮、评测仪表和保留／回退岔路循环一圈；循环箭头最终回到代码纸",
+          "保留参考图的循环关系，但删除所有文字、数字和界面细节"
+        ],
+        "output_constraints": [
+          "3:4 portrait composition for a WeChat article",
+          "Use a white background",
+          "No text, letters, numbers, logos, trademarks, watermarks, or fake interface labels",
+          "Keep the circular feedback relationship readable at mobile width with generous edge safety"
+        ],
+        "avoid": [
+          "Polished technology-magazine composition, vector geometry, cinematic depth, professional illustration finish, humanoid realism, extra objects, garbled marks that resemble text, or news-scene realism"
+        ]
+      }
+    },
+    {
+      "id": "rsi-four-cases-infographic-v02",
+      "visual_type": "qualitative_explainer",
+      "visual_route": "infographic",
+      "purpose": "用同一把尺比较 DGM、R-Zero、Sol + Codex 和 AAR 各自改了什么、闭上哪一段以及人类仍控制什么。",
+      "style_override": {
+        "profile": "appsso-infographic-v1",
+        "profile_registry": "APPSO-数字资产/04-模板/生图风格档案.json",
+        "source": "project_visual_route",
+        "reason": "PROJECT-WECHAT-VISUAL-ROUTES-001 固定的信息图路线",
+        "confirmed_on": "2026-08-25"
+      },
+      "reference_strategy": "provided_local",
+      "final_stage": {
+        "mode": "referenced_edit",
+        "prompt_ref": "appsso-infographic-v1",
+        "prompt_sha256": "c8c191665a99da9af14f8ba84b0f7ef769cbadefe347f5d197635264b024c043",
+        "input_assets": [
+          "research/source-assets/rsi-four-cases-infographic-v01-edit-target.png",
+          "research/source-assets/appsso-logo-red-background.png"
+        ],
+        "output": "assets/rsi-four-cases-infographic-image2-v02.png",
+        "receipt": "research/image-generation-runs/rsi-four-cases-infographic-v02-final-preflight.json",
+        "present_to_user": true,
+        "preserve": [
+          "第一张输入图是要编辑的 v01 成图；保持它的画布、版式、标题、表头、四行表格、图标、颜色、字号、间距和结论不变",
+          "第二张输入图是 APPSO Logo；继续原比例、完整红底白字放入页脚",
+          "只把页脚来源改为「来源：公开信息整理」，把错误日期「2025-05-24」改为「2026-08-25」",
+          "不改写表格与结论中的任何其他文字，不添加或删除其他元素"
+        ],
+        "output_constraints": [
+          "1080 x 1440 px vertical canvas with the safe areas, six-column grid, typography floors, color ratios, and footer rules from the governed specification",
+          "This is a precise footer correction to the first input image, not a redesign",
+          "Use the provided APPSO red-background white-wordmark image unchanged and proportionally in the footer lockup",
+          "Keep every existing table label readable at mobile width"
+        ],
+        "avoid": [
+          "Any layout change, table-text rewrite, invented benchmark numbers, unsupported rankings, garbled Chinese, extra cases, stretched branding, or a large red background"
+        ]
+      }
+    },
+    {
+      "id": "rsi-three-constraints-infographic-v02",
+      "visual_type": "qualitative_explainer",
+      "visual_route": "infographic",
+      "purpose": "区分回路形成之后仍然存在的选题评测、反馈吞吐和权限控制三类制约。",
+      "style_override": {
+        "profile": "appsso-infographic-v1",
+        "profile_registry": "APPSO-数字资产/04-模板/生图风格档案.json",
+        "source": "project_visual_route",
+        "reason": "PROJECT-WECHAT-VISUAL-ROUTES-001 固定的信息图路线",
+        "confirmed_on": "2026-08-25"
+      },
+      "reference_strategy": "provided_local",
+      "final_stage": {
+        "mode": "referenced_edit",
+        "prompt_ref": "appsso-infographic-v1",
+        "prompt_sha256": "c8c191665a99da9af14f8ba84b0f7ef769cbadefe347f5d197635264b024c043",
+        "input_assets": [
+          "research/source-assets/rsi-three-constraints-infographic-v01-edit-target.png",
+          "research/source-assets/appsso-logo-red-background.png"
+        ],
+        "output": "assets/rsi-three-constraints-infographic-image2-v02.png",
+        "receipt": "research/image-generation-runs/rsi-three-constraints-infographic-v02-final-preflight.json",
+        "present_to_user": true,
+        "preserve": [
+          "第一张输入图是要精简的 v01 成图；保持画布、标题「循环能跑，不等于能自主加速」、三个主图标、三张卡片和底部结论不变",
+          "第二张输入图是 APPSO Logo；继续原比例、完整红底白字放入页脚",
+          "三张卡片只保留：①「选题与评测」／「会刷分 ≠ 做对」；②「反馈吞吐」／「长时任务回报会变慢」；③「权限与控制」／「上线、审计、回滚不能同环」",
+          "删除三张卡片内红色短句下方的所有小字号说明段落；删除整块「为什么这三类制约同时存在？」及其内容，用留白代替",
+          "底部结论保持逐字为「闭环／自主／加速／可部署，是四件事」",
+          "页脚只写「来源：本文整理」和日期「2026-08-25」"
+        ],
+        "output_constraints": [
+          "1080 x 1440 px vertical canvas with the safe areas, six-column grid, typography floors, color ratios, and footer rules from the governed specification",
+          "Three simplified constraint blocks must be visually distinct, equally weighted, and readable at mobile width",
+          "Use the provided APPSO red-background white-wordmark image unchanged and proportionally in the footer lockup",
+          "Use the freed space as breathing room; do not refill it with explanatory copy"
+        ],
+        "avoid": [
+          "Any extra explanatory paragraphs, unsupported causal claims, invented numbers, garbled Chinese, extra trademarks, fake interfaces, stretched branding, fear imagery, or a large red background"
+        ]
+      }
+    },
+    {
+      "id": "rsi-reward-hacking-doodle",
+      "visual_type": "ai_editorial_creative",
+      "visual_route": "clumsy_doodle",
+      "purpose": "让读者一眼看到优化系统追逐容易刷高的代理信号，却绕开真实目标。",
+      "reference_strategy": "provided_local",
+      "final_stage": {
+        "mode": "referenced_edit",
+        "prompt_ref": "appsso-004",
+        "prompt_sha256": "6ba5e092a4f8d6fb2bd33602424ba4792715aa59f2bf5f916b90d8bb3f0bbd0a",
+        "input_assets": [
+          "research/source-assets/rsi-reward-hacking-structure-v01.png"
+        ],
+        "output": "assets/rsi-reward-hacking-doodle-image2-v01.png",
+        "receipt": "research/image-generation-runs/rsi-reward-hacking-doodle-final-preflight.json",
+        "present_to_user": true,
+        "preserve": [
+          "本图只画：一个笨拙的小优化机器绕圈追逐越来越亮的代理奖牌，却从真实目标旁边跑过去",
+          "保留参考图的中央真实目标、外圈循环和明显绕行关系，但删除所有文字、数字和界面细节"
+        ],
+        "output_constraints": [
+          "3:4 portrait composition for a WeChat article",
+          "Use a white background",
+          "No text, letters, numbers, logos, trademarks, watermarks, score labels, or fake interfaces",
+          "Make the bypass relationship obvious at mobile width"
+        ],
+        "avoid": [
+          "Polished technology-magazine composition, vector geometry, cinematic depth, professional illustration finish, casino imagery, literal cheating people, garbled marks that resemble text, or news-scene realism"
+        ]
+      }
+    },
+    {
+      "id": "codex-workflow-doodle",
+      "visual_type": "ai_editorial_creative",
+      "visual_route": "clumsy_doodle",
+      "purpose": "用两格无文字涂鸦对比今天由人手工盯多个 Agent，与未来由 Agent 围绕持续项目状态工作、只在异常时找人。",
+      "reference_strategy": "provided_local",
+      "final_stage": {
+        "mode": "referenced_edit",
+        "prompt_ref": "appsso-004",
+        "prompt_sha256": "6ba5e092a4f8d6fb2bd33602424ba4792715aa59f2bf5f916b90d8bb3f0bbd0a",
+        "input_assets": [
+          "research/source-assets/codex-workflow-structure-v01.png"
+        ],
+        "output": "assets/codex-workflow-doodle-image2-v01.png",
+        "receipt": "research/image-generation-runs/codex-workflow-doodle-final-preflight.json",
+        "present_to_user": true,
+        "preserve": [
+          "本图只画：左边一个手忙脚乱的人同时盯许多散乱 Agent 窗口；右边多个 Agent 围绕一本持续更新的项目册工作，只把一个红色异常灯递给人",
+          "保留参考图的左右对照和责任转移关系，但删除所有文字、数字和真实界面细节"
+        ],
+        "output_constraints": [
+          "3:4 portrait composition for a WeChat article",
+          "Use a white background",
+          "No text, letters, numbers, logos, trademarks, watermarks, or fake interfaces",
+          "Keep both halves equally legible at mobile width with a simple hand-drawn divider"
+        ],
+        "avoid": [
+          "Polished technology-magazine composition, vector geometry, cinematic depth, professional illustration finish, humanoid robots, garbled marks that resemble text, or news-scene realism"
+        ]
+      }
+    }
+  ]
+}
