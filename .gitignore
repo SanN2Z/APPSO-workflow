@@ -65,3 +65,10 @@ APPSO-数字资产/90-受限资料/*
 *.db.*
 *.sqlite
 *.sqlite3
+
+# Git audit 2026-09-07: keep local evidence and scratch files in place.
+/微信公众号/内容/projects.lnk
+/微信公众号/内容/2026/09/astra-cli-review/research/viewing/
+/微信公众号/内容/2026/09/astra-cli-review/research/history/
+/微信公众号/内容/2026/09/astra-cli-review/research/cognition-benchmark-page.html
+/微信公众号/内容/2026/09/astra-cli-review/research/openai-benchmark-page.html
