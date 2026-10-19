@@ -11,12 +11,13 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools/bootstrap.ps1 -FullTes
 powershell -NoProfile -ExecutionPolicy Bypass -File tools/workflow.ps1 verify
 ```
 
-`bootstrap.ps1` 会完成四件事：
+`bootstrap.ps1` 会完成五件事：
 
 1. 创建 clone 内 `.venv`，按 `requirements-workflow.txt` 安装精确 Python 依赖。
 2. 对两个锁文件执行 `npm ci`：恢复公众号 Wenyan 渲染器，以及 clone 内 Codex／Claude CLI。
 3. 从已跟踪模板创建缺失的本地配置槽；已有文件永不覆盖。
-4. 运行源码合同、运行时 doctor 和可选全量回归。
+4. 从 clone 内固定源恢复 Claude／Codex 的 ARIS 技能链接，保留原内容技能与项目状态。
+5. 运行源码合同、运行时 doctor 和可选全量回归。
 
 `.venv`、`node_modules`、`.env`、`.local-capabilities` 和运行缓存均被 Git 忽略；另一台机器通过锁文件重建，不提交生成物。
 
@@ -26,7 +27,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools/workflow.ps1 verify
 
 | 能力包 | 随 clone 到达的部分 | 本机执行前输入 |
 |---|---|---|
-| `content_core` | 内容包校验、开头检查、复盘、洞察、语料、PDF／图片／文本工具 | 无 |
+| `content_core` | 内容包校验、开头检查、复盘、洞察、语料、PDF／图片／文本工具、固定版 ARIS 与初始化器 | 内容工具无额外输入；科研外部模型连接另查 |
 | `wechat` | 预览、交接、纵向滑动页、密封草稿与微信适配器 | 执行草稿时填写微信凭据并联网 |
 | `x` | 环境检查、只读检查、可见性、趋势扫描、队列和发布脚本 | X 凭据、网络；发布仍需本次授权 |
 | `company_feishu` | 公司同步状态机、锁定排版、飞书配置模板、clone 内 Codex | 飞书 UAT、Codex 登录、网络与精确写入授权 |
@@ -86,6 +87,32 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools/workflow.ps1 claude-ox
 ```
 
 外部模型会收到提示词和附件，只能使用允许送往外部提供方的公开材料。
+
+### Gemini 主笔试跑
+
+按[主笔交接模板](<../共享/模板/写作/Gemini主笔交接.md>)准备 `external_shareable`、`prompt` 和 `locked_fragments` 字段。原生 agy 是用户自行安装并登录的外部运行输入，未打包进 clone；通过 `AGY_BIN`、`--agy-bin` 或忽略的 `.aris/runtime.local.json` 中的 `agy_bin` 注入，不使用旧 Gemini CLI 自动替代。目前适配并校验 agy 1.4.2，模型和 effort 必须逐次显式指定。
+
+```powershell
+# 只查本机二进制，不假称已验证登录或模型连接
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/workflow.ps1 gemini-writer doctor --model gemini-4-argon-high --effort high
+
+# 只返回试写，不写 canonical；输出目录必须是尚不存在的 .tmp 子目录
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/workflow.ps1 gemini-writer draft --model gemini-4-argon-high --effort high --handoff <本次已脱敏交接.json> --output-dir .tmp/agy-writer/run-01
+```
+
+运行于无仓库祖先的临时目录，使用 plan 模式并请求原生 sandbox；未启用跳过权限。指令要求纯文本写作，检查实际工具调用是否为零；这些设置不冒称关闭了全部原生工具。原始 stdout、stderr 和 CLI 日志仅存忽略目录。可归档正文和白名单 receipt，不能整包提交诊断日志。模型不符、调用工具、缺失锁定段落、空输出或失败均保留诊断并失败退出，不自动重试或换供应商。
+
+局部修复先冻结原稿 SHA256，以及 `allowed-spans.json` 的 `[{"id":"P01","old":"待修改原文","issue":"问题"}]`。主笔返回 `{"patches":[{"id":"P01","old":"待修改原文","new":"修改后原文"}]}`，再运行本地装配：
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File tools/workflow.ps1 gemini-writer apply-patches --source <首次正文.md> --source-sha256 <审稿冻结的SHA256> --allowed-spans <允许范围.json> --patches <主笔补丁.json> --locked-handoff <原交接.json> --output <新的试写正文.md>
+```
+
+此命令不调用模型，不要求安装 agy。它逐项匹配允许范围，检查图片顺序和锁定段落，只创建新文件。输入不含 frontmatter，输出不得是 `draft.md`。装配成功仍需原有审稿与发布检查，不自动更新文章状态。
+
+### ARIS 与日常写作
+
+本仓库同时保存研究与内容工作流。研究入口、版本来源和恢复命令见 [ARIS 接入说明](aris/README.md)；日常改稿继续按 `self-media-ops`，不自动加载研究全文。`aris setup` 不启动文献研究或模型调用，`aris doctor` 检查固定源与本地链接。
 
 ## 公司浏览器扩展
 

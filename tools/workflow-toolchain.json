@@ -1,6 +1,9 @@
 {
   "schema_version": 2,
   "contract_id": "CORE-PORTABILITY-001",
+  "source_locks": [
+    {"root": "tools/aris", "manifest": "tools/aris/source-lock.json"}
+  ],
   "python": {
     "minimum": "3.11.0",
     "tested": "3.12.10",
@@ -69,6 +72,8 @@
     "crop-image": "tools/crop_image_region.py",
     "normalize-text": "tools/normalize_text_whitespace.py",
     "openrouter": "tools/openrouter_chat.py",
+    "gemini-writer": "tools/gemini_writer.py",
+    "aris": "tools/aris_project.py",
     "x-env": "X/scripts/check_x_env.py",
     "x-readonly": "X/scripts/check_x_api_readonly.py",
     "x-visibility": "X/scripts/check_x_visibility.py",
@@ -94,6 +99,24 @@
     "tools/workflow-toolchain.json",
     "tools/verify_clone_ready.py",
     "tools/capability_bundle.py",
+    "tools/gemini_writer.py",
+    "tools/aris_project.py",
+    "tools/tests/test_aris_project.py",
+    "tools/aris/project-profile.json",
+    "tools/aris/source-lock.json",
+    "tools/aris/skills-excluded.txt",
+    "tools/aris/initializer/SKILL.md",
+    "tools/aris/initializer/scripts/aris_init.py",
+    "tools/aris/upstream/LICENSE",
+    "tools/aris/upstream/AGENT_GUIDE.md",
+    "tools/aris/upstream/tools/install_aris.ps1",
+    "tools/aris/upstream/tools/research_wiki.py",
+    "RESEARCH_WORKFLOW.md",
+    "RESEARCH_BRIEF.md",
+    "RESEARCH_HANDOFF.md",
+    "CLAUDE.md",
+    "tools/tests/test_gemini_writer.py",
+    "共享/模板/写作/Gemini主笔交接.md",
     "tools/bootstrap.ps1",
     "tools/workflow.ps1",
     "tools/codex-company.cmd",
@@ -149,6 +172,8 @@
     }
   },
   "portable_docs": [
+    "RESEARCH_WORKFLOW.md",
+    "tools/aris/README.md",
     "README.md",
     "共享/运营/SOP/内容工作流.md",
     ".agents/skills/self-media-ops/SKILL.md",
@@ -266,12 +291,17 @@
         "pdf-render",
         "crop-image",
         "normalize-text",
+        "gemini-writer",
+        "aris",
         "repo-preflight"
       ],
       "tracked_paths": [
         ".agents/skills/self-media-ops/SKILL.md",
         ".agents/skills/content-retrospective/SKILL.md",
-        ".agents/skills/insight-to-asset/SKILL.md"
+        ".agents/skills/insight-to-asset/SKILL.md",
+        "共享/模板/写作/Gemini主笔交接.md",
+        "tools/aris/source-lock.json",
+        "tools/aris/project-profile.json"
       ],
       "config_requirements": [],
       "private_asset_ids": [],
@@ -478,6 +508,18 @@
     "X/tests"
   ],
   "external_gates": [
+    {
+      "id": "agy_native_writer",
+      "required_for": "opt-in Gemini prose drafting through gemini-writer",
+      "adapter_packaged": true,
+      "runtime_inputs": [
+        "AGY_BIN, .aris/runtime.local.json agy_bin or agy on PATH (native host binary; tested and required version 1.4.2)",
+        "Antigravity login (local host input, not cloned)",
+        "explicit available Gemini model and effort",
+        "external-shareable handoff JSON",
+        "network"
+      ]
+    },
     {
       "id": "wechat_credentials_and_egress",
       "required_for": "wechat draft --execute",

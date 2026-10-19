@@ -1,0 +1,212 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-19",
+  "research_stage": "idle",
+  "aris_doctor": {
+    "ok": true,
+    "source_commit": "26b95cfa0d8747078e9e43b42e20952709e561b8",
+    "source_workflow_date": "2026-10-19",
+    "skill_links": {
+      "claude": {
+        "skills": 62,
+        "missing": []
+      },
+      "codex": {
+        "skills": 62,
+        "missing": []
+      }
+    },
+    "failures": [],
+    "runtime_file_present": true,
+    "external_model_connectivity": "not probed by setup/doctor",
+    "global_configuration_written": false
+  },
+  "wiki_stats_output": "📚 Research Wiki Stats\nPapers:      0\nIdeas:       0 (0 failed, 0 succeeded)\nExperiments: 0\nClaims:      0\nEdges:       0\nWiki root:   research-wiki",
+  "repair_replay": {
+    "status": "ASSEMBLED",
+    "source_sha256": "f0e803d98a6d463de9f711c0c35d314a1a1e8329d3b9c944e3f88ed8991eb774",
+    "response_sha256": "9710db8467deee92545870d36b459e7137ae9c2821415b879ad89e959c12af59",
+    "patches": 9,
+    "media_preserved": true,
+    "locked_fragments_preserved": true,
+    "canonical_written": false,
+    "external_model_called": false,
+    "publication_checks": "not run; editorial review still required",
+    "matches_existing_repaired_body": true
+  },
+  "content_skills": {
+    "self-media-ops": {
+      "owned_directory": true,
+      "matches_committed_skill": true
+    },
+    "company-content-sync": {
+      "owned_directory": true,
+      "matches_committed_skill": true
+    },
+    "content-retrospective": {
+      "owned_directory": true,
+      "matches_committed_skill": true
+    },
+    "feedback-to-system": {
+      "owned_directory": true,
+      "matches_committed_skill": true
+    },
+    "insight-to-asset": {
+      "owned_directory": true,
+      "matches_committed_skill": true
+    }
+  },
+  "canonical_article_sha256": "a55f0a5f48173fecafe92c643888ddf1667398e552527d4eb592d52dbc720863",
+  "global_aris_pointer_unchanged": true,
+  "new_external_model_calls": 0,
+  "targeted_tests": {
+    "passed": 32,
+    "deselected": 1,
+    "reason": "source tracking tested in independent clone"
+  },
+  "cold_clone": {
+    "status": "passed",
+    "clone_method": "git clone --no-local --no-hardlinks from isolated validation snapshot",
+    "snapshot_commit": "e6f485db8e307acf453c1ae3a70ee299508ea184",
+    "shared_venv_or_node_modules": false,
+    "bootstrap_fulltest_exit_code": 0,
+    "tests": {
+      "passed": 357,
+      "skipped": 1,
+      "subtests_passed": 324,
+      "seconds": 46.23
+    },
+    "verify_exit_code": 0,
+    "checks": [
+      {
+        "name": "python.version",
+        "ok": true,
+        "detail": "actual=3.12.10; minimum=3.11.0; tested=3.12.10"
+      },
+      {
+        "name": "source.requirements",
+        "ok": true,
+        "detail": "8 exact pins from 6 tracked manifests"
+      },
+      {
+        "name": "source.node_lock",
+        "ok": true,
+        "detail": "2 package.json / lockfile pairs agree"
+      },
+      {
+        "name": "source.capability_contract",
+        "ok": true,
+        "detail": "9 capability bundles and 7 runtime gates registered"
+      },
+      {
+        "name": "source.tracked_contract",
+        "ok": true,
+        "detail": "562 required files are tracked"
+      },
+      {
+        "name": "source.line_endings",
+        "ok": true,
+        "detail": "1 hash-bound files have deterministic checkout EOL"
+      },
+      {
+        "name": "source.python_syntax",
+        "ok": true,
+        "detail": "compiled 104 tracked Python files in memory"
+      },
+      {
+        "name": "source.portable_docs",
+        "ok": true,
+        "detail": "scanned 23 operational documents"
+      },
+      {
+        "name": "source.company_extension",
+        "ok": true,
+        "detail": "22 files, 3347963 bytes, tree hash verified"
+      },
+      {
+        "name": "source.workflow_inputs",
+        "ok": true,
+        "detail": "6 approved workflow inputs verified"
+      },
+      {
+        "name": "source.pinned_workflows",
+        "ok": true,
+        "detail": "461 pinned source files verified"
+      },
+      {
+        "name": "runtime.python_packages",
+        "ok": true,
+        "detail": "8 exact package pins installed"
+      },
+      {
+        "name": "runtime.node",
+        "ok": true,
+        "detail": "node=v24.13.0; npm=11.6.2; minimum=22.0.0; tested=24.13.0"
+      },
+      {
+        "name": "runtime.node_packages",
+        "ok": true,
+        "detail": "3 direct packages installed across 2 runtimes"
+      },
+      {
+        "name": "runtime.javascript_syntax",
+        "ok": true,
+        "detail": "node --check passed for 12 files"
+      },
+      {
+        "name": "runtime.aris_doctor",
+        "ok": true,
+        "detail": "reported ok=true"
+      },
+      {
+        "name": "runtime.wechat_capability",
+        "ok": true,
+        "detail": "reported ok=true"
+      },
+      {
+        "name": "runtime.company_doctor",
+        "ok": true,
+        "detail": "reported ok=true"
+      },
+      {
+        "name": "runtime.capability_bundle",
+        "ok": true,
+        "detail": "reported ok=true"
+      }
+    ],
+    "capability_bundles": {
+      "content_core": true,
+      "wechat": true,
+      "x": true,
+      "company_feishu": true,
+      "company_browser": true,
+      "image_generation": true,
+      "appsso_visual_profiles": true,
+      "openrouter_ox": true,
+      "writing_skill_assets": true
+    },
+    "scope": "Only this task and the preceding Gemini adapter changes; unrelated dirty-tree changes excluded.",
+    "post_test_cleanup": "Main .gitattributes removed one duplicate identical ARIS rule; effective attributes unchanged."
+  },
+  "gemini_local_binary_check": {
+    "cli_version": "1.4.2",
+    "requested_model": "gemini-4-argon-high",
+    "login_and_model_connectivity": "not probed",
+    "status": "LOCAL_BINARY_OK"
+  },
+  "main_index_unchanged": true,
+  "main_preflight": {
+    "exit_code": 0,
+    "candidate_files": 4249,
+    "checks": "Git boundary, credentials, large files, staged and unstaged whitespace passed"
+  },
+  "research_wiki_empty": true,
+  "research_workflow_source_sha256": "4ec3968af4ff72ad24d463063af5bf0c935c9b233c58bf96fe1be98b912067bd",
+  "source_lock_files": 461,
+  "unresolved": [
+    "Research deliberately not started.",
+    "No new external-model connectivity probe; local agy version check only.",
+    "Writing quality and human time effects remain unmeasured; configuration is project-scoped E0."
+  ],
+  "index_check_scope": "Index was empty at verification time; only task-owned files are staged for the local workflow commit."
+}

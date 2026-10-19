@@ -58,6 +58,8 @@ try {
 
         Write-Output "[bootstrap] Preparing all clone-local capability configuration slots..."
         Invoke-Checked $venvPython @($capabilityManager, "prepare")
+        Write-Output "[bootstrap] Restoring pinned project-local ARIS research skills..."
+        Invoke-Checked $venvPython @((Join-Path $PSScriptRoot "aris_project.py"), "setup")
     }
 
     if (-not (Test-Path -LiteralPath $venvPython -PathType Leaf)) {

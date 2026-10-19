@@ -38,7 +38,29 @@ def test_workflow_source_manifest_rejects_escape_and_empty_list(tmp_path):
         {"path": "../outside", "bytes": 0, "sha256": "0" * 64}
     ]}), encoding="utf-8")
     assert not MODULE.check_workflow_sources(tmp_path)["ok"]
-    manifest.write_text(json.dumps({"schema_version": 1, "assets": []}), encoding="utf-8")
+
+
+def test_pinned_workflow_detects_line_ending_drift_and_path_escape(tmp_path):
+    bundle = tmp_path / "bundle"
+    bundle.mkdir()
+    source = bundle / "install.ps1"
+    source.write_bytes(b"pinned\r\n")
+    lock = tmp_path / "lock.json"
+    data = {"files": {"install.ps1": hashlib.sha256(source.read_bytes()).hexdigest()}}
+    lock.write_text(json.dumps(data), encoding="utf-8")
+    manifest = {"source_locks": [{"root": "bundle", "manifest": "lock.json"}]}
+    assert MODULE.check_pinned_sources(manifest, tmp_path)["ok"]
+    source.write_bytes(b"pinned\n")
+    assert not MODULE.check_pinned_sources(manifest, tmp_path)["ok"]
+    data["files"] = {"../outside": "0" * 64}
+    lock.write_text(json.dumps(data), encoding="utf-8")
+    assert not MODULE.check_pinned_sources(manifest, tmp_path)["ok"]
+
+
+def test_empty_workflow_source_manifest_is_rejected(tmp_path):
+    (tmp_path / "tools").mkdir()
+    (tmp_path / "tools/workflow-source-assets.json").write_text(
+        json.dumps({"schema_version": 1, "assets": []}), encoding="utf-8")
     assert not MODULE.check_workflow_sources(tmp_path)["ok"]
 
 

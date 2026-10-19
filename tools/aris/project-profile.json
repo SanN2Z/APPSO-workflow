@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "name": "自媒体运营与自动生产研究",
+  "direction": "可适配不同媒体与体裁文风的自动图文生产工作流；研究参考样本、编辑反馈和递归自我改进能否提升未见风格上的质量，并减少人工介入。",
+  "mode": "research-and-daily-content",
+  "platforms": [
+    "codex",
+    "claude"
+  ],
+  "source_commit": "26b95cfa0d8747078e9e43b42e20952709e561b8",
+  "source_workflow_date": "2026-10-19",
+  "source_workflow_sha256": "4ec3968af4ff72ad24d463063af5bf0c935c9b233c58bf96fe1be98b912067bd",
+  "source_initializer": "DGM aris-init snapshot adopted by owner 2026-10-19",
+  "exclude_file": "tools/aris/skills-excluded.txt",
+  "gemini_route": "agy",
+  "gemini_model": "gemini-4-argon-high",
+  "gemini_effort": "high",
+  "no_global_configuration_changes": true,
+  "research_card": "共享/研究/洞察实验室/ideas/2026-10-19-self-media-automation/research-question-card.md",
+  "local_adaptations": [
+    "Route research and daily content separately.",
+    "Keep host paths out of shared workflow.",
+    "Install only from the vendored source; do not write global ARIS pointer.",
+    "Retain existing content skills, documents, state and publication authorization."
+  ],
+  "active_brief": "RESEARCH_BRIEF.md"
+}

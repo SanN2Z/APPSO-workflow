@@ -1,6 +1,8 @@
 # 自媒体运营知识库
 
-这是公司内容工作的私有仓库。它保存内容真源、可复用方法、公司数字资产和必要工具，不要求每次写稿都加载全部资料。
+这是兼顾日常写作与 ARIS 研究的私有工作区。它保存内容真源、可复用方法、公司数字资产、研究文档和必要工具，不要求每次写稿都加载全部资料。
+
+日常选题、改稿、配图和排版走原内容工作流。科研任务按需进入 ARIS；当前研究方向已记录，尚未启动。文档分工与跨会话交接见 [RESEARCH_HANDOFF.md](RESEARCH_HANDOFF.md)。
 
 > 仓库含 `internal` 与受限索引，只能保持 Private。公开前必须逐项脱敏和核权。
 
@@ -15,7 +17,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools/bootstrap.ps1 -FullTes
 powershell -NoProfile -ExecutionPolicy Bypass -File tools/workflow.ps1 verify
 ```
 
-`bootstrap.ps1` 会创建被 Git 忽略的 `.venv`，按统一清单安装精确 Python 依赖，以 `npm ci` 恢复锁定的 Wenyan、Codex 和 Claude Code，并从模板创建缺失的本地配置槽。它随后验证公司扩展文件树、脚本语法、9 个能力包和核心 doctor；已有配置永不覆盖，模板也不含真实凭据。
+`bootstrap.ps1` 会创建被 Git 忽略的 `.venv`，按统一清单安装精确 Python 依赖，以 `npm ci` 恢复锁定的 Wenyan、Codex 和 Claude Code，从模板创建缺失的本地配置槽，并恢复项目内固定版 ARIS 技能链接。它随后验证公司扩展文件树、脚本语法、9 个能力包和核心 doctor；已有配置永不覆盖，模板也不含真实凭据。
 
 可分发的适配器、依赖、Skill、SOP、公司扩展源码和配置模板全部随 clone 到达。账号值、浏览器登录态、远端 `image_gen` 能力通过固定入口在本机接线，不进 Git。2026-09-07 获授权的 APPSO Prompt、设计规范和 Logo 已随私有仓库保存，并校验原文哈希。完整清单与迁移方法见 [`tools/README-capabilities.md`](tools/README-capabilities.md)。
 
@@ -44,7 +46,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools/workflow.ps1 company d
 ## 三步开始
 
 1. 读根 [`AGENTS.md`](AGENTS.md)，确定安全规则和任务类型。
-2. 使用 [`self-media-ops`](.agents/skills/self-media-ops/SKILL.md) 选择最短流程。
+2. 内容任务使用 [`self-media-ops`](.agents/skills/self-media-ops/SKILL.md) 选择最短流程；科研任务按根指令进入 ARIS。
 3. 只进入目标平台、目标内容包和被当前任务触发的专项模块。
 
 新任务、跨稿切换或仓库整理时再读 [`上下文/当前重点.md`](上下文/当前重点.md)。普通改字不需要读取全局状态。
@@ -54,6 +56,8 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools/workflow.ps1 company d
 | 层 | 唯一职责 |
 |---|---|
 | `AGENTS.md` | 安全硬门与任务路由 |
+| `RESEARCH_BRIEF.md`、`RESEARCH_WORKFLOW.md`、`RESEARCH_HANDOFF.md` | 当前研究方向、共享科研流程、交接；分别维护 |
+| `research-wiki/` | 研究记忆，按实际阅读和实验逐步增加 |
 | `共享/运营/SOP/内容工作流.md` | 跨平台核心流程唯一真源 |
 | `.agents/skills/` | 按任务调用流程，不复制完整 SOP |
 | `微信公众号/`、`X/` | 平台写法、工具和独立内容包 |
@@ -82,4 +86,4 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools/workflow.ps1 company d
 - 洞察实验：[`共享/研究/洞察实验室/README.md`](共享/研究/洞察实验室/README.md)
 - Git：[`Git 提交与仓库整理 SOP`](共享/运营/SOP/Git%20提交与仓库整理%20SOP.md)
 
-本仓库不包含开源许可；未经权利人明确授权，不得复制、公开或重新许可其中内容。
+本项目内容与公司资产未经权利人明确授权，不得复制、公开或重新许可。`tools/aris/upstream/` 保留其上游 MIT 许可；第三方许可不改变其他目录的保密与权利要求。

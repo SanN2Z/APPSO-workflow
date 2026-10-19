@@ -5,7 +5,7 @@ param(
         "verify", "test", "repo-preflight", "export-workflow", "capabilities", "validate", "image-preflight",
         "opening-check", "wechat", "company", "insight", "retrospective-init",
         "retrospective-audit", "corpus", "pdf-render", "crop-image", "normalize-text",
-        "openrouter", "x-env", "x-readonly", "x-visibility", "x-post",
+        "openrouter", "gemini-writer", "aris", "x-env", "x-readonly", "x-visibility", "x-post",
         "x-publish-queue", "x-trend-scan", "codex-company",
         "codex-company-feishu", "claude-ox", "set-openrouter-key"
     )]
@@ -20,7 +20,10 @@ $repoRoot = Split-Path -Parent $PSScriptRoot
 $manifestPath = Join-Path $PSScriptRoot "workflow-toolchain.json"
 $manifest = Get-Content -LiteralPath $manifestPath -Raw -Encoding UTF8 | ConvertFrom-Json
 $python = Join-Path $repoRoot ".venv\Scripts\python.exe"
-$remainingArgs = if ($null -eq $CommandArgs) { @() } else { @($CommandArgs) }
+[string[]]$remainingArgs = @()
+if ($null -ne $CommandArgs) {
+    $remainingArgs = @($CommandArgs)
+}
 
 function Invoke-Checked {
     param(

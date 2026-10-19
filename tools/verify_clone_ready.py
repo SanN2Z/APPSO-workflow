@@ -260,6 +260,9 @@ def check_required_tracked(manifest: dict[str, Any]) -> dict[str, Any]:
     required_set.update(
         str(item).replace("\\", "/") for item in manifest["entrypoints"].values()
     )
+    for locked in manifest.get("source_locks", []):
+        source_lock = read_json(REPO_ROOT / locked["manifest"])
+        required_set.update(f"{locked['root']}/{relative}" for relative in source_lock["files"])
     required_set.update(
         str(item).replace("\\", "/")
         for item in manifest["powershell_entrypoints"].values()
@@ -664,6 +667,29 @@ def check_workflow_sources(root: Path | None = None) -> dict[str, Any]:
         return make_check("source.workflow_inputs", False, f"workflow source manifest: {exc}")
 
 
+def check_pinned_sources(manifest: dict[str, Any], root: Path = REPO_ROOT) -> dict[str, Any]:
+    problems, checked = [], 0
+    try:
+        for locked in manifest.get("source_locks", []):
+            base = (root / locked["root"]).resolve()
+            if not base.is_relative_to(root.resolve()):
+                raise ValueError("source root escapes repository")
+            files = read_json(root / locked["manifest"])["files"]
+            if not isinstance(files, dict) or not files:
+                raise ValueError("empty source lock")
+            for relative, expected in files.items():
+                path = (base / relative).resolve()
+                if not path.is_relative_to(base):
+                    raise ValueError("pinned path escapes source root")
+                if not path.is_file() or hashlib.sha256(path.read_bytes()).hexdigest() != expected:
+                    problems.append(f"{locked['root']}/{relative}")
+                checked += 1
+    except (OSError, ValueError, KeyError, TypeError) as exc:
+        problems.append(str(exc))
+    return make_check("source.pinned_workflows", not problems,
+                      "; ".join(problems) if problems else f"{checked} pinned source files verified")
+
+
 def source_checks(manifest: dict[str, Any]) -> list[dict[str, Any]]:
     return [
         check_python_runtime(manifest),
@@ -676,6 +702,7 @@ def source_checks(manifest: dict[str, Any]) -> list[dict[str, Any]]:
         check_portable_docs(manifest),
         check_company_extension(manifest),
         check_workflow_sources(),
+        check_pinned_sources(manifest),
     ]
 
 
@@ -686,6 +713,10 @@ def runtime_checks(manifest: dict[str, Any]) -> list[dict[str, Any]]:
         check_node_runtime(manifest),
         check_installed_node_packages(manifest),
         check_javascript_syntax(manifest),
+        json_probe(
+            "runtime.aris_doctor",
+            [sys.executable, str(REPO_ROOT / entrypoints["aris"]), "doctor"],
+        ),
         json_probe(
             "runtime.wechat_capability",
             [sys.executable, str(REPO_ROOT / entrypoints["wechat"]), "capability", "--json"],
