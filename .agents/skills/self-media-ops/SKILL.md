@@ -10,11 +10,13 @@ Route the task once, load only the triggered module, and use [the core workflow]
 ## Start
 
 1. Run `git status --short`; preserve unrelated changes.
-2. Identify the target platform, package, requested state change, and external action.
+2. Identify the platform, account/brand, package, current stage, requested artifact, and external action. For media, distinguish evidence or actual product-test output from a newly authored editorial visual.
 3. Read only the target platform `AGENTS.md` / `CONTEXT.md`, target package, and directly triggered references.
 4. Read `上下文/当前重点.md` only for a new task, cross-package switch, planning, or repository cleanup.
 5. For analysis, pass `CORE-VALUE-001`; do not manufacture value with style, structure, or length.
 6. When changing an SOP, Skill, dependency, workflow entry, or versioned tool, apply `CORE-PORTABILITY-001`; use the clone-local bootstrap and runner instead of relying on global packages or machine paths.
+
+Compose only the needed layers: core lane, platform/account configuration, task-specific production, then the current delivery stage. Brand adapters own their specialized task menus; do not copy those menus here. The ownership map is [SOP architecture](../../../共享/运营/SOP/README.md), for workflow maintenance only.
 
 ## Choose the lowest safe lane
 
@@ -40,9 +42,10 @@ Choose by uncertainty and change scope, not length. Dense facts, complex rights,
 | Voice repair after the value gate | [wechat-human-voice-pass.md](references/wechat-human-voice-pass.md) and [wechat-ai-pattern-pass.md](references/wechat-ai-pattern-pass.md) |
 | Final WeChat review | [wechat-editorial-gates.md](references/wechat-editorial-gates.md) and [wechat-copyedit-pass.md](references/wechat-copyedit-pass.md) |
 | X final review | [review-checklist.md](references/review-checklist.md) |
-| First WeChat visual task, AI image generation, or image editing | `PROJECT-WECHAT-VISUAL-ROUTES-001`, [content-package.md](references/content-package.md), then [Image2 workflow](<../../../共享/运营/SOP/Image2 生图工作流.md>) for AI routes |
+| First WeChat visual task, editorial AI image generation, or editorial image editing | `PROJECT-WECHAT-VISUAL-ROUTES-001`, [content-package.md](references/content-package.md), then [Image2 workflow](<../../../共享/运营/SOP/Image2 生图工作流.md>) for editorial AI routes; actual test output follows its product-testing SOP |
 | WeChat preview, handoff, or draft | [wechat-publishing.md](references/wechat-publishing.md) |
-| APPSO, Hunt Good, company visual, or company draft | `APPSO-数字资产/README.md`, confidentiality rules, and one relevant adapter |
+| WeChat personal-account drafting or voice editing | Account configuration in `微信公众号/CONTEXT.md` |
+| APPSO, Hunt Good, company visual, or company draft | `APPSO-数字资产/README.md`, confidentiality rules, then [APPSO adapter task menu](<../../../APPSO-数字资产/03-SOP/APPSO 内容生产 SOP.md>) and its applicable module |
 | Material feedback, delivery, or publication | [content-retrospective](../content-retrospective/SKILL.md) |
 | Owner-binding future preference, recurring rework, or workflow/prompt migration | [feedback-to-system](../feedback-to-system/SKILL.md) |
 | Turn a long-term claim into an experiment | [insight-to-asset](../insight-to-asset/SKILL.md) |

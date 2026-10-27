@@ -1,3 +1,6 @@
 version: 3
 updated: "YYYY-MM-DD"
 assets: []
+# 实测 AI 输出：source_original + product_test_output，保留 generation_record、模型和输入。
+# 精确数据图：infographic + data_visualization，保留 data_source、render_script 和品牌输入。
+# 完整字段与权利要求见 .agents/skills/self-media-ops/references/content-package.md。

@@ -160,13 +160,13 @@ Use package-relative paths. A user-supplied file is not automatically cleared fo
 
 Publication-bound WeChat images use exactly one `visual_route`:
 
-- `source_original`: community discussion screenshot, X screenshot, or official original. Also set `source_original_kind`, `source_url`, and `original_pixels_preserved: true`; do not AI-redraw or visually restyle it.
+- `source_original`: a community/X screenshot, official original, product screenshot or actual product-test output. Set `source_original_kind` and `original_pixels_preserved: true`; use `source_url` for published sources and product pages. Do not redraw evidence or restyle the measured output.
 - `clumsy_doodle`: governed clumsy-doodle AI image. The manifest `prompt_ref`, generation mode, reference inputs, and receipt must match the selected project adapter.
-- `infographic`: a diagram explaining one relationship, process, or comparison. APPSO infographics must use Image2 with `appsso-infographic-v1` and the registered APPSO Logo input.
+- `infographic`: a diagram explaining one relationship, process, or comparison. APPSO editorial AI diagrams use Image2 with `appsso-infographic-v1` and the registered APPSO Logo input. Quantitative charts rendered from recorded data use the data contract below and retain the registered logo requirement.
 
 A WeChat article cannot enter `ready` or `published` unless its release-bound images cover at least two distinct routes. Version 1–2 manifests remain readable only as historical contracts; the next substantive visual edit migrates them to v3.
 
-For `source_type: "ai_generated"`, also record:
+For editorial `source_type: "ai_generated"`, also record:
 
 ```yaml
     generator: "Codex built-in image_gen"
@@ -183,6 +183,37 @@ For `source_type: "ai_generated"`, also record:
 ```
 
 Referenced edits must identify every input and its derivative-use status. Persist conversation attachments before `ready`. Publication-bound assets with missing provenance, unresolved rights, or a platform mismatch block `ready`; unused research assets remain warnings.
+
+### Actual product-test output and quantitative charts
+
+Keep the common ownership, rights, attribution, platform and release-binding fields. Actual model output uses the existing `source_original` route as test evidence, with explicit AI provenance:
+
+```yaml
+    visual_route: source_original
+    source_original_kind: product_test_output
+    source_type: ai_generated
+    original_pixels_preserved: true
+    generator: "Target product official CLI or Web"
+    model: "Actual model used"
+    generated_on: "2026-10-27"
+    generation_record: "research/task-result.json"
+    input_assets: []
+```
+
+`generation_record` must be an existing package-local file recording the actual task/project, prompt, parameters and result. Keep it free of credentials and signed download tokens. Persist and register referenced inputs with derivative rights; text-only generation may use an empty list. Proportional exports and video frames identify the original file and modifications. Native product-test output does not require an Image2 prompt or receipt. A real interface screenshot uses `source_original_kind: product_screenshot`, its product-page URL and a non-AI screenshot source type. AI redraws of official images or interfaces remain prohibited.
+
+For a chart computed with standard plotting tools:
+
+```yaml
+    visual_route: infographic
+    source_type: data_visualization
+    ai_generated: false
+    data_source: "research/cost-data.csv"
+    render_script: "research/plot_cost.py"
+    input_assets: ["assets/brand-logo.png"]
+```
+
+The data and rendering script must exist inside the package. Cite the underlying sources and pricing conditions in the ordinary provenance fields; APPSO charts retain the registered APPSO Logo input. AI images cannot be relabeled as computed charts. The article still needs two distinct visual routes, and rights and platform checks apply to both contracts.
 
 The validator enforces schema, path, rights, provenance, input-cycle, and release-use details. Load the full [Image2 workflow](<../../../../共享/运营/SOP/Image2 生图工作流.md>) only when generating or editing images.
 

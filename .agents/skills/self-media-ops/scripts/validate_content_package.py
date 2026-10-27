@@ -195,6 +195,8 @@ VISUAL_ROUTES = {"source_original", "clumsy_doodle", "infographic"}
 SOURCE_ORIGINAL_KINDS = {
     "community_screenshot",
     "official_original",
+    "product_screenshot",
+    "product_test_output",
     "x_screenshot",
 }
 APPSO_CLUMSY_PROMPT_REF = "appsso-004"
@@ -1286,6 +1288,17 @@ def validate_manifest_assets(
         else:
             warnings.append(message)
 
+    def require_local_record(
+        asset: dict[str, object], field: str, label: str, release_bound: bool
+    ) -> None:
+        value = asset.get(field)
+        key = canonical_package_key(package, value) if isinstance(value, str) else None
+        if key is None or not (package / key).is_file():
+            add_contract_issue(
+                f"manifest {label} {field} must name an existing package-local file",
+                release_bound,
+            )
+
     for index, asset in enumerate(assets, start=1):
         raw_file = asset.get("file")
         file_value = raw_file.strip() if isinstance(raw_file, str) else ""
@@ -1426,6 +1439,28 @@ def validate_manifest_assets(
             isinstance(source_type, str)
             and source_type.strip().casefold().startswith("ai_generated")
         )
+        product_test_output = (
+            visual_route == "source_original"
+            and asset.get("source_original_kind") == "product_test_output"
+        )
+        data_visualization = (
+            visual_route == "infographic" and source_type == "data_visualization"
+        )
+        if product_test_output:
+            if source_type != "ai_generated":
+                add_contract_issue(
+                    f"manifest {label} product_test_output must use source_type: ai_generated",
+                    release_bound,
+                )
+            require_local_record(asset, "generation_record", label, release_bound)
+        if data_visualization:
+            require_local_record(asset, "data_source", label, release_bound)
+            require_local_record(asset, "render_script", label, release_bound)
+            if asset.get("ai_generated") is True:
+                add_contract_issue(
+                    f"manifest {label} data_visualization must be rendered from data, not AI-generated",
+                    release_bound,
+                )
 
         if visual_route == "source_original":
             source_original_kind = asset.get("source_original_kind")
@@ -1442,14 +1477,14 @@ def validate_manifest_assets(
                     release_bound,
                 )
             source_url = asset.get("source_url")
-            if not isinstance(source_url, str) or not re.match(
+            if not product_test_output and (not isinstance(source_url, str) or not re.match(
                 r"^https?://", source_url.strip(), re.IGNORECASE
-            ):
+            )):
                 add_contract_issue(
                     f"manifest {label} source_original requires an http(s) source_url",
                     release_bound,
                 )
-            if ai_generated_like:
+            if ai_generated_like and not product_test_output:
                 add_contract_issue(
                     f"manifest {label} source_original cannot be AI-generated or redrawn",
                     release_bound,
@@ -1481,19 +1516,19 @@ def validate_manifest_assets(
                 )
 
         if visual_route == "infographic" and publish_project_adapter == "appsso":
-            if not ai_generated_like:
+            if not ai_generated_like and not data_visualization:
                 add_contract_issue(
                     f"manifest {label} APPSO infographic must use Image2 with "
                     "source_type: ai_generated",
                     release_bound,
                 )
-            if asset.get("prompt_ref") != APPSO_INFOGRAPHIC_PROMPT_REF:
+            if not data_visualization and asset.get("prompt_ref") != APPSO_INFOGRAPHIC_PROMPT_REF:
                 add_contract_issue(
                     f"manifest {label} APPSO infographic must use prompt_ref: "
                     f"{APPSO_INFOGRAPHIC_PROMPT_REF}",
                     release_bound,
                 )
-            if asset.get("generation_mode") not in REFERENCE_GENERATION_MODES:
+            if not data_visualization and asset.get("generation_mode") not in REFERENCE_GENERATION_MODES:
                 add_contract_issue(
                     f"manifest {label} APPSO infographic must use a referenced edit",
                     release_bound,
@@ -1531,9 +1566,14 @@ def validate_manifest_assets(
                 release_bound,
             )
 
+        required_ai_fields = (
+            ("generator", "model", "generated_on", "input_assets")
+            if product_test_output
+            else AI_GENERATED_REQUIRED_FIELDS
+        )
         missing_ai = [
             field
-            for field in AI_GENERATED_REQUIRED_FIELDS
+            for field in required_ai_fields
             if is_missing_value(asset.get(field))
         ]
         if missing_ai:
@@ -1544,7 +1584,7 @@ def validate_manifest_assets(
                 warnings.append(f"legacy {message}; migrate manifest to version 2 when edited")
 
         generation_mode = asset.get("generation_mode")
-        if not is_missing_value(generation_mode) and (
+        if not product_test_output and not is_missing_value(generation_mode) and (
             not isinstance(generation_mode, str) or generation_mode not in AI_GENERATION_MODES
         ):
             add_contract_issue(
@@ -1574,7 +1614,7 @@ def validate_manifest_assets(
                 release_bound,
             )
 
-        if strict:
+        if strict and not product_test_output:
             for issue in validate_ai_preflight_receipt(
                 package,
                 asset,

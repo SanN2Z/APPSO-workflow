@@ -1,8 +1,8 @@
 # APPSO 内容生产 adapter
 
-版本：3.4
+版本：3.6
 
-更新日期：2026 年 9 月 7 日
+更新日期：2026 年 10 月 27 日
 
 资料属性：internal
 
@@ -19,6 +19,7 @@
 | 用户明确要求文风实验，且已有实质正文 | [笨拙写作 Prompt](<../../.agents/skills/self-media-ops/references/wechat-clumsy-writing.yml>)；普通去 AI 味按核心流程的删解释检查执行 |
 | Hunt Good | [Hunt Good 周报专项 SOP](<Hunt Good 周报专项 SOP.md>) |
 | 当天热点 × AIGC 方法解释 | [时效热点 × AIGC 解释稿 SOP](<时效热点 × AIGC 解释稿 SOP.md>) |
+| 需要实际制作视频的 AI 产品体验、短剧、转绘或商单 | [AIGC 视频产品体验制作 SOP](<AIGC 视频产品体验制作 SOP.md>) |
 | AI 创意图或重绘 | [Image2 生图工作流](<../../共享/运营/SOP/Image2 生图工作流.md>) + APPSO 风格配置 |
 | 公司飞书定稿排版 | [公司飞书到公众号浏览器排版 SOP](<公司飞书到公众号浏览器排版 SOP.md>) |
 
@@ -171,9 +172,9 @@ APPSO 文章的发布图片固定分为三条路线：
 
 | `visual_route` | 使用场景 | 执行合同 |
 |---|---|---|
-| `source_original` | 社区讨论截图、X 截图、官方原图 | 使用网上搜到的原图，保留原始像素；只做裁切、等比缩放、压缩或必要隐私遮挡，不用 AI 重画，不为统一风格重做 |
+| `source_original` | 社区／X 截图、官方原图、真实产品截图与实测输出 | 保留来源画面及必要上下文；实测 AI 输出保留模型、输入与任务记录，不按编辑风格重做；只做所需裁切、等比导出或隐私遮挡 |
 | `clumsy_doodle` | 封面创意、气氛图、定性解释 | Image2 + `appsso-004`；参考图重绘，白底、鼠标线、低像素感；禁止电影感、精致矢量、专业杂志风 |
-| `infographic` | 关系、流程、比较、时间线与概念地图 | Image2 + `appsso-infographic-v1`；把完整《Markdown 示意图设计系统规范》作为受控 Prompt，并把登记版 APPSO Logo 原图作为参考输入 |
+| `infographic` | 关系、流程、比较、时间线与概念地图 | AI 编辑图用 Image2 + `appsso-infographic-v1`，输入完整规范与登记 Logo；精确成本或统计图用标准绘图工具，保留数据、绘图脚本与登记 Logo 输入 |
 
 每篇文章在视觉计划阶段至少选择 2 条路线，进入 `ready` 时按正文与封面实际使用图片复核；图片多不等于类型达标。通用科技 3D、深色电影感概念图和自行生成的科技卡片不构成第四条路线。
 
@@ -185,7 +186,7 @@ APPSO 的 `ai_editorial_creative` 默认绑定 `appsso-004`：
 
 适用于封面创意图、气氛图和定性解释图。官方资料、真实界面、Logo、新闻图片和要求数值精确的图表不套该风格。
 
-APPSO 的 `infographic` 固定绑定 `appsso-infographic-v1`。Prompt 真源为 `01-栏目与品牌/品牌视觉/原始资料/Markdown 示意图设计系统规范.md`，以 `prompt_format: full_file` 逐字交给 Image2；参考图固定包含已登记的 `APPSO Logo 红底白字.png`。不得只读取速查或 Prompt 摘要后用 HTML／CSS、自创深色体系或通用生图 Prompt 代替。
+APPSO 的 AI 编辑信息图固定绑定 `appsso-infographic-v1`。Prompt 真源为 `01-栏目与品牌/品牌视觉/原始资料/Markdown 示意图设计系统规范.md`，以 `prompt_format: full_file` 逐字交给 Image2；参考图固定包含已登记的 `APPSO Logo 红底白字.png`。不得只读取速查或 Prompt 摘要后用 HTML／CSS、自创深色体系或通用生图 Prompt 代替。精确数据图采用前述数据与绘图脚本合同，登记版 Logo 仍需作为输入。
 
 执行时：
 
@@ -195,7 +196,7 @@ APPSO 的 `infographic` 固定绑定 `appsso-infographic-v1`。Prompt 真源为 
 4. 原尺寸检查白底、笨拙鼠标线、低质量逐像素感和「大致相似但明显别扭」。
 5. 成品、输入权利、Prompt 哈希、生成模式和 receipt 回填 `asset-manifest.yml`。
 
-视觉清单使用 version 3，并为每张发布图登记 `visual_route`。`source_original` 另记 `source_original_kind`、原始 URL 与 `original_pixels_preserved: true`；Image2 成品的路线必须与 plan 和 receipt 一致。微信公众号文章少于 2 类路线不得进入 `ready`。
+视觉清单使用 version 3，并为每张发布图登记 `visual_route`。原图记录类别、URL 和像素保留状态；产品 AI 输出与数据图按[素材合同](<../../.agents/skills/self-media-ops/references/content-package.md>)记录任务或数据及渲染来源。Image2 成品路线须与 plan 和 receipt 一致；公众号文章少于 2 类路线不得进入 `ready`。
 
 用户在当前任务中明确指定其他方向时，以该任务覆盖为先；覆盖不扩散到其他图片。
 

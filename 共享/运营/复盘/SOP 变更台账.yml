@@ -1,7 +1,37 @@
 schema_version: 1
-updated_on: "2026-09-07"
+updated_on: "2026-10-27"
 
 changes:
+  - id: "SOP-CHANGE-20261027-ARCHITECTURE"
+    date: "2026-10-27"
+    change: "统一内容 SOP 的文件职责与任务组合入口；品牌专项集中路由，编辑配图与产品实测分工，工具试跑按需加载"
+    source_cases:
+      - "user:2026-10-27-global-sop-architecture"
+      - "jimeng-drama-studio:JM-20261027-09"
+    classification: "project_configuration"
+    evidence_level: "E0 owner request; documentation and scenario review only"
+    trigger: "日常内容任务分流或 SOP 架构维护"
+    action: "按平台、账号、阶段和交付物组合模块；完整规则在所属真源维护，入口只保留触发与链接"
+    pass_condition: "任务可从入口找到专项；品牌与素材用途准确；原有硬门与试跑内容可追溯"
+    failure_signal: "多套菜单失步、账号配置串用、实测素材误入编辑风格、未到交付阶段加载外部写入流程"
+    scope: "本仓库日常内容 SOP、素材合同及对应校验；不启动 ARIS，不修改依赖或外部发布动作"
+    affected_sources:
+      - "共享/运营/SOP/README.md"
+      - "共享/运营/SOP/工作流使用入口.md"
+      - "共享/运营/SOP/内容工作流.md"
+      - "共享/运营/SOP/Gemini 主笔试跑.md"
+      - "共享/运营/SOP/Image2 生图工作流.md"
+      - ".agents/skills/self-media-ops/SKILL.md"
+      - ".agents/skills/self-media-ops/references/content-package.md"
+      - ".agents/skills/self-media-ops/scripts/validate_content_package.py"
+      - ".agents/skills/self-media-ops/tests/test_product_test_media.py"
+      - "共享/模板/微信公众号内容包/asset-manifest.yml"
+    regression_check: "检查本地链接、原触发入口和试跑说明完整性，走查个人号、APPSO、X、局部修改、用户指定载体及 ready 场景"
+    evidence: "共享/运营/复盘/2026-10-27-SOP架构统筹.md"
+    configured_rules: ["SOP module ownership and task composition"]
+    promoted_rules: []
+    owner: "content workflow"
+    review_on: "2026-11-27"
   - id: "SOP-CHANGE-20260907-WORKFLOW-PACK"
     date: "2026-09-07"
     change: "整理桌面与仓库工作流入口，补齐获授权原始输入，修正文风触发、手机字号、交付载体和测试路径"
