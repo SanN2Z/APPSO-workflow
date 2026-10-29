@@ -27,7 +27,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools/workflow.ps1 verify
 
 | 能力包 | 随 clone 到达的部分 | 本机执行前输入 |
 |---|---|---|
-| `content_core` | 内容包校验、开头检查、复盘、洞察、语料、PDF／图片／文本工具、固定版 ARIS 与初始化器 | 内容工具无额外输入；科研外部模型连接另查 |
+| `content_core` | 内容包校验、媒体 HTML／ZIP 审阅、开头检查、复盘、洞察、语料、PDF／图片／文本工具、固定版 ARIS 与初始化器 | 内容工具无额外输入；科研外部模型连接另查 |
 | `wechat` | 预览、交接、纵向滑动页、密封草稿与微信适配器 | 执行草稿时填写微信凭据并联网 |
 | `x` | 环境检查、只读检查、可见性、趋势扫描、队列和发布脚本 | X 凭据、网络；发布仍需本次授权 |
 | `company_feishu` | 公司同步状态机、锁定排版、飞书配置模板、clone 内 Codex | 飞书 UAT、Codex 登录、网络与精确写入授权 |

@@ -61,6 +61,7 @@
     "capabilities": "tools/capability_bundle.py",
     "validate": ".agents/skills/self-media-ops/scripts/validate_content_package.py",
     "image-preflight": ".agents/skills/self-media-ops/scripts/preflight_image_generation.py",
+    "media-review": "tools/media_review.py",
     "opening-check": ".agents/skills/self-media-ops/scripts/check_wechat_opening.py",
     "wechat": "微信公众号/tools/wechat_publish.py",
     "company": "tools/company_content_sync/company_content_sync.py",
@@ -89,6 +90,10 @@
     "set-openrouter-key": "tools/set_openrouter_key.ps1"
   },
   "required_tracked_paths": [
+    "tools/media_review.py",
+    "APPSO-数字资产/04-模板/HTML/image-review.html",
+    "APPSO-数字资产/04-模板/HTML/video-review.html",
+    "APPSO-数字资产/04-模板/HTML/common.css",
     "tools/export_workflow_bundle.py",
     ".env.example",
     ".python-version",
@@ -283,6 +288,7 @@
       "bundle_status": "complete",
       "entrypoints": [
         "validate",
+        "media-review",
         "opening-check",
         "insight",
         "retrospective-init",
@@ -297,6 +303,10 @@
       ],
       "tracked_paths": [
         ".agents/skills/self-media-ops/SKILL.md",
+        "tools/media_review.py",
+        "APPSO-数字资产/04-模板/HTML/image-review.html",
+        "APPSO-数字资产/04-模板/HTML/video-review.html",
+        "APPSO-数字资产/04-模板/HTML/common.css",
         ".agents/skills/content-retrospective/SKILL.md",
         ".agents/skills/insight-to-asset/SKILL.md",
         "共享/模板/写作/Gemini主笔交接.md",

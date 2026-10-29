@@ -20,6 +20,7 @@
 | Hunt Good | [Hunt Good 周报专项 SOP](<Hunt Good 周报专项 SOP.md>) |
 | 当天热点 × AIGC 方法解释 | [时效热点 × AIGC 解释稿 SOP](<时效热点 × AIGC 解释稿 SOP.md>) |
 | 需要实际制作视频的 AI 产品体验、短剧、转绘或商单 | [AIGC 视频产品体验制作 SOP](<AIGC 视频产品体验制作 SOP.md>) |
+| 图像／视频作品审阅、过程图库与离线 ZIP | [媒体 HTML 模板与清单](<../04-模板/HTML/README.md>) |
 | AI 创意图或重绘 | [Image2 生图工作流](<../../共享/运营/SOP/Image2 生图工作流.md>) + APPSO 风格配置 |
 | 公司飞书定稿排版 | [公司飞书到公众号浏览器排版 SOP](<公司飞书到公众号浏览器排版 SOP.md>) |
 

@@ -1,0 +1,10 @@
+{
+  "kind": "image",
+  "title": "APPSO 工作流｜配图审阅",
+  "summary": "点击图片可查看原文件；本页示例为工作流封面和架构图。",
+  "items": [
+    {"file": "../assets/workflow-cover.png", "title": "工作流封面", "caption": "编辑创意图，AI 生成。", "model": "项目 Image2 生图流程"},
+    {"file": "../assets/workflow-architecture.png", "title": "工作流架构", "caption": "任务入口、共用底座、执行模块、交付模板和反馈关系；AI 生成。"}
+  ],
+  "footnote": "APPSO · 内部工作流说明"
+}
