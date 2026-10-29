@@ -1,16 +1,33 @@
-classification: internal
+classification: public
 assets:
 - file: workflow-cover.png
   source: 本次内置 image_gen，按项目 Image2 生成流程执行
   ai_generated: true
   style_profile: appsso-004
   rights_status: project_owned
-  allowed_use: APPSO 工作流私有仓库文档与内部说明
+  allowed_use: APPSO 工作流公开仓库文档与内部说明
   created_on: '2026-10-29'
 - file: workflow-architecture.png
   source: 本次内置 image_gen，按项目 Image2 生成流程执行
   ai_generated: true
   style_profile: appsso-infographic-v1
   rights_status: project_owned
-  allowed_use: APPSO 工作流私有仓库文档与内部说明
+  allowed_use: APPSO 工作流公开仓库文档与内部说明
   created_on: '2026-10-29'
+displayed_examples:
+- file: ../../../微信公众号/内容/2026/08/tibo-codex-recursive-self-improvement/assets/codex-workflow-doodle-image2-v01.png
+  source_manifest: ../../../微信公众号/内容/2026/08/tibo-codex-recursive-self-improvement/asset-manifest.yml
+  ai_generated: true
+  style_profile: appsso-004
+  creator_or_rightsholder: 本项目 / AI 生成
+  modifications: 引用已有成品原文件
+  rights_status: project_owned
+  allowed_use: APPSO 工作流公开 README 作品示例
+- file: ../../../微信公众号/内容/2026/08/tibo-codex-recursive-self-improvement/assets/rsi-four-cases-infographic-image2-v02.png
+  source_manifest: ../../../微信公众号/内容/2026/08/tibo-codex-recursive-self-improvement/asset-manifest.yml
+  ai_generated: true
+  style_profile: appsso-infographic-v1
+  creator_or_rightsholder: 本项目 / AI 生成，含 APPSO 品牌元素
+  modifications: 引用已有成品原文件
+  rights_status: project_owned
+  allowed_use: APPSO 工作流公开 README 作品示例
